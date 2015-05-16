@@ -3,7 +3,7 @@ using System;
 namespace EmodiaQuest
 {
 #if WINDOWS || XBOX
-    static class Main
+    static class Programm
     {
         /// <summary>
         /// The main entry point for the application.
