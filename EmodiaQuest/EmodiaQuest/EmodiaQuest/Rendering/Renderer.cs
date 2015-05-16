@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace EmodiaQuest.Rendering
+{
+    class Renderer
+    {
+        //TODO: renders everthing of the game -> calling the draw methods of:
+        /* 1. Backgroundtexture
+         * 2. Static Environment
+         * 2.1 Shadows
+         * 2.2 Particles (Smoke, Fire etc)
+         * 3. The Enemies
+         * 3.1 Shadows
+         * 3.2 Particles /Attacks
+         * 4. The Player
+         * 4.1 Shadow
+         * 4.2 Particles / Attacks
+         * 5. Hud
+         * 6. Buttons and other UI Elements in CameraSpace
+         */
+    }
+}
