@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using EmodiaQuest.Core;
+using EmodiaQuest.Rendering;
 
 namespace EmodiaQuest
 {
@@ -18,7 +20,7 @@ namespace EmodiaQuest
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Rendering.Renderer rendering;
+        Renderer rendering;
 
         public EmodiaQuest()
         {

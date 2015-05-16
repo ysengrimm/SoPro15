@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    abstract class Screen
+    public abstract class Screen
     {
         //TODO: Implement thing, every Screen will have (background texture etc.)
     }

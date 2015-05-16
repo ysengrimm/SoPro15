@@ -15,5 +15,14 @@ namespace EmodiaQuest.Core
     class Dungeon : Game
     {
         // Implement the Game things and the special Dungeon things
+        public override void initialise()
+        {
+        }
+
+
+        public override void loadContent()
+        {
+        }
+
     }
 }

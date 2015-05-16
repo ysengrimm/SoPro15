@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    abstract class Game : Screen
+    public abstract class Game : Screen
     {
         // Implement everything, the Overworld and the Dungeon needs :
         /*
@@ -23,5 +23,17 @@ namespace EmodiaQuest.Core
          * StoryController
          * EnvironmentController
          */
+        public Core.EnvironmentController enviromentController;
+
+        /// <summary>
+        /// Method for initialising Objects
+        /// </summary>
+        public abstract void initialise();
+
+        /// <summary>
+        /// Method for loading Models and other stuff
+        /// </summary>
+        public abstract void loadContent();
+
     }
 }
