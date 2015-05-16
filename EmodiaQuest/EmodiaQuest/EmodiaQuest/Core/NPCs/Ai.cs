@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    class Ai
     {
-        // Implement the Game things and the special Dungeon things
+        // Implements behavior for NPCs ( normal NPCs and the enemies:  A*!?)
     }
 }

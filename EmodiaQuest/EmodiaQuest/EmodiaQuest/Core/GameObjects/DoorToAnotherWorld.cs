@@ -12,8 +12,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    class DoorToAnotherWorld : GameObject
     {
-        // Implement the Game things and the special Dungeon things
+        //TODO: contains textures, size, position, collsion, mesh etc.
+        // Should start a new event, with dungen/safeworld
     }
 }

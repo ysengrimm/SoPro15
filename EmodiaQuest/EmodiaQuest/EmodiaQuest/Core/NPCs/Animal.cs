@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    class Animal
     {
-        // Implement the Game things and the special Dungeon things
+        // implements damage, range, mesh, texture etc
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    abstract class Screen
     {
-        // Implement the Game things and the special Dungeon things
+        //TODO: Implement thing, every Screen will have (background texture etc.)
     }
 }

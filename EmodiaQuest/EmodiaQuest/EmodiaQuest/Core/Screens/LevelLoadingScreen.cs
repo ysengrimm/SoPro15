@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    class LevelLoadingScreen : Screen
     {
-        // Implement the Game things and the special Dungeon things
+        // Implement the Screen, where it is able to start a gamestate which hwas saved
     }
 }

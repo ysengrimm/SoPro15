@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    class Wall : GameObject
     {
-        // Implement the Game things and the special Dungeon things
+        //TODO: contains textures, size, position, collsion, mesh etc.
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    class OptionsScreen : Screen
     {
-        // Implement the Game things and the special Dungeon things
+        // Todo: Implement Buttons to set the Volume and Gamesize
     }
 }

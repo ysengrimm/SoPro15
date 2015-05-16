@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    abstract class NPC
     {
-        // Implement the Game things and the special Dungeon things
+        // Implement everything, a NPC needs ( Name, etc.)
     }
 }

@@ -12,8 +12,25 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Dungeon : Game
+    
+    abstract class GameObject
     {
-        // Implement the Game things and the special Dungeon things
+        private Vector3 _position;
+        private Vector3 _rotation;
+        private float _scale;
+        private Model _model;
+
+
+        public Vector3 getPosition()
+        {
+            return this._position;
+        }
+        public void setPosition(Vector3 position)
+        {
+            this._position = position;
+        }
+        
+
+    
     }
 }
