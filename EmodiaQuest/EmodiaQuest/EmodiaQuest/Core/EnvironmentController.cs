@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class EnvironmentController
+    public class EnvironmentController
     {
         // TODO: Controll the whole environment, is used for getting easy access of everything wich is static, needs to be rendered or has collsion
         // will have a lot of lists with items
@@ -21,12 +21,15 @@ namespace EmodiaQuest.Core
         public Color[] colors1D;
         public Color[,] colors2D;
 
-        List<GameObject> ground, wall, items, accessoires, buildings;
+        public List<GameObject> ground, wall, items, accessoires, buildings;
+
+        public EnvironmentController() { }
 
         /// <summary>
         /// Creates a new map from a pixelmap
         /// <param name="map">A Texture2D with loaded map-picture.</param>
         /// </summary>
+        ///
         public void createMap(Texture2D map)
         {
             this.map = map;

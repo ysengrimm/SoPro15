@@ -18,6 +18,7 @@ namespace EmodiaQuest
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Rendering.Renderer rendering;
 
         public EmodiaQuest()
         {
@@ -35,6 +36,8 @@ namespace EmodiaQuest
         {
             // TODO: Add your initialization logic here
 
+            // Initialize the Renderer
+            rendering = new Rendering.Renderer();
             base.Initialize();
         }
 
