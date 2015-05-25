@@ -65,5 +65,29 @@ namespace EmodiaQuest.Core
                 }
             }
         }
+
+        public void drawEnvironment(Matrix world, Matrix view, Matrix projection)
+        {
+            foreach(GameObject obj in ground)
+            {
+                obj.drawGameobject(world, view, projection);
+            }
+            foreach (GameObject obj in wall)
+            {
+                obj.drawGameobject(world, view, projection);
+            }
+            foreach (GameObject obj in items)
+            {
+                obj.drawGameobject(world, view, projection);
+            }
+            foreach (GameObject obj in accessoires)
+            {
+                obj.drawGameobject(world, view, projection);
+            }
+            foreach (GameObject obj in buildings)
+            {
+                obj.drawGameobject(world, view, projection);
+            }
+        }
     }
 }

@@ -44,5 +44,27 @@ namespace EmodiaQuest.Core
         {
             map = content.Load<Texture2D>("safeWorldMap");
         }
+
+        /// <summary>
+        /// Method for drawing the whole GameScreen
+        /// Especially the following:
+        /// Environment, NPCs, HUD, Player
+        /// </summary>
+        /// <param name="world">the world Matrix, which will be used for rendering</param>
+        /// <param name="view">the view Matrix, which will be used for the rendering</param>
+        /// <param name="projection">the projection Matrix, which will be used for the rendering</param>
+        public override void drawGameScreen(Matrix world, Matrix view, Matrix projection)
+        {
+            drawenvironment(world, view, projection);
+            //drawNPCs();
+            //drawHUD();
+            //drawPlayer();
+            
+        }
+
+        private void drawenvironment(Matrix world, Matrix view, Matrix projection)
+        {
+            enviromentController.drawEnvironment(world, view, projection);
+        }
     }
 }

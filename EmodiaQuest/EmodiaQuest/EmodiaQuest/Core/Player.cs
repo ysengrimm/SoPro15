@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Player
+    public class Player
     {
         // Todo: Implement the following
         /*

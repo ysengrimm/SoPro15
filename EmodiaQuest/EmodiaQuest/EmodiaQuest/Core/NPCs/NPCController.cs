@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class NPCController
+    public class NPCController
     {
         //Implement everything, what a NPC needs
     }

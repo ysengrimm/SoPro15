@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class Storycontroller
+    public class Storycontroller
     {
         //TODO: Implement, which Quests and Stories are able to displayed
     }

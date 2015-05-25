@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using EmodiaQuest.Core;
 
 namespace EmodiaQuest.Rendering
 {
@@ -30,21 +31,52 @@ namespace EmodiaQuest.Rendering
          */
 
         //Constructor
+        Matrix world, view, projection;
+
         public Renderer() { }
-
-        public void drawBakcground()
+        /// <summary>
+        /// constructor with the required Matrices given at the beginning
+        /// </summary>
+        /// <param name="world">the world matrix, which will be used for rendering</param>
+        /// <param name="view">the view matrix, which will be used for rendering</param>
+        /// <param name="projection">the projection matrix, which will be used for rendering</param>
+        public Renderer(Matrix world, Matrix view, Matrix projection)
         {
-
+            this.world = world;
+            this.view = view;
+            this.projection = projection;
         }
-        public void drawEnvironment()
+
+        public void drawSafeWorld(SafeWorld safeWorld)
         {
-
+           // safeWorld.drawGameScreen(world, view, projection);
         }
 
-        private void drawGround()
+        /// <summary>
+        /// Updates the world matrix, which will be used for rendering
+        /// </summary>
+        /// <param name="world"></param>
+        public void updateWorld(Matrix world)
         {
-            
+            this.world = world;
         }
+        /// <summary>
+        /// Updates the view matrix, which will be used for rendering
+        /// </summary>
+        /// <param name="view"></param>
+        public void updateView(Matrix view)
+        {
+            this.view = view;
+        }
+        /// <summary>
+        /// Updates the projection matrix, which will be used for rendering
+        /// </summary>
+        /// <param name="projection"></param>
+        public void updateProjection(Matrix projection)
+        {
+            this.projection = projection;
+        }
+
 
     }
 }

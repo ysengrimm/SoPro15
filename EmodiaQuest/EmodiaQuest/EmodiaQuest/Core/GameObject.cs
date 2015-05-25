@@ -17,9 +17,8 @@ namespace EmodiaQuest.Core
     {
         public Vector3 position;
         public Vector3 rotation;
-        public float scale;
+        //public float scale; Don´t let us scale GameObject in the game
         public Model model;
-        public Matrix projektion, view;
 
         /// <summary>
         /// Creates a new map from a pixelmap
@@ -32,7 +31,7 @@ namespace EmodiaQuest.Core
             this.position = position;
         }
 
-        /*
+        
         /// <summary>
         /// Creates a new map from a pixelmap
         /// <param name="projektion">A projektion-matrix.</param>
@@ -40,25 +39,20 @@ namespace EmodiaQuest.Core
         /// <param name="rotation">Rotation vector.</param>
         /// <param name="scale">Used for scaling the object.</param>
         /// </summary>
-        public void Draw(Matrix projektion, Matrix view, Vector3 rotation, float scale)
+        public void drawGameobject(Matrix world, Matrix view, Matrix projection)
         {
-            this.projektion = projektion;
-            this.view = view;
-            this.rotation = rotation;
-            this.scale = scale;
-
             foreach (ModelMesh mesh in model.Meshes)
             {
-                foreach (BasicEffect effects in mesh.Effects)
+                foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effects.View = view;
-                    effects.Projection = projektion;
-                    effects.EnableDefaultLighting();
-                    effects.World = Matrix.CreateScale(scale) * Matrix.CreateFromYawPitchRoll(rotation.X, rotation.Y, rotation.Z) * Matrix.CreateTranslation(position);
+                    effect.EnableDefaultLighting();
+                    effect.World = Matrix.CreateTranslation(position);
+                    effect.View = view;
+                    effect.Projection = projection;
                 }
                 mesh.Draw();
             }
         }
-        */
+        
     }
 }

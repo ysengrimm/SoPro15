@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class CollisionHandler
+    public class CollisionHandler
     {
         // TODO: Implement collision with
         /* Walls and stuff (movement restriction)

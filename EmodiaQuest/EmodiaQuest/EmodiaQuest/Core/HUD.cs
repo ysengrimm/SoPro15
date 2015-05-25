@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-    class HUD
+    public class HUD
     {
         // TODO: Implement everything of the HUD
         /*

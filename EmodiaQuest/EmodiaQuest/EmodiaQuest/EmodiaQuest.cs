@@ -21,6 +21,7 @@ namespace EmodiaQuest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Renderer rendering;
+        SafeWorld safeWorld;
 
         public EmodiaQuest()
         {
@@ -40,6 +41,8 @@ namespace EmodiaQuest
 
             // Initialize the Renderer
             rendering = new Rendering.Renderer();
+            safeWorld = new SafeWorld(Content);
+            
             base.Initialize();
         }
 
@@ -51,7 +54,7 @@ namespace EmodiaQuest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -74,9 +77,13 @@ namespace EmodiaQuest
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
+            /*
+            rendering.updateWorld();
+            rendering.updateView();
+            rendering.updateProjection();
+             */
             // TODO: Add your update logic here
-
+            
             base.Update(gameTime);
         }
 
@@ -89,7 +96,7 @@ namespace EmodiaQuest
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            rendering.drawSafeWorld(safeWorld);
             base.Draw(gameTime);
         }
     }
