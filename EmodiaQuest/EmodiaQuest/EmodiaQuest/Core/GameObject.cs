@@ -34,10 +34,9 @@ namespace EmodiaQuest.Core
         
         /// <summary>
         /// Creates a new map from a pixelmap
+        /// <param name="world">World matrix for multiplying other functions.</param>
         /// <param name="projektion">A projektion-matrix.</param>
         /// <param name="view">A view-matrix.</param>
-        /// <param name="rotation">Rotation vector.</param>
-        /// <param name="scale">Used for scaling the object.</param>
         /// </summary>
         public void drawGameobject(Matrix world, Matrix view, Matrix projection)
         {
@@ -46,7 +45,7 @@ namespace EmodiaQuest.Core
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateTranslation(position);
+                    effect.World = Matrix.CreateTranslation(position) * world;
                     effect.View = view;
                     effect.Projection = projection;
                 }
