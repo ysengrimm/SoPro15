@@ -42,7 +42,6 @@ namespace EmodiaQuest
             // Initialize the Renderer
             rendering = new Rendering.Renderer();
             safeWorld = new SafeWorld(Content);
-            safeWorld.initialise();
             
             base.Initialize();
         }

@@ -23,7 +23,14 @@ namespace EmodiaQuest.Core
 
         public List<GameObject> ground, wall, items, accessoires, buildings;
 
-        public EnvironmentController() { }
+        public EnvironmentController() 
+        { 
+            ground = new List<GameObject>();
+            wall = new List<GameObject>();
+            items = new List<GameObject>();
+            accessoires = new List<GameObject>();
+            buildings = new List<GameObject>();
+        }
 
         /// <summary>
         /// Creates a new map from a pixelmap

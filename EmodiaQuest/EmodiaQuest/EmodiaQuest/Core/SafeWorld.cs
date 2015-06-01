@@ -22,6 +22,7 @@ namespace EmodiaQuest.Core
         public EnvironmentController controller;
         public Texture2D map;
         public ContentManager content;
+        public Model testCube;
 
         public SafeWorld(ContentManager content)
         {
@@ -32,17 +33,18 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Method for initialising Models and so on in SafeWorld
         /// </summary>
-        public override void initialise()
-        {
-            controller.createMap(map);
-        }
+        public override void initialise(){}
 
         /// <summary>
         /// Method for loading relevant content fpr SafeWorld
         /// </summary>
         public override void loadContent()
         {
-            map = content.Load<Texture2D>("safeWorldMap");
+            map = content.Load<Texture2D>("maps/safeWorldMap");
+            controller.createMap(map);
+
+            testCube = content.Load<Model>("testCube");
+            controller.insertObj(controller.wall, testCube, Color.Black, 0);
         }
 
         /// <summary>
