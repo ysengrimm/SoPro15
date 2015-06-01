@@ -42,6 +42,7 @@ namespace EmodiaQuest
             // Initialize the Renderer
             rendering = new Rendering.Renderer();
             safeWorld = new SafeWorld(Content);
+            safeWorld.initialise();
             
             base.Initialize();
         }
@@ -56,6 +57,7 @@ namespace EmodiaQuest
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
             // TODO: use this.Content to load your game content here
+            safeWorld.loadContent();
         }
 
         /// <summary>
