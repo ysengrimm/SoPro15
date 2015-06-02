@@ -49,7 +49,9 @@ namespace EmodiaQuest.Rendering
 
         public void drawSafeWorld(SafeWorld safeWorld)
         {
-           // safeWorld.drawGameScreen(world, view, projection);
+            safeWorld.drawGameScreen(world, view, projection);
+
+            
         }
 
         /// <summary>

@@ -23,6 +23,26 @@ namespace EmodiaQuest
         Renderer rendering;
         SafeWorld safeWorld;
 
+        /// <summary>
+        /// Stores the world matrix for the model, which transforms the 
+        /// model to be in the correct position, scale, and rotation
+        /// in the game world.
+        /// </summary>
+        private Matrix world;
+
+        /// <summary>
+        /// Stores the view matrix for the model, which gets the model
+        /// in the right place, relative to the camera.
+        /// </summary>
+        private Matrix view;
+
+        /// <summary>
+        /// Stores the projection matrix, which gets the model projected
+        /// onto the screen in the correct way.  Essentially, this defines the
+        /// properties of the camera you are using.
+        /// </summary>
+        private Matrix projection;
+
         public EmodiaQuest()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -39,8 +59,13 @@ namespace EmodiaQuest
         {
             // TODO: Add your initialization logic here
 
+            //Initialize the Matrizes
+            world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            view = Matrix.CreateLookAt(new Vector3(0, 0, 120), new Vector3(0, 0, 0), Vector3.UnitY);
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
+
             // Initialize the Renderer
-            rendering = new Rendering.Renderer();
+            rendering = new Rendering.Renderer(world, view, projection);
             safeWorld = new SafeWorld(Content);
             
             base.Initialize();
@@ -78,11 +103,11 @@ namespace EmodiaQuest
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            /*
-            rendering.updateWorld();
-            rendering.updateView();
-            rendering.updateProjection();
-             */
+            
+            rendering.updateWorld(world);
+            rendering.updateView(view);
+            rendering.updateProjection(projection);
+            
             // TODO: Add your update logic here
             
             base.Update(gameTime);

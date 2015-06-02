@@ -57,16 +57,16 @@ namespace EmodiaQuest.Core
         /// <param name="projection">the projection Matrix, which will be used for the rendering</param>
         public override void drawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
-            drawenvironment(world, view, projection);
+            drawEnvironment(world, view, projection);
             //drawNPCs();
             //drawHUD();
             //drawPlayer();
             
         }
 
-        private void drawenvironment(Matrix world, Matrix view, Matrix projection)
+        private void drawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
-            enviromentController.drawEnvironment(world, view, projection);
+            controller.drawEnvironment(world, view, projection);
         }
     }
 }
