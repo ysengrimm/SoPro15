@@ -15,6 +15,21 @@ namespace EmodiaQuest.Rendering
 {
     public class Renderer : Microsoft.Xna.Framework.Game
     {
+        private static Renderer instance;
+
+        private Renderer() { }
+
+        public static Renderer Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Renderer();
+                }
+                return instance;
+            }
+        }
         //TODO: renders everthing of the game -> calling the draw methods of:
         /* 1. Backgroundtexture
          * 2. Static Environment
@@ -30,23 +45,22 @@ namespace EmodiaQuest.Rendering
          * 6. Buttons and other UI Elements in CameraSpace
          */
 
-        //Constructor
         Matrix world, view, projection;
-
-        public Renderer() { }
         /// <summary>
         /// constructor with the required Matrices given at the beginning
         /// </summary>
         /// <param name="world">the world matrix, which will be used for rendering</param>
         /// <param name="view">the view matrix, which will be used for rendering</param>
         /// <param name="projection">the projection matrix, which will be used for rendering</param>
+        /// 
+        /*
         public Renderer(Matrix world, Matrix view, Matrix projection)
         {
             this.world = world;
             this.view = view;
             this.projection = projection;
         }
-
+        */
         public void drawSafeWorld(SafeWorld safeWorld)
         {
             safeWorld.drawGameScreen(world, view, projection);

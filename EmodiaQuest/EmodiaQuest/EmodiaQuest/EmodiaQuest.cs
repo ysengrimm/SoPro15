@@ -20,7 +20,7 @@ namespace EmodiaQuest
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Renderer rendering;
+        Renderer rendering = Renderer.Instance;
         SafeWorld safeWorld;
 
         /// <summary>
@@ -57,17 +57,7 @@ namespace EmodiaQuest
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
-            //Initialize the Matrizes
-            world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            view = Matrix.CreateLookAt(new Vector3(0, 80, 0), new Vector3(40, 0, 40), Vector3.UnitY);
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
-
-            // Initialize the Renderer
-            rendering = new Rendering.Renderer(world, view, projection);
-            safeWorld = new SafeWorld(Content);
-            
+            // TODO: Don´t use this method, we are using the LoadContent for everytrhing, which is called once at the beginning of the game.   
             base.Initialize();
         }
 
@@ -81,7 +71,18 @@ namespace EmodiaQuest
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
             // TODO: use this.Content to load your game content here
+            safeWorld = new SafeWorld(Content);
             safeWorld.loadContent();
+
+            //Initialize the matrizes with reasonable values
+            world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            view = Matrix.CreateLookAt(new Vector3(0, 80, 0), new Vector3(40, 0, 40), Vector3.UnitY);
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
+            //initialize the rendering with the matrizes
+            rendering.updateProjection(projection);
+            rendering.updateWorld(world);
+            rendering.updateView(view);
+            
         }
 
         /// <summary>
