@@ -107,6 +107,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\GUI\Button_GUI.cs" />
+    <Compile Include="Core\GUI\Controls_GUI.cs" />
+    <Compile Include="Core\GUI\Enums_GUI.cs" />
+    <Compile Include="Core\GUI\Platform.cs" />
+    <Compile Include="Core\GUI\Screens\Menu_GUI.cs" />
     <Compile Include="Core\NPCs\Ai.cs" />
     <Compile Include="Core\NPCs\Animal.cs" />
     <Compile Include="Core\CollisionHandler.cs" />
@@ -129,6 +134,7 @@
     <Compile Include="Core\Screens\Screen.cs" />
     <Compile Include="Core\Storycontroller.cs" />
     <Compile Include="Core\Screens\VideoScreen.cs" />
+    <Compile Include="Enums_Overall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Programm.cs" />
     <Compile Include="EmodiaQuest.cs" />
