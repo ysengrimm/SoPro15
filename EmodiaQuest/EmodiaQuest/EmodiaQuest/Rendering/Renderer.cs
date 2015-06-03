@@ -46,26 +46,14 @@ namespace EmodiaQuest.Rendering
          */
 
         Matrix world, view, projection;
+
         /// <summary>
-        /// constructor with the required Matrices given at the beginning
+        /// draws ever object, which is listed in the Safeworld
         /// </summary>
-        /// <param name="world">the world matrix, which will be used for rendering</param>
-        /// <param name="view">the view matrix, which will be used for rendering</param>
-        /// <param name="projection">the projection matrix, which will be used for rendering</param>
-        /// 
-        /*
-        public Renderer(Matrix world, Matrix view, Matrix projection)
-        {
-            this.world = world;
-            this.view = view;
-            this.projection = projection;
-        }
-        */
+        /// <param name="safeWorld"></param>
         public void drawSafeWorld(SafeWorld safeWorld)
         {
-            safeWorld.drawGameScreen(world, view, projection);
-
-            
+            safeWorld.drawGameScreen(world, view, projection);          
         }
 
         /// <summary>
