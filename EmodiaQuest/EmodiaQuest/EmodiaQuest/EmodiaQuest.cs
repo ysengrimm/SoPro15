@@ -16,7 +16,7 @@ namespace EmodiaQuest
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class EmodiaQuest : Microsoft.Xna.Framework.Game
+    public class EmodiaQuest_Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -43,7 +43,7 @@ namespace EmodiaQuest
         /// </summary>
         private Matrix projection;
 
-        public EmodiaQuest()
+        public EmodiaQuest_Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

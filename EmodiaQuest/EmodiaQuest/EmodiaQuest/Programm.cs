@@ -10,7 +10,7 @@ namespace EmodiaQuest
         /// </summary>
         static void Main(string[] args)
         {
-            using (EmodiaQuest game = new EmodiaQuest())
+            using (EmodiaQuest_Game game = new EmodiaQuest_Game())
             {
                 game.Run();
             }

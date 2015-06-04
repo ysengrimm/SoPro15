@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace EmodiaQuest.Core.GUI
 {
@@ -14,6 +16,10 @@ namespace EmodiaQuest.Core.GUI
         public string Name { get; set; }
         public int Score { get; set; }
 
+        private static Texture2D button_n;
+        private static Texture2D button_m;
+        private static Texture2D button_p;
+
         private ButtonState_GUI button_State = ButtonState_GUI.Normal;
 
         public Button_GUI(int xPos, int yPos, int width, int height, string name)
@@ -23,6 +29,13 @@ namespace EmodiaQuest.Core.GUI
             this.Width = width;
             this.Height = height;
             this.Name = name;
+        }
+
+        public static void loadContent(ContentManager Content)
+        {
+            button_n = Content.Load<Texture2D>("button_normal");
+            button_m = Content.Load<Texture2D>("button_mouseOver");
+            button_p = Content.Load<Texture2D>("button_pressed");
         }
 
         public static bool isInside(int mouse_xPos, int mouse_yPos, int button_xPos, int button_yPos, int button_width, int button_height)

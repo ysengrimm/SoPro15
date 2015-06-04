@@ -23,9 +23,11 @@ namespace EmodiaQuest.Core.GUI
 
         public void loadContent(ContentManager Content)
         {
+
             button_n = Content.Load<Texture2D>("button_normal");
             button_m = Content.Load<Texture2D>("button_mouseOver");
             button_p = Content.Load<Texture2D>("button_pressed");
+            //Button_GUI.loadContent(Content);
 
             background = Content.Load<Texture2D>("white_Pixel");
 
@@ -36,7 +38,7 @@ namespace EmodiaQuest.Core.GUI
             this.background = Content.Load<Texture2D>(name);
         }
 
-        
+
 
         public void update()
         {
