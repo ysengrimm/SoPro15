@@ -23,6 +23,9 @@ namespace EmodiaQuest
         Renderer rendering = Renderer.Instance;
         SafeWorld safeWorld;
 
+        // TODO: This is not pretty ...
+        private Player player;
+
         /// <summary>
         /// Stores the world matrix for the model, which transforms the 
         /// model to be in the correct position, scale, and rotation
@@ -83,6 +86,8 @@ namespace EmodiaQuest
             rendering.updateWorld(world);
             rendering.updateView(view);
             
+            player = new Player(new Vector2(40, 40));
+            player.Model = Content.Load<Model>("mainchar_sopro_badsculp_badcolored");
         }
 
         /// <summary>
@@ -110,6 +115,8 @@ namespace EmodiaQuest
             rendering.updateProjection(projection);
             
             // TODO: Add your update logic here
+
+            player.Update(gameTime);
             
             base.Update(gameTime);
         }
@@ -124,6 +131,7 @@ namespace EmodiaQuest
 
             // TODO: Add your drawing code here
             rendering.drawSafeWorld(safeWorld);
+            player.Draw(rendering.world, rendering.view, rendering.projection);
             base.Draw(gameTime);
         }
     }

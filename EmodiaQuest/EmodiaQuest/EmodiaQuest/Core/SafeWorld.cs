@@ -60,7 +60,7 @@ namespace EmodiaQuest.Core
             drawEnvironment(world, view, projection);
             //drawNPCs();
             //drawHUD();
-            //drawPlayer();
+            //drawPlayer(); <--- nope is in EmodiaQuest.cs
             
         }
 

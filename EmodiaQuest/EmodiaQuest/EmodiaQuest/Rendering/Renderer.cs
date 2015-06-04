@@ -45,7 +45,7 @@ namespace EmodiaQuest.Rendering
          * 6. Buttons and other UI Elements in CameraSpace
          */
 
-        Matrix world, view, projection;
+        public Matrix world, view, projection; // TODO: better solution for player rendering
 
         /// <summary>
         /// draws ever object, which is listed in the Safeworld
