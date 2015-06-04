@@ -110,7 +110,7 @@
     <Compile Include="Core\GUI\Button_GUI.cs" />
     <Compile Include="Core\GUI\Controls_GUI.cs" />
     <Compile Include="Core\GUI\Enums_GUI.cs" />
-    <Compile Include="Core\GUI\Platform.cs" />
+    <Compile Include="Core\GUI\Platform_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Menu_GUI.cs" />
     <Compile Include="Core\NPCs\Ai.cs" />
     <Compile Include="Core\NPCs\Animal.cs" />

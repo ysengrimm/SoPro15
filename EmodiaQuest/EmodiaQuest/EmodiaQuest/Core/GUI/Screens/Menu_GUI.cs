@@ -27,7 +27,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             }
         }
 
-        private Platform platform = new Platform();
+        private Platform_GUI platform = new Platform_GUI();
 
         public void loadContent(ContentManager Content)
         {

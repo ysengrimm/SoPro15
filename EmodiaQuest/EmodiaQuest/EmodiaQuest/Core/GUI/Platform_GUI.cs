@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace EmodiaQuest.Core.GUI
 {
-    public class Platform
+    public class Platform_GUI
     {
         public SpriteBatch menuSpritebatch;
         private List<Button_GUI> buttons = new List<Button_GUI>();
@@ -26,9 +26,17 @@ namespace EmodiaQuest.Core.GUI
             button_n = Content.Load<Texture2D>("button_normal");
             button_m = Content.Load<Texture2D>("button_mouseOver");
             button_p = Content.Load<Texture2D>("button_pressed");
+
             background = Content.Load<Texture2D>("white_Pixel");
 
         }
+
+        public void setBackground(ContentManager Content, string name)
+        {
+            this.background = Content.Load<Texture2D>(name);
+        }
+
+        
 
         public void update()
         {
