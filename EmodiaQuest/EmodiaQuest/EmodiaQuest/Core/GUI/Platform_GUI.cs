@@ -29,7 +29,7 @@ namespace EmodiaQuest.Core.GUI
             button_p = Content.Load<Texture2D>("button_pressed");
             //Button_GUI.loadContent(Content);
 
-            background = Content.Load<Texture2D>("white_Pixel");
+            //background = Content.Load<Texture2D>("white_Pixel");
 
         }
 
