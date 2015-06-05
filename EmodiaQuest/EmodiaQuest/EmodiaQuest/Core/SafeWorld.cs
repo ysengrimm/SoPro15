@@ -43,7 +43,7 @@ namespace EmodiaQuest.Core
             map = content.Load<Texture2D>("maps/safeWorldMap");
             controller.createMap(map);
 
-            testCube = content.Load<Model>("testCube");
+            testCube = content.Load<Model>("fbxContent/testCube");
             controller.insertObj(controller.wall, testCube, Color.Black, 0);
         }
 
