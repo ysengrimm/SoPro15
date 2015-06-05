@@ -79,7 +79,7 @@ namespace EmodiaQuest
 
             //Initialize the matrizes with reasonable values
             world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            view = Matrix.CreateLookAt(new Vector3(0, 80, 0), new Vector3(40, 0, 40), Vector3.UnitY);
+            view = Matrix.CreateLookAt(new Vector3(30, 80, 30), new Vector3(40, 0, 40), Vector3.UnitY);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
             //initialize the rendering with the matrizes
             rendering.updateProjection(projection);
