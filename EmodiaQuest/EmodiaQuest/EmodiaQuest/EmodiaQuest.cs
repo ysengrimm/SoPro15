@@ -109,7 +109,12 @@ namespace EmodiaQuest
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            
+
+            //Close Game with Escape
+            KeyboardState kState = Keyboard.GetState();
+            if (kState.IsKeyDown(Keys.Escape))
+                this.Exit();
+
             rendering.updateWorld(world);
             rendering.updateView(view);
             rendering.updateProjection(projection);
