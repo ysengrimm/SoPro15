@@ -11,24 +11,27 @@ namespace EmodiaQuest.Core.GUI
 {
     public class Platform_GUI
     {
-        public SpriteBatch menuSpritebatch;
         private List<Button_GUI> buttons = new List<Button_GUI>();
         private MouseState mouseHandle;
         private MouseState mouseHandle_Old;
         private string pushed_name = null;
+
+        // Button Textures
         private Texture2D button_n;
         private Texture2D button_m;
         private Texture2D button_p;
+
+        // Background Textures
         private Texture2D background;
 
         public void loadContent(ContentManager Content)
         {
-
+            // Button Content
             button_n = Content.Load<Texture2D>("button_normal");
             button_m = Content.Load<Texture2D>("button_mouseOver");
             button_p = Content.Load<Texture2D>("button_pressed");
-            //Button_GUI.loadContent(Content);
 
+            // Background Content
             //background = Content.Load<Texture2D>("white_Pixel");
 
         }
@@ -83,7 +86,7 @@ namespace EmodiaQuest.Core.GUI
         public void draw(SpriteBatch spritebatch)
         {
             spritebatch.Begin();
-            spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
+            //spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
 
             foreach (Button_GUI bb in buttons)
             {

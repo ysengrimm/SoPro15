@@ -107,7 +107,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\GUI\Background_GUI.cs" />
     <Compile Include="Core\GUI\Button_GUI.cs" />
     <Compile Include="Core\GUI\Controls_GUI.cs" />
     <Compile Include="Core\GUI\Enums_GUI.cs" />

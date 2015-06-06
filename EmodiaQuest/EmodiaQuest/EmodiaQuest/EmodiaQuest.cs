@@ -83,6 +83,7 @@ namespace EmodiaQuest
             rendering.updateWorld(world);
             rendering.updateView(view);
             
+            
         }
 
         /// <summary>
@@ -108,6 +109,7 @@ namespace EmodiaQuest
             rendering.updateWorld(world);
             rendering.updateView(view);
             rendering.updateProjection(projection);
+
             
             // TODO: Add your update logic here
             
@@ -124,6 +126,7 @@ namespace EmodiaQuest
 
             // TODO: Add your drawing code here
             rendering.drawSafeWorld(safeWorld);
+
             base.Draw(gameTime);
         }
     }
