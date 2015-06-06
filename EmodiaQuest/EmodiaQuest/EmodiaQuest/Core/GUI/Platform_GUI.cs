@@ -27,12 +27,12 @@ namespace EmodiaQuest.Core.GUI
         public void loadContent(ContentManager Content)
         {
             // Button Content
-            button_n = Content.Load<Texture2D>("button_normal");
-            button_m = Content.Load<Texture2D>("button_mouseOver");
-            button_p = Content.Load<Texture2D>("button_pressed");
+            button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
+            button_m = Content.Load<Texture2D>("Content_GUI/button_mouseOver");
+            button_p = Content.Load<Texture2D>("Content_GUI/button_pressed");
 
             // Background Content
-            //background = Content.Load<Texture2D>("white_Pixel");
+            background = Content.Load<Texture2D>("Content_GUI/pixel_white");
 
         }
 
@@ -86,7 +86,7 @@ namespace EmodiaQuest.Core.GUI
         public void draw(SpriteBatch spritebatch)
         {
             spritebatch.Begin();
-            //spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
+            spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
 
             foreach (Button_GUI bb in buttons)
             {

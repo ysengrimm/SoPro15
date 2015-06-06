@@ -88,6 +88,7 @@ namespace EmodiaQuest
             
             player = new Player(new Vector2(40, 40));
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
+
         }
 
         /// <summary>
@@ -122,6 +123,7 @@ namespace EmodiaQuest
             // TODO: Add your update logic here
 
             player.Update(gameTime);
+            
             
             base.Update(gameTime);
         }

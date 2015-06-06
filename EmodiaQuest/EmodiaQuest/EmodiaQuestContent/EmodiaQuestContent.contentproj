@@ -49,21 +49,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="button_normal.png">
+    <Compile Include="Content_GUI\button_normal.png">
       <Name>button_normal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="button_pressed.png">
+    <Compile Include="Content_GUI\button_pressed.png">
       <Name>button_pressed</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="button_mouseOver.png">
+    <Compile Include="Content_GUI\button_mouseOver.png">
       <Name>button_mouseOver</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -86,6 +86,13 @@
       <Name>testCube</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Content_GUI\pixel_white.png">
+      <Name>pixel_white</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
