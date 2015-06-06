@@ -49,13 +49,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="testCube.fbx">
-      <Name>testCube</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="button_normal.png">
       <Name>button_normal</Name>
       <Importer>TextureImporter</Importer>
@@ -74,6 +67,25 @@
       <Name>button_mouseOver</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\mainchar_sopro_badsculp_badcolored.fbx">
+      <Name>mainchar_sopro_badsculp_badcolored</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\mainchar_sopro_sculp3sub_colored.fbx">
+      <Name>mainchar_sopro_sculp3sub_colored</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\testCube.fbx">
+      <Name>testCube</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

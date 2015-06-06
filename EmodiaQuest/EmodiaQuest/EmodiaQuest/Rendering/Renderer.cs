@@ -45,13 +45,13 @@ namespace EmodiaQuest.Rendering
          * 6. Buttons and other UI Elements in CameraSpace
          */
 
-        Matrix world, view, projection;
+        public Matrix world, view, projection; // TODO: better solution for player rendering
 
         /// <summary>
         /// draws ever object, which is listed in the Safeworld
         /// </summary>
         /// <param name="safeWorld"></param>
-        public void drawSafeWorld(SafeWorld safeWorld)
+        public void DrawSafeWorld(SafeWorld safeWorld)
         {
             safeWorld.drawGameScreen(world, view, projection);          
         }
@@ -60,7 +60,7 @@ namespace EmodiaQuest.Rendering
         /// Updates the world matrix, which will be used for rendering
         /// </summary>
         /// <param name="world"></param>
-        public void updateWorld(Matrix world)
+        public void UpdateWorld(Matrix world)
         {
             this.world = world;
         }
@@ -68,7 +68,7 @@ namespace EmodiaQuest.Rendering
         /// Updates the view matrix, which will be used for rendering
         /// </summary>
         /// <param name="view"></param>
-        public void updateView(Matrix view)
+        public void UpdateView(Matrix view)
         {
             this.view = view;
         }
@@ -76,7 +76,7 @@ namespace EmodiaQuest.Rendering
         /// Updates the projection matrix, which will be used for rendering
         /// </summary>
         /// <param name="projection"></param>
-        public void updateProjection(Matrix projection)
+        public void UpdateProjection(Matrix projection)
         {
             this.projection = projection;
         }

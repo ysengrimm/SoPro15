@@ -23,6 +23,9 @@ namespace EmodiaQuest
         Renderer rendering = Renderer.Instance;
         SafeWorld safeWorld;
 
+        // TODO: This is not pretty ...
+        private Player player;
+
         /// <summary>
         /// Stores the world matrix for the model, which transforms the 
         /// model to be in the correct position, scale, and rotation
@@ -76,14 +79,15 @@ namespace EmodiaQuest
 
             //Initialize the matrizes with reasonable values
             world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            view = Matrix.CreateLookAt(new Vector3(0, 80, 0), new Vector3(40, 0, 40), Vector3.UnitY);
+            view = Matrix.CreateLookAt(new Vector3(30, 85, 30), new Vector3(40, 0, 40), Vector3.UnitY);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
             //initialize the rendering with the matrizes
-            rendering.updateProjection(projection);
-            rendering.updateWorld(world);
-            rendering.updateView(view);
+            rendering.UpdateProjection(projection);
+            rendering.UpdateWorld(world);
+            rendering.UpdateView(view);
             
-            
+            player = new Player(new Vector2(40, 40));
+            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
         }
 
         /// <summary>
@@ -105,13 +109,19 @@ namespace EmodiaQuest
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            
-            rendering.updateWorld(world);
-            rendering.updateView(view);
-            rendering.updateProjection(projection);
 
+            //Close Game with Escape
+            KeyboardState kState = Keyboard.GetState();
+            if (kState.IsKeyDown(Keys.Escape))
+                this.Exit();
+
+            rendering.UpdateWorld(world);
+            rendering.UpdateView(view);
+            rendering.UpdateProjection(projection);
             
             // TODO: Add your update logic here
+
+            player.Update(gameTime);
             
             base.Update(gameTime);
         }
@@ -125,8 +135,8 @@ namespace EmodiaQuest
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            rendering.drawSafeWorld(safeWorld);
-
+            rendering.DrawSafeWorld(safeWorld);
+            player.Draw(rendering.world, rendering.view, rendering.projection);
             base.Draw(gameTime);
         }
     }
