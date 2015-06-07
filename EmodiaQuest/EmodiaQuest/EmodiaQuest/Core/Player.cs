@@ -19,11 +19,13 @@ namespace EmodiaQuest.Core
         public float Hp;
         public float Armor;
 
-        public float PlayerSpeed = 1;
+        public float PlayerSpeed = 1f;
 
-        public Vector2 Position;
+        public Vector2 position;
 
         private Model playerModel;
+
+        private CollisionHandler collisionHandler;
 
         public Model Model
         {
@@ -34,10 +36,11 @@ namespace EmodiaQuest.Core
         /// The Player, nothing new.
         /// </summary>
         /// <param name="position">Initial player position.</param>
-        public Player(Vector2 position)
+        /// <param name="collisionHandler">Current collision handler</param>
+        public Player(Vector2 position, CollisionHandler collisionHandler)
         {
-            Position = position;
-
+            this.position = position;
+            this.collisionHandler = collisionHandler;
             // set defaults
             Hp = 100;
             Armor = 0;
@@ -52,22 +55,26 @@ namespace EmodiaQuest.Core
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                Position.Y -= PlayerSpeed;
+                if (!collisionHandler.getWallCollision(new Vector2(position.X, position.Y - PlayerSpeed)))
+                position.Y -= PlayerSpeed;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                Position.Y += PlayerSpeed;
+                if (!collisionHandler.getWallCollision(new Vector2(position.X, position.Y + PlayerSpeed)))
+                position.Y += PlayerSpeed;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                Position.X -= PlayerSpeed;
+                if (!collisionHandler.getWallCollision(new Vector2(position.X - PlayerSpeed, position.Y)))
+                position.X -= PlayerSpeed;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                Position.X += PlayerSpeed;
+                if (!collisionHandler.getWallCollision(new Vector2(position.X + PlayerSpeed, position.Y)))
+                position.X += PlayerSpeed;
             }
-
-            //Console.WriteLine(Position);
+            
+            //Console.WriteLine(position);
         }
 
 
@@ -78,7 +85,7 @@ namespace EmodiaQuest.Core
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+                    effect.World = Matrix.CreateTranslation(new Vector3(position.X, 0, position.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
                 }

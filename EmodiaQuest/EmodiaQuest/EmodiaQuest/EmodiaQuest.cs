@@ -22,6 +22,7 @@ namespace EmodiaQuest
         SpriteBatch spriteBatch;
         Renderer rendering = Renderer.Instance;
         SafeWorld safeWorld;
+        CollisionHandler collisionHandler;
 
         // TODO: This is not pretty ...
         private Player player;
@@ -85,8 +86,10 @@ namespace EmodiaQuest
             rendering.UpdateProjection(projection);
             rendering.UpdateWorld(world);
             rendering.UpdateView(view);
-            
-            player = new Player(new Vector2(40, 40));
+
+            collisionHandler = new CollisionHandler(safeWorld.controller);
+
+            player = new Player(new Vector2(40, 40), collisionHandler);
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
 
         }
