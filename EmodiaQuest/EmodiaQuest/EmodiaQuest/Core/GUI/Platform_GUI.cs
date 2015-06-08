@@ -15,6 +15,10 @@ namespace EmodiaQuest.Core.GUI
         private MouseState mouseHandle;
         private MouseState mouseHandle_Old;
         private string pushed_name = null;
+        private string functionCalled = null;
+
+        //private short alphaValue = 255;
+        public Color drawColor = Color.White;
 
         // Button Textures
         private Texture2D button_n;
@@ -34,6 +38,8 @@ namespace EmodiaQuest.Core.GUI
             // Background Content
             background = Content.Load<Texture2D>("Content_GUI/pixel_white");
 
+
+            
         }
 
         public void setBackground(ContentManager Content, string name)
@@ -43,8 +49,9 @@ namespace EmodiaQuest.Core.GUI
 
 
 
-        public void update()
+        public string update()
         {
+            functionCalled = null;
             mouseHandle = Controls_GUI.Instance.Mouse_GUI;
 
             foreach (Button_GUI bb in buttons)
@@ -55,22 +62,22 @@ namespace EmodiaQuest.Core.GUI
                     if (mouseHandle.LeftButton == ButtonState.Pressed)
                     {
 
-                        if (pushed_name == bb.Name)
+                        if (pushed_name == bb.Function)
                         {
                             bb.Button_State = ButtonState_GUI.Pressed;
                         }
                         if (mouseHandle_Old.LeftButton == ButtonState.Released)
                         {
-                            pushed_name = bb.Name;
+                            pushed_name = bb.Function;
                         }
 
                     }
                     else
                         bb.Button_State = ButtonState_GUI.MouseOver;
 
-                    if (mouseHandle.LeftButton == ButtonState.Pressed && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name == bb.Name)
+                    if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name == bb.Function)
                     {
-                        //button.click
+                        this.functionCalled = bb.onClick();
                     }
 
 
@@ -81,21 +88,28 @@ namespace EmodiaQuest.Core.GUI
 
             }
             mouseHandle_Old = mouseHandle;
+            return this.functionCalled;
         }
 
         public void draw(SpriteBatch spritebatch)
         {
             spritebatch.Begin();
-            spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
+
+            // Beware: Hardcoded values...
+            //spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
+            spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), drawColor);
 
             foreach (Button_GUI bb in buttons)
             {
-                if (bb.Button_State == ButtonState_GUI.Normal)
-                    spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), Color.White);
-                else if (bb.Button_State == ButtonState_GUI.MouseOver)
-                    spritebatch.Draw(button_m, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), Color.White);
-                else if (bb.Button_State == ButtonState_GUI.Pressed)
-                    spritebatch.Draw(button_p, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), Color.White);
+                if(bb.isVisible)
+                {
+                    if (bb.Button_State == ButtonState_GUI.Normal)
+                        spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                    else if (bb.Button_State == ButtonState_GUI.MouseOver)
+                        spritebatch.Draw(button_m, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                    else if (bb.Button_State == ButtonState_GUI.Pressed)
+                        spritebatch.Draw(button_p, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                }
             }
             spritebatch.End();
         }
@@ -104,6 +118,18 @@ namespace EmodiaQuest.Core.GUI
         {
             buttons.Add(new Button_GUI(xPos, yPos, width, height, name));
         }
+        public void addButton(int xPos, int yPos, int width, int height, string name, bool isVisible)
+        {
+            buttons.Add(new Button_GUI(xPos, yPos, width, height, name, isVisible));
+        }
+
+        // This doesn't actually lighten anything up. It just pumps the alpha to the max
+        public void lightenUp()
+        {
+            if (drawColor.A < 254)
+                drawColor.A++;
+        }
+
 
 
     }
