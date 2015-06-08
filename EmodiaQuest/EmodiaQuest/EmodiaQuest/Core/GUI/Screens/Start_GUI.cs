@@ -9,19 +9,19 @@ using Microsoft.Xna.Framework;
 
 namespace EmodiaQuest.Core.GUI.Screens
 {
-    class Menu_GUI
+    class Start_GUI
     {
-        private static Menu_GUI instance;
+        private static Start_GUI instance;
 
-        private Menu_GUI() { }
+        private Start_GUI() { }
 
-        public static Menu_GUI Instance
+        public static Start_GUI Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new Menu_GUI();
+                    instance = new Start_GUI();
                 }
                 return instance;
             }
@@ -35,19 +35,21 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             this.platform.loadContent(Content);
 
-            // Beware: Hardcoded values...
-            this.platform.addButton(20, 20, 80, 20, "nextState");
-            this.platform.addButton(20, 50, 80, 20, "quit");
+            this.platform.setBackground(Content, "Content_GUI/pixel_black");
 
-            
+            int h = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            int w = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            this.platform.addButton(0, 0, h, w, "clickToPlay", false);
 
-
+            this.platform.drawColor.A = 0;
         }
 
         public void update()
         {
             if ((this.functionCalled = this.platform.update()) != null)
                 this.functionCall();
+
+            this.platform.lightenUp();
         }
 
         public void draw(SpriteBatch spritebatch)
@@ -59,11 +61,8 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             switch (this.functionCalled)
             {
-                case "nextState":
-                    Console.WriteLine("nextState");
-                    break;
-                case "quit":
-                    Console.WriteLine("quit");
+                case "clickToPlay":
+                    Console.WriteLine("clickToPlay");
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
