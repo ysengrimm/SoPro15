@@ -20,12 +20,16 @@ namespace EmodiaQuest.Core
         public float Armor;
 
         public float PlayerSpeed = 1f;
+        public float RotationSpeed = 1.3f;
 
-        public Vector2 position;
+        public Vector2 Position;
+        public float Angle;
 
         private Model playerModel;
 
         private CollisionHandler collisionHandler;
+
+        private Vector2 windowSize;
 
         public Model Model
         {
@@ -37,13 +41,17 @@ namespace EmodiaQuest.Core
         /// </summary>
         /// <param name="position">Initial player position.</param>
         /// <param name="collisionHandler">Current collision handler</param>
-        public Player(Vector2 position, CollisionHandler collisionHandler)
+        public Player(Vector2 position, CollisionHandler collisionHandler, Vector2 winSize)
         {
-            this.position = position;
+            Position = position;
             this.collisionHandler = collisionHandler;
+            windowSize = winSize;
+            
             // set defaults
             Hp = 100;
             Armor = 0;
+
+            Angle = 0;
         }
 
         public void LoadContent()
@@ -51,30 +59,37 @@ namespace EmodiaQuest.Core
             
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, MouseState mouseState)
         {
+            //scale position to 0.0 to 1.0 then center the +/- change
+            Angle = ((mouseState.X / windowSize.X) - 0.5f) * RotationSpeed;
+            
+            
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(position.X, position.Y - PlayerSpeed)))
-                position.Y -= PlayerSpeed;
+                if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y - PlayerSpeed)))
+                    Position.Y += (PlayerSpeed + (float) Math.Cos(Angle));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(position.X, position.Y + PlayerSpeed)))
-                position.Y += PlayerSpeed;
+                if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y + PlayerSpeed)))
+                    Position.Y -= (PlayerSpeed + (float) Math.Cos(Angle));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(position.X - PlayerSpeed, position.Y)))
-                position.X -= PlayerSpeed;
+                if (!collisionHandler.getWallCollision(new Vector2(Position.X - PlayerSpeed, Position.Y)))
+                    Position.X += (PlayerSpeed + (float) Math.Sin(Angle));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(position.X + PlayerSpeed, position.Y)))
-                position.X += PlayerSpeed;
+                if (!collisionHandler.getWallCollision(new Vector2(Position.X + PlayerSpeed, Position.Y)))
+                    Position.X -= (PlayerSpeed + (float) Math.Sin(Angle));
             }
+
+            // not really necessary beacuse only vertical rotation
+            //float mousePosYNorm = mouseState.Y / windowSize.Y;
+
             
-            //Console.WriteLine(position);
         }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
@@ -84,7 +99,7 @@ namespace EmodiaQuest.Core
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateTranslation(new Vector3(position.X, 0, position.Y)) * world;
+                    effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
                 }

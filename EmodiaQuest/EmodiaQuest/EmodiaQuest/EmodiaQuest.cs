@@ -24,8 +24,10 @@ namespace EmodiaQuest
         SafeWorld safeWorld;
         CollisionHandler collisionHandler;
 
-        // TODO: This is not pretty ...
+        // TODO move to InGameScreen
         private Player player;
+
+        private Vector2 windowSize;
 
         /// <summary>
         /// Stores the world matrix for the model, which transforms the 
@@ -89,9 +91,10 @@ namespace EmodiaQuest
 
             collisionHandler = new CollisionHandler(safeWorld.controller);
 
-            player = new Player(new Vector2(40, 40), collisionHandler);
-            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
+            windowSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
 
+            player = new Player(new Vector2(45, 45), collisionHandler, windowSize);
+            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
         }
 
         /// <summary>
@@ -125,8 +128,8 @@ namespace EmodiaQuest
             
             // TODO: Add your update logic here
 
-            player.Update(gameTime);
-            
+            MouseState ms = Mouse.GetState();
+            player.Update(gameTime, ms);
             
             base.Update(gameTime);
         }
