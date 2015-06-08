@@ -52,7 +52,7 @@ namespace EmodiaQuest.Core
             Hp = 100;
             Armor = 0;
 
-            collOf = 1f;
+            collOf = 2f;
 
             Angle = 0;
 
@@ -71,23 +71,23 @@ namespace EmodiaQuest.Core
             
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y - collOf - PlayerSpeed)))
-                    Position.Y += (PlayerSpeed + (float) Math.Cos(Angle));
+                if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y + collOf + PlayerSpeed)))
+                    Position.Y += (PlayerSpeed);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y + collOf + PlayerSpeed)))
-                    Position.Y -= (PlayerSpeed + (float) Math.Cos(Angle));
+                if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y - collOf - PlayerSpeed)))
+                    Position.Y -= (PlayerSpeed);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(Position.X - collOf - PlayerSpeed, Position.Y)))
-                    Position.X += (PlayerSpeed + (float) Math.Sin(Angle));
+                if (!collisionHandler.getWallCollision(new Vector2(Position.X + collOf + PlayerSpeed, Position.Y)))
+                    Position.X += (PlayerSpeed);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(Position.X + collOf + PlayerSpeed, Position.Y)))
-                    Position.X -= (PlayerSpeed + (float) Math.Sin(Angle));
+                if (!collisionHandler.getWallCollision(new Vector2(Position.X - collOf - PlayerSpeed, Position.Y)))
+                    Position.X -= (PlayerSpeed);
             }
 
             // not really necessary beacuse only vertical rotation
