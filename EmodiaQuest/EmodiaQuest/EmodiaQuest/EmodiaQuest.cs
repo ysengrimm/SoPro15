@@ -77,10 +77,12 @@ namespace EmodiaQuest
             // TODO: use this.Content to load your game content here
             safeWorld = new SafeWorld(Content);
             safeWorld.loadContent();
-
+            // Initialize Player
+            player = new Player(new Vector2(40, 40), collisionHandler);
+            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
             //Initialize the matrizes with reasonable values
             world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            view = Matrix.CreateLookAt(new Vector3(30, 85, 30), new Vector3(40, 0, 40), Vector3.UnitY);
+            view = Matrix.CreateLookAt(new Vector3(30, 85, 30), new Vector3(player.position.X, 5, player.position.Y), Vector3.UnitY);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
             //initialize the rendering with the matrizes
             rendering.UpdateProjection(projection);
@@ -89,8 +91,7 @@ namespace EmodiaQuest
 
             collisionHandler = new CollisionHandler(safeWorld.controller);
 
-            player = new Player(new Vector2(40, 40), collisionHandler);
-            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
+            
 
         }
 

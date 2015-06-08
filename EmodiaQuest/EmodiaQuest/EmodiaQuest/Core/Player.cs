@@ -26,6 +26,7 @@ namespace EmodiaQuest.Core
         private Model playerModel;
 
         private CollisionHandler collisionHandler;
+        private float collOf; 
 
         public Model Model
         {
@@ -44,6 +45,7 @@ namespace EmodiaQuest.Core
             // set defaults
             Hp = 100;
             Armor = 0;
+            collOf = 1f;
         }
 
         public void LoadContent()
@@ -55,22 +57,22 @@ namespace EmodiaQuest.Core
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(position.X, position.Y - PlayerSpeed)))
+                if (!collisionHandler.getWallCollision(new Vector2(position.X, position.Y - collOf - PlayerSpeed)))
                 position.Y -= PlayerSpeed;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(position.X, position.Y + PlayerSpeed)))
+                if (!collisionHandler.getWallCollision(new Vector2(position.X, position.Y + collOf + PlayerSpeed)))
                 position.Y += PlayerSpeed;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(position.X - PlayerSpeed, position.Y)))
+                if (!collisionHandler.getWallCollision(new Vector2(position.X - collOf - PlayerSpeed, position.Y)))
                 position.X -= PlayerSpeed;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(position.X + PlayerSpeed, position.Y)))
+                if (!collisionHandler.getWallCollision(new Vector2(position.X + collOf + PlayerSpeed, position.Y)))
                 position.X += PlayerSpeed;
             }
             
