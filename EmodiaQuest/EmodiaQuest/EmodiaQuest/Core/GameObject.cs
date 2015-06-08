@@ -17,7 +17,6 @@ namespace EmodiaQuest.Core
     {
         public Vector3 position;
         public Vector3 rotation;
-        //public float scale; Don´t let us scale GameObject in the game
         public Model model;
 
         /// <summary>
@@ -31,7 +30,6 @@ namespace EmodiaQuest.Core
             this.position = position;
         }
 
-        
         /// <summary>
         /// Creates a new map from a pixelmap
         /// <param name="world">World matrix for multiplying other functions.</param>
@@ -52,6 +50,6 @@ namespace EmodiaQuest.Core
                 mesh.Draw();
             }
         }
-        
+
     }
 }

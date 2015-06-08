@@ -68,5 +68,6 @@ namespace EmodiaQuest.Core
         {
             controller.drawEnvironment(world, view, projection);
         }
+
     }
 }

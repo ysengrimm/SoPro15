@@ -33,7 +33,7 @@ namespace EmodiaQuest.Core
         }
 
         /// <summary>
-        /// The Player, nothing new.
+        /// Creates new instance of player.
         /// </summary>
         /// <param name="position">Initial player position.</param>
         /// <param name="collisionHandler">Current collision handler</param>
@@ -77,7 +77,6 @@ namespace EmodiaQuest.Core
             //Console.WriteLine(position);
         }
 
-
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             foreach (ModelMesh mesh in playerModel.Meshes)
@@ -92,7 +91,6 @@ namespace EmodiaQuest.Core
                 mesh.Draw();
             }
         }
-
 
     }
 }

@@ -96,5 +96,6 @@ namespace EmodiaQuest.Core
                 obj.drawGameobject(world, view, projection);
             }
         }
+
     }
 }

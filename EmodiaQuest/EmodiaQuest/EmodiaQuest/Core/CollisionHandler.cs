@@ -25,10 +25,20 @@ namespace EmodiaQuest.Core
          * Collsiion with a DoorToAnotherWorld = go to a dungeon or return to Safeworld
          */
 
+        /*List of colors, RGB and use
+         * Black: 0, 0, 0           Wall
+         * White: 255, 255, 255     Floor
+         * Blue: 0, 0, 255
+         * Grey: 128, 128, 128
+         * Green: 0, 128, 0
+         * Lime: 0, 255, 0
+         * Red: 255, 0, 0
+        */
+
         EnvironmentController controller;
 
-        // Current player movement color
-        Color movementColor;
+        // Current choosen color
+        Color color;
 
         /// <summary>
         /// Enables collision handling
@@ -41,14 +51,14 @@ namespace EmodiaQuest.Core
         }
 
         /// <summary>
-        /// Method for getting color of position
+        /// Method for getting color of a position
         /// </summary>
         /// <param name="movement">Position</param>
         /// <returns>Color of position</returns>
-        public Color getMovementColor(Vector2 position)
+        public Color getColor(Vector2 position)
         {
-            movementColor = controller.colors2D[(int)position.X, (int)position.Y];
-            return movementColor;
+            color = controller.colors2D[(int)position.X, (int)position.Y];
+            return color;
         }
 
         /// <summary>
@@ -58,11 +68,10 @@ namespace EmodiaQuest.Core
         /// <returns>True if collide with wall</returns>
         public bool getWallCollision(Vector2 movement)
         {
-            if (getMovementColor(movement) == Color.Black)
+            if (getColor(movement) == Color.Black)
                 return true;
             return false;
         }
-
 
     }
 }
