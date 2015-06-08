@@ -85,7 +85,7 @@ namespace EmodiaQuest
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
             //Initialize the matrizes with reasonable values
             world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            view = Matrix.CreateLookAt(new Vector3(30, 85, 30), new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
+            view = Matrix.CreateLookAt(new Vector3(player.Position.X+5f, 5, player.Position.Y+5f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
             //initialize the rendering with the matrizes
             rendering.UpdateProjection(projection);
@@ -126,6 +126,7 @@ namespace EmodiaQuest
             if (kState.IsKeyDown(Keys.Escape))
                 this.Exit();
 
+            view = Matrix.CreateLookAt(new Vector3(player.Position.X + 15f, 20, player.Position.Y + 15f), new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
             rendering.UpdateWorld(world);
             rendering.UpdateView(view);
             rendering.UpdateProjection(projection);
