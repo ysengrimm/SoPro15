@@ -24,8 +24,10 @@ namespace EmodiaQuest
         SafeWorld safeWorld;
         CollisionHandler collisionHandler;
 
-        // TODO: This is not pretty ...
+        // TODO move to InGameScreen
         private Player player;
+
+        private Vector2 windowSize;
 
         /// <summary>
         /// Stores the world matrix for the model, which transforms the 
@@ -77,10 +79,13 @@ namespace EmodiaQuest
             // TODO: use this.Content to load your game content here
             safeWorld = new SafeWorld(Content);
             safeWorld.loadContent();
-
+            // Initialize Player
+            windowSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
+            player = new Player(new Vector2(40, 40), collisionHandler, windowSize);
+            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
             //Initialize the matrizes with reasonable values
             world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            view = Matrix.CreateLookAt(new Vector3(30, 85, 30), new Vector3(40, 0, 40), Vector3.UnitY);
+            view = Matrix.CreateLookAt(new Vector3(30, 85, 30), new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
             //initialize the rendering with the matrizes
             rendering.UpdateProjection(projection);
@@ -89,9 +94,11 @@ namespace EmodiaQuest
 
             collisionHandler = new CollisionHandler(safeWorld.controller);
 
-            player = new Player(new Vector2(40, 40), collisionHandler);
-            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
+            
 
+
+            player = new Player(new Vector2(45, 45), collisionHandler, windowSize);
+            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
         }
 
         /// <summary>
@@ -125,8 +132,8 @@ namespace EmodiaQuest
             
             // TODO: Add your update logic here
 
-            player.Update(gameTime);
-            
+            MouseState ms = Mouse.GetState();
+            player.Update(gameTime, ms);
             
             base.Update(gameTime);
         }
