@@ -24,7 +24,6 @@ namespace EmodiaQuest
 
         public static GameStates_Overall Gamestate_Game = GameStates_Overall.IngameScreen;
 
-
         Renderer rendering = Renderer.Instance;
         SafeWorld safeWorld;
         CollisionHandler collisionHandler;
@@ -74,7 +73,7 @@ namespace EmodiaQuest
 
             // This is how it should look:
             // Notice how it can be called without an instance!
-
+            
             // GUI init
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.loadContent();
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
@@ -97,10 +96,8 @@ namespace EmodiaQuest
 
             collisionHandler = new CollisionHandler(safeWorld.controller);
 
-
-
-
             player = new Player(new Vector2(100, 100), collisionHandler, windowSize);
+
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
         }
 
@@ -142,7 +139,9 @@ namespace EmodiaQuest
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
 
-                    view = Matrix.CreateLookAt(new Vector3(player.Position.X + 15f, 20, player.Position.Y + 15f), new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
+                    Vector3 cameraPos = Vector3.Transform(new Vector3(player.Position.X + 15f, 20, player.Position.Y + 15f) - new Vector3(player.Position.X, 5, player.Position.Y), Matrix.CreateRotationY((float) (player.Angle + Math.PI * 0.75))) + new Vector3(player.Position.X, 5, player.Position.Y);
+
+                    view = Matrix.CreateLookAt(cameraPos, new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
                     rendering.UpdateWorld(world);
                     rendering.UpdateView(view);
                     rendering.UpdateProjection(projection);

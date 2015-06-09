@@ -84,7 +84,6 @@ namespace EmodiaQuest.Core
             foreach (GameObject obj in wall)
             {
                 obj.drawGameobject(world, view, projection);
-                Console.Out.WriteLine(obj.position);
             }
             foreach (GameObject obj in items)
             {

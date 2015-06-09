@@ -20,7 +20,7 @@ namespace EmodiaQuest.Core
         public float Armor;
 
         public float PlayerSpeed = 1f;
-        public float RotationSpeed = 1.3f;
+        public float RotationSpeed = 0.2f;
 
         public Vector2 Position;
         public float Angle;
@@ -66,28 +66,41 @@ namespace EmodiaQuest.Core
         public void Update(GameTime gameTime, MouseState mouseState)
         {
             //scale position to 0.0 to 1.0 then center the +/- change
-            Angle = ((mouseState.X / windowSize.X) - 0.5f) * RotationSpeed;
+            Angle = (float) -(((mouseState.X/windowSize.X))*2*Math.PI);// * RotationSpeed);
             
             
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
+                
                 if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y + collOf)))
-                    Position.Y += (PlayerSpeed);
+                {
+                    Position.Y += PlayerSpeed * (float)Math.Cos(Angle);
+                    Position.X += PlayerSpeed * (float)Math.Sin(Angle);
+                }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y - collOf)))
-                    Position.Y -= (PlayerSpeed);
+                {
+                    Position.Y -= PlayerSpeed * (float)Math.Cos(Angle);
+                    Position.X -= PlayerSpeed * (float)Math.Sin(Angle);
+                }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 if (!collisionHandler.getWallCollision(new Vector2(Position.X + collOf, Position.Y)))
-                    Position.X += (PlayerSpeed);
+                {
+                    Position.Y -= PlayerSpeed * (float)Math.Cos(Angle - Math.PI / 2);
+                    Position.X -= PlayerSpeed * (float)Math.Sin(Angle - Math.PI / 2);
+                }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 if (!collisionHandler.getWallCollision(new Vector2(Position.X - collOf, Position.Y)))
-                    Position.X -= (PlayerSpeed);
+                {
+                    Position.Y += PlayerSpeed * (float)Math.Cos(Angle + 3 * Math.PI / 2);
+                    Position.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
+                }
             }
 
             // not really necessary beacuse only vertical rotation
