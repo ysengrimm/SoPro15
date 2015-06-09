@@ -18,13 +18,8 @@ namespace EmodiaQuest
     /// </summary>
     public class EmodiaQuest_Game : Microsoft.Xna.Framework.Game
     {
-        // Only this two and the enum-init should be here
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-        public static GameStates_Overall Gamestate_Game = GameStates_Overall.IngameScreen;
-
-
         Renderer rendering = Renderer.Instance;
         SafeWorld safeWorld;
         CollisionHandler collisionHandler;
@@ -60,26 +55,28 @@ namespace EmodiaQuest
             Content.RootDirectory = "Content";
         }
 
-
+        /// <summary>
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
+        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Don´t use this method, we are using LoadContent-Method
+            // TODO: Don´t use this method, we are using the LoadContent for everytrhing, which is called once at the beginning of the game.   
             base.Initialize();
         }
 
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
         protected override void LoadContent()
         {
-            // This has to stay here!
+            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            // This is how it should look:
-            // Notice how it can be called without an instance!
-
-            // GUI init
-            EmodiaQuest.Core.GUI.Controls_GUI.Instance.loadContent();
-            EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
-            EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);
-
+            // TODO: use this.Content to load your game content here
             safeWorld = new SafeWorld(Content);
             safeWorld.loadContent();
             // Initialize Player
@@ -88,7 +85,7 @@ namespace EmodiaQuest
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
             //Initialize the matrizes with reasonable values
             world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            view = Matrix.CreateLookAt(new Vector3(30, 85, 30), new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
+            view = Matrix.CreateLookAt(new Vector3(player.Position.X+5f, 5, player.Position.Y+5f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
             //initialize the rendering with the matrizes
             rendering.UpdateProjection(projection);
@@ -97,7 +94,7 @@ namespace EmodiaQuest
 
             collisionHandler = new CollisionHandler(safeWorld.controller);
 
-
+            
 
 
             player = new Player(new Vector2(45, 45), collisionHandler, windowSize);
@@ -120,47 +117,24 @@ namespace EmodiaQuest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            switch (Gamestate_Game)
-            {
-                case GameStates_Overall.StartScreen:
-                    EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
-                    EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.update();
-                    break;
-                case GameStates_Overall.MenuScreen:
-                    EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
-                    EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
-                    break;
-                case GameStates_Overall.IngameScreen:
+            // Allows the game to exit
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();
 
+            //Close Game with Escape
+            KeyboardState kState = Keyboard.GetState();
+            if (kState.IsKeyDown(Keys.Escape))
+                this.Exit();
 
-                    // Allows the game to exit
-                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                        this.Exit();
-
-                    //Close Game with Escape
-                    KeyboardState kState = Keyboard.GetState();
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
-
-                    rendering.UpdateWorld(world);
-                    rendering.UpdateView(view);
-                    rendering.UpdateProjection(projection);
-
-                    // TODO: Add your update logic here
-
-                    MouseState ms = Mouse.GetState();
-                    player.Update(gameTime, ms);
-
-                    break;
-                case GameStates_Overall.OptionsScreen:
-                    break;
-                default:
-                    break;
-            }
-
+            view = Matrix.CreateLookAt(new Vector3(player.Position.X + 15f, 20, player.Position.Y + 15f), new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
+            rendering.UpdateWorld(world);
+            rendering.UpdateView(view);
+            rendering.UpdateProjection(projection);
             
+            // TODO: Add your update logic here
 
-            
+            MouseState ms = Mouse.GetState();
+            player.Update(gameTime, ms);
             
             base.Update(gameTime);
         }
@@ -172,34 +146,10 @@ namespace EmodiaQuest
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
 
-
-            switch (Gamestate_Game)
-            {
-                case GameStates_Overall.StartScreen:
-                    this.IsMouseVisible = true;
-                    EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.draw(spriteBatch);
-                    GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-                    break;
-                case GameStates_Overall.MenuScreen:
-                    this.IsMouseVisible = true;
-                    EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.draw(spriteBatch);
-                    GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-                    break;
-                case GameStates_Overall.IngameScreen:
-                    this.IsMouseVisible = false;
-                    rendering.DrawSafeWorld(safeWorld);
-                    player.Draw(rendering.world, rendering.view, rendering.projection);
-                    break;
-                case GameStates_Overall.OptionsScreen:
-                    break;
-                default:
-                    break;
-            }
-
-
-            
+            // TODO: Add your drawing code here
+            rendering.DrawSafeWorld(safeWorld);
+            player.Draw(rendering.world, rendering.view, rendering.projection);
             base.Draw(gameTime);
         }
     }

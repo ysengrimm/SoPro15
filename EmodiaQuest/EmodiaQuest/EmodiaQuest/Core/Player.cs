@@ -52,7 +52,7 @@ namespace EmodiaQuest.Core
             Hp = 100;
             Armor = 0;
 
-            collOf = 2f;
+            collOf = 0.5f;
 
             Angle = 0;
 
