@@ -68,7 +68,9 @@ namespace EmodiaQuest.Core
                 for (int j = 0; j < map.Height; j++)
                 {
                     if (colors2D[i, j] == color)
-                        objList.Add(new GameObject(model, new Vector3(i, height, j)));
+                    {
+                        objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10)));
+                    }    
                 }
             }
         }
@@ -82,6 +84,7 @@ namespace EmodiaQuest.Core
             foreach (GameObject obj in wall)
             {
                 obj.drawGameobject(world, view, projection);
+                Console.Out.WriteLine(obj.position);
             }
             foreach (GameObject obj in items)
             {

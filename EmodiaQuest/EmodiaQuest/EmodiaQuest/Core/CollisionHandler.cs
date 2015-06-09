@@ -57,7 +57,7 @@ namespace EmodiaQuest.Core
         /// <returns>Color of position</returns>
         public Color getColor(Vector2 position)
         {
-            color = controller.colors2D[(int)position.X, (int)position.Y];
+            color = controller.colors2D[(int)position.X/10, (int)position.Y/10];
             return color;
         }
 

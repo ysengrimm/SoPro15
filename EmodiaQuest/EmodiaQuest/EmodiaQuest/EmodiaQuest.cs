@@ -100,7 +100,7 @@ namespace EmodiaQuest
 
 
 
-            player = new Player(new Vector2(45, 45), collisionHandler, windowSize);
+            player = new Player(new Vector2(100, 100), collisionHandler, windowSize);
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
         }
 
