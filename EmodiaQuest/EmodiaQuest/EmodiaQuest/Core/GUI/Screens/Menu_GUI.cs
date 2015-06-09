@@ -37,7 +37,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             // Beware: Hardcoded values...
             this.platform.addButton(20, 20, 80, 20, "nextState");
-            this.platform.addButton(20, 50, 80, 20, "quit");
+            this.platform.addButton(20, 50, 80, 20, "writeToConsole");
 
             
 
@@ -60,16 +60,15 @@ namespace EmodiaQuest.Core.GUI.Screens
             switch (this.functionCalled)
             {
                 case "nextState":
-                    Console.WriteLine("nextState");
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
                     break;
-                case "quit":
-                    Console.WriteLine("quit");
+                case "writeToConsole":
+                    Console.WriteLine("I am writing something to Console.");
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
                     break;
             }
-            Console.WriteLine("Es klappt! Yes!");
         }
     }
 }

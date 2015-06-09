@@ -62,13 +62,12 @@ namespace EmodiaQuest.Core.GUI.Screens
             switch (this.functionCalled)
             {
                 case "clickToPlay":
-                    Console.WriteLine("clickToPlay");
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
                     break;
             }
-            Console.WriteLine("Es klappt! Yes!");
         }
     }
 }

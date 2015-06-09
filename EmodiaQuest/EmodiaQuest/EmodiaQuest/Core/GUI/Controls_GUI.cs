@@ -23,7 +23,7 @@ namespace EmodiaQuest.Core.GUI
         }
 
         // Declare of the MouseState for the GUI
-        //Hier die muss ich dann jeweils in die Mitte ins Menu setzen bei Aufruf oder letzter Mousepunkt! Jaaaa besser!
+        // Should be set to the middle of the screen when opening menu TODO
         public MouseState Mouse_GUI { get; set; }
 
 
