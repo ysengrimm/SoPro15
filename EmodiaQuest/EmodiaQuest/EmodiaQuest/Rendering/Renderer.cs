@@ -45,7 +45,43 @@ namespace EmodiaQuest.Rendering
          * 6. Buttons and other UI Elements in CameraSpace
          */
 
-        public Matrix world, view, projection; // TODO: better solution for player rendering
+        /// <summary>
+        /// Stores the world matrix for the model, which transforms the 
+        /// model to be in the correct position, scale, and rotation
+        /// in the game world.
+        /// </summary>
+
+        private Matrix world;
+        public Matrix World
+        {
+            get { return world; }
+            set { world = value; }
+        }
+
+        /// <summary>
+        /// Stores the view matrix for the model, which gets the model
+        /// in the right place, relative to the camera.
+        /// </summary>
+        
+        private Matrix view;
+        public Matrix View
+        {
+            get { return view; }
+            set { view = value; }
+        }
+
+        /// <summary>
+        /// Stores the projection matrix, which gets the model projected
+        /// onto the screen in the correct way.  Essentially, this defines the
+        /// properties of the camera you are using.
+        /// </summary>
+
+        private Matrix projection;
+        public Matrix Projection
+        {
+            get { return projection; }
+            set { projection = value; }
+        }
 
         /// <summary>
         /// draws ever object, which is listed in the Safeworld
@@ -57,30 +93,12 @@ namespace EmodiaQuest.Rendering
         }
 
         /// <summary>
-        /// Updates the world matrix, which will be used for rendering
+        /// draws the player object
         /// </summary>
-        /// <param name="world"></param>
-        public void UpdateWorld(Matrix world)
+        /// <param name="player"></param>
+        public void DrawPlayer(Player player)
         {
-            this.world = world;
+            player.Draw(world, view, projection);
         }
-        /// <summary>
-        /// Updates the view matrix, which will be used for rendering
-        /// </summary>
-        /// <param name="view"></param>
-        public void UpdateView(Matrix view)
-        {
-            this.view = view;
-        }
-        /// <summary>
-        /// Updates the projection matrix, which will be used for rendering
-        /// </summary>
-        /// <param name="projection"></param>
-        public void UpdateProjection(Matrix projection)
-        {
-            this.projection = projection;
-        }
-
-
     }
 }

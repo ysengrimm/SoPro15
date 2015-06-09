@@ -24,34 +24,14 @@ namespace EmodiaQuest
 
         public static GameStates_Overall Gamestate_Game = GameStates_Overall.IngameScreen;
 
-        Renderer rendering = Renderer.Instance;
         SafeWorld safeWorld;
-        CollisionHandler collisionHandler;
 
         // TODO move to InGameScreen
-        private Player player;
+        private Player player; // Mabey implement this as Singleton, so we don´t have to initialize at all
 
         private Vector2 windowSize;
 
-        /// <summary>
-        /// Stores the world matrix for the model, which transforms the 
-        /// model to be in the correct position, scale, and rotation
-        /// in the game world.
-        /// </summary>
-        private Matrix world;
 
-        /// <summary>
-        /// Stores the view matrix for the model, which gets the model
-        /// in the right place, relative to the camera.
-        /// </summary>
-        private Matrix view;
-
-        /// <summary>
-        /// Stores the projection matrix, which gets the model projected
-        /// onto the screen in the correct way.  Essentially, this defines the
-        /// properties of the camera you are using.
-        /// </summary>
-        private Matrix projection;
 
         public EmodiaQuest_Game()
         {
@@ -79,26 +59,21 @@ namespace EmodiaQuest
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);
 
+            // Safeworld Init
             safeWorld = new SafeWorld(Content);
             safeWorld.loadContent();
+            // Collision Init
+            CollisionHandler.Instance.SetEnvironmentController(safeWorld.controller);
             // Initialize Player
             windowSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
-            player = new Player(new Vector2(40, 40), collisionHandler, windowSize);
+            player = new Player(new Vector2(40, 40), CollisionHandler.Instance, windowSize);
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
             //Initialize the matrizes with reasonable values
-            world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            view = Matrix.CreateLookAt(new Vector3(player.Position.X + 5f, 5, player.Position.Y + 5f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
-            //initialize the rendering with the matrizes
-            rendering.UpdateProjection(projection);
-            rendering.UpdateWorld(world);
-            rendering.UpdateView(view);
+            Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 5f, 5, player.Position.Y + 5f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
+            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
 
-            collisionHandler = new CollisionHandler(safeWorld.controller);
-
-            player = new Player(new Vector2(100, 100), collisionHandler, windowSize);
-
-            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
+            
         }
 
         /// <summary>
@@ -140,11 +115,7 @@ namespace EmodiaQuest
                         this.Exit();
 
                     Vector3 cameraPos = Vector3.Transform(new Vector3(player.Position.X + 15f, 20, player.Position.Y + 15f) - new Vector3(player.Position.X, 5, player.Position.Y), Matrix.CreateRotationY((float) (player.Angle + Math.PI * 0.75))) + new Vector3(player.Position.X, 5, player.Position.Y);
-
-                    view = Matrix.CreateLookAt(cameraPos, new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
-                    rendering.UpdateWorld(world);
-                    rendering.UpdateView(view);
-                    rendering.UpdateProjection(projection);
+                    Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
 
                     // TODO: Add your update logic here
 
@@ -189,8 +160,8 @@ namespace EmodiaQuest
                     break;
                 case GameStates_Overall.IngameScreen:
                     this.IsMouseVisible = false;
-                    rendering.DrawSafeWorld(safeWorld);
-                    player.Draw(rendering.world, rendering.view, rendering.projection);
+                    Renderer.Instance.DrawSafeWorld(safeWorld);
+                    Renderer.Instance.DrawPlayer(player);
                     break;
                 case GameStates_Overall.OptionsScreen:
                     break;

@@ -17,6 +17,21 @@ namespace EmodiaQuest.Core
     /// </summary>
     public class CollisionHandler
     {
+        private static CollisionHandler instance;
+
+        private CollisionHandler() { }
+
+        public static CollisionHandler Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new CollisionHandler();
+                }
+                return instance;
+            }
+        }
         // TODO: Implement collision with
         /* Walls and stuff (movement restriction)
          * Enemy NPCs ( Damage and Kill)
@@ -45,7 +60,7 @@ namespace EmodiaQuest.Core
         /// </summary>
         /// <param name="controller">Current enviroment controller</param>
         /// <param name="player">Current player</param>
-        public CollisionHandler(EnvironmentController controller)
+        public void SetEnvironmentController(EnvironmentController controller)
         {
             this.controller = controller;
         }
