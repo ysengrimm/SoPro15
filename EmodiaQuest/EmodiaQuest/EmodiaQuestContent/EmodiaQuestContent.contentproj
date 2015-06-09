@@ -103,13 +103,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fbxContent\mainchar_v1.fbx">
-      <Name>mainchar_v1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Texturen\Playertexturen\mainchar_v1_tex.png">
       <Name>mainchar_v1_tex</Name>
       <Importer>TextureImporter</Importer>
