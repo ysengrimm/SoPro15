@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+
+
 namespace EmodiaQuest.Core
 {
     public class Player
@@ -23,12 +25,13 @@ namespace EmodiaQuest.Core
         public float RotationSpeed = 0.2f;
 
         public Vector2 Position;
+        private Vector2 movement;
         public float Angle;
 
         private Model playerModel;
 
         private CollisionHandler collisionHandler;
-        private float collOf; 
+        private float collOf;
 
         private Vector2 windowSize;
 
@@ -36,6 +39,8 @@ namespace EmodiaQuest.Core
         {
             set { playerModel = value; }
         }
+
+
 
         /// <summary>
         /// Creates new instance of player.
@@ -68,39 +73,36 @@ namespace EmodiaQuest.Core
             //scale position to 0.0 to 1.0 then center the +/- change
             Angle = (float) -(((mouseState.X/windowSize.X))*2*Math.PI);// * RotationSpeed);
             
-            
+            movement = Position;
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                
-                if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y + collOf)))
-                {
-                    Position.Y += PlayerSpeed * (float)Math.Cos(Angle);
-                    Position.X += PlayerSpeed * (float)Math.Sin(Angle);
-                }
+                movement.Y += PlayerSpeed * (float)Math.Cos(Angle);
+                movement.X += PlayerSpeed * (float)Math.Sin(Angle);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(Position.X, Position.Y - collOf)))
-                {
-                    Position.Y -= PlayerSpeed * (float)Math.Cos(Angle);
-                    Position.X -= PlayerSpeed * (float)Math.Sin(Angle);
-                }
+                movement.Y -= PlayerSpeed * (float)Math.Cos(Angle);
+                movement.X -= PlayerSpeed * (float)Math.Sin(Angle);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(Position.X + collOf, Position.Y)))
-                {
-                    Position.Y -= PlayerSpeed * (float)Math.Cos(Angle - Math.PI / 2);
-                    Position.X -= PlayerSpeed * (float)Math.Sin(Angle - Math.PI / 2);
-                }
+                movement.Y -= PlayerSpeed * (float)Math.Cos(Angle - Math.PI / 2);
+                movement.X -= PlayerSpeed * (float)Math.Sin(Angle - Math.PI / 2);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                if (!collisionHandler.getWallCollision(new Vector2(Position.X - collOf, Position.Y)))
-                {
-                    Position.Y += PlayerSpeed * (float)Math.Cos(Angle + 3 * Math.PI / 2);
-                    Position.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
-                }
+                movement.Y += PlayerSpeed * (float)Math.Cos(Angle + 3 * Math.PI / 2);
+                movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
+            }
+
+            if (!collisionHandler.getWallCollision(new Vector2(Position.X, movement.Y)))
+            {
+                Position.Y = movement.Y;
+            }
+            if (!collisionHandler.getWallCollision(new Vector2(movement.X, Position.Y)))
+            {
+                Position.X = movement.X;
             }
 
             // not really necessary beacuse only vertical rotation

@@ -23,6 +23,7 @@ namespace EmodiaQuest.Core
         public Texture2D map;
         public ContentManager content;
         public Model testCube;
+        public Model Groundplate1;
 
         public SafeWorld(ContentManager content)
         {
@@ -36,7 +37,7 @@ namespace EmodiaQuest.Core
         public override void initialise(){}
 
         /// <summary>
-        /// Method for loading relevant content fpr SafeWorld
+        /// Method for loading relevant content for SafeWorld
         /// </summary>
         public override void loadContent()
         {
@@ -44,7 +45,9 @@ namespace EmodiaQuest.Core
             controller.createMap(map);
 
             testCube = content.Load<Model>("fbxContent/testCube");
+            Groundplate1 = content.Load<Model>("fbxContent/bodenplatte");
             controller.insertObj(controller.wall, testCube, Color.Black, 0);
+            controller.insertObj(controller.ground, Groundplate1, Color.White, 0);
         }
 
         /// <summary>
