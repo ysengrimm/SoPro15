@@ -91,6 +91,10 @@ namespace EmodiaQuest.Core
                 return true;
             else if (getColor(new Vector2(movement.X - offset, movement.Y)) == Color.Black)
                 return true;
+            else if (getColor(new Vector2(movement.X - offset, movement.Y - offset)) == Color.Black)
+                return true;
+            else if (getColor(new Vector2(movement.X + offset, movement.Y + offset)) == Color.Black)
+                return true;
             else return false;
         }
 
