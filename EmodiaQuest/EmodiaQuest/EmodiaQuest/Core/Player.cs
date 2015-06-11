@@ -96,11 +96,11 @@ namespace EmodiaQuest.Core
                 movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
             }
 
-            if (!collisionHandler.getWallCollision(new Vector2(Position.X, movement.Y), offset))
+            if (Color.White == collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), offset))
             {
                 Position.Y = movement.Y;
             }
-            if (!collisionHandler.getWallCollision(new Vector2(movement.X, Position.Y), offset))
+            if (Color.White == collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), offset))
             {
                 Position.X = movement.X;
             }

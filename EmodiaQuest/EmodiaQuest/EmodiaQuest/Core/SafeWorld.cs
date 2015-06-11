@@ -20,7 +20,7 @@ namespace EmodiaQuest.Core
     public class SafeWorld : Game
     {
         public EnvironmentController controller;
-        public Texture2D map;
+        public Texture2D CollisionMap, PlacementMap;
         public ContentManager content;
         public Model testCube;
         public Model Groundplate1;
@@ -41,8 +41,10 @@ namespace EmodiaQuest.Core
         /// </summary>
         public override void loadContent()
         {
-            map = content.Load<Texture2D>("maps/safeWorldMap");
-            controller.createMap(map);
+            PlacementMap = content.Load<Texture2D>("maps/safeWorld_PlacementMap");
+            CollisionMap = content.Load<Texture2D>("maps/safeWorld_CollisionMap");
+            controller.createPlacementMap(PlacementMap);
+            controller.createCollisionMap(CollisionMap);
 
             testCube = content.Load<Model>("fbxContent/testCube");
             Groundplate1 = content.Load<Model>("fbxContent/bodenplatte");
