@@ -72,7 +72,7 @@ namespace EmodiaQuest.Core
         /// <returns>Color of position</returns>
         public Color getColor(Vector2 position)
         {
-            color = controller.colors2D[(int)Math.Round(position.X/10)+1, (int)Math.Round(position.Y/10)+1];
+            color = controller.colors2D[(int)Math.Round(position.X/10), (int)Math.Round(position.Y/10)];
             return color;
         }
 
@@ -81,11 +81,17 @@ namespace EmodiaQuest.Core
         /// </summary>
         /// <param name="movement">Current movement</param>
         /// <returns>True if collide with wall</returns>
-        public bool getWallCollision(Vector2 movement)
+        public bool getWallCollision(Vector2 movement, float offset)
         {
-            if (getColor(movement) == Color.Black)
+            if (getColor(new Vector2(movement.X, movement.Y + offset)) == Color.Black)
                 return true;
-            return false;
+            else if (getColor(new Vector2(movement.X + offset, movement.Y)) == Color.Black)
+                return true;
+            else if (getColor(new Vector2(movement.X, movement.Y - offset)) == Color.Black)
+                return true;
+            else if (getColor(new Vector2(movement.X - offset, movement.Y)) == Color.Black)
+                return true;
+            else return false;
         }
 
     }

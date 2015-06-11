@@ -26,6 +26,7 @@ namespace EmodiaQuest.Core
 
         public Vector2 Position;
         private Vector2 movement;
+        private float offset = 4;
         public float Angle;
 
         private Model playerModel;
@@ -96,11 +97,11 @@ namespace EmodiaQuest.Core
                 movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
             }
 
-            if (!collisionHandler.getWallCollision(new Vector2(Position.X, movement.Y)))
+            if (!collisionHandler.getWallCollision(new Vector2(Position.X, movement.Y), offset))
             {
                 Position.Y = movement.Y;
             }
-            if (!collisionHandler.getWallCollision(new Vector2(movement.X, Position.Y)))
+            if (!collisionHandler.getWallCollision(new Vector2(movement.X, Position.Y), offset))
             {
                 Position.X = movement.X;
             }
