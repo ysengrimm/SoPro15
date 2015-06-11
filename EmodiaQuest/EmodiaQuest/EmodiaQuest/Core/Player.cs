@@ -26,13 +26,12 @@ namespace EmodiaQuest.Core
 
         public Vector2 Position;
         private Vector2 movement;
-        private float offset = 4;
+        private float offset;
         public float Angle;
 
         private Model playerModel;
 
         private CollisionHandler collisionHandler;
-        private float collOf;
 
         private Vector2 windowSize;
 
@@ -58,7 +57,7 @@ namespace EmodiaQuest.Core
             Hp = 100;
             Armor = 0;
 
-            collOf = 1f;
+            offset= 4f;
 
             Angle = 0;
 

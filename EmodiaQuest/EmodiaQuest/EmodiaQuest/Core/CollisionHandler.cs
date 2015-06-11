@@ -80,6 +80,7 @@ namespace EmodiaQuest.Core
         /// Procedure for handling a collision with wall
         /// </summary>
         /// <param name="movement">Current movement</param>
+        /// <param name="offset">offset which should be choosen for an extra distance between the collision object and the movement vector</param>
         /// <returns>True if collide with wall</returns>
         public bool getWallCollision(Vector2 movement, float offset)
         {
@@ -94,6 +95,14 @@ namespace EmodiaQuest.Core
             else if (getColor(new Vector2(movement.X - offset, movement.Y - offset)) == Color.Black)
                 return true;
             else if (getColor(new Vector2(movement.X + offset, movement.Y + offset)) == Color.Black)
+                return true;
+            else if (getColor(new Vector2(movement.X - offset, movement.Y + offset)) == Color.Black)
+                return true;
+            else if (getColor(new Vector2(movement.X + offset, movement.Y - offset)) == Color.Black)
+                return true;
+            else if (getColor(new Vector2(movement.X + offset, movement.Y - offset)) == Color.Black)
+                return true;
+            else if (getColor(new Vector2(movement.X - offset, movement.Y + offset)) == Color.Black)
                 return true;
             else return false;
         }
