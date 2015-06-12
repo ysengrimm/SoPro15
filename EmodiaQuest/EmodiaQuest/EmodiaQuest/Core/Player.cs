@@ -22,7 +22,7 @@ namespace EmodiaQuest.Core
         public float Armor;
 
         public float PlayerSpeed = 1f;
-        public float RotationSpeed = 0.2f;
+        public float RotationSpeed = 1.5f;
 
         public Vector2 Position;
         private Vector2 movement;
@@ -71,8 +71,8 @@ namespace EmodiaQuest.Core
         public void Update(GameTime gameTime, MouseState mouseState)
         {
             //scale position to 0.0 to 1.0 then center the +/- change
-            Angle = (float) -(((mouseState.X/windowSize.X))*2*Math.PI);// * RotationSpeed);
-            
+            Angle = (float) -(((mouseState.X/windowSize.X))*2*Math.PI * RotationSpeed);
+
             movement = Position;
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
@@ -96,13 +96,37 @@ namespace EmodiaQuest.Core
                 movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
             }
 
-            if (Color.White == collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), offset))
+            //Collision with Walls
+            if (Color.White == collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, offset))
             {
                 Position.Y = movement.Y;
             }
-            if (Color.White == collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), offset))
+            if (Color.White == collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, offset))
             {
                 Position.X = movement.X;
+            }
+
+            //Collision with Items
+            if (Color.White != collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.ItemColors, offset))
+            {
+                foreach(GameObject item in collisionHandler.Controller.items){
+                    if (item.position == new Vector3((int)Math.Round(Position.X), 0, (int)Math.Round(movement.Y)))
+                    {
+                        item.drawable = false;
+                        Console.Out.WriteLine("BLUBB");
+                    }
+                }
+            }
+            if (Color.White != collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.ItemColors, offset))
+            {
+                foreach (GameObject item in collisionHandler.Controller.items)
+                {
+                    if (item.position == new Vector3((int)Math.Round(movement.X), 0, (int)Math.Round(Position.Y)))
+                    {
+                        item.drawable = false;
+                        Console.Out.WriteLine("BLUBB2");
+                    }
+                }
             }
 
             // not really necessary beacuse only vertical rotation

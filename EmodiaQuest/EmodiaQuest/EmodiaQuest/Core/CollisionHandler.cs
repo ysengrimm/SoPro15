@@ -52,10 +52,7 @@ namespace EmodiaQuest.Core
          * WHEN COLLISION COLORS WILL BE SAME MAKE ONE MORE LIST WITH THOSE COLORS AND MEANINGS
         */
 
-        EnvironmentController controller;
-
-        // Current choosen color
-        Color color;
+        public EnvironmentController Controller;
 
         /// <summary>
         /// Enables collision handling
@@ -64,17 +61,19 @@ namespace EmodiaQuest.Core
         /// <param name="player">Current player</param>
         public void SetEnvironmentController(EnvironmentController controller)
         {
-            this.controller = controller;
+            this.Controller = controller;
         }
 
         /// <summary>
         /// Method for getting color of a position
         /// </summary>
-        /// <param name="movement">Position</param>
+        /// <param name="position">Position</param>
         /// <returns>Color of position</returns>
-        public Color getColor(Vector2 position)
+        public Color getColor(Vector2 position, Color [,] colorArray)
         {
-            color = controller.CollisionColors[(int)Math.Round(position.X/10), (int)Math.Round(position.Y/10)];
+            // Current choosen color
+            Color color;
+            color = colorArray[(int)Math.Round(position.X/10), (int)Math.Round(position.Y/10)];
             return color;
         }
 
@@ -84,28 +83,28 @@ namespace EmodiaQuest.Core
         /// <param name="movement">Current movement</param>
         /// <param name="offset">offset which should be choosen for an extra distance between the collision object and the movement vector</param>
         /// <returns>Returns a Color</returns>
-        public Color getCollisionColor(Vector2 movement, float offset)
+        public Color getCollisionColor(Vector2 movement, Color[,] colorArray, float offset)
         {
-            if (getColor(new Vector2(movement.X, movement.Y + offset)) != Color.White)
-                return getColor(new Vector2(movement.X, movement.Y + offset));
-            else if (getColor(new Vector2(movement.X + offset, movement.Y)) != Color.White)
-                return getColor(new Vector2(movement.X + offset, movement.Y));
-            else if (getColor(new Vector2(movement.X, movement.Y - offset)) != Color.White)
-                return getColor(new Vector2(movement.X, movement.Y - offset));
-            else if (getColor(new Vector2(movement.X - offset, movement.Y)) != Color.White)
-                return getColor(new Vector2(movement.X - offset, movement.Y));
-            else if (getColor(new Vector2(movement.X - offset, movement.Y - offset)) != Color.White)
-                return getColor(new Vector2(movement.X - offset, movement.Y - offset));
-            else if (getColor(new Vector2(movement.X + offset, movement.Y + offset)) != Color.White)
-                return getColor(new Vector2(movement.X + offset, movement.Y + offset));
-            else if (getColor(new Vector2(movement.X - offset, movement.Y + offset)) != Color.White)
-                return getColor(new Vector2(movement.X - offset, movement.Y + offset));
-            else if (getColor(new Vector2(movement.X + offset, movement.Y - offset)) != Color.White)
-                return getColor(new Vector2(movement.X + offset, movement.Y - offset));
-            else if (getColor(new Vector2(movement.X + offset, movement.Y - offset)) != Color.White)
-                return getColor(new Vector2(movement.X + offset, movement.Y - offset));
-            else if (getColor(new Vector2(movement.X - offset, movement.Y + offset)) != Color.White)
-                return getColor(new Vector2(movement.X - offset, movement.Y + offset));
+            if (getColor(new Vector2(movement.X, movement.Y + offset), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X, movement.Y + offset), colorArray);
+            else if (getColor(new Vector2(movement.X + offset, movement.Y), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X + offset, movement.Y), colorArray);
+            else if (getColor(new Vector2(movement.X, movement.Y - offset), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X, movement.Y - offset), colorArray);
+            else if (getColor(new Vector2(movement.X - offset, movement.Y), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X - offset, movement.Y), colorArray);
+            else if (getColor(new Vector2(movement.X - offset, movement.Y - offset), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X - offset, movement.Y - offset), colorArray);
+            else if (getColor(new Vector2(movement.X + offset, movement.Y + offset), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X + offset, movement.Y + offset), colorArray);
+            else if (getColor(new Vector2(movement.X - offset, movement.Y + offset), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X - offset, movement.Y + offset), colorArray);
+            else if (getColor(new Vector2(movement.X + offset, movement.Y - offset), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X + offset, movement.Y - offset), colorArray);
+            else if (getColor(new Vector2(movement.X + offset, movement.Y - offset), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X + offset, movement.Y - offset), colorArray);
+            else if (getColor(new Vector2(movement.X - offset, movement.Y + offset), colorArray) != Color.White)
+                return getColor(new Vector2(movement.X - offset, movement.Y + offset), colorArray);
             else return Color.White;
         }
 
