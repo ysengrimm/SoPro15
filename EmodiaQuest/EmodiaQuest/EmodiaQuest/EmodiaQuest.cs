@@ -21,6 +21,7 @@ namespace EmodiaQuest
         // Only this two and the enum-init should be here
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        int a = 1;
 
         public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
         SafeWorld safeWorld;
@@ -93,36 +94,38 @@ namespace EmodiaQuest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            KeyboardState kState = Keyboard.GetState();
             switch (Gamestate_Game)
             {
                 case GameStates_Overall.StartScreen:
                     EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.update();
                     //Close Game with Escape
-                    KeyboardState kState = Keyboard.GetState();
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
                     break;
                 case GameStates_Overall.MenuScreen:
+                    kState = Keyboard.GetState();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
                     EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
-                    EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
+                    //FAKE FAKE FAKE
+                    //EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
+                    if (EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update())
+                        this.Exit();
                     break;
                 case GameStates_Overall.IngameScreen:
-
 
                     // Allows the game to exit
                     if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                         this.Exit();
-
                     //Close Game with Escape
-                    kState = Keyboard.GetState();
                     if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                        EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
+                        //this.Exit();
 
                     Vector3 cameraPos = Vector3.Transform(new Vector3(player.Position.X + 15f, 20, player.Position.Y + 15f) - new Vector3(player.Position.X, 5, player.Position.Y), Matrix.CreateRotationY((float) (player.Angle + Math.PI * 0.75))) + new Vector3(player.Position.X, 5, player.Position.Y);
                     Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
-
-                    // TODO: Add your update logic here
 
                     MouseState ms = Mouse.GetState();
                     player.Update(gameTime, ms);
