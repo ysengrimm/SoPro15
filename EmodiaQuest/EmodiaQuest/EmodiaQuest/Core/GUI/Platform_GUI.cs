@@ -12,6 +12,7 @@ namespace EmodiaQuest.Core.GUI
     public class Platform_GUI
     {
         private List<Button_GUI> buttons = new List<Button_GUI>();
+        private List<PlainText_GUI> ptexts = new List<PlainText_GUI>();
         private MouseState mouseHandle;
         private MouseState mouseHandle_Old;
         private string pushed_name = null;
@@ -19,6 +20,9 @@ namespace EmodiaQuest.Core.GUI
 
         //private short alphaValue = 255;
         public Color drawColor = Color.White;
+        private Color overlayColor = Color.White;
+        private float overlayValue = 0;
+        private bool overlayBool = true;
 
         // Button Textures
         private Texture2D button_n;
@@ -27,6 +31,12 @@ namespace EmodiaQuest.Core.GUI
 
         // Background Textures
         private Texture2D background;
+        private Texture2D overlay;
+
+        // Stuff wieder loeschen
+        private SpriteFont monoFont_big;
+        private SpriteFont dice_big;
+        private SpriteFont monoFont_small;
 
         public void loadContent(ContentManager Content)
         {
@@ -36,9 +46,14 @@ namespace EmodiaQuest.Core.GUI
             button_p = Content.Load<Texture2D>("Content_GUI/button_pressed");
 
             // Background Content
-            background = Content.Load<Texture2D>("Content_GUI/pixel_white");
+            background = Content.Load<Texture2D>("Content_GUI/pixel_black");
+            overlay = Content.Load<Texture2D>("Content_GUI/pixel_white");
 
-
+            // Load Fonts
+            monoFont_big = Content.Load<SpriteFont>("Content_GUI/monoFont_big");
+            dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
+            monoFont_small = Content.Load<SpriteFont>("Content_GUI/monoFont_small");
+            //Console.WriteLine(monoFont_big.MeasureString("12345"));
             
         }
 
@@ -97,7 +112,15 @@ namespace EmodiaQuest.Core.GUI
 
             // Beware: Hardcoded values...
             //spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
+            // Windows-Standard-Size ist 800x480
+
+            spritebatch.Draw(overlay, new Rectangle(0, 0, 800, 480), Color.White);
             spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), drawColor);
+            
+
+            
+            //spritebatch.Draw(overlay, new Rectangle(0, 0, 800, 480), Color.White*0.7f);
+            
 
             foreach (Button_GUI bb in buttons)
             {
@@ -111,6 +134,9 @@ namespace EmodiaQuest.Core.GUI
                         spritebatch.Draw(button_p, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                 }
             }
+            foreach (PlainText_GUI pt in ptexts)
+                spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor);
+
             spritebatch.End();
         }
 
@@ -123,12 +149,40 @@ namespace EmodiaQuest.Core.GUI
             buttons.Add(new Button_GUI(xPos, yPos, width, height, name, isVisible));
         }
 
-        // This doesn't actually lighten anything up. It just pumps the alpha to the max
-        public void lightenUp()
+        public void addPlainText(int xPos, int yPos, string chooseFont, string text)
         {
-            if (drawColor.A < 254)
-                drawColor.A++;
+            switch (chooseFont)
+            {
+                case "dice_big":
+                    ptexts.Add(new PlainText_GUI(xPos, yPos, dice_big, text));
+                    break;
+                case "monoFont_big":
+                    ptexts.Add(new PlainText_GUI(xPos, yPos, monoFont_big, text));
+                    break;
+                case "monoFont_small":
+                    ptexts.Add(new PlainText_GUI(xPos, yPos, monoFont_small, text));
+                    break;
+                default:
+                    Console.WriteLine("No such font");
+                    break;
+            }
         }
+                
+
+        public void breathing()
+        {
+            if (this.overlayBool)
+                this.overlayValue += 0.01f;
+            else
+                this.overlayValue -= 0.01f;
+            if (this.overlayValue > 0.88)
+                this.overlayBool = false;
+            if (this.overlayValue < 0.22)
+                this.overlayBool = true;
+            this.drawColor = Color.White * overlayValue;
+        }
+
+
 
 
 

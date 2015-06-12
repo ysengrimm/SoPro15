@@ -31,17 +31,17 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private string functionCalled = null;
 
+        
+
         public void loadContent(ContentManager Content)
         {
             this.platform.loadContent(Content);
-
-            this.platform.setBackground(Content, "Content_GUI/pixel_black");
 
             int h = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             int w = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             this.platform.addButton(0, 0, h, w, "clickToPlay", false);
 
-            this.platform.drawColor.A = 0;
+            this.platform.addPlainText(80, 95, "dice_big", "EMODIA \n\n  QUEST ");
         }
 
         public void update()
@@ -49,7 +49,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             if ((this.functionCalled = this.platform.update()) != null)
                 this.functionCall();
 
-            this.platform.lightenUp();
+            this.platform.breathing();
         }
 
         public void draw(SpriteBatch spritebatch)
