@@ -31,6 +31,9 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private string functionCalled = null;
 
+        // FAKE FAKE FAKE
+        private bool exitValue = false;
+
         public void loadContent(ContentManager Content)
         {
             this.platform.loadContent(Content);
@@ -39,7 +42,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             // Beware: Hardcoded values...
             this.platform.addButton(240, 240, 300, 60, "nextState");
-            this.platform.addButton(240, 340, 300, 60, "writeToConsole");
+            this.platform.addButton(240, 340, 300, 60, "quit");
 
             this.platform.addPlainText(170, 30, "monoFont_big", "MAIN MENU");
 
@@ -49,11 +52,12 @@ namespace EmodiaQuest.Core.GUI.Screens
 
 
         }
-
-        public void update()
+        // FAKE FAKE FAKE
+        public bool update()
         {
             if ((this.functionCalled = this.platform.update()) != null)
                 this.functionCall();
+            return this.exitValue;
         }
 
         public void draw(SpriteBatch spritebatch)
@@ -68,11 +72,11 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "nextState":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
                     break;
-                case "writeToConsole":
-                    Console.WriteLine("I am writing something to Console.");
+                case "quit":
+                    this.exitValue = true;
                     break;
                 default:
-                    Console.WriteLine("Function name does not exist");
+                    Console.WriteLine("No such Function.");
                     break;
             }
         }
