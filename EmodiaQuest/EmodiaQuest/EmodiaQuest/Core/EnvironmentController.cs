@@ -17,9 +17,9 @@ namespace EmodiaQuest.Core
         // TODO: Controll the whole environment, is used for getting easy access of everything wich is static, needs to be rendered or has collsion
         // will have a lot of lists with items
 
-        public Texture2D map;
-        public Color[] colors1D;
-        public Color[,] colors2D;
+        public Texture2D CollisionMap, PlacementMap;
+        public Color[,] PlacementColors;
+        public Color[,] CollisionColors;
 
         public List<GameObject> ground, wall, items, accessoires, buildings;
 
@@ -33,23 +33,47 @@ namespace EmodiaQuest.Core
         }
 
         /// <summary>
-        /// Creates a new map from a pixelmap
-        /// <param name="map">A Texture2D with loaded map-picture.</param>
+        /// Creates a new placement map from a pixelmap
+        /// <param name="map">A Texture2D with loaded placement map-picture.</param>
         /// </summary>
-        ///
-        public void createMap(Texture2D map)
+        public void createPlacementMap(Texture2D map)
         {
-            this.map = map;
+            Color[] colors1D;
+
+            this.PlacementMap = map;
 
             colors1D = new Color[map.Width * map.Height];
             map.GetData(colors1D);
             
-            colors2D = new Color[map.Width, map.Height];
+            PlacementColors = new Color[map.Width, map.Height];
             for (int x = 0; x < map.Width; x++)
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    colors2D[x, y] = colors1D[x + y * map.Width];
+                    PlacementColors[x, y] = colors1D[x + y * map.Width];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a new collision map from a pixelmap
+        /// <param name="map">A Texture2D with loaded collision map-picture.</param>
+        /// </summary>
+        public void createCollisionMap(Texture2D map)
+        {
+            Color[] colors1D;
+
+            this.CollisionMap = map;
+
+            colors1D = new Color[map.Width * map.Height];
+            map.GetData(colors1D);
+
+            CollisionColors = new Color[map.Width, map.Height];
+            for (int x = 0; x < map.Width; x++)
+            {
+                for (int y = 0; y < map.Height; y++)
+                {
+                    CollisionColors[x, y] = colors1D[x + y * map.Width];
                 }
             }
         }
@@ -63,11 +87,11 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void insertObj (List<GameObject> objList, Model model, Color color, int height)
         {
-            for (int i = 0; i < map.Width; i++)
+            for (int i = 0; i < PlacementMap.Width; i++)
             {
-                for (int j = 0; j < map.Height; j++)
+                for (int j = 0; j < PlacementMap.Height; j++)
                 {
-                    if (colors2D[i, j] == color)
+                    if (PlacementColors[i, j] == color)
                     {
                         objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10)));
                     }    
