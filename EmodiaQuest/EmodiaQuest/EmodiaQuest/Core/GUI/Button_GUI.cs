@@ -41,6 +41,7 @@ namespace EmodiaQuest.Core.GUI
 
         public static bool isInside(int mouse_xPos, int mouse_yPos, int button_xPos, int button_yPos, int button_width, int button_height)
         {
+            Console.WriteLine(mouse_xPos);
             if (mouse_xPos >= button_xPos)
             {
 

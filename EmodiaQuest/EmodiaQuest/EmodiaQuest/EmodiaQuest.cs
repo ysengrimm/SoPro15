@@ -22,8 +22,7 @@ namespace EmodiaQuest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public static GameStates_Overall Gamestate_Game = GameStates_Overall.IngameScreen;
-
+        public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
         SafeWorld safeWorld;
 
         // TODO move to InGameScreen
@@ -56,6 +55,8 @@ namespace EmodiaQuest
             
             // GUI init
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.loadContent();
+            
+            //EmodiaQuest.Core.GUI.Controls_GUI.Instance.Mouse_GUI.
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);
 
@@ -73,7 +74,7 @@ namespace EmodiaQuest
             Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 3f, 3, player.Position.Y + 3f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
             Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 900f); //Setting farülane = render distance
 
-            
+            Mouse.WindowHandle = Window.Handle;
         }
 
         /// <summary>
@@ -97,6 +98,10 @@ namespace EmodiaQuest
                 case GameStates_Overall.StartScreen:
                     EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.update();
+                    //Close Game with Escape
+                    KeyboardState kState = Keyboard.GetState();
+                    if (kState.IsKeyDown(Keys.Escape))
+                        this.Exit();
                     break;
                 case GameStates_Overall.MenuScreen:
                     EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
@@ -110,7 +115,7 @@ namespace EmodiaQuest
                         this.Exit();
 
                     //Close Game with Escape
-                    KeyboardState kState = Keyboard.GetState();
+                    kState = Keyboard.GetState();
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
 
@@ -154,6 +159,7 @@ namespace EmodiaQuest
                     GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
                     break;
                 case GameStates_Overall.MenuScreen:
+                    
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.draw(spriteBatch);
                     GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };

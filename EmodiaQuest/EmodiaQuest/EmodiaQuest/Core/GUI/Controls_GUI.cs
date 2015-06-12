@@ -29,11 +29,12 @@ namespace EmodiaQuest.Core.GUI
 
         public void loadContent()
         {
-
+            
         }
         public void update()
         {
             this.Mouse_GUI = Mouse.GetState();
+
         }
     }
 }
