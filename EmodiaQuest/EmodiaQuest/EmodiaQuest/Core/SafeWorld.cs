@@ -20,11 +20,12 @@ namespace EmodiaQuest.Core
     public class SafeWorld : Game
     {
         public EnvironmentController controller;
-        public Texture2D CollisionMap, PlacementMap;
+        public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager content;
         public Model wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8; // wall with direction to bottom, right, top, left.
         public Model brownWay, grasGround;
         public Model house1, house2;
+        public Model item;
         public Model Groundplate1;
 
         public SafeWorld(ContentManager content)
@@ -46,8 +47,10 @@ namespace EmodiaQuest.Core
             // Maps
             PlacementMap = content.Load<Texture2D>("maps/safeWorld_PlacementMap");
             CollisionMap = content.Load<Texture2D>("maps/safeWorld_CollisionMap");
+            ItemMap = content.Load<Texture2D>("maps/safeWorld_ItemMap");
             controller.createPlacementMap(PlacementMap);
             controller.createCollisionMap(CollisionMap);
+            controller.createItemMap(ItemMap);
             // Walls
             wall1 = content.Load<Model>("fbxContent/gameobjects/wall1"); Color wall1C = new Color(1, 0, 0); 
             wall2 = content.Load<Model>("fbxContent/gameobjects/wall2"); Color wall2C = new Color(2, 0, 0);
@@ -62,9 +65,10 @@ namespace EmodiaQuest.Core
             grasGround = content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"); Color greenGroundC = new Color(0, 100, 0);
             // Buildings
             house1 = content.Load<Model>("fbxContent/gameobjects/haus1_dim30x10"); Color house1C = new Color(100, 0, 0);
-            house2 = content.Load<Model>("fbxContent/gameobjects/haus2_dim10x30"); Color house2C = new Color(101, 0, 0);
-
-
+            house2 = content.Load<Model>("fbxContent/gameobjects/haus2_dim10x30"); Color house2C = new Color(0, 0, 255); //last one was (101, 0, 0);
+            // Items
+            item = content.Load<Model>("fbxContent/items/Point"); Color itemC = new Color(255, 0, 0);
+            // Insert objects
             controller.insertObj(controller.wall, wall1, wall1C, 0);
             controller.insertObj(controller.wall, wall2, wall2C, 0);
             controller.insertObj(controller.wall, wall3, wall3C, 0);
@@ -77,6 +81,8 @@ namespace EmodiaQuest.Core
             controller.insertObj(controller.ground, grasGround, greenGroundC, 0);
             controller.insertObj(controller.buildings, house1, house1C, 0);
             controller.insertObj(controller.buildings, house2, house2C, 0);
+            // Insert items
+            controller.insertItem(controller.items, item, itemC, 0);
         }
 
         /// <summary>
