@@ -101,10 +101,14 @@ namespace EmodiaQuest
                 case GameStates_Overall.StartScreen:
                     EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.update();
+                    if (kState.IsKeyDown(Keys.Escape))
+                        this.Exit();
                     break;
                 case GameStates_Overall.MenuScreen:
                     EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
+                    if (kState.IsKeyDown(Keys.Escape))
+                        this.Exit();
                     break;
                 case GameStates_Overall.IngameScreen:
 
