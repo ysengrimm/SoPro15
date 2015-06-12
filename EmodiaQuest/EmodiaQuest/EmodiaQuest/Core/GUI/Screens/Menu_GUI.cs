@@ -53,11 +53,10 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         }
         // FAKE FAKE FAKE
-        public bool update()
+        public void update()
         {
             if ((this.functionCalled = this.platform.update()) != null)
                 this.functionCall();
-            return this.exitValue;
         }
 
         public void draw(SpriteBatch spritebatch)

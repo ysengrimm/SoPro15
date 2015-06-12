@@ -22,10 +22,7 @@ namespace EmodiaQuest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-
-        int testb;
-
-        public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
+        public static GameStates_Overall Gamestate_Game = GameStates_Overall.IngameScreen;
         SafeWorld safeWorld;
 
         // TODO move to InGameScreen
@@ -104,19 +101,10 @@ namespace EmodiaQuest
                 case GameStates_Overall.StartScreen:
                     EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.update();
-                    //Close Game with Escape
-                    //if (kState.IsKeyDown(Keys.Escape))
-                    //    this.Exit();
                     break;
                 case GameStates_Overall.MenuScreen:
-                    kState = Keyboard.GetState();
-                    //if (kState.IsKeyDown(Keys.Escape))
-                    //    this.Exit();
                     EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
-                    //FAKE FAKE FAKE
-                    //EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
-                    if (EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update())
-                        this.Exit();
+                    EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
                     break;
                 case GameStates_Overall.IngameScreen:
 
@@ -125,8 +113,7 @@ namespace EmodiaQuest
                         this.Exit();
                     //Close Game with Escape
                     if (kState.IsKeyDown(Keys.Escape))
-                        EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
-                        //this.Exit();
+                        this.Exit();
 
                     Vector3 cameraPos = Vector3.Transform(new Vector3(player.Position.X + 10f, 5, player.Position.Y + 10f) - new Vector3(player.Position.X, 4, player.Position.Y), Matrix.CreateRotationY((float) (player.Angle + Math.PI * 0.75))) + new Vector3(player.Position.X, 5, player.Position.Y);
                     Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
