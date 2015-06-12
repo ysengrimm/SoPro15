@@ -70,8 +70,8 @@ namespace EmodiaQuest
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
             //Initialize the matrizes with reasonable values
             Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 5f, 5, player.Position.Y + 5f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
-            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 200f);
+            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 3f, 3, player.Position.Y + 3f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
+            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 900f); //Setting farülane = render distance
 
             
         }
@@ -114,7 +114,7 @@ namespace EmodiaQuest
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
 
-                    Vector3 cameraPos = Vector3.Transform(new Vector3(player.Position.X + 15f, 20, player.Position.Y + 15f) - new Vector3(player.Position.X, 5, player.Position.Y), Matrix.CreateRotationY((float) (player.Angle + Math.PI * 0.75))) + new Vector3(player.Position.X, 5, player.Position.Y);
+                    Vector3 cameraPos = Vector3.Transform(new Vector3(player.Position.X + 10f, 5, player.Position.Y + 10f) - new Vector3(player.Position.X, 4, player.Position.Y), Matrix.CreateRotationY((float) (player.Angle + Math.PI * 0.75))) + new Vector3(player.Position.X, 5, player.Position.Y);
                     Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
 
                     // TODO: Add your update logic here

@@ -75,13 +75,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fbxContent\testCube.fbx">
-      <Name>testCube</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Content_GUI\pixel_white.png">
       <Name>pixel_white</Name>
       <Importer>TextureImporter</Importer>
@@ -103,14 +96,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="fbxContent\player\" />
     <Folder Include="Texturen\Buttons\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="fbxContent\bodenplatte.fbx">
-      <Name>bodenplatte</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="maps\safeWorld_CollisionMap.png">
@@ -122,6 +109,90 @@
       <Name>safeWorld_PlacementMap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\gameobjects\bodenplatte.fbx">
+      <Name>bodenplatte</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\testCube.fbx">
+      <Name>testCube</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\wall1.fbx">
+      <Name>wall1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\gameobjects\wall2.fbx">
+      <Name>wall2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\gameobjects\wall3.fbx">
+      <Name>wall3</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\wall4.fbx">
+      <Name>wall4</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\wall5.fbx">
+      <Name>wall5</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\wall6.fbx">
+      <Name>wall6</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\wall7.fbx">
+      <Name>wall7</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\wall8.fbx">
+      <Name>wall8</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\gameobjects\brownway_dim10x10.fbx">
+      <Name>brownway_dim10x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\gameobjects\grasGround_dim10x10.fbx">
+      <Name>grasGround_dim10x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\gameobjects\haus1_dim30x10.fbx">
+      <Name>haus1_dim30x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\gameobjects\haus2_dim10x30.fbx">
+      <Name>haus2_dim10x30</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

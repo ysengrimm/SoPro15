@@ -57,7 +57,7 @@ namespace EmodiaQuest.Core
             Hp = 100;
             Armor = 0;
 
-            offset= 4f;
+            offset= 2;
 
             Angle = 0;
 

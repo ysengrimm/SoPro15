@@ -1,0 +1,9 @@
+wall1 = zinnen nach unten
+wall2 = zinnen nach rechts
+wall3 = zinnen nach oben
+wall4 = zinnen nach links
+
+wall5 = verbindet wall1 und wall2
+wall6 = verbindet wall2 und wall3
+wall7 = verbindet wall3 und wall4
+wall8 = verbindet wall4 und wall1
