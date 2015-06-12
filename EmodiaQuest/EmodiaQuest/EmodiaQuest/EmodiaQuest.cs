@@ -68,7 +68,7 @@ namespace EmodiaQuest
             CollisionHandler.Instance.SetEnvironmentController(safeWorld.controller);
             // Initialize Player
             windowSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
-            player = new Player(new Vector2(40, 40), CollisionHandler.Instance, windowSize);
+            player = new Player(new Vector2(250, 350), CollisionHandler.Instance, windowSize);
             player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
             //Initialize the matrizes with reasonable values
             Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));

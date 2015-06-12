@@ -65,7 +65,7 @@ namespace EmodiaQuest.Core
             grasGround = content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"); Color greenGroundC = new Color(0, 100, 0);
             // Buildings
             house1 = content.Load<Model>("fbxContent/gameobjects/haus1_dim30x10"); Color house1C = new Color(100, 0, 0);
-            house2 = content.Load<Model>("fbxContent/gameobjects/haus2_dim10x30"); Color house2C = new Color(101, 0, 0);
+            house2 = content.Load<Model>("fbxContent/gameobjects/haus2_dim10x30"); Color house2C = new Color(0, 0, 255); //last one was (101, 0, 0);
             // Items
             item = content.Load<Model>("fbxContent/items/Point"); Color itemC = new Color(255, 0, 0);
             // Insert objects
