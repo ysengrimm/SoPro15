@@ -26,7 +26,7 @@ namespace EmodiaQuest.Core
 
         public Vector2 Position;
         private Vector2 movement;
-        private float offset;
+        public float MovementOffset, ItemOffset;
         public float Angle;
 
         private Model playerModel;
@@ -57,7 +57,8 @@ namespace EmodiaQuest.Core
             Hp = 100;
             Armor = 0;
 
-            offset= 2;
+            MovementOffset = 2.0f;
+            ItemOffset = 0.0f;
 
             Angle = 0;
 
@@ -97,36 +98,28 @@ namespace EmodiaQuest.Core
             }
 
             //Collision with Walls
-            if (Color.White == collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, offset))
+            if (Color.White == collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
                 Position.Y = movement.Y;
             }
-            if (Color.White == collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, offset))
+            if (Color.White == collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
                 Position.X = movement.X;
             }
 
             //Collision with Items
-            if (Color.White != collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.ItemColors, offset))
+            if (Color.White != collisionHandler.getCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
             {
-                foreach(GameObject item in collisionHandler.Controller.items){
-                    if (item.position == new Vector3((int)Math.Round(Position.X), 0, (int)Math.Round(movement.Y)))
-                    {
-                        item.drawable = false;
-                        Console.Out.WriteLine("BLUBB");
-                    }
-                }
-            }
-            if (Color.White != collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.ItemColors, offset))
-            {
-                foreach (GameObject item in collisionHandler.Controller.items)
+                for(int i = 0; i < collisionHandler.Controller.items.Count; i++)
                 {
-                    if (item.position == new Vector3((int)Math.Round(movement.X), 0, (int)Math.Round(Position.Y)))
-                    {
-                        item.drawable = false;
-                        Console.Out.WriteLine("BLUBB2");
-                    }
+                    Vector2 temp = new Vector2(collisionHandler.Controller.items.ElementAt(i).position.X, collisionHandler.Controller.items.ElementAt(i).position.Z);
+                if (euclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 15)
+                {
+                    collisionHandler.Controller.items.RemoveAt(i);
+                    Console.Out.WriteLine("+1 Point");
                 }
+                }
+
             }
 
             // not really necessary beacuse only vertical rotation
@@ -148,6 +141,12 @@ namespace EmodiaQuest.Core
                 }
                 mesh.Draw();
             }
+        }
+
+
+        private double euclideanDistance(Vector2 p1, Vector2 p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }
 
     }

@@ -18,7 +18,6 @@ namespace EmodiaQuest.Core
         public Vector3 position;
         public Vector3 rotation;
         public Model model;
-        public Boolean drawable = true;
 
         /// <summary>
         /// Creates a new map from a pixelmap
@@ -39,20 +38,16 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void drawGameobject(Matrix world, Matrix view, Matrix projection)
         {
-            //for items
-            if (drawable)
+            foreach (ModelMesh mesh in model.Meshes)
             {
-                foreach (ModelMesh mesh in model.Meshes)
+                foreach (BasicEffect effect in mesh.Effects)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateTranslation(position) * world;
-                        effect.View = view;
-                        effect.Projection = projection;
-                    }
-                    mesh.Draw();
+                    effect.EnableDefaultLighting();
+                    effect.World = Matrix.CreateTranslation(position) * world;
+                    effect.View = view;
+                    effect.Projection = projection;
                 }
+                mesh.Draw();
             }
         }
 
