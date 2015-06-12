@@ -116,7 +116,7 @@ namespace EmodiaQuest.Core
                 if (euclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 15)
                 {
                     collisionHandler.Controller.items.RemoveAt(i);
-                    Console.Out.WriteLine("BLUBB");
+                    Console.Out.WriteLine("+1 Point");
                 }
                 }
 

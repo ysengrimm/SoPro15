@@ -69,7 +69,7 @@ namespace EmodiaQuest
             // Initialize Player
             windowSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
             player = new Player(new Vector2(40, 40), CollisionHandler.Instance, windowSize);
-            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_colored");
+            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_trousers_2");
             //Initialize the matrizes with reasonable values
             Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
             Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 3f, 3, player.Position.Y + 3f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
