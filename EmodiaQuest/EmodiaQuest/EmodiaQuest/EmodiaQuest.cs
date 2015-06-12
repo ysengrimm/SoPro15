@@ -21,7 +21,9 @@ namespace EmodiaQuest
         // Only this two and the enum-init should be here
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        int a = 1;
+
+
+        int testb;
 
         public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
         SafeWorld safeWorld;
