@@ -68,7 +68,7 @@ namespace EmodiaQuest.Core
 
             Angle = 0;
 
-            playerModel = content.Load<Model>("fbxContent/test2anim");
+            playerModel = content.Load<Model>("fbxContent/testPlayerv1");
 
             // Look up our custom skinning information.
             SkinningData skinningData = playerModel.Tag as SkinningData;
@@ -79,8 +79,10 @@ namespace EmodiaQuest.Core
 
             // Create an animation player, and start decoding an animation clip.
             animationPlayer = new AnimationPlayer(skinningData);
+            Console.WriteLine("Holla");
+            Console.WriteLine("Test:" + skinningData.AnimationClips.ElementAt(0));
 
-            AnimationClip clip = skinningData.AnimationClips["run"];
+            AnimationClip clip = skinningData.AnimationClips["Default Take"];
 
             animationPlayer.StartClip(clip);
 
@@ -163,6 +165,7 @@ namespace EmodiaQuest.Core
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
                     effect.SetBoneTransforms(bones);
+                    effect.DiffuseColor = new Vector3(255, 0, 0);
 
                     effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
                     effect.View = view;

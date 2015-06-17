@@ -63,18 +63,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fbxContent\mainchar_sopro_badsculp_badcolored.fbx">
-      <Name>mainchar_sopro_badsculp_badcolored</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="fbxContent\mainchar_sopro_sculp3sub_colored.fbx">
-      <Name>mainchar_sopro_sculp3sub_colored</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Content_GUI\pixel_white.png">
       <Name>pixel_white</Name>
       <Importer>TextureImporter</Importer>
@@ -84,13 +72,6 @@
   <ItemGroup>
     <Compile Include="Content_GUI\pixel_black.png">
       <Name>pixel_black</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Texturen\Playertexturen\mainchar_v1_tex.png">
-      <Name>mainchar_v1_tex</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -235,35 +216,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fbxContent\mainchar_sopro_sculp3sub_trousers_2.fbx">
-      <Name>mainchar_sopro_sculp3sub_trousers_2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Texturen\Playertexturen\rocky.png">
-      <Name>rocky</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="fbxContent\test2anim.fbx">
-      <Name>test2anim</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SkinnedModelPipeline\SkinnedModelPipeline.csproj">
       <Project>{4636c7e1-b845-4b83-b96d-64a11b8a4515}</Project>
       <Name>SkinnedModelPipeline</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Texturen\Playertexturen\animtext.png">
-      <Name>animtext</Name>
+    <Compile Include="fbxContent\testPlayerv1.fbx">
+      <Name>testPlayerv1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Texturen\Playertexturen\testPlayerV1Texture.png">
+      <Name>testPlayerV1Texture</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
