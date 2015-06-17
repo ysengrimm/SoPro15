@@ -31,9 +31,6 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private string functionCalled = null;
 
-        // FAKE FAKE FAKE
-        private bool exitValue = false;
-
         public void loadContent(ContentManager Content)
         {
             this.platform.loadContent(Content);
@@ -71,9 +68,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "nextState":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
                     break;
-                case "quit":
-                    this.exitValue = true;
-                    break;
+                //case "quit":
+                //    this.exitValue = true;
+                //    break;
                 default:
                     Console.WriteLine("No such Function.");
                     break;
