@@ -111,6 +111,7 @@
     <Compile Include="Core\GUI\Controls_GUI.cs" />
     <Compile Include="Core\GUI\Enums_GUI.cs" />
     <Compile Include="Core\GUI\ItemSocket_GUI.cs" />
+    <Compile Include="Core\GUI\PlainImage_GUI.cs" />
     <Compile Include="Core\GUI\PlainText_GUI.cs" />
     <Compile Include="Core\GUI\Platform_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Menu_GUI.cs" />
