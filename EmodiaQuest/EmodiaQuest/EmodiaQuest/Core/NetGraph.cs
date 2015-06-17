@@ -28,8 +28,10 @@ namespace EmodiaQuest.Core
 
         private Texture2D backgroundForFrames;
         private SpriteFont monoFont_small;
-        float frameRate;
-        private string frames = "0";
+        float frameRate = 0;
+        private string frameString = "0";
+        private string playerXString = "0";
+        private string playerYString = "0";
         
 
         public void loadContent(ContentManager Content)
@@ -37,20 +39,30 @@ namespace EmodiaQuest.Core
 
             backgroundForFrames = Content.Load<Texture2D>("Content_GUI/pixel_black");
             monoFont_small = Content.Load<SpriteFont>("Content_GUI/monoFont_small");
+
+            //Measure Fontsize
+            //Console.WriteLine(monoFont_small.MeasureString("1"));
         }
 
-        public void update(GameTime gameTime)
+        public void update(GameTime gameTime, float playerX, float playerY)
         {
+            // get frames
             frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
-            frames = frameRate.ToString();
+            // set the frames string to the frame value
+            frameString = frameRate.ToString();
+            playerXString = playerX.ToString();
+            playerYString = playerY.ToString();
         }
 
         public void draw(SpriteBatch spritebatch)
         {
             // Beware: Hardcoded values
             spritebatch.Begin();
-            spritebatch.Draw(backgroundForFrames, new Rectangle(800 - 180, 0, 180, 40), new Color(0, 0, 0, 80));
-            spritebatch.DrawString(monoFont_small, frames, new Vector2(800 - 178, 0), Color.White);
+            // Add draws
+            spritebatch.Draw(backgroundForFrames, new Rectangle(800 - 180, 0, 180, 40*3), new Color(0, 0, 0, 80));
+            spritebatch.DrawString(monoFont_small, frameString, new Vector2(800 - 178, 0), Color.White);
+            spritebatch.DrawString(monoFont_small, playerXString, new Vector2(800 - 178, 40), Color.White);
+            spritebatch.DrawString(monoFont_small, playerYString, new Vector2(800 - 178, 80), Color.White);
             spritebatch.End();
         }
 
