@@ -200,6 +200,7 @@
       <Name>diceFont_big</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Content_GUI\monoFont_big.spritefont">
       <Name>monoFont_big</Name>
@@ -248,8 +249,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Content_GUI\itemSocket.png">
       <Name>itemSocket</Name>
+=======
+    <Compile Include="fbxContent\test2anim.fbx">
+      <Name>test2anim</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SkinnedModelPipeline\SkinnedModelPipeline.csproj">
+      <Project>{4636c7e1-b845-4b83-b96d-64a11b8a4515}</Project>
+      <Name>SkinnedModelPipeline</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Texturen\Playertexturen\animtext.png">
+      <Name>animtext</Name>
+>>>>>>> 0ebac6500da6668e819cc0e4108f32bcac14452f
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

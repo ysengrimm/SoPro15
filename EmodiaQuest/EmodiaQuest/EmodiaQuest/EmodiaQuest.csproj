@@ -142,6 +142,7 @@
     <Compile Include="Core\Player.cs" />
     <Compile Include="Core\SafeWorld.cs" />
     <Compile Include="Core\Screens\Screen.cs" />
+    <Compile Include="Core\Settings.cs" />
     <Compile Include="Core\Storycontroller.cs" />
     <Compile Include="Core\Screens\VideoScreen.cs" />
     <Compile Include="Enums_Overall.cs" />
@@ -161,6 +162,10 @@
     <ProjectReference Include="..\EmodiaQuestContent\EmodiaQuestContent.contentproj">
       <Name>EmodiaQuestContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
+    <ProjectReference Include="..\SkinnedModel\SkinnedModelWindows.csproj">
+      <Project>{0d41e29b-829f-4255-bca5-64dc2677da6d}</Project>
+      <Name>SkinnedModelWindows</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
