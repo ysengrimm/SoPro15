@@ -79,8 +79,6 @@ namespace EmodiaQuest.Core
 
             // Create an animation player, and start decoding an animation clip.
             animationPlayer = new AnimationPlayer(skinningData);
-            Console.WriteLine("Holla");
-            Console.WriteLine("Test:" + skinningData.AnimationClips.ElementAt(0));
 
             AnimationClip clip = skinningData.AnimationClips["Default Take"];
 

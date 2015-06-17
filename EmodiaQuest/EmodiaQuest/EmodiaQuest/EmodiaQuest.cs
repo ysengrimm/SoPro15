@@ -22,7 +22,7 @@ namespace EmodiaQuest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public static GameStates_Overall Gamestate_Game = GameStates_Overall.IngameScreen;
+        public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
         SafeWorld safeWorld;
 
         // TODO move to InGameScreen

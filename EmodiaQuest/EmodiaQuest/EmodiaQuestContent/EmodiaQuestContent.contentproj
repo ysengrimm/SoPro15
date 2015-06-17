@@ -222,17 +222,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fbxContent\testPlayerv1.fbx">
-      <Name>testPlayerv1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
+    <Compile Include="Content_GUI\itemSocket.png">
+      <Name>itemSocket</Name>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Texturen\Playertexturen\testPlayerV1Texture.png">
       <Name>testPlayerV1Texture</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <ProjectReference Include="..\SkinnedModelPipeline\SkinnedModelPipeline.csproj">
+      <Project>{4636c7e1-b845-4b83-b96d-64a11b8a4515}</Project>
+      <Name>SkinnedModelPipeline</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\testPlayerv1.fbx">
+      <Name>testPlayerv1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
