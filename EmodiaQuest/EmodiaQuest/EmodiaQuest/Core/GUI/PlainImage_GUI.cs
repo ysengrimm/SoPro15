@@ -10,13 +10,18 @@ namespace EmodiaQuest.Core.GUI
     {
         public int XPos { get; set; }
         public int YPos { get; set; }
-        private Color color = Color.Black;
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public Color Color { get; set; }
 
-        public PlainImage_GUI(int xPos, int yPos, Color color)
+        public PlainImage_GUI(int xPos, int yPos, int width, int height, Color color)
         {
             this.XPos = xPos;
             this.YPos = yPos;
-            this.color = color;
+            this.Width = width;
+            this.Height = height;
+            this.Color = color;
         }
+
     }
 }

@@ -59,6 +59,7 @@ namespace EmodiaQuest
             //EmodiaQuest.Core.GUI.Controls_GUI.Instance.Mouse_GUI.
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);
+            EmodiaQuest.Core.NetGraph.Instance.loadContent(Content);
 
             // Safeworld Init
             safeWorld = new SafeWorld(Content);
@@ -124,6 +125,9 @@ namespace EmodiaQuest
                     MouseState mState = Mouse.GetState();
                     player.Update(gameTime, mState);
 
+                    // HUD/NetStat
+                    EmodiaQuest.Core.NetGraph.Instance.update(gameTime);
+
                     break;
                 case GameStates_Overall.OptionsScreen:
                     break;
@@ -159,12 +163,19 @@ namespace EmodiaQuest
                     
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.draw(spriteBatch);
+                    
+
                     GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
                     break;
                 case GameStates_Overall.IngameScreen:
                     this.IsMouseVisible = false;
                     Renderer.Instance.DrawSafeWorld(safeWorld);
                     Renderer.Instance.DrawPlayer(player);
+
+                    // HUD/NetStat
+                    EmodiaQuest.Core.NetGraph.Instance.draw(spriteBatch);
+                    GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+                    
                     break;
                 case GameStates_Overall.OptionsScreen:
                     break;

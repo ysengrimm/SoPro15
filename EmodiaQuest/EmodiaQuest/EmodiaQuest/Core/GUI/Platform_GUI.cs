@@ -19,12 +19,15 @@ namespace EmodiaQuest.Core.GUI
         private MouseState mouseHandle_Old;
         private string pushed_name = null;
         private string functionCalled = null;
+        
 
         //private short alphaValue = 255;
         public Color drawColor = Color.White;
+        public bool backgroundEnabled = true;
         private Color overlayColor = Color.White;
         private float overlayValue = 0;
         private bool overlayBool = true;
+        
 
         // Button Textures
         private Texture2D button_n;
@@ -37,6 +40,9 @@ namespace EmodiaQuest.Core.GUI
         // Background Textures
         private Texture2D background;
         private Texture2D overlay;
+
+        // Images Textures
+        private Texture2D plainImage;
 
         // Fonts
         private SpriteFont monoFont_big;
@@ -57,6 +63,9 @@ namespace EmodiaQuest.Core.GUI
             background = Content.Load<Texture2D>("Content_GUI/pixel_black");
             overlay = Content.Load<Texture2D>("Content_GUI/pixel_white");
 
+            // PlainImage Content
+            plainImage = Content.Load<Texture2D>("Content_GUI/pixel_black");
+
             // Load Fonts
             monoFont_big = Content.Load<SpriteFont>("Content_GUI/monoFont_big");
             dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
@@ -68,6 +77,11 @@ namespace EmodiaQuest.Core.GUI
         public void setBackground(ContentManager Content, string name)
         {
             this.background = Content.Load<Texture2D>(name);
+        }
+
+        public void backgroundOff()
+        {
+            this.backgroundEnabled = false;
         }
 
 
@@ -122,8 +136,12 @@ namespace EmodiaQuest.Core.GUI
             //spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
             // Windows-Standard-Size ist 800x480
 
-            spritebatch.Draw(overlay, new Rectangle(0, 0, 800, 480), Color.White);
-            spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), drawColor);
+            if(backgroundEnabled)
+            {
+                spritebatch.Draw(overlay, new Rectangle(0, 0, 800, 480), Color.White);
+                spritebatch.Draw(background, new Rectangle(0, 0, 800, 480), drawColor);
+            }
+            
             
 
             
@@ -142,6 +160,9 @@ namespace EmodiaQuest.Core.GUI
                         spritebatch.Draw(button_p, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                 }
             }
+            foreach (PlainImage_GUI pi in pimages)
+                spritebatch.Draw(plainImage, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), pi.Color);
+
             foreach (PlainText_GUI pt in ptexts)
                 spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor);
 
@@ -176,9 +197,9 @@ namespace EmodiaQuest.Core.GUI
             }
         }
 
-        public void addPlainImage(int xPos, int yPos, Color color)
+        public void addPlainImage(int xPos, int yPos, int width, int height, Color color)
         {
-            pimages.Add(new PlainImage_GUI(xPos, yPos, color));
+            pimages.Add(new PlainImage_GUI(xPos, yPos, width, height, color));
         }
                 
 
