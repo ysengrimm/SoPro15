@@ -9,7 +9,7 @@ namespace EmodiaQuest.Core
     {
         public string itemName = null;
         public int strength = 0;
-        public int tenacity = 0;
+        public int tenacity = 0; 
     }
 
     // Geschick Schwerter tragen plus Schaden

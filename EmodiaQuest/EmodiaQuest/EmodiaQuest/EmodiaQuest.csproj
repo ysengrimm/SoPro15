@@ -122,6 +122,7 @@
     <Compile Include="Core\Item_Useable.cs" />
     <Compile Include="Core\Item_ValueParent.cs" />
     <Compile Include="Core\Item_Weapon.cs" />
+    <Compile Include="Core\NetGraph.cs" />
     <Compile Include="Core\NPCs\Ai.cs" />
     <Compile Include="Core\NPCs\Animal.cs" />
     <Compile Include="Core\CollisionHandler.cs" />
