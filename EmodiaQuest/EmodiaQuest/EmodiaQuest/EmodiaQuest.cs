@@ -157,7 +157,6 @@ namespace EmodiaQuest
                 case GameStates_Overall.StartScreen:
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.draw(spriteBatch);
-                    GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
                     break;
                 case GameStates_Overall.MenuScreen:
                     
@@ -165,16 +164,16 @@ namespace EmodiaQuest
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.draw(spriteBatch);
                     
 
-                    GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+                    
                     break;
                 case GameStates_Overall.IngameScreen:
                     this.IsMouseVisible = false;
+                    GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
                     Renderer.Instance.DrawSafeWorld(safeWorld);
                     Renderer.Instance.DrawPlayer(player);
 
                     // HUD/NetStat
                     EmodiaQuest.Core.NetGraph.Instance.draw(spriteBatch);
-                    GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
                     
                     break;
                 case GameStates_Overall.OptionsScreen:
