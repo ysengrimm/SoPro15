@@ -13,6 +13,7 @@ namespace EmodiaQuest.Core.GUI
     {
         private List<Button_GUI> buttons = new List<Button_GUI>();
         private List<PlainText_GUI> ptexts = new List<PlainText_GUI>();
+        private List<ItemSocket_GUI> sockets = new List<ItemSocket_GUI>();
         private MouseState mouseHandle;
         private MouseState mouseHandle_Old;
         private string pushed_name = null;
@@ -29,11 +30,14 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D button_m;
         private Texture2D button_p;
 
+        // ItemSocket Textures
+        private Texture2D itemSocket;
+
         // Background Textures
         private Texture2D background;
         private Texture2D overlay;
 
-        // Stuff wieder loeschen
+        // Fonts
         private SpriteFont monoFont_big;
         private SpriteFont dice_big;
         private SpriteFont monoFont_small;
@@ -44,6 +48,9 @@ namespace EmodiaQuest.Core.GUI
             button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
             button_m = Content.Load<Texture2D>("Content_GUI/button_mouseOver");
             button_p = Content.Load<Texture2D>("Content_GUI/button_pressed");
+
+            // ItemSocket Content
+            itemSocket = Content.Load<Texture2D>("Content_GUI/itemSocket");
 
             // Background Content
             background = Content.Load<Texture2D>("Content_GUI/pixel_black");
