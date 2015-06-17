@@ -14,6 +14,7 @@ namespace EmodiaQuest.Core.GUI
         private List<Button_GUI> buttons = new List<Button_GUI>();
         private List<PlainText_GUI> ptexts = new List<PlainText_GUI>();
         private List<ItemSocket_GUI> sockets = new List<ItemSocket_GUI>();
+        private List<PlainImage_GUI> pimages = new List<PlainImage_GUI>();
         private MouseState mouseHandle;
         private MouseState mouseHandle_Old;
         private string pushed_name = null;
@@ -173,6 +174,11 @@ namespace EmodiaQuest.Core.GUI
                     Console.WriteLine("No such font");
                     break;
             }
+        }
+
+        public void addPlainImage(int xPos, int yPos, Color color)
+        {
+            pimages.Add(new PlainImage_GUI(xPos, yPos, color));
         }
                 
 
