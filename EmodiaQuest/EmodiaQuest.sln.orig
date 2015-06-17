@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+<<<<<<< HEAD
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
+=======
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+>>>>>>> 1772482ff200eb6adbb8663ee9f786fd785d52d1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmodiaQuest", "EmodiaQuest\EmodiaQuest\EmodiaQuest.csproj", "{91E8D219-A546-4F70-AF9E-02F96B642FBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmodiaQuestContent", "EmodiaQuest\EmodiaQuestContent\EmodiaQuestContent.contentproj", "{DE9102AE-4008-474D-90B8-2480D6055240}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinnedModelPipeline", "EmodiaQuest\SkinnedModelPipeline\SkinnedModelPipeline.csproj", "{4636C7E1-B845-4B83-B96D-64A11B8A4515}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinnedModelWindows", "EmodiaQuest\SkinnedModel\SkinnedModelWindows.csproj", "{0D41E29B-829F-4255-BCA5-64DC2677DA6D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Debug|Xbox 360 = Debug|Xbox 360
+		Release|x86 = Release|x86
+		Release|Xbox 360 = Release|Xbox 360
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91E8D219-A546-4F70-AF9E-02F96B642FBF}.Debug|x86.ActiveCfg = Debug|x86
+		{91E8D219-A546-4F70-AF9E-02F96B642FBF}.Debug|x86.Build.0 = Debug|x86
+		{91E8D219-A546-4F70-AF9E-02F96B642FBF}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{91E8D219-A546-4F70-AF9E-02F96B642FBF}.Release|x86.ActiveCfg = Release|x86
+		{91E8D219-A546-4F70-AF9E-02F96B642FBF}.Release|x86.Build.0 = Release|x86
+		{91E8D219-A546-4F70-AF9E-02F96B642FBF}.Release|Xbox 360.ActiveCfg = Release|x86
+		{DE9102AE-4008-474D-90B8-2480D6055240}.Debug|x86.ActiveCfg = Debug|x86
+		{DE9102AE-4008-474D-90B8-2480D6055240}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{DE9102AE-4008-474D-90B8-2480D6055240}.Release|x86.ActiveCfg = Release|x86
+		{DE9102AE-4008-474D-90B8-2480D6055240}.Release|Xbox 360.ActiveCfg = Release|x86
+		{4636C7E1-B845-4B83-B96D-64A11B8A4515}.Debug|x86.ActiveCfg = Debug|x86
+		{4636C7E1-B845-4B83-B96D-64A11B8A4515}.Debug|x86.Build.0 = Debug|x86
+		{4636C7E1-B845-4B83-B96D-64A11B8A4515}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{4636C7E1-B845-4B83-B96D-64A11B8A4515}.Debug|Xbox 360.Build.0 = Debug|x86
+		{4636C7E1-B845-4B83-B96D-64A11B8A4515}.Release|x86.ActiveCfg = Debug|x86
+		{4636C7E1-B845-4B83-B96D-64A11B8A4515}.Release|x86.Build.0 = Debug|x86
+		{4636C7E1-B845-4B83-B96D-64A11B8A4515}.Release|Xbox 360.ActiveCfg = Debug|x86
+		{4636C7E1-B845-4B83-B96D-64A11B8A4515}.Release|Xbox 360.Build.0 = Debug|x86
+		{0D41E29B-829F-4255-BCA5-64DC2677DA6D}.Debug|x86.ActiveCfg = Debug|x86
+		{0D41E29B-829F-4255-BCA5-64DC2677DA6D}.Debug|x86.Build.0 = Debug|x86
+		{0D41E29B-829F-4255-BCA5-64DC2677DA6D}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
+		{0D41E29B-829F-4255-BCA5-64DC2677DA6D}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
+		{0D41E29B-829F-4255-BCA5-64DC2677DA6D}.Release|x86.ActiveCfg = Release|x86
+		{0D41E29B-829F-4255-BCA5-64DC2677DA6D}.Release|x86.Build.0 = Release|x86
+		{0D41E29B-829F-4255-BCA5-64DC2677DA6D}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
+		{0D41E29B-829F-4255-BCA5-64DC2677DA6D}.Release|Xbox 360.Build.0 = Release|Xbox 360
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
