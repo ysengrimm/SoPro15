@@ -68,12 +68,11 @@ namespace EmodiaQuest
             // Initialize Player
             windowSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
 
-            player = new Player(new Vector2(250, 350), CollisionHandler.Instance, windowSize);
-            player.Model = Content.Load<Model>("fbxContent/mainchar_sopro_sculp3sub_trousers_2");
+            player = new Player(new Vector2(250, 350), CollisionHandler.Instance, windowSize, Content);
 
             //Initialize the matrizes with reasonable values
             Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 3f, 3, player.Position.Y + 3f), new Vector3(player.Position.X, 2, player.Position.Y), Vector3.UnitY);
+            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 3f, 3, player.Position.Y + 3f), new Vector3(player.Position.X, 1, player.Position.Y), Vector3.UnitY);
             Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 900f); //Setting farülane = render distance
 
             Mouse.WindowHandle = Window.Handle;
@@ -122,8 +121,8 @@ namespace EmodiaQuest
                     Vector3 cameraPos = Vector3.Transform(new Vector3(player.Position.X + 10f, 5, player.Position.Y + 10f) - new Vector3(player.Position.X, 4, player.Position.Y), Matrix.CreateRotationY((float) (player.Angle + Math.PI * 0.75))) + new Vector3(player.Position.X, 5, player.Position.Y);
                     Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
 
-                    MouseState ms = Mouse.GetState();
-                    player.Update(gameTime, ms);
+                    MouseState mState = Mouse.GetState();
+                    player.Update(gameTime, mState);
 
                     break;
                 case GameStates_Overall.OptionsScreen:
