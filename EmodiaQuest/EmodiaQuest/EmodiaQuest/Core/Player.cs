@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using SkinnedModel;
 
 
 
@@ -21,19 +22,23 @@ namespace EmodiaQuest.Core
         public float Hp;
         public float Armor;
 
-        public float PlayerSpeed = 1f;
+        public float PlayerSpeed = 0.5f;
         public float RotationSpeed = 1.5f;
 
         public Vector2 Position;
-        private Vector2 movement;
+        private Vector2 movement; // future position
+        private Vector2 lastPos; //position from last step (fixes false kamera focus)
         public float MovementOffset, ItemOffset;
         public float Angle;
 
         private Model playerModel;
+        private AnimationPlayer animationPlayer;
 
         private CollisionHandler collisionHandler;
 
         private Vector2 windowSize;
+
+        public ContentManager content;
 
         public Model Model
         {
@@ -47,10 +52,11 @@ namespace EmodiaQuest.Core
         /// </summary>
         /// <param name="position">Initial player position.</param>
         /// <param name="collisionHandler">Current collision handler</param>
-        public Player(Vector2 position, CollisionHandler collisionHandler, Vector2 winSize)
+        public Player(Vector2 position, CollisionHandler collisionHandler, Vector2 winSize, ContentManager content)
         {
             Position = position;
             this.collisionHandler = collisionHandler;
+            this.content = content;
             windowSize = winSize;
             
             // set defaults
@@ -61,6 +67,22 @@ namespace EmodiaQuest.Core
             ItemOffset = 0.0f;
 
             Angle = 0;
+
+            playerModel = content.Load<Model>("fbxContent/test2anim");
+
+            // Look up our custom skinning information.
+            SkinningData skinningData = playerModel.Tag as SkinningData;
+
+            if (skinningData == null)
+                throw new InvalidOperationException
+                    ("This model does not contain a SkinningData tag.");
+
+            // Create an animation player, and start decoding an animation clip.
+            animationPlayer = new AnimationPlayer(skinningData);
+
+            AnimationClip clip = skinningData.AnimationClips["run"];
+
+            animationPlayer.StartClip(clip);
 
         }
 
@@ -73,7 +95,7 @@ namespace EmodiaQuest.Core
         {
             //scale position to 0.0 to 1.0 then center the +/- change
             Angle = (float) -(((mouseState.X/windowSize.X))*2*Math.PI * RotationSpeed);
-
+            lastPos = Position;
             movement = Position;
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
@@ -125,19 +147,31 @@ namespace EmodiaQuest.Core
             // not really necessary beacuse only vertical rotation
             //float mousePosYNorm = mouseState.Y / windowSize.Y;
 
+
+            animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+
             //Console.Out.WriteLine(Position);
         }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
+            // Bone update
+            Matrix[] bones = animationPlayer.GetSkinTransforms();
+
             foreach (ModelMesh mesh in playerModel.Meshes)
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach (SkinnedEffect effect in mesh.Effects)
                 {
-                    effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+                    effect.SetBoneTransforms(bones);
+
+                    effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
+
+                    effect.EnableDefaultLighting();
+
+                    effect.SpecularColor = new Vector3(0.25f);
+                    effect.SpecularPower = 16;
                 }
                 mesh.Draw();
             }
