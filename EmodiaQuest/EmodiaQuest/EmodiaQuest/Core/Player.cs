@@ -18,21 +18,36 @@ namespace EmodiaQuest.Core
 {
     public class Player
     {
-
+        // Playerstats
         public float Hp;
         public float Armor;
-
         public float PlayerSpeed = 0.5f;
         public float RotationSpeed = 1.5f;
 
         public Vector2 Position;
+        // For movement and camera update
         private Vector2 movement; // future position
         private Vector2 lastPos; //position from last step (fixes false kamera focus)
         public float MovementOffset, ItemOffset;
         public float Angle;
 
-        private Model playerModel;
-        private AnimationPlayer animationPlayer;
+        // The Model
+        private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
+        // Skinning Data
+        private SkinningData standingSD, walkingSD, jumpingSD, swordfightingSD, bowfightingSD;
+        // The animation Player
+        private AnimationPlayer standingAP, walkingAP, jumpingAP, swordfightingAP, bowfightingAP;
+        // The animation Clips, which will be used by the model
+        private AnimationClip standingC, walkingC, jumpingC, swordfightingC, bowfightingC;
+        // The Bone Matrices for each animation
+        private Matrix[] standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones;
+        // The playerState, which will be needed to update the right animation
+        public PlayerState playerState = PlayerState.Standing;
+        public PlayerState lastPlayerState = PlayerState.Standing;
+        private float standingDuration;
+        private float walkingDuration;
+        private float jumpingDuration;
+        private float stateTime;
 
         private CollisionHandler collisionHandler;
 
@@ -42,7 +57,7 @@ namespace EmodiaQuest.Core
 
         public Model Model
         {
-            set { playerModel = value; }
+            set { standingM = value; }
         }
 
 
@@ -67,28 +82,50 @@ namespace EmodiaQuest.Core
             ItemOffset = 0.0f;
 
             Angle = 0;
-
+            
             playerModel = content.Load<Model>("fbxContent/testPlayerv1");
-
+            /*
             // Look up our custom skinning information.
             SkinningData skinningData = playerModel.Tag as SkinningData;
-
-            if (skinningData == null)
-                throw new InvalidOperationException
-                    ("This model does not contain a SkinningData tag.");
-
             // Create an animation player, and start decoding an animation clip.
             animationPlayer = new AnimationPlayer(skinningData);
-
-            AnimationClip clip = skinningData.AnimationClips["Default Take"];
+            Console.WriteLine("Holla" + skinningData.AnimationClips.Count);
+            AnimationClip clip = skinningData.AnimationClips["Jump"];
 
             animationPlayer.StartClip(clip);
-
+            */
         }
 
         public void LoadContent()
         {
-            
+            //loading default mesh
+            playerModel = content.Load<Model>("fbxContent/testPlayerv1");
+            //loading Animation Models
+            standingM = content.Load<Model>("fbxContent/testPlayerv1_Stand");
+            walkingM = content.Load<Model>("fbxContent/testPlayerv1_Run");
+            jumpingM = content.Load<Model>("fbxContent/testPlayerv1_Jump");
+            //Loading Skinning Data
+            standingSD = standingM.Tag as SkinningData;
+            walkingSD = walkingM.Tag as SkinningData;
+            jumpingSD = jumpingM.Tag as SkinningData;
+            //Load an animation Player for each animation
+            standingAP = new AnimationPlayer(standingSD);
+            walkingAP = new AnimationPlayer(walkingSD);
+            jumpingAP = new AnimationPlayer(jumpingSD);
+            //loading Animation Clips
+            AnimationClip standingC = standingSD.AnimationClips["Stand"];
+            AnimationClip walkingC = walkingSD.AnimationClips["Run"];
+            AnimationClip jumpingC = jumpingSD.AnimationClips["Jump"];
+            //Safty Start Animations
+            standingAP.StartClip(standingC);
+            walkingAP.StartClip(walkingC);
+            jumpingAP.StartClip(jumpingC);
+            //assign the specific animationTimes
+            standingDuration = standingC.Duration.Milliseconds/1.5f;
+            walkingDuration = walkingC.Duration.Milliseconds/1.5f;
+            jumpingDuration = jumpingC.Duration.Milliseconds/1.5f;
+            stateTime = 0;
+
         }
 
         public void Update(GameTime gameTime, MouseState mouseState)
@@ -143,26 +180,76 @@ namespace EmodiaQuest.Core
                 }
 
             }
+            //update playerState
+            if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
+            {
+                playerState = PlayerState.Walking;
+                stateTime = walkingDuration;
+            }
+            else if(Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 10)
+            {
+                playerState = PlayerState.Jumping;
+                stateTime = jumpingDuration;
+            }
+            else if(lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
+            {
+                playerState = PlayerState.Standing;
+                stateTime = standingDuration;
+            }
+            stateTime -= gameTime.ElapsedGameTime.Milliseconds;
 
-            // not really necessary beacuse only vertical rotation
-            //float mousePosYNorm = mouseState.Y / windowSize.Y;
-
-
-            animationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-
-            //Console.Out.WriteLine(Position);
+            Console.WriteLine("stateTime " + stateTime);
+            
+            //update only the animation which is required if the Playerstate changed        
+            switch(playerState)
+            {
+                case PlayerState.Standing:
+                    standingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case PlayerState.Walking:
+                    walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case PlayerState.Jumping:
+                    jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+            }
+            lastPlayerState = playerState;
         }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
-            // Bone update
-            Matrix[] bones = animationPlayer.GetSkinTransforms();
+            // Bone updates for each required animation        
+            switch (playerState)
+            {
+                case PlayerState.Standing:
+                    standingBones = standingAP.GetSkinTransforms();
+                    break;
+                case PlayerState.Walking:
+                    walkingBones = walkingAP.GetSkinTransforms();
+                    break;
+                case PlayerState.Jumping:
+                    jumpingBones = jumpingAP.GetSkinTransforms();
+                    break;
+            }
 
             foreach (ModelMesh mesh in playerModel.Meshes)
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
-                    effect.SetBoneTransforms(bones);
+                    
+                    //Draw the Bones which are required
+                    switch (playerState)
+                    {
+                        case PlayerState.Standing:
+                            effect.SetBoneTransforms(standingBones);
+                            break;
+                        case PlayerState.Walking:
+                            effect.SetBoneTransforms(walkingBones);
+                            break;
+                        case PlayerState.Jumping:
+                            effect.SetBoneTransforms(jumpingBones);
+                            break;
+                    }
                     effect.DiffuseColor = new Vector3(255, 0, 0);
 
                     effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;

@@ -32,6 +32,7 @@ namespace EmodiaQuest.Core
         private string frameString = "0";
         private string playerXString = "0";
         private string playerYString = "0";
+        private string playerState = "0";
         
 
         public void loadContent(ContentManager Content)
@@ -44,7 +45,7 @@ namespace EmodiaQuest.Core
             //Console.WriteLine(monoFont_small.MeasureString("1"));
         }
 
-        public void update(GameTime gameTime, float playerX, float playerY)
+        public void update(GameTime gameTime, float playerX, float playerY, string playerState)
         {
             // get frames
             frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -52,6 +53,7 @@ namespace EmodiaQuest.Core
             frameString = frameRate.ToString();
             playerXString = playerX.ToString();
             playerYString = playerY.ToString();
+            this.playerState = playerState;
         }
 
         public void draw(SpriteBatch spritebatch)
@@ -60,13 +62,15 @@ namespace EmodiaQuest.Core
             spritebatch.Begin();
             // Add draws
             //spritebatch.Draw(backgroundForFrames, new Rectangle(800 - 180, 0, 180, 40*3), new Color(0, 0, 0, 80));
-            spritebatch.Draw(backgroundForFrames, new Rectangle(800 - 230, 0, 230, 42 * 3), new Color(0, 0, 0, 80));
+            spritebatch.Draw(backgroundForFrames, new Rectangle(800 - 230, 0, 230, 42 * 4), new Color(0, 0, 0, 80));
             spritebatch.DrawString(monoFont_small, frameString, new Vector2(800 - 178, 0), Color.White);
             spritebatch.DrawString(monoFont_small, "F:", new Vector2(800 - 218, 0), Color.White);
             spritebatch.DrawString(monoFont_small, "x:", new Vector2(800 - 218, 40), Color.White);
             spritebatch.DrawString(monoFont_small, "y:", new Vector2(800 - 218, 80), Color.White);
+            spritebatch.DrawString(monoFont_small, "  ", new Vector2(800 - 218, 120), Color.White);
             spritebatch.DrawString(monoFont_small, playerXString, new Vector2(800 - 178, 40), Color.White);
             spritebatch.DrawString(monoFont_small, playerYString, new Vector2(800 - 178, 80), Color.White);
+            spritebatch.DrawString(monoFont_small, playerState, new Vector2(800 - 178, 120), Color.White);
             spritebatch.End();
         }
 

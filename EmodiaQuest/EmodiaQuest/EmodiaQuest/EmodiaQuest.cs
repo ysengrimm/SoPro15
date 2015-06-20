@@ -70,11 +70,12 @@ namespace EmodiaQuest
             windowSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
 
             player = new Player(new Vector2(250, 350), CollisionHandler.Instance, windowSize, Content);
+            player.LoadContent();
 
             //Initialize the matrizes with reasonable values
             Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
             Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 3f, 3, player.Position.Y + 3f), new Vector3(player.Position.X, 1, player.Position.Y), Vector3.UnitY);
-            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 900f); //Setting farülane = render distance
+            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 900f); //Setting farplane = render distance
 
             Mouse.WindowHandle = Window.Handle;
         }
@@ -126,7 +127,7 @@ namespace EmodiaQuest
                     player.Update(gameTime, mState);
 
                     // HUD/NetStat
-                    EmodiaQuest.Core.NetGraph.Instance.update(gameTime, player.Position.X, player.Position.Y);
+                    EmodiaQuest.Core.NetGraph.Instance.update(gameTime, player.Position.X, player.Position.Y, player.playerState.ToString());
 
                     break;
                 case GameStates_Overall.OptionsScreen:
