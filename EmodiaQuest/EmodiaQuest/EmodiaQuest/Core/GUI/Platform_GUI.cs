@@ -15,6 +15,7 @@ namespace EmodiaQuest.Core.GUI
         private List<PlainText_GUI> ptexts = new List<PlainText_GUI>();
         private List<ItemSocket_GUI> sockets = new List<ItemSocket_GUI>();
         private List<PlainImage_GUI> pimages = new List<PlainImage_GUI>();
+        private List<Slider_GUI> sliders = new List<Slider_GUI>();
         private MouseState mouseHandle;
         private MouseState mouseHandle_Old;
         private string pushed_name = null;
@@ -41,8 +42,13 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D background;
         private Texture2D overlay;
 
-        // Images Textures
+        // PlainImages Textures
         private Texture2D plainImage;
+
+        // Slider Textures
+        private Texture2D slider_background;
+        private Texture2D slider_foreground_normal;
+        private Texture2D slider_foreground_pressed;
 
         // Fonts
         private SpriteFont monoFont_big;
@@ -65,6 +71,11 @@ namespace EmodiaQuest.Core.GUI
 
             // PlainImage Content
             plainImage = Content.Load<Texture2D>("Content_GUI/pixel_black");
+
+            // Slider Content
+            slider_background = Content.Load<Texture2D>("Content_GUI/slider_background");
+            slider_foreground_normal = Content.Load<Texture2D>("Content_GUI/slider_foreground_normal");
+            slider_foreground_pressed = Content.Load<Texture2D>("Content_GUI/slider_foreground_pressed");
 
             // Load Fonts
             monoFont_big = Content.Load<SpriteFont>("Content_GUI/monoFont_big");
@@ -95,10 +106,8 @@ namespace EmodiaQuest.Core.GUI
             {
                 if (Button_GUI.isInside(mouseHandle.X, mouseHandle.Y, bb.XPos, bb.YPos, bb.Width, bb.Height))
                 {
-
                     if (mouseHandle.LeftButton == ButtonState.Pressed)
                     {
-
                         if (pushed_name == bb.Function)
                         {
                             bb.Button_State = ButtonState_GUI.Pressed;
@@ -107,7 +116,6 @@ namespace EmodiaQuest.Core.GUI
                         {
                             pushed_name = bb.Function;
                         }
-
                     }
                     else
                         bb.Button_State = ButtonState_GUI.MouseOver;
@@ -116,14 +124,37 @@ namespace EmodiaQuest.Core.GUI
                     {
                         this.functionCalled = bb.onClick();
                     }
-
-
-
                 }
                 else
                     bb.Button_State = ButtonState_GUI.Normal;
-
             }
+            //foreach (Slider_GUI sl in sliders)
+            //{
+            //    if (Button_GUI.isInside(mouseHandle.X, mouseHandle.Y, bb.XPos, bb.YPos, bb.Width, bb.Height))
+            //    {
+            //        if (mouseHandle.LeftButton == ButtonState.Pressed)
+            //        {
+            //            if (pushed_name == bb.Function)
+            //            {
+            //                bb.Button_State = ButtonState_GUI.Pressed;
+            //            }
+            //            if (mouseHandle_Old.LeftButton == ButtonState.Released)
+            //            {
+            //                pushed_name = bb.Function;
+            //            }
+            //        }
+            //        else
+            //            bb.Button_State = ButtonState_GUI.MouseOver;
+
+            //        if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name == bb.Function)
+            //        {
+            //            this.functionCalled = bb.onClick();
+            //        }
+            //    }
+            //    else
+            //        bb.Button_State = ButtonState_GUI.Normal;
+            //}
+
             mouseHandle_Old = mouseHandle;
             return this.functionCalled;
         }
@@ -200,6 +231,11 @@ namespace EmodiaQuest.Core.GUI
         public void addPlainImage(int xPos, int yPos, int width, int height, Color color)
         {
             pimages.Add(new PlainImage_GUI(xPos, yPos, width, height, color));
+        }
+
+        public void addSlider(int xPos, int yPos, int width, int height, string name)
+        {
+            sliders.Add(new Slider_GUI(xPos, yPos, width, height, name));
         }
                 
 
