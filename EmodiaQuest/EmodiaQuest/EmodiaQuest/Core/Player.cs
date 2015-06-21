@@ -40,7 +40,7 @@ namespace EmodiaQuest.Core
         // The animation Clips, which will be used by the model
         private AnimationClip standingC, walkingC, jumpingC, swordfightingC, bowfightingC;
         // The Bone Matrices for each animation
-        private Matrix[] standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones;
+        private Matrix[] blendingBones, standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones;
         // The playerState, which will be needed to update the right animation
         public PlayerState playerState = PlayerState.Standing;
         public PlayerState lastPlayerState = PlayerState.Standing;
@@ -113,17 +113,17 @@ namespace EmodiaQuest.Core
             walkingAP = new AnimationPlayer(walkingSD);
             jumpingAP = new AnimationPlayer(jumpingSD);
             //loading Animation Clips
-            AnimationClip standingC = standingSD.AnimationClips["Stand"];
-            AnimationClip walkingC = walkingSD.AnimationClips["Run"];
-            AnimationClip jumpingC = jumpingSD.AnimationClips["Jump"];
+            standingC = standingSD.AnimationClips["Stand"];
+            walkingC = walkingSD.AnimationClips["Run"];
+            jumpingC = jumpingSD.AnimationClips["Jump"];
             //Safty Start Animations
             standingAP.StartClip(standingC);
             walkingAP.StartClip(walkingC);
             jumpingAP.StartClip(jumpingC);
             //assign the specific animationTimes
-            standingDuration = standingC.Duration.Milliseconds/1.5f;
-            walkingDuration = walkingC.Duration.Milliseconds/1.5f;
-            jumpingDuration = jumpingC.Duration.Milliseconds/1.5f;
+            standingDuration = standingC.Duration.Milliseconds/1f;
+            walkingDuration = walkingC.Duration.Milliseconds/1f;
+            jumpingDuration = jumpingC.Duration.Milliseconds/1f;
             stateTime = 0;
 
         }
@@ -181,10 +181,15 @@ namespace EmodiaQuest.Core
 
             }
             //update playerState
-            if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
+            if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                playerState = PlayerState.WalkJumping;
+                stateTime = jumpingDuration;
+            }
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
             {
                 playerState = PlayerState.Walking;
-                stateTime = walkingDuration;
+                stateTime = walkingDuration/3f;
             }
             else if(Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 10)
             {
@@ -194,11 +199,11 @@ namespace EmodiaQuest.Core
             else if(lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
             {
                 playerState = PlayerState.Standing;
-                stateTime = standingDuration;
+                stateTime = standingDuration/4f;
             }
             stateTime -= gameTime.ElapsedGameTime.Milliseconds;
 
-            Console.WriteLine("stateTime " + stateTime);
+            //Console.WriteLine("stateTime " + stateTime);
             
             //update only the animation which is required if the Playerstate changed        
             switch(playerState)
@@ -210,6 +215,10 @@ namespace EmodiaQuest.Core
                     walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
                 case PlayerState.Jumping:
+                    jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case PlayerState.WalkJumping:
+                    walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
             }
@@ -230,6 +239,10 @@ namespace EmodiaQuest.Core
                 case PlayerState.Jumping:
                     jumpingBones = jumpingAP.GetSkinTransforms();
                     break;
+                case PlayerState.WalkJumping:
+                    walkingBones = walkingAP.GetSkinTransforms();
+                    jumpingBones = jumpingAP.GetSkinTransforms();
+                    break;
             }
 
             foreach (ModelMesh mesh in playerModel.Meshes)
@@ -248,6 +261,15 @@ namespace EmodiaQuest.Core
                             break;
                         case PlayerState.Jumping:
                             effect.SetBoneTransforms(jumpingBones);
+                            break;
+                        case PlayerState.WalkJumping:
+                            blendingBones = walkingBones;
+                            for (int i = 0; i < walkingBones.Length; i++)
+                            {
+                                blendingBones[i] = Matrix.Multiply(walkingBones[i], jumpingBones[i]);
+                            }
+                            
+                            effect.SetBoneTransforms(blendingBones);
                             break;
                     }
                     effect.DiffuseColor = new Vector3(255, 0, 0);
