@@ -37,12 +37,12 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Method for initialising Models and so on in SafeWorld
         /// </summary>
-        public override void initialise(){}
+        public override void Initialise(){}
 
         /// <summary>
         /// Method for loading relevant content for SafeWorld
         /// </summary>
-        public override void loadContent()
+        public override void LoadContent()
         {
             // Maps
             PlacementMap = content.Load<Texture2D>("maps/safeWorld_PlacementMap");
@@ -93,16 +93,16 @@ namespace EmodiaQuest.Core
         /// <param name="world">the world Matrix, which will be used for rendering</param>
         /// <param name="view">the view Matrix, which will be used for the rendering</param>
         /// <param name="projection">the projection Matrix, which will be used for the rendering</param>
-        public override void drawGameScreen(Matrix world, Matrix view, Matrix projection)
+        public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
-            drawEnvironment(world, view, projection);
+            DrawEnvironment(world, view, projection);
             //drawNPCs();
             //drawHUD();
             //drawPlayer(); <--- nope is in EmodiaQuest.cs
             
         }
 
-        private void drawEnvironment(Matrix world, Matrix view, Matrix projection)
+        private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
             controller.drawEnvironment(world, view, projection);
         }

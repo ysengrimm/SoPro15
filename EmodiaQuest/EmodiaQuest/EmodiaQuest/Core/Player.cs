@@ -12,19 +12,12 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using SkinnedModel;
 
-
-
 namespace EmodiaQuest.Core
 {
     public class Player
     {
-        // Playerstats
-        public float Hp;
-        public float Armor;
-        public float PlayerSpeed = 0.5f;
-        public float RotationSpeed = 1.5f;
+        private static Player _instance;
 
-        public Vector2 Position;
         // For movement and camera update
         private Vector2 movement; // future position
         private Vector2 lastPos; //position from last step (fixes false kamera focus)
@@ -42,38 +35,62 @@ namespace EmodiaQuest.Core
         // The Bone Matrices for each animation
         private Matrix[] blendingBones, standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones;
         // The playerState, which will be needed to update the right animation
-        public PlayerState playerState = PlayerState.Standing;
-        public PlayerState lastPlayerState = PlayerState.Standing;
+        public PlayerState PlayerState = PlayerState.Standing;
+        public PlayerState LastPlayerState = PlayerState.Standing;
         private float standingDuration;
         private float walkingDuration;
         private float jumpingDuration;
         private float stateTime;
 
-        private CollisionHandler collisionHandler;
+        // Playerstats
+        public float Hp;
+        public float Armor;
+        public float PlayerSpeed;
+        public float RotationSpeed;
 
+        // Properties
         private Vector2 windowSize;
-
-        public ContentManager content;
-
-        public Model Model
+        public Vector2 WindowSize
         {
-            set { standingM = value; }
+            set { windowSize = value; }
+        }
+
+        private ContentManager contentMngr;
+        public ContentManager ContentMngr
+        {
+            set { contentMngr = value; }
+        }
+
+        private Vector2 position;
+        public Vector2 Position
+        {
+            set { position = value; }
+            get { return position; }
+        }
+
+        private CollisionHandler collisionHandler;
+        public CollisionHandler CollisionHandler
+        {
+            set { collisionHandler = value; }
+        }
+
+        private Player()
+        {
+       
+        }
+
+        public static Player Instance
+        {
+            get { return _instance ?? (_instance = new Player()); }
         }
 
 
-
-        /// <summary>
-        /// Creates new instance of player.
-        /// </summary>
-        /// <param name="position">Initial player position.</param>
-        /// <param name="collisionHandler">Current collision handler</param>
-        public Player(Vector2 position, CollisionHandler collisionHandler, Vector2 winSize, ContentManager content)
+        public void LoadContent()
         {
-            Position = position;
-            this.collisionHandler = collisionHandler;
-            this.content = content;
-            windowSize = winSize;
-            
+            // Initialize player stuff
+            PlayerSpeed = Settings.Instance.PlayerSpeed;
+            RotationSpeed = Settings.Instance.PlayerRotationSpeed;
+
             // set defaults
             Hp = 100;
             Armor = 0;
@@ -82,8 +99,8 @@ namespace EmodiaQuest.Core
             ItemOffset = 0.0f;
 
             Angle = 0;
-            
-            playerModel = content.Load<Model>("fbxContent/testPlayerv1");
+
+            playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
             /*
             // Look up our custom skinning information.
             SkinningData skinningData = playerModel.Tag as SkinningData;
@@ -91,35 +108,37 @@ namespace EmodiaQuest.Core
             animationPlayer = new AnimationPlayer(skinningData);
             Console.WriteLine("Holla" + skinningData.AnimationClips.Count);
             AnimationClip clip = skinningData.AnimationClips["Jump"];
-
             animationPlayer.StartClip(clip);
             */
-        }
 
-        public void LoadContent()
-        {
             //loading default mesh
-            playerModel = content.Load<Model>("fbxContent/testPlayerv1");
+            playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
+
             //loading Animation Models
-            standingM = content.Load<Model>("fbxContent/testPlayerv1_Stand");
-            walkingM = content.Load<Model>("fbxContent/testPlayerv1_Run");
-            jumpingM = content.Load<Model>("fbxContent/testPlayerv1_Jump");
+            standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
+            walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
+            jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
+
             //Loading Skinning Data
             standingSD = standingM.Tag as SkinningData;
             walkingSD = walkingM.Tag as SkinningData;
             jumpingSD = jumpingM.Tag as SkinningData;
+
             //Load an animation Player for each animation
             standingAP = new AnimationPlayer(standingSD);
             walkingAP = new AnimationPlayer(walkingSD);
             jumpingAP = new AnimationPlayer(jumpingSD);
-            //loading Animation Clips
+
+            //loading Animation 
             standingC = standingSD.AnimationClips["Stand"];
             walkingC = walkingSD.AnimationClips["Run"];
             jumpingC = jumpingSD.AnimationClips["Jump"];
+
             //Safty Start Animations
             standingAP.StartClip(standingC);
             walkingAP.StartClip(walkingC);
             jumpingAP.StartClip(jumpingC);
+
             //assign the specific animationTimes
             standingDuration = standingC.Duration.Milliseconds/1f;
             walkingDuration = walkingC.Duration.Milliseconds/1f;
@@ -131,10 +150,13 @@ namespace EmodiaQuest.Core
         public void Update(GameTime gameTime, MouseState mouseState)
         {
             //scale position to 0.0 to 1.0 then center the +/- change
-            Angle = (float) -(((mouseState.X/windowSize.X))*2*Math.PI * RotationSpeed);
+            Angle += (float) -(((mouseState.X/windowSize.X) - 0.5) * RotationSpeed);
+            // reset mouse position to window center
+            Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));
+
             lastPos = Position;
             movement = Position;
-
+            
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 movement.Y += PlayerSpeed * (float)Math.Cos(Angle);
@@ -159,20 +181,20 @@ namespace EmodiaQuest.Core
             //Collision with Walls
             if (Color.White == collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
-                Position.Y = movement.Y;
+                position.Y = movement.Y;
             }
             if (Color.White == collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
-                Position.X = movement.X;
+                position.X = movement.X;
             }
 
             //Collision with Items
             if (Color.White != collisionHandler.getCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
             {
-                for(int i = 0; i < collisionHandler.Controller.items.Count; i++)
+                for(var i = 0; i < collisionHandler.Controller.items.Count; i++)
                 {
-                    Vector2 temp = new Vector2(collisionHandler.Controller.items.ElementAt(i).position.X, collisionHandler.Controller.items.ElementAt(i).position.Z);
-                if (euclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 15)
+                    var temp = new Vector2(collisionHandler.Controller.items.ElementAt(i).position.X, collisionHandler.Controller.items.ElementAt(i).position.Z);
+                if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 15)
                 {
                     collisionHandler.Controller.items.RemoveAt(i);
                     Console.Out.WriteLine("+1 Point");
@@ -183,30 +205,28 @@ namespace EmodiaQuest.Core
             //update playerState
             if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                playerState = PlayerState.WalkJumping;
+                PlayerState = PlayerState.WalkJumping;
                 stateTime = jumpingDuration;
             }
             else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
             {
-                playerState = PlayerState.Walking;
+                PlayerState = PlayerState.Walking;
                 stateTime = walkingDuration/3f;
             }
             else if(Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 10)
             {
-                playerState = PlayerState.Jumping;
+                PlayerState = PlayerState.Jumping;
                 stateTime = jumpingDuration;
             }
             else if(lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
             {
-                playerState = PlayerState.Standing;
+                PlayerState = PlayerState.Standing;
                 stateTime = standingDuration/4f;
             }
             stateTime -= gameTime.ElapsedGameTime.Milliseconds;
-
-            //Console.WriteLine("stateTime " + stateTime);
             
             //update only the animation which is required if the Playerstate changed        
-            switch(playerState)
+            switch(PlayerState)
             {
                 case PlayerState.Standing:
                     standingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
@@ -222,13 +242,13 @@ namespace EmodiaQuest.Core
                     jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
             }
-            lastPlayerState = playerState;
+            LastPlayerState = PlayerState;
         }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             // Bone updates for each required animation        
-            switch (playerState)
+            switch (PlayerState)
             {
                 case PlayerState.Standing:
                     standingBones = standingAP.GetSkinTransforms();
@@ -245,13 +265,13 @@ namespace EmodiaQuest.Core
                     break;
             }
 
-            foreach (ModelMesh mesh in playerModel.Meshes)
+            foreach (var mesh in playerModel.Meshes)
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
                     
                     //Draw the Bones which are required
-                    switch (playerState)
+                    switch (PlayerState)
                     {
                         case PlayerState.Standing:
                             effect.SetBoneTransforms(standingBones);
@@ -264,7 +284,7 @@ namespace EmodiaQuest.Core
                             break;
                         case PlayerState.WalkJumping:
                             blendingBones = walkingBones;
-                            for (int i = 0; i < walkingBones.Length; i++)
+                            for (var i = 0; i < walkingBones.Length; i++)
                             {
                                 blendingBones[i] = Matrix.Multiply(walkingBones[i], jumpingBones[i]);
                             }
@@ -287,8 +307,7 @@ namespace EmodiaQuest.Core
             }
         }
 
-
-        private double euclideanDistance(Vector2 p1, Vector2 p2)
+        private double EuclideanDistance(Vector2 p1, Vector2 p2)
         {
             return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }

@@ -25,17 +25,19 @@ namespace EmodiaQuest
         public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
         SafeWorld safeWorld;
 
-        // TODO move to InGameScreen
-        private Player player; // Mabey implement this as Singleton, so we don´t have to initialize at all
-
-        private Vector2 windowSize;
-
-
+        private Vector2 screenSize;
 
         public EmodiaQuest_Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            // set window size
+            graphics.PreferredBackBufferWidth = (int)Settings.Instance.Resolution.X;
+            graphics.PreferredBackBufferHeight = (int) Settings.Instance.Resolution.Y;
+
+            // set fullscreen
+            graphics.IsFullScreen = Settings.Instance.Fullscreen;
         }
 
 
@@ -59,23 +61,28 @@ namespace EmodiaQuest
             //EmodiaQuest.Core.GUI.Controls_GUI.Instance.Mouse_GUI.
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);
-            EmodiaQuest.Core.NetGraph.Instance.loadContent(Content);
+            EmodiaQuest.Core.NetGraph.Instance.LoadContent(Content);
 
             // Safeworld Init
             safeWorld = new SafeWorld(Content);
-            safeWorld.loadContent();
+            safeWorld.LoadContent();
             // Collision Init
             CollisionHandler.Instance.SetEnvironmentController(safeWorld.controller);
-            // Initialize Player
-            windowSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
 
-            player = new Player(new Vector2(250, 350), CollisionHandler.Instance, windowSize, Content);
-            player.LoadContent();
+            // set screen size
+            screenSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
+
+            // Init player
+            Player.Instance.Position = new Vector2(250, 350);
+            Player.Instance.CollisionHandler = CollisionHandler.Instance;
+            Player.Instance.WindowSize = screenSize;
+            Player.Instance.ContentMngr = Content;
+            Player.Instance.LoadContent();
 
             //Initialize the matrizes with reasonable values
             Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(player.Position.X + 3f, 3, player.Position.Y + 3f), new Vector3(player.Position.X, 1, player.Position.Y), Vector3.UnitY);
-            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 900f); //Setting farplane = render distance
+            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(Player.Instance.Position.X + 3f, 3, Player.Instance.Position.Y + 3f), new Vector3(Player.Instance.Position.X, 1, Player.Instance.Position.Y), Vector3.UnitY);
+            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), Settings.Instance.Resolution.X / Settings.Instance.Resolution.Y, 0.1f, Settings.Instance.ViewDistance); //Setting farplane = render distance
 
             Mouse.WindowHandle = Window.Handle;
         }
@@ -120,14 +127,15 @@ namespace EmodiaQuest
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
 
-                    Vector3 cameraPos = Vector3.Transform(new Vector3(player.Position.X + 10f, 5, player.Position.Y + 10f) - new Vector3(player.Position.X, 4, player.Position.Y), Matrix.CreateRotationY((float) (player.Angle + Math.PI * 0.75))) + new Vector3(player.Position.X, 5, player.Position.Y);
-                    Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(player.Position.X, 5, player.Position.Y), Vector3.UnitY);
+                    Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 10f, 5, Player.Instance.Position.Y + 10f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y), 
+                        Matrix.CreateRotationY((float) (Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
+                    Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y), Vector3.UnitY);
 
                     MouseState mState = Mouse.GetState();
-                    player.Update(gameTime, mState);
+                    Player.Instance.Update(gameTime, mState);
 
                     // HUD/NetStat
-                    EmodiaQuest.Core.NetGraph.Instance.update(gameTime, player.Position.X, player.Position.Y, player.playerState.ToString());
+                    EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.PlayerState.ToString());
 
                     break;
                 case GameStates_Overall.OptionsScreen:
@@ -136,9 +144,8 @@ namespace EmodiaQuest
                     break;
             }
 
-
-
-
+            // if we change the window size outside the constructor (e.g. dynamic window size or fullscreen on/off) we need to call this 
+            //graphics.ApplyChanges();
 
             base.Update(gameTime);
         }
@@ -151,8 +158,6 @@ namespace EmodiaQuest
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
-
             switch (Gamestate_Game)
             {
                 case GameStates_Overall.StartScreen:
@@ -164,17 +169,15 @@ namespace EmodiaQuest
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.draw(spriteBatch);
                     
-
-                    
                     break;
                 case GameStates_Overall.IngameScreen:
                     this.IsMouseVisible = false;
-                    GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+                    GraphicsDevice.DepthStencilState = new DepthStencilState { DepthBufferEnable = true };
                     Renderer.Instance.DrawSafeWorld(safeWorld);
-                    Renderer.Instance.DrawPlayer(player);
+                    Renderer.Instance.DrawPlayer(Player.Instance);
 
                     // HUD/NetStat
-                    EmodiaQuest.Core.NetGraph.Instance.draw(spriteBatch);
+                    EmodiaQuest.Core.NetGraph.Instance.Draw(spriteBatch);
                     
                     break;
                 case GameStates_Overall.OptionsScreen:
@@ -182,8 +185,6 @@ namespace EmodiaQuest
                 default:
                     break;
             }
-
-
 
             base.Draw(gameTime);
         }

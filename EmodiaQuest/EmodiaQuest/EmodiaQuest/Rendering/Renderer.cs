@@ -89,7 +89,7 @@ namespace EmodiaQuest.Rendering
         /// <param name="safeWorld"></param>
         public void DrawSafeWorld(SafeWorld safeWorld)
         {
-            safeWorld.drawGameScreen(world, view, projection);          
+            safeWorld.DrawGameScreen(world, view, projection);          
         }
 
         /// <summary>

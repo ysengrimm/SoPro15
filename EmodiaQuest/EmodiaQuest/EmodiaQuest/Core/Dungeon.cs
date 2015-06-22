@@ -15,17 +15,17 @@ namespace EmodiaQuest.Core
     class Dungeon : Game
     {
         // Implement the Game things and the special Dungeon things
-        public override void initialise()
+        public override void Initialise()
         {
             throw new NotImplementedException();
         }
 
-        public override void loadContent()
+        public override void LoadContent()
         {
             throw new NotImplementedException();
         }
 
-        public override void drawGameScreen(Matrix world, Matrix view, Matrix projection)
+        public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             throw new NotImplementedException();
         }

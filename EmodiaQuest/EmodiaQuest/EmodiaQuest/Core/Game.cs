@@ -25,26 +25,26 @@ namespace EmodiaQuest.Core
          * StoryController
          * EnvironmentController
          */
-        public NPCController npcController;
-        public CollisionHandler collisionHandler;
-        public HUD hud;
-        public Player player;
-        public Storycontroller storyController;
-        public EnvironmentController enviromentController;
+        public NPCController NpcController;
+        public CollisionHandler CollisionHandler;
+        public HUD Hud;
+        public Player Player;
+        public Storycontroller StoryController;
+        public EnvironmentController EnviromentController;
 
         /// <summary>
         /// Method for initialising Objects
         /// </summary>
-        public abstract void initialise();
+        public abstract void Initialise();
 
         /// <summary>
         /// Method for loading Models and other stuff
         /// </summary>
-        public abstract void loadContent();
+        public abstract void LoadContent();
 
         /// <summary>
         /// Method for drawing the whole GameScreen
         /// </summary>
-        public abstract void drawGameScreen(Matrix world, Matrix view, Matrix projection);
+        public abstract void DrawGameScreen(Matrix world, Matrix view, Matrix projection);
     }
 }
