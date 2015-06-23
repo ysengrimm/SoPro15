@@ -31,17 +31,24 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private string functionCalled = null;
 
+        //private Vector2 windowSize;
+        private int mainWindowWidth;
+        private int mainwindowHeight;
+
         
 
         public void loadContent(ContentManager Content)
         {
             this.platform.loadContent(Content);
 
-            int h = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            int w = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            this.platform.addButton(0, 0, h, w, "clickToPlay", false);
+            //int h = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //int w = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            mainWindowWidth = (int)EmodiaQuest.Core.Settings.Instance.Resolution.X;
+            mainwindowHeight = (int)EmodiaQuest.Core.Settings.Instance.Resolution.Y;
 
-            this.platform.addPlainText(80, 95, "dice_big", "EMODIA \n\n  QUEST ");
+            this.platform.addButton(0, 0, mainWindowWidth, mainwindowHeight, "clickToPlay", false);
+
+            this.platform.addPlainText(10.5f, 10, "dice_big", "EMODIA \n  QUEST ");
         }
 
         public void update()
