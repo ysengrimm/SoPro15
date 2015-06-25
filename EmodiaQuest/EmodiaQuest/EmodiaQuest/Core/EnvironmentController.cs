@@ -104,7 +104,9 @@ namespace EmodiaQuest.Core
         }
         
         /// <summary>
-        /// Method for fillig an object list with objects including their models and positions from placement map
+        /// Method for fillig an object list with objects including their models and positions from placement map.
+        /// Using B channel of .png to calculate rotation of selected object. 
+        /// Using R and G channels to calculate wich object is selected.
         /// <param name="objList">List, that takes all the new objects.</param>
         /// <param name="model">What model of objects should be used?</param>
         /// <param name="color">On wich pixel-color is used to display the objects?</param>
@@ -116,17 +118,18 @@ namespace EmodiaQuest.Core
             {
                 for (int j = 0; j < PlacementMap.Height; j++)
                 {
-                    if (PlacementColors[i, j] == color)
+                    if (PlacementColors[i, j].R == color.R && PlacementColors[i, j].G == color.G)
                     {
-                        objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10)));
-                        //objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), color.B));
+                        objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), PlacementColors[i, j].B));
                     }    
                 }
             }
         }
 
         /// <summary>
-        /// Method for fillig an object list with items including their models and positions from item map
+        /// Method for fillig an object list with items including their models and positions from item map.
+        /// Using B channel of .png to calculate rotation of selected item. 
+        /// Using R and G channels to calculate wich item is selected.
         /// <param name="itemList">List, that takes all the new items.</param>
         /// <param name="model">What model of item should be used?</param>
         /// <param name="color">Wich pixel-color is used to display the items?</param>
@@ -138,10 +141,9 @@ namespace EmodiaQuest.Core
             {
                 for (int j = 0; j < ItemMap.Height; j++)
                 {
-                    if (ItemColors[i, j] == color)
+                    if (ItemColors[i, j].R == color.R && ItemColors[i, j].G == color.G)
                     {
-                        itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10)));
-                        //itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), color.B));
+                        itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), ItemColors[i, j].B));
                     }
                 }
             }
