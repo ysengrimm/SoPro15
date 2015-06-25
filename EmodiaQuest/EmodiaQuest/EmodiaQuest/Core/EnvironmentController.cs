@@ -38,7 +38,7 @@ namespace EmodiaQuest.Core
         /// Creates a new placement map from a pixelmap
         /// <param name="map">A Texture2D with loaded placement map-picture.</param>
         /// </summary>
-        public void createPlacementMap(Texture2D map)
+        public void CreatePlacementMap(Texture2D map)
         {
             Color[] colors1D;
 
@@ -61,7 +61,7 @@ namespace EmodiaQuest.Core
         /// Creates a new collision map from a pixelmap
         /// <param name="map">A Texture2D with loaded collision map-picture.</param>
         /// </summary>
-        public void createCollisionMap(Texture2D map)
+        public void CreateCollisionMap(Texture2D map)
         {
             Color[] colors1D;
 
@@ -84,7 +84,7 @@ namespace EmodiaQuest.Core
         /// Creates a new item map from a pixelmap
         /// <param name="map">A Texture2D with loaded item map-picture.</param>
         /// </summary>
-        public void createItemMap(Texture2D map)
+        public void CreateItemMap(Texture2D map)
         {
             Color[] colors1D;
 
@@ -110,7 +110,7 @@ namespace EmodiaQuest.Core
         /// <param name="color">On wich pixel-color is used to display the objects?</param>
         /// <param name="height">Integer for placing the object in Z-axis</param>
         /// </summary>
-        public void insertObj (List<GameObject> objList, Model model, Color color, int height)
+        public void InsertObj (List<GameObject> objList, Model model, Color color, int height)
         {
             for (int i = 0; i < PlacementMap.Width; i++)
             {
@@ -119,6 +119,7 @@ namespace EmodiaQuest.Core
                     if (PlacementColors[i, j] == color)
                     {
                         objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10)));
+                        //objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), color.B));
                     }    
                 }
             }
@@ -131,7 +132,7 @@ namespace EmodiaQuest.Core
         /// <param name="color">Wich pixel-color is used to display the items?</param>
         /// <param name="height">Integer for placing the item in Z-axis</param>
         /// </summary>
-        public void insertItem(List<GameObject> itemList, Model model, Color color, int height)
+        public void InsertItem(List<GameObject> itemList, Model model, Color color, int height)
         {
             for (int i = 0; i < ItemMap.Width; i++)
             {
@@ -140,12 +141,13 @@ namespace EmodiaQuest.Core
                     if (ItemColors[i, j] == color)
                     {
                         itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10)));
+                        //itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), color.B));
                     }
                 }
             }
         }
 
-        public void drawEnvironment(Matrix world, Matrix view, Matrix projection)
+        public void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
             jump += 0.11f;
 

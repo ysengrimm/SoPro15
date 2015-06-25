@@ -48,9 +48,9 @@ namespace EmodiaQuest.Core
             PlacementMap = content.Load<Texture2D>("maps/safeWorld_PlacementMap");
             CollisionMap = content.Load<Texture2D>("maps/safeWorld_CollisionMap");
             ItemMap = content.Load<Texture2D>("maps/safeWorld_ItemMap");
-            controller.createPlacementMap(PlacementMap);
-            controller.createCollisionMap(CollisionMap);
-            controller.createItemMap(ItemMap);
+            controller.CreatePlacementMap(PlacementMap);
+            controller.CreateCollisionMap(CollisionMap);
+            controller.CreateItemMap(ItemMap);
             // Walls
             wall1 = content.Load<Model>("fbxContent/gameobjects/wall1"); Color wall1C = new Color(1, 0, 0); 
             wall2 = content.Load<Model>("fbxContent/gameobjects/wall2"); Color wall2C = new Color(2, 0, 0);
@@ -69,20 +69,20 @@ namespace EmodiaQuest.Core
             // Items
             item = content.Load<Model>("fbxContent/items/Point"); Color itemC = new Color(255, 0, 0);
             // Insert objects
-            controller.insertObj(controller.wall, wall1, wall1C, 0);
-            controller.insertObj(controller.wall, wall2, wall2C, 0);
-            controller.insertObj(controller.wall, wall3, wall3C, 0);
-            controller.insertObj(controller.wall, wall4, wall4C, 0);
-            controller.insertObj(controller.wall, wall5, wall5C, 0);
-            controller.insertObj(controller.wall, wall6, wall6C, 0);
-            controller.insertObj(controller.wall, wall7, wall7C, 0);
-            controller.insertObj(controller.wall, wall8, wall8C, 0);
-            controller.insertObj(controller.ground, brownWay, brownWayC, 0);
-            controller.insertObj(controller.ground, grasGround, greenGroundC, 0);
-            controller.insertObj(controller.buildings, house1, house1C, 0);
-            controller.insertObj(controller.buildings, house2, house2C, 0);
+            controller.InsertObj(controller.wall, wall1, wall1C, 0);
+            controller.InsertObj(controller.wall, wall2, wall2C, 0);
+            controller.InsertObj(controller.wall, wall3, wall3C, 0);
+            controller.InsertObj(controller.wall, wall4, wall4C, 0);
+            controller.InsertObj(controller.wall, wall5, wall5C, 0);
+            controller.InsertObj(controller.wall, wall6, wall6C, 0);
+            controller.InsertObj(controller.wall, wall7, wall7C, 0);
+            controller.InsertObj(controller.wall, wall8, wall8C, 0);
+            controller.InsertObj(controller.ground, brownWay, brownWayC, 0);
+            controller.InsertObj(controller.ground, grasGround, greenGroundC, 0);
+            controller.InsertObj(controller.buildings, house1, house1C, 0);
+            controller.InsertObj(controller.buildings, house2, house2C, 0);
             // Insert items
-            controller.insertItem(controller.items, item, itemC, 0);
+            controller.InsertItem(controller.items, item, itemC, 0);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace EmodiaQuest.Core
 
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
-            controller.drawEnvironment(world, view, projection);
+            controller.DrawEnvironment(world, view, projection);
         }
 
     }

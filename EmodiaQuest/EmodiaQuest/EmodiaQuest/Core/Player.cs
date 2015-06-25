@@ -179,22 +179,22 @@ namespace EmodiaQuest.Core
             }
 
             //Collision with Walls
-            if (Color.White == collisionHandler.getCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            if (Color.White == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
                 position.Y = movement.Y;
             }
-            if (Color.White == collisionHandler.getCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            if (Color.White == collisionHandler.GetCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
                 position.X = movement.X;
             }
 
             //Collision with Items
-            if (Color.White != collisionHandler.getCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
+            if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
             {
                 for(var i = 0; i < collisionHandler.Controller.items.Count; i++)
                 {
                     var temp = new Vector2(collisionHandler.Controller.items.ElementAt(i).position.X, collisionHandler.Controller.items.ElementAt(i).position.Z);
-                if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 15)
+                if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
                 {
                     collisionHandler.Controller.items.RemoveAt(i);
                     Console.Out.WriteLine("+1 Point");
