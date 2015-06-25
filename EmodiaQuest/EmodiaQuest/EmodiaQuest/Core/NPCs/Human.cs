@@ -9,11 +9,14 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using SkinnedModel;
 
-namespace EmodiaQuest.Core
+namespace EmodiaQuest.Core.NPCs
 {
-    class Human
+    class Human : Enemy
     {
         // implements damage, range, mesh, texture etc (Are Questing Npcs also part of this class!?)
+
+        
     }
 }
