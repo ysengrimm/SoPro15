@@ -52,35 +52,22 @@ namespace EmodiaQuest.Core
             controller.CreateCollisionMap(CollisionMap);
             controller.CreateItemMap(ItemMap);
             // Walls
-            wall1 = content.Load<Model>("fbxContent/gameobjects/wall1"); Color wall1C = new Color(1, 0, 0); 
-            wall2 = content.Load<Model>("fbxContent/gameobjects/wall2"); Color wall2C = new Color(2, 0, 0);
-            wall3 = content.Load<Model>("fbxContent/gameobjects/wall3"); Color wall3C = new Color(3, 0, 0);
-            wall4 = content.Load<Model>("fbxContent/gameobjects/wall4"); Color wall4C = new Color(4, 0, 0);
-            wall5 = content.Load<Model>("fbxContent/gameobjects/wall5"); Color wall5C = new Color(5, 0, 0);
-            wall6 = content.Load<Model>("fbxContent/gameobjects/wall6"); Color wall6C = new Color(6, 0, 0);
-            wall7 = content.Load<Model>("fbxContent/gameobjects/wall7"); Color wall7C = new Color(7, 0, 0);
-            wall8 = content.Load<Model>("fbxContent/gameobjects/wall8"); Color wall8C = new Color(8, 0, 0);
+            wall1 = content.Load<Model>("fbxContent/gameobjects/wall1"); Color wall1C = new Color(1, 0, 0); //normal wall
+            wall2 = content.Load<Model>("fbxContent/gameobjects/wall2"); Color wall5C = new Color(2, 0, 0); //corner wall
+
             // Grounds
-            brownWay = content.Load<Model>("fbxContent/gameobjects/brownway_dim10x10"); Color brownWayC = new Color(100, 100, 100);
+            brownWay = content.Load<Model>("fbxContent/gameobjects/brownway_dim10x10"); Color brownWayC = new Color(100, 100, 0);
             grasGround = content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"); Color greenGroundC = new Color(0, 100, 0);
             // Buildings
             house1 = content.Load<Model>("fbxContent/gameobjects/haus1_dim30x10"); Color house1C = new Color(100, 0, 0);
-            house2 = content.Load<Model>("fbxContent/gameobjects/haus2_dim10x30"); Color house2C = new Color(0, 0, 255); //last one was (101, 0, 0);
             // Items
             item = content.Load<Model>("fbxContent/items/Point"); Color itemC = new Color(255, 0, 0);
             // Insert objects
             controller.InsertObj(controller.wall, wall1, wall1C, 0);
-            controller.InsertObj(controller.wall, wall2, wall2C, 0);
-            controller.InsertObj(controller.wall, wall3, wall3C, 0);
-            controller.InsertObj(controller.wall, wall4, wall4C, 0);
-            controller.InsertObj(controller.wall, wall5, wall5C, 0);
-            controller.InsertObj(controller.wall, wall6, wall6C, 0);
-            controller.InsertObj(controller.wall, wall7, wall7C, 0);
-            controller.InsertObj(controller.wall, wall8, wall8C, 0);
+            controller.InsertObj(controller.wall, wall2, wall5C, 0);
             controller.InsertObj(controller.ground, brownWay, brownWayC, 0);
             controller.InsertObj(controller.ground, grasGround, greenGroundC, 0);
             controller.InsertObj(controller.buildings, house1, house1C, 0);
-            controller.InsertObj(controller.buildings, house2, house2C, 0);
             // Insert items
             controller.InsertItem(controller.items, item, itemC, 0);
         }

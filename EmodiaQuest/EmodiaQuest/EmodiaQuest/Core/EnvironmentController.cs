@@ -120,6 +120,10 @@ namespace EmodiaQuest.Core
                 {
                     if (PlacementColors[i, j].R == color.R && PlacementColors[i, j].G == color.G)
                     {
+                        if(PlacementColors[i, j].B > 3)
+                        {
+                            Console.WriteLine("GameObject has a wrong rotation: Blue Channel!" + PlacementColors[i,j]);
+                        }
                         objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), PlacementColors[i, j].B));
                     }    
                 }
