@@ -134,6 +134,8 @@ namespace EmodiaQuest
                     MouseState mState = Mouse.GetState();
                     Player.Instance.Update(gameTime, mState);
 
+                    //just for enemytesting in the safeworld
+                    safeWorld.UpdateSafeworld(gameTime);
                     // HUD/NetStat
                     EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.PlayerState.ToString());
 

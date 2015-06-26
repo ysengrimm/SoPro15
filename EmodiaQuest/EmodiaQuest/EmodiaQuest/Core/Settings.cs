@@ -63,5 +63,27 @@ namespace EmodiaQuest.Core
         /// </summary>
         public float PlayerRotationSpeed = 2f;
 
+        /// <summary>
+        /// Player health
+        /// </summary>
+        public float MaxPlayerHealth = 100f;
+
+
+        /********************************
+         *      Enemy Settings        *
+         ********************************/
+
+        /// <summary>
+        /// Human enemy speed
+        /// </summary>
+        public float HumanEnemySpeed = 0.5f;
+
+        /// <summary>
+        /// Player health
+        /// </summary>
+        public float MaxHumanEnemyHealth = 100f;
+
+
+
     }
 }

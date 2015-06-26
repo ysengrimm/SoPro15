@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using EmodiaQuest.Core;
 using EmodiaQuest.Rendering;
+using EmodiaQuest.Core.NPCs;
 
 namespace EmodiaQuest.Core
 {
@@ -22,11 +23,12 @@ namespace EmodiaQuest.Core
         public EnvironmentController controller;
         public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager content;
-        public Model wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8; // wall with direction to bottom, right, top, left.
+        public Model wall1, wall2; 
         public Model brownWay, grasGround;
-        public Model house1, house2;
+        public Model house1;
         public Model item;
-        public Model Groundplate1;
+
+        public Human enemy;
 
         public SafeWorld(ContentManager content)
         {
@@ -70,6 +72,17 @@ namespace EmodiaQuest.Core
             controller.InsertObj(controller.buildings, house1, house1C, 0);
             // Insert items
             controller.InsertItem(controller.items, item, itemC, 0);
+
+
+            // temporary enemy testing
+            enemy = new Human(new Vector3(250, 0, 300), controller);
+            enemy.LoadContent(this.content);
+        }
+
+        //just for testing the enemy
+        public void UpdateSafeworld(GameTime gametime)
+        {
+            enemy.Update(gametime);
         }
 
         /// <summary>
@@ -83,6 +96,7 @@ namespace EmodiaQuest.Core
         public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             DrawEnvironment(world, view, projection);
+            enemy.Draw(world, view, projection);
             //drawNPCs();
             //drawHUD();
             //drawPlayer(); <--- nope is in EmodiaQuest.cs

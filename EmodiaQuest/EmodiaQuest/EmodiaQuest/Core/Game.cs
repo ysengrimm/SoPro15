@@ -13,7 +13,7 @@ using EmodiaQuest.Core;
 
 namespace EmodiaQuest.Core
 {
-    public abstract class Game : Screen
+    public abstract class Game
     {
         
         // Implement everything, the Overworld and the Dungeon needs :
