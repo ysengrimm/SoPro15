@@ -67,7 +67,7 @@ namespace EmodiaQuest
             safeWorld = new SafeWorld(Content);
             safeWorld.LoadContent();
             // Collision Init
-            CollisionHandler.Instance.SetEnvironmentController(safeWorld.controller);
+            CollisionHandler.Instance.SetEnvironmentController(safeWorld.Controller);
 
             // set screen size
             screenSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);

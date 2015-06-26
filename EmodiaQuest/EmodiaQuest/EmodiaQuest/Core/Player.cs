@@ -191,12 +191,12 @@ namespace EmodiaQuest.Core
             //Collision with Items
             if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
             {
-                for(var i = 0; i < collisionHandler.Controller.items.Count; i++)
+                for(var i = 0; i < collisionHandler.Controller.Items.Count; i++)
                 {
-                    var temp = new Vector2(collisionHandler.Controller.items.ElementAt(i).position.X, collisionHandler.Controller.items.ElementAt(i).position.Z);
+                    var temp = new Vector2(collisionHandler.Controller.Items.ElementAt(i).position.X, collisionHandler.Controller.Items.ElementAt(i).position.Z);
                 if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
                 {
-                    collisionHandler.Controller.items.RemoveAt(i);
+                    collisionHandler.Controller.Items.RemoveAt(i);
                     Console.Out.WriteLine("+1 Point");
                 }
                 }
