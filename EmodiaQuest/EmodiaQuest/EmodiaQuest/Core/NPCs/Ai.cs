@@ -25,14 +25,22 @@ namespace EmodiaQuest.Core
         private bool hasTracked = false;
 
 
-        private Vector3 calculatedMovingDirection;
-        public Vector3 CalculatedMovingDirection
+        private Vector3 trackingDirection;
+        public Vector3 TrackingDirection
         {
-            get { return calculatedMovingDirection; }
+            get { return trackingDirection; }
         }
 
 
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="ownPosition"></param>
+        /// <param name="currentState"></param>
+        /// <param name="lastState"></param>
+        /// <param name="trackingRadius"></param>
+        /// <param name="ownMovementSpeed"></param>
+        /// <param name="currentEnvironment"></param>
         public Ai(Vector3 ownPosition, EnemyState currentState, EnemyState lastState, float trackingRadius, float ownMovementSpeed, EnvironmentController currentEnvironment)
         {
             this.playerPosition = new Vector3(Player.Instance.Position.X, 0, Player.Instance.Position.Y);
@@ -44,38 +52,53 @@ namespace EmodiaQuest.Core
             this.currentEnvironment = currentEnvironment;
         }
 
-
-        public void calculateTracking()
+        /// <summary>
+        /// calculate the boolean "hasTracked" which indicates, if the enemy is near the Player and wan´t to follow the player
+        /// </summary>
+        public void CalculateTracking()
         {
             if (EuclideanDistance(new Vector2(playerPosition.X, playerPosition.Z), new Vector2(ownPosition.X, ownPosition.Z)) < trackingRadius)
             {
                 hasTracked = true;
             }
             else hasTracked = false;
-            //Console.WriteLine("PlayerPosition: " + playerPosition + " EnemyPosition: " + ownPosition);
-            //Console.WriteLine("Distance: " + EuclideanDistance(new Vector2(playerPosition.X, playerPosition.Z), new Vector2(ownPosition.X, ownPosition.Z)));
         }
 
-        public void calculateMovementDirection()
+        /// <summary>
+        /// calculate the "Tracking Direction" where the Player is, in relation to the actual enemy position
+        /// </summary>
+        public void CalculateTrackingDirection()
         {
             if (hasTracked)
             {
-                calculatedMovingDirection = Vector3.Multiply(Vector3.Normalize(Vector3.Subtract(playerPosition, ownPosition)),ownMovementSpeed);
+                trackingDirection = Vector3.Multiply(Vector3.Normalize(Vector3.Subtract(playerPosition, ownPosition)),ownMovementSpeed);
             }
             else
             {
-                calculatedMovingDirection = new Vector3(0);
+                trackingDirection = new Vector3(0);
             }
-      }
+        }
 
+        /// <summary>
+        /// updates whether the player is in tracking range
+        /// updates the direction if the player is in tracking range
+        /// if the player isn´t in the tracking range, the tracking direction will be set to 0
+        /// </summary>
+        /// <param name="ownPosition"></param>
         public void updateAi(Vector3 ownPosition)
         {
             this.playerPosition = new Vector3(Player.Instance.Position.X, 0, Player.Instance.Position.Y);
             this.ownPosition = ownPosition;
-            calculateTracking();
-            calculateMovementDirection();
+            CalculateTracking();
+            CalculateTrackingDirection();
         }
 
+        /// <summary>
+        /// Calculates the euclidean distance between 2 Points (Vector2)
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
         private double EuclideanDistance(Vector2 p1, Vector2 p2)
         {
             return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));

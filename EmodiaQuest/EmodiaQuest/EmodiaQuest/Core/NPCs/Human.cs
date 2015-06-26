@@ -65,7 +65,7 @@ namespace EmodiaQuest.Core.NPCs
         public void Update(GameTime gameTime)
         {
             humanAi.updateAi(Position);;
-            Position = Vector3.Add(humanAi.CalculatedMovingDirection, Position);
+            Position = Vector3.Add(humanAi.TrackingDirection, Position);
         }
 
 

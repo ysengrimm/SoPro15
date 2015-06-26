@@ -33,7 +33,7 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Resolution for the game
         /// </summary>
-        public Vector2 Resolution = PossibleResolutions[0];
+        public Vector2 Resolution = PossibleResolutions[1];
 
         public bool Fullscreen = false;
 
