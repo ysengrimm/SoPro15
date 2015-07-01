@@ -16,7 +16,9 @@ namespace EmodiaQuest.Core.GUI
         public int Height { get; set; }
         public string Function { get; set; }
         public bool isVisible = true;
-        //public string Text { get; set; }
+        private string buttonText = null;
+        public int TextXPos { get; set; }
+        public int TextYPos { get; set; }
 
         private ButtonState_GUI button_State = ButtonState_GUI.Normal;
 
@@ -27,6 +29,18 @@ namespace EmodiaQuest.Core.GUI
             this.Width = width;
             this.Height = height;
             this.Function = function;
+        }
+
+        public Button_GUI(int xPos, int yPos, int width, int height, string function, string buttonText)
+        {
+            this.XPos = xPos;
+            this.YPos = yPos;
+            this.Width = width;
+            this.Height = height;
+            this.Function = function;
+            this.ButtonText = buttonText;
+            //this.TextYPos = (int)(height*0.75);
+            //this.TextXPos = width;
         }
 
         public Button_GUI(int xPos, int yPos, int width, int height, string function, bool isVisible)
@@ -72,6 +86,18 @@ namespace EmodiaQuest.Core.GUI
             set
             {
                 this.button_State = value;
+            }
+        }
+
+        public string ButtonText
+        {
+            get
+            {
+                return this.buttonText;
+            }
+            set
+            {
+                this.buttonText = value;
             }
         }
 
