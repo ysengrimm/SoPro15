@@ -93,6 +93,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -107,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\NPCs\EnemyState.cs" />
     <Compile Include="Core\GUI\Button_GUI.cs" />
     <Compile Include="Core\GUI\Controls_GUI.cs" />
     <Compile Include="Core\GUI\Enums_GUI.cs" />

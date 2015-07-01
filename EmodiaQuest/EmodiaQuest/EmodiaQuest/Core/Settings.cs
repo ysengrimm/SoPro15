@@ -33,7 +33,7 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Resolution for the game
         /// </summary>
-        public Vector2 Resolution = PossibleResolutions[0];
+        public Vector2 Resolution = PossibleResolutions[1];
 
         public bool Fullscreen = false;
 
@@ -62,6 +62,28 @@ namespace EmodiaQuest.Core
         /// Player camera rotation speed.
         /// </summary>
         public float PlayerRotationSpeed = 2f;
+
+        /// <summary>
+        /// Player health
+        /// </summary>
+        public float MaxPlayerHealth = 100f;
+
+
+        /********************************
+         *      Enemy Settings        *
+         ********************************/
+
+        /// <summary>
+        /// Human enemy speed
+        /// </summary>
+        public float HumanEnemySpeed = 0.5f;
+
+        /// <summary>
+        /// Player health
+        /// </summary>
+        public float MaxHumanEnemyHealth = 100f;
+
+
 
     }
 }

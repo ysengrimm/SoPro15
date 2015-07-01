@@ -16,18 +16,21 @@ namespace EmodiaQuest.Core
     public class GameObject
     {
         public Vector3 position;
-        public Vector3 rotation;
+        public int rotation;
         public Model model;
 
         /// <summary>
         /// Creates a new map from a pixelmap
         /// <param name="model">A model for the .</param>
-        /// <param name="view">A view-matrix.</param>
+        /// <param name="position">Position of object.</param>
+        /// <param name="rotation">Creates rotation of object: 0 -> 0°, 1 -> 90° etc.</param>
         /// </summary>
-        public GameObject(Model model, Vector3 position)
+        public GameObject(Model model, Vector3 position, int rotation)     
         {
             this.model = model;
             this.position = position;
+            if(rotation  == 0 || rotation  == 1 || rotation  == 2 || rotation  == 3)
+                this.rotation = rotation;
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace EmodiaQuest.Core
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateTranslation(position) * world;
+                    effect.World = Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position) * world;
                     effect.View = view;
                     effect.Projection = projection;
                 }
