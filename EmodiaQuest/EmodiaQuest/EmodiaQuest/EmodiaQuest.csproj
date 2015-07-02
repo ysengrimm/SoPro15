@@ -137,7 +137,7 @@
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\HUD.cs" />
-    <Compile Include="Core\NPCs\Human.cs" />
+    <Compile Include="Core\NPCs\Enemy.cs" />
     <Compile Include="Core\Jukebox.cs" />
     <Compile Include="Core\Screens\LevelLoadingScreen.cs" />
     <Compile Include="Core\Screens\MainMenueScreen.cs" />

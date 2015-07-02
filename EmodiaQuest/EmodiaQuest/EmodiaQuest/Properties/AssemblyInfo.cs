@@ -7,8 +7,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("EmodiaQuest")]
 [assembly: AssemblyProduct("EmodiaQuest")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyDescription("Software Projekt 2015, Acagamics, Team: Alex, Kim, Claudius, Janos. This is the Game!")]
+[assembly: AssemblyCompany("Overscoping GmbH")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

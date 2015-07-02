@@ -77,7 +77,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="fbxContent\player\" />
     <Folder Include="Texturen\Buttons\" />
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +240,13 @@
       <Name>temp_enemy_v1</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fbxContent\player\MainChar_run_34f.fbx">
+      <Name>MainChar_run_34f</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

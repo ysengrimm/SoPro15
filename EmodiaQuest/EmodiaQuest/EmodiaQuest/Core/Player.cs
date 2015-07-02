@@ -24,6 +24,7 @@ namespace EmodiaQuest.Core
         public float MovementOffset, ItemOffset;
         public float Angle;
 
+
         // The Model
         private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
         // Skinning Data
@@ -100,7 +101,7 @@ namespace EmodiaQuest.Core
 
             Angle = 0;
 
-            playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
+            //playerModel = contentMngr.Load<Model>("fbxContent/player/MainChar_run_34f");
             /*
             // Look up our custom skinning information.
             SkinningData skinningData = playerModel.Tag as SkinningData;
@@ -116,6 +117,7 @@ namespace EmodiaQuest.Core
 
             //loading Animation Models
             standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
+            //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
             walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
             jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
 
@@ -197,12 +199,13 @@ namespace EmodiaQuest.Core
                 if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
                 {
                     collisionHandler.Controller.Items.RemoveAt(i);
-                    Console.Out.WriteLine("+1 Point");
+                    //Console.Out.WriteLine("+1 Point");
                 }
                 }
 
             }
             //update playerState
+
             if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 PlayerState = PlayerState.WalkJumping;
@@ -224,8 +227,8 @@ namespace EmodiaQuest.Core
                 stateTime = standingDuration/4f;
             }
             stateTime -= gameTime.ElapsedGameTime.Milliseconds;
-            
-            //update only the animation which is required if the Playerstate changed        
+
+            //update only the animation which is required if the changed Playerstate      
             switch(PlayerState)
             {
                 case PlayerState.Standing:
@@ -247,7 +250,8 @@ namespace EmodiaQuest.Core
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
-            // Bone updates for each required animation        
+            // Bone updates for each required animation   
+            
             switch (PlayerState)
             {
                 case PlayerState.Standing:
@@ -264,13 +268,14 @@ namespace EmodiaQuest.Core
                     jumpingBones = jumpingAP.GetSkinTransforms();
                     break;
             }
-
+            
             foreach (var mesh in playerModel.Meshes)
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
                     
                     //Draw the Bones which are required
+                    
                     switch (PlayerState)
                     {
                         case PlayerState.Standing:
@@ -292,13 +297,13 @@ namespace EmodiaQuest.Core
                             effect.SetBoneTransforms(blendingBones);
                             break;
                     }
+                    effect.EnableDefaultLighting();
                     effect.DiffuseColor = new Vector3(255, 0, 0);
-
                     effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
 
-                    effect.EnableDefaultLighting();
+
 
                     effect.SpecularColor = new Vector3(0.25f);
                     effect.SpecularPower = 16;

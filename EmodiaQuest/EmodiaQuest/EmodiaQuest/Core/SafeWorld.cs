@@ -25,7 +25,7 @@ namespace EmodiaQuest.Core
         public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager Content;
 
-        public Human Enemy;
+        public Enemy enemy1;
         
         public SafeWorld(ContentManager content)
         {
@@ -76,14 +76,14 @@ namespace EmodiaQuest.Core
             Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing
-            Enemy = new Human(new Vector3(250, 0, 300), Controller);
-            Enemy.LoadContent(this.Content);
+            enemy1 = new Enemy(new Vector3(250, 0, 300), Controller);
+            enemy1.LoadContent(this.Content);
         }
 
         //just for testing the enemy
         public void UpdateSafeworld(GameTime gametime)
         {
-            Enemy.Update(gametime);
+            enemy1.Update(gametime);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace EmodiaQuest.Core
         public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             DrawEnvironment(world, view, projection);
-            Enemy.Draw(world, view, projection);
+            enemy1.Draw(world, view, projection);
             //drawNPCs();
             //drawHUD();
             //drawPlayer(); <--- nope is in EmodiaQuest.cs
