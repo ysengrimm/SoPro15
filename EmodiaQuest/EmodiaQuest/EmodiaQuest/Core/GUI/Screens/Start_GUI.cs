@@ -48,7 +48,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             this.platform.addButton(0, 0, mainWindowWidth, mainwindowHeight, "clickToPlay", false);
 
-            this.platform.addPlainText(10.5f, 10, "dice_big", "EMODIA \n  QUEST ");
+            this.platform.addPlainText(10.5f, 10.0f, "dice_big", "EMODIA \n  QUEST ");
         }
 
         public void update()

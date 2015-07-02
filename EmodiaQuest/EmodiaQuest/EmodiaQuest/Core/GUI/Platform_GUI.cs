@@ -22,7 +22,7 @@ namespace EmodiaQuest.Core.GUI
         private string functionCalled = null;
 
         //MainwindowRes
-        public static Vector2 WindowSize { get; set; } 
+        public static Vector2 MainWindowSize { get; set; } 
         public static int MainWindowWidth { get; set; }
         public static int MainwindowHeight { get; set; }
 
@@ -60,11 +60,17 @@ namespace EmodiaQuest.Core.GUI
         private SpriteFont dice_big;
         private SpriteFont monoFont_small;
 
+        // Fontsizes and Scales
+        private float fontFactor_dice_big = 0.41458f;
+        private float fontFactor_monoFont_big = 0.2083f;
+        private float fontFactor_monoFont_small = 0.0979f;
+        private float scaleFactor_dice_big;
+        private float scaleFactor_monoFont_big;
+        private float scaleFactor_monoFont_small;
+
         public void loadContent(ContentManager Content)
         {            
-            // Set resolution
-            // This gets called for every Menu. Should change            
-            setResolution();
+            
 
             // Button Content
             button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
@@ -91,6 +97,12 @@ namespace EmodiaQuest.Core.GUI
             dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
             monoFont_small = Content.Load<SpriteFont>("Content_GUI/monoFont_small");
             //Console.WriteLine(monoFont_big.MeasureString("12345"));
+            
+            
+            // Set resolution
+            // This gets called for every Menu. Should change
+            setResolution();
+            setFontSize();
 
         }
 
@@ -139,26 +151,42 @@ namespace EmodiaQuest.Core.GUI
             }
             foreach (Slider_GUI sl in sliders)
             {
+                int sliderhandle = mouseHandle.X - sl.SliderWidth / 2;
                 if (mouseHandle.LeftButton == ButtonState.Pressed)
                 {
+                    
                     if (Slider_GUI.isInside(mouseHandle.X, mouseHandle.Y, sl.SliderPosX, sl.SliderPosY, sl.SliderWidth, sl.SliderHeight))
                     {
-                        if (pushed_name == sl.Function)
-                        {
-                            //bb.Button_State = ButtonState_GUI.Pressed;
-                            // Direkte Übergabe? Ne, da das mit Grafik-Stuff schief geht
-                        }
+                        sl.Slider_State = SliderState_GUI.Pressed;
+                        //if (pushed_name == sl.Function)
+                        //{
+                            
+                        //    //bb.Button_State = ButtonState_GUI.Pressed;
+                        //    // Direkte Übergabe? Ne, da das mit Grafik-Stuff schief geht
+                        //}
                         if (mouseHandle_Old.LeftButton == ButtonState.Released)
                         {
                             pushed_name = sl.Function;
                         }
                     }
 
-                    if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name == sl.Function)
-                    {
-                        //this.functionCalled = bb.onClick();
-                        // Werte eintragen
-                    }
+                    if (pushed_name == sl.Function)
+                    {    
+                        sl.SliderPosX = sliderhandle;
+                        if (sliderhandle <= sl.SliderMinX)
+                            sl.SliderPosX = sl.SliderMinX;
+                        else if (sliderhandle >= sl.SliderMaxX)
+                            sl.SliderPosX = sl.SliderMaxX;
+                    }                        
+                }
+
+                if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name == sl.Function)
+                {
+                    pushed_name = null;
+                    sl.Slider_State = SliderState_GUI.Normal;
+                    //Console.WriteLine(monoFont_small.MeasureString("A").Y);
+                    //Console.WriteLine(monoFont_big.MeasureString("MAIN MENU").X);
+                    //Console.WriteLine((int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX));
                 }
             }
 
@@ -197,12 +225,17 @@ namespace EmodiaQuest.Core.GUI
                     else if (bb.Button_State == ButtonState_GUI.Pressed)
                         spritebatch.Draw(button_p, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                 }
+                if (bb.ButtonText != null)
+                {
+                    //spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), 2.7f, SpriteEffects.None, 0.0f);
+                }
             }
-            foreach (PlainImage_GUI pi in pimages)
+            foreach (PlainImage_GUI pi in pimages)               
                 spritebatch.Draw(plainImage, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), pi.Color);
 
             foreach (PlainText_GUI pt in ptexts)
                 spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor);
+                //spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f,0.0f), 1.86f, SpriteEffects.None, 0.0f);
             foreach (Slider_GUI sl in sliders)
             {
                 spritebatch.Draw(slider_background, new Rectangle(sl.XPos, sl.YPos, sl.Width, sl.Height), drawColor);
@@ -218,32 +251,53 @@ namespace EmodiaQuest.Core.GUI
 
         public void setResolution()
         {
-            WindowSize = EmodiaQuest.Core.Settings.Instance.Resolution;
+            MainWindowSize = EmodiaQuest.Core.Settings.Instance.Resolution;
             MainWindowWidth = (int)EmodiaQuest.Core.Settings.Instance.Resolution.X;
             MainwindowHeight = (int)EmodiaQuest.Core.Settings.Instance.Resolution.Y;
         }
 
+        public void setFontSize()
+        {
+            this.scaleFactor_dice_big = fontFactor_dice_big / MainWindowSize.Y;
+            this.scaleFactor_monoFont_big = scaleFactor_monoFont_big / MainWindowSize.Y;
+            this.scaleFactor_monoFont_small = scaleFactor_monoFont_small / MainWindowSize.Y;
+            //fontFactor_dice_big
+            //fontSize_dice_big = dice_big.MeasureString("A");
+            //fontSize_monoFont_big = monoFont_big.MeasureString("A");
+            //fontSize_monoFont_small = monoFont_small.MeasureString("A");
+        }
+
         public void addButton(float xPos, float yPos, float width, float height, string name)
         {
-            int xPosAbs = (int)(WindowSize.X * xPos * 0.01);
-            int yPosAbs = (int)(WindowSize.Y * yPos * 0.01);
-            int widthAbs = (int)(WindowSize.X * width * 0.01);
-            int heightAbs = (int)(WindowSize.Y * height * 0.01);
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name));
+        }
+        public void addButton(float xPos, float yPos, float width, float height, string name, string buttonText)
+        {
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
+            //int textX = (int)(xPos + (width-monoFont_small.MeasureString(buttonText).X)/2);
+            //int textY = (int)monoFont_small.MeasureString(buttonText).Y;
+            buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name, buttonText));
         }
         public void addButton(float xPos, float yPos, float width, float height, string name, bool isVisible)
         {
-            int xPosAbs = (int)(WindowSize.X * xPos * 0.01);
-            int yPosAbs = (int)(WindowSize.Y * yPos * 0.01);
-            int widthAbs = (int)(WindowSize.X * width * 0.01);
-            int heightAbs = (int)(WindowSize.Y * height * 0.01);
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name, isVisible));
         }
 
         public void addPlainText(float xPos, float yPos, string chooseFont, string text)
         {
-            int xPosAbs = (int)(WindowSize.X * xPos * 0.01);
-            int yPosAbs = (int)(WindowSize.Y * yPos * 0.01);
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             switch (chooseFont)
             {
                 case "dice_big":
@@ -263,20 +317,20 @@ namespace EmodiaQuest.Core.GUI
 
         public void addPlainImage(float xPos, float yPos, float width, float height, Color color)
         {
-            int xPosAbs = (int)(WindowSize.X * xPos * 0.01);
-            int yPosAbs = (int)(WindowSize.Y * yPos * 0.01);
-            int widthAbs = (int)(WindowSize.X * width * 0.01);
-            int heightAbs = (int)(WindowSize.Y * height * 0.01);
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             pimages.Add(new PlainImage_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, color));
         }
 
-        public void addSlider(float xPos, float yPos, float width, float height, string name)
+        public void addSlider(float xPos, float yPos, float width, float height, int minValue, int maxValue, string name)
         {
-            int xPosAbs = (int)(WindowSize.X * xPos * 0.01);
-            int yPosAbs = (int)(WindowSize.Y * yPos * 0.01);
-            int widthAbs = (int)(WindowSize.X * width * 0.01);
-            int heightAbs = (int)(WindowSize.Y * height * 0.01);
-            sliders.Add(new Slider_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name));
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
+            sliders.Add(new Slider_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, minValue, maxValue, name));
         }
 
 
