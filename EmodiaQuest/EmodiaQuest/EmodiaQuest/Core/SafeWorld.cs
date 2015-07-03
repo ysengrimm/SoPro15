@@ -50,6 +50,9 @@ namespace EmodiaQuest.Core
             Controller.CreatePlacementMap(PlacementMap);
             Controller.CreateItemMap(ItemMap);
 
+            //initialise enemy array
+            Controller.CreateEnemyArray();
+
             // Walls
             EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall1);
             EnvironmentController.Object wall2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall2"), new Color(2, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall2);

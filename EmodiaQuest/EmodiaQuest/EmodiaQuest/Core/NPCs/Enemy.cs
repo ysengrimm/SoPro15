@@ -37,6 +37,7 @@ namespace EmodiaQuest.Core.NPCs
 
         // Enemystats
         public Vector3 Position;
+        public Vector3 oldPosition;
         public float MaxEnemyHealth;
         public float Armor;
         public float MovementSpeed;
@@ -47,6 +48,7 @@ namespace EmodiaQuest.Core.NPCs
         {
             this.currentEnvironment = currentEnvironment;
             this.Position = position;
+            currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Z / 10)].Add(this);
             this.TrackingRadius = 20f;
             MovementSpeed = 0.25f;
             this.enemyAi = new Ai(position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
@@ -65,8 +67,34 @@ namespace EmodiaQuest.Core.NPCs
 
         public void Update(GameTime gameTime)
         {
+            oldPosition = Position;
+
             enemyAi.updateAi(Position);;
-            Position = Vector3.Add(enemyAi.TrackingDirection, Position);
+            Vector3 newPosition = Vector3.Add(enemyAi.TrackingDirection, Position);
+
+            //all this should be tested
+            //if next part of grid contains less then 5 enemies:
+            //let Enymy walk
+            //remove from old List
+            //add to new List
+            if (currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Z / 10)].Count < 5)  //if next part of grid contains less then 5 Enemies
+            {
+                Position = Vector3.Add(enemyAi.TrackingDirection, Position);
+                currentEnvironment.enemyArray[(int)Math.Round(oldPosition.X / 10), (int)Math.Round(oldPosition.Z / 10)].Remove(this);
+                currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Z / 10)].Add(this);      
+            }
+
+            //to test current position in array
+            /*
+            for (int i = 0; i < currentEnvironment.enemyArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < currentEnvironment.enemyArray.GetLength(1); j++)
+                {
+                    if(currentEnvironment.enemyArray[i, j].Count == 1)
+                        Console.Out.WriteLine(i + " " + j);
+                }
+            }
+            */
         }
 
 
