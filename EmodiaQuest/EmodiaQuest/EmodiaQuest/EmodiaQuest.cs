@@ -134,6 +134,8 @@ namespace EmodiaQuest
                     MouseState mState = Mouse.GetState();
                     Player.Instance.Update(gameTime, mState);
 
+                    // check if game is in focus
+                    Player.Instance.GameIsInFocus = IsActive;
                     //just for enemytesting in the safeworld
                     safeWorld.UpdateSafeworld(gameTime);
                     // HUD/NetStat

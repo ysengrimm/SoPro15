@@ -75,6 +75,12 @@ namespace EmodiaQuest.Core
             set { collisionHandler = value; }
         }
 
+        private bool gameIsInFocus = false;
+        public bool GameIsInFocus
+        {
+            set { gameIsInFocus= value; }
+        }
+
         private Player()
         {
        
@@ -151,10 +157,13 @@ namespace EmodiaQuest.Core
 
         public void Update(GameTime gameTime, MouseState mouseState)
         {
-            //scale position to 0.0 to 1.0 then center the +/- change
-            Angle += (float) -(((mouseState.X/windowSize.X) - 0.5) * RotationSpeed);
-            // reset mouse position to window center
-            Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));
+            if (gameIsInFocus)
+            {
+                //scale position to 0.0 to 1.0 then center the +/- change
+                Angle += (float)-(((mouseState.X / windowSize.X) - 0.5) * RotationSpeed);
+                // reset mouse position to window center
+                Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));    
+            }
 
             lastPos = Position;
             movement = Position;
