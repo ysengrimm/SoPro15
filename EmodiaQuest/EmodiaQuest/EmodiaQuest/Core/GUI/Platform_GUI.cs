@@ -16,6 +16,9 @@ namespace EmodiaQuest.Core.GUI
         private List<ItemSocket_GUI> sockets = new List<ItemSocket_GUI>();
         private List<PlainImage_GUI> pimages = new List<PlainImage_GUI>();
         private List<Slider_GUI> sliders = new List<Slider_GUI>();
+
+        public static List<SpriteFonts_GUI> fonts = new List<SpriteFonts_GUI>();
+
         private MouseState mouseHandle;
         private MouseState mouseHandle_Old;
         private string pushed_name = null;
@@ -23,8 +26,8 @@ namespace EmodiaQuest.Core.GUI
 
         //MainwindowRes
         public static Vector2 MainWindowSize { get; set; } 
-        public static int MainWindowWidth { get; set; }
-        public static int MainwindowHeight { get; set; }
+        public static int MainWindowWidthInt { get; set; }
+        public static int MainWindowHeightInt { get; set; }
 
 
         //private short alphaValue = 255;
@@ -60,13 +63,15 @@ namespace EmodiaQuest.Core.GUI
         private SpriteFont dice_big;
         private SpriteFont monoFont_small;
 
+        public static float OverallFontScale;
+
         // Fontsizes and Scales
-        private float fontFactor_dice_big = 0.41458f;
-        private float fontFactor_monoFont_big = 0.2083f;
-        private float fontFactor_monoFont_small = 0.0979f;
-        private float scaleFactor_dice_big;
-        private float scaleFactor_monoFont_big;
-        private float scaleFactor_monoFont_small;
+        //private float fontFactor_dice_big = 0.41458f;
+        //private float fontFactor_monoFont_big = 0.2083f;
+        //private float fontFactor_monoFont_small = 0.0979f;
+        //private float scaleFactor_dice_big;
+        //private float scaleFactor_monoFont_big;
+        //private float scaleFactor_monoFont_small;
 
         public void loadContent(ContentManager Content)
         {            
@@ -92,17 +97,17 @@ namespace EmodiaQuest.Core.GUI
             slider_foreground_normal = Content.Load<Texture2D>("Content_GUI/slider_foreground_normal");
             slider_foreground_pressed = Content.Load<Texture2D>("Content_GUI/slider_foreground_pressed");
 
-            // Load Fonts
-            monoFont_big = Content.Load<SpriteFont>("Content_GUI/monoFont_big");
+            //fonts.Add()
+            //dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
+            //monoFont_big = Content.Load<SpriteFont>("Content_GUI/monoFont_big");            
+            //monoFont_small = Content.Load<SpriteFont>("Content_GUI/monoFont_small");
+
             dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
+            monoFont_big = Content.Load<SpriteFont>("Content_GUI/monoFont_big");
             monoFont_small = Content.Load<SpriteFont>("Content_GUI/monoFont_small");
+
             //Console.WriteLine(monoFont_big.MeasureString("12345"));
             
-            
-            // Set resolution
-            // This gets called for every Menu. Should change
-            setResolution();
-            setFontSize();
 
         }
 
@@ -204,8 +209,8 @@ namespace EmodiaQuest.Core.GUI
 
             if (backgroundEnabled)
             {
-                spritebatch.Draw(overlay, new Rectangle(0, 0, MainWindowWidth, MainwindowHeight), Color.White);
-                spritebatch.Draw(background, new Rectangle(0, 0, MainWindowWidth, MainwindowHeight), drawColor);
+                spritebatch.Draw(overlay, new Rectangle(0, 0, MainWindowWidthInt, MainWindowHeightInt), Color.White);
+                spritebatch.Draw(background, new Rectangle(0, 0, MainWindowWidthInt, MainWindowHeightInt), drawColor);
             }
 
 
@@ -227,15 +232,15 @@ namespace EmodiaQuest.Core.GUI
                 }
                 if (bb.ButtonText != null)
                 {
-                    //spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), 2.7f, SpriteEffects.None, 0.0f);
+                    spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(bb.TextXPos, bb.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), bb.textScaleFactor, SpriteEffects.None, 0.0f);
                 }
             }
             foreach (PlainImage_GUI pi in pimages)               
                 spritebatch.Draw(plainImage, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), pi.Color);
 
             foreach (PlainText_GUI pt in ptexts)
-                spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor);
-                //spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f,0.0f), 1.86f, SpriteEffects.None, 0.0f);
+                spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), OverallFontScale, SpriteEffects.None, 0.0f);
+                //spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor);                
             foreach (Slider_GUI sl in sliders)
             {
                 spritebatch.Draw(slider_background, new Rectangle(sl.XPos, sl.YPos, sl.Width, sl.Height), drawColor);
@@ -249,23 +254,7 @@ namespace EmodiaQuest.Core.GUI
             spritebatch.End();
         }
 
-        public void setResolution()
-        {
-            MainWindowSize = EmodiaQuest.Core.Settings.Instance.Resolution;
-            MainWindowWidth = (int)EmodiaQuest.Core.Settings.Instance.Resolution.X;
-            MainwindowHeight = (int)EmodiaQuest.Core.Settings.Instance.Resolution.Y;
-        }
-
-        public void setFontSize()
-        {
-            this.scaleFactor_dice_big = fontFactor_dice_big / MainWindowSize.Y;
-            this.scaleFactor_monoFont_big = scaleFactor_monoFont_big / MainWindowSize.Y;
-            this.scaleFactor_monoFont_small = scaleFactor_monoFont_small / MainWindowSize.Y;
-            //fontFactor_dice_big
-            //fontSize_dice_big = dice_big.MeasureString("A");
-            //fontSize_monoFont_big = monoFont_big.MeasureString("A");
-            //fontSize_monoFont_small = monoFont_small.MeasureString("A");
-        }
+        
 
         public void addButton(float xPos, float yPos, float width, float height, string name)
         {
@@ -281,9 +270,16 @@ namespace EmodiaQuest.Core.GUI
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
-            //int textX = (int)(xPos + (width-monoFont_small.MeasureString(buttonText).X)/2);
-            //int textY = (int)monoFont_small.MeasureString(buttonText).Y;
-            buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name, buttonText));
+
+            Vector2 spriteFontSize = monoFont_small.MeasureString(buttonText);
+            
+            // 0.7 Factor is the scale for the text for now to make it fit in the box
+            float textScaleFactor = (MainWindowSize.Y * height * 0.01f * 0.7f) / spriteFontSize.Y;
+            //Console.WriteLine(textScaleFactor);
+            int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2) - (MainWindowSize.X*0.01));
+            int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - (textScaleFactor * spriteFontSize.Y / 2) + (MainWindowSize.Y * 0.01));
+            //int textY = (int)((MainWindowSize.Y * yPos * 0.01f) - (textScaleFactor * spriteFontSize.Y) / 2);
+            buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name, buttonText, textX, textY, textScaleFactor));
         }
         public void addButton(float xPos, float yPos, float width, float height, string name, bool isVisible)
         {
@@ -294,25 +290,65 @@ namespace EmodiaQuest.Core.GUI
             buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name, isVisible));
         }
 
-        public void addPlainText(float xPos, float yPos, string chooseFont, string text)
+        public void addPlainText(float xPos, float yPos, string chooseFont, string text, bool centered)
         {
-            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
-            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int xPosAbs;
+            int yPosAbs;
+            
+            
+            Vector2 spriteFontSize;
+
+            // Oh my god this is so ugly. I can't believe it myself.
             switch (chooseFont)
             {
                 case "dice_big":
-                    ptexts.Add(new PlainText_GUI(xPosAbs, yPosAbs, dice_big, text));
+                    spriteFontSize = dice_big.MeasureString(text);
+                    if (centered)
+                    {
+                        xPosAbs = (int)((MainWindowSize.X * xPos * 0.01) - spriteFontSize.X * OverallFontScale / 2);
+                        yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+                        //yPosAbs = (int)((MainWindowSize.Y * yPos * 0.01) - spriteFontSize.Y * OverallFontScale / 2);
+                    }
+                    else
+                    {
+                        xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+                        yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+                    }
+                    ptexts.Add(new PlainText_GUI(xPosAbs, yPosAbs, dice_big, text, centered, spriteFontSize));
                     break;
                 case "monoFont_big":
-                    ptexts.Add(new PlainText_GUI(xPosAbs, yPosAbs, monoFont_big, text));
+                    spriteFontSize = monoFont_big.MeasureString(text);
+                    if (centered)
+                    {
+                        xPosAbs = (int)((MainWindowSize.X * xPos * 0.01) - spriteFontSize.X * OverallFontScale / 2);
+                        yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+                    }
+                    else
+                    {
+                        xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+                        yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+                    }
+                    ptexts.Add(new PlainText_GUI(xPosAbs, yPosAbs, monoFont_big, text, centered, spriteFontSize));
                     break;
                 case "monoFont_small":
-                    ptexts.Add(new PlainText_GUI(xPosAbs, yPosAbs, monoFont_small, text));
+                    spriteFontSize = monoFont_small.MeasureString(text);
+                    if (centered)
+                    {
+                        xPosAbs = (int)((MainWindowSize.X * xPos * 0.01) - spriteFontSize.X * OverallFontScale / 2);
+                        yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+                    }
+                    else
+                    {
+                        xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+                        yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+                    }
+                    ptexts.Add(new PlainText_GUI(xPosAbs, yPosAbs, monoFont_small, text, centered, spriteFontSize));
                     break;
                 default:
                     Console.WriteLine("No such font");
                     break;
             }
+            
         }
 
         public void addPlainImage(float xPos, float yPos, float width, float height, Color color)

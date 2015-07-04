@@ -38,14 +38,16 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.setBackground(Content, "Content_GUI/menu_background");
 
             // Beware: Hardcoded values...
-            this.platform.addButton(30, 50, 40, 15, "nextState");
-            this.platform.addButton(30, 70, 40, 15, "quit");
+            //this.platform.addButton(30, 50, 40, 15, "nextState");
+            this.platform.addButton(30, 50, 40, 15, "nextState", "Start Game");
+            //this.platform.addButton(30, 70, 40, 15, "quit");
+            this.platform.addButton(30, 70, 40, 15, "quit", "Quit Game");
 
-            this.platform.addPlainText(22.5f, 10.0f, "monoFont_big", "MAIN MENU");
-            
+            //this.platform.addPlainText(22.5f, 10.0f, "monoFont_big", "MAIN MENU", true);
+            this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "MAIN MENU", true);
 
-            this.platform.addPlainText(296, 248, "monoFont_small", "New game");
-            this.platform.addPlainText(288, 348, "monoFont_small", "Quit game");
+            //this.platform.addPlainText(50.0f, 80.0f, "monoFont_small", "New game", true);
+            //this.platform.addPlainText(50.0f, 90.0f, "monoFont_small", "Quit game", true);
 
             this.platform.addSlider(30, 85, 40, 15, 0, 100, "testslide");
 

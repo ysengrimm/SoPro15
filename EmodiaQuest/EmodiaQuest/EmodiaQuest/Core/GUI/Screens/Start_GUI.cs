@@ -47,8 +47,9 @@ namespace EmodiaQuest.Core.GUI.Screens
             mainwindowHeight = (int)EmodiaQuest.Core.Settings.Instance.Resolution.Y;
 
             this.platform.addButton(0, 0, mainWindowWidth, mainwindowHeight, "clickToPlay", false);
-
-            this.platform.addPlainText(10.5f, 10.0f, "dice_big", "EMODIA \n  QUEST ");
+        
+            this.platform.addPlainText(50.0f, 20.0f, "dice_big", "EMODIA", true);
+            this.platform.addPlainText(50.0f, 20.0f, "dice_big", "\nQUEST", true);
         }
 
         public void update()

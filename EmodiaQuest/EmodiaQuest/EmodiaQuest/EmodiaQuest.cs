@@ -57,7 +57,7 @@ namespace EmodiaQuest
             
             // GUI init
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.loadContent();
-            
+            EmodiaQuest.Core.GUI.Settings_GUI.Instance.loadContent(Content);
             //EmodiaQuest.Core.GUI.Controls_GUI.Instance.Mouse_GUI.
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);

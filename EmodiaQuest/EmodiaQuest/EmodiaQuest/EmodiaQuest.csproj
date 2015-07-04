@@ -108,6 +108,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\GUI\Settings_GUI.cs" />
+    <Compile Include="Core\GUI\SpriteFonts_GUI.cs" />
     <Compile Include="Core\NPCs\EnemyState.cs" />
     <Compile Include="Core\GUI\Button_GUI.cs" />
     <Compile Include="Core\GUI\Controls_GUI.cs" />
