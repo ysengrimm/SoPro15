@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using EmodiaQuest.Core.NPCs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -23,7 +24,6 @@ namespace EmodiaQuest.Core
         private Vector2 lastPos; //position from last step (fixes false kamera focus)
         public float MovementOffset, ItemOffset;
         public float Angle;
-
 
         // The Model
         private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
@@ -79,6 +79,12 @@ namespace EmodiaQuest.Core
         public bool GameIsInFocus
         {
             set { gameIsInFocus= value; }
+        }
+
+        private EnvironmentController gameEnv;
+        public EnvironmentController GameEnv
+        {
+            set { gameEnv = value; }
         }
 
         private Player()
@@ -157,6 +163,7 @@ namespace EmodiaQuest.Core
 
         public void Update(GameTime gameTime, MouseState mouseState)
         {
+            // only set fixed mouse pos if game is in focus
             if (gameIsInFocus)
             {
                 //scale position to 0.0 to 1.0 then center the +/- change
@@ -255,6 +262,47 @@ namespace EmodiaQuest.Core
                     break;
             }
             LastPlayerState = PlayerState;
+
+            // interaction
+            int gridBlockSize = 10;
+            Vector2 currentGridPos = new Vector2((float) Math.Round(Position.X / gridBlockSize), (float) Math.Round(Position.Y / 10));
+            Vector2 frontDirection = new Vector2((float) Math.Sin(Angle), (float) Math.Cos(Angle));
+            Console.WriteLine(frontDirection);
+
+            // checking for interactionable objects (currently enemy) in each grid block around the current pos (and the currend pos too)
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int) currentGridPos.X + i, (int) currentGridPos.Y + j];
+                    if (currentBlockEnemyList.Count > 0)
+                    {
+                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                       
+                        if (mouseState.LeftButton == ButtonState.Pressed)
+                        {
+                            currentClosestEnemy.SetAsDead();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private Enemy getClosestMonster(List<Enemy> enemyList)
+        {
+            float currentCosest = float.MaxValue;
+            Enemy closestEnemy = null;
+            foreach (var enemy in enemyList)
+            {
+                float dist = (float) EuclideanDistance(Position, enemy.Position);
+                if (dist < currentCosest)
+                {
+                    currentCosest = dist;
+                    closestEnemy = enemy;
+                }
+            }
+            return closestEnemy;
         }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)

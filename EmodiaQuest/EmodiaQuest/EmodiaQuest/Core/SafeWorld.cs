@@ -64,6 +64,8 @@ namespace EmodiaQuest.Core
             // Items
             EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
 
+            Player.Instance.GameEnv = Controller;
+
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall1.Model, wall1.Color, 0);
             Controller.InsertObj(Controller.Wall, wall2.Model, wall2.Color, 0);
@@ -79,7 +81,7 @@ namespace EmodiaQuest.Core
             Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing
-            enemy1 = new Enemy(new Vector3(250, 0, 300), Controller);
+            enemy1 = new Enemy(new Vector2(250, 300), Controller);
             enemy1.LoadContent(this.Content);
         }
 
