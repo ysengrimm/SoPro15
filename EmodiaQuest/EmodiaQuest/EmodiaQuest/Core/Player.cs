@@ -363,7 +363,7 @@ namespace EmodiaQuest.Core
                 {
                     for (int j = -1; j < 2; j++)
                     {
-                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y +j];
                         if (currentBlockEnemyList.Count > 0)
                         {
                             Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
@@ -378,7 +378,7 @@ namespace EmodiaQuest.Core
                 {
                     for (int j = -1; j < 2; j++)
                     {
-                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y + j];
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
                         if (currentBlockEnemyList.Count > 0)
                         {
                             Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
