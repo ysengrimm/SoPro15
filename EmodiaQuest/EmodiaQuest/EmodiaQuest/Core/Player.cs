@@ -266,27 +266,126 @@ namespace EmodiaQuest.Core
             // interaction
             int gridBlockSize = 10;
             Vector2 currentGridPos = new Vector2((float) Math.Round(Position.X / gridBlockSize), (float) Math.Round(Position.Y / 10));
-            Vector2 frontDirection = new Vector2((float) Math.Sin(Angle), (float) Math.Cos(Angle));
-            Console.WriteLine(frontDirection);
+            Vector2 frontDirection = new Vector2((float) Math.Round(Math.Sin(Angle)), (float) Math.Round(Math.Cos(Angle)));
+            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridBlockSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridBlockSize) + frontDirection.Y));
 
-            // checking for interactionable objects (currently enemy) in each grid block around the current pos (and the currend pos too)
-            for (int i = -1; i < 2; i++)
+            // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
+            // only == 2 in edges, else normal 3 in a row
+            if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
             {
-                for (int j = -1; j < 2; j++)
+                // top left 
+                if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
                 {
-                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int) currentGridPos.X + i, (int) currentGridPos.Y + j];
-                    if (currentBlockEnemyList.Count > 0)
+                    Console.WriteLine("top left");
+                    for (int i = 0; i < 2; i++)
                     {
-                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                       
-                        if (mouseState.LeftButton == ButtonState.Pressed)
+                        for (int j = 0; j < 2; j++)
                         {
-                            currentClosestEnemy.SetAsDead();
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // top right
+                else if ((int)frontDirection.X == 1 && (int)frontDirection.Y == -1)
+                {
+                    for (int i = -1; i < 1; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // bot left
+                else if ((int) frontDirection.X == -1 && (int) frontDirection.Y == 1)
+                {
+                    Console.WriteLine("bot left");
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = -1; j < 1; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // bot right (X = 1, Y = 1)
+                else
+                {
+                    Console.WriteLine("bot right");
+                    for (int i = -1; i < 1; i++)
+                    {
+                        for (int j = -1; j < 1; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
                         }
                     }
                 }
+                
             }
+            else
+            {
+                // left or right
+                if ((int) Math.Abs(frontDirection.X) == 1 && (int) frontDirection.Y == 0)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
+                        if (currentBlockEnemyList.Count > 0)
+                        {
+                            Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                            if (mouseState.LeftButton == ButtonState.Pressed)
+                            {
+                                currentClosestEnemy.SetAsDead();
+                            }
+                        }
+                    }
+                }
+                else // top or bottom
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y + j];
+                        if (currentBlockEnemyList.Count > 0)
+                        {
+                            Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                            if (mouseState.LeftButton == ButtonState.Pressed)
+                            {
+                                currentClosestEnemy.SetAsDead();
+                            }
+                        }
+                    }
+                }
 
+            }
         }
 
         private Enemy getClosestMonster(List<Enemy> enemyList)
