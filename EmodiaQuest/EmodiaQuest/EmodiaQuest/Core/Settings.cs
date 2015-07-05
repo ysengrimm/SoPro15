@@ -21,6 +21,11 @@ namespace EmodiaQuest.Core
         /// </summary>
         public bool DebugMode = false;
 
+        /// <summary>
+        /// Size of a grid element.
+        /// </summary>
+        public int GridSize = 10;
+
         /********************************
          *      Graphics Settings        *
          ********************************/

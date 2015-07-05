@@ -45,6 +45,8 @@ namespace EmodiaQuest.Core.NPCs
 
         public bool IsAlive { get; set; }
 
+        private CollisionHandler collHandler;
+
         // Constructor
         public Enemy(Vector2 position, EnvironmentController currentEnvironment)
         {
@@ -66,6 +68,7 @@ namespace EmodiaQuest.Core.NPCs
             enemyModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
 
             IsAlive = true;
+            collHandler = CollisionHandler.Instance;
         }
 
 
@@ -82,24 +85,35 @@ namespace EmodiaQuest.Core.NPCs
             //remove from old List
             //add to new List
             // TODO: /10 shouldn't be a magic number
-            if (IsAlive && currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5)  //if next part of grid contains less then 5 Enemies
+            
+            // object collision
+            if (Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.CollisionColors, 2.0f))
             {
-                Position = newPosition;
-                currentEnvironment.enemyArray[(int)Math.Round(oldPosition.X / 10), (int)Math.Round(oldPosition.Y / 10)].Remove(this);
-                currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);      
-            }
-
-            //to test current position in array
-            /*
-            for (int i = 0; i < currentEnvironment.enemyArray.GetLength(0); i++)
-            {
-                for (int j = 0; j < currentEnvironment.enemyArray.GetLength(1); j++)
+                if (IsAlive && currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5 && !onSameGridElement(newPosition, Player.Instance.Position))  //if next part of grid contains less then 5 Enemies
                 {
-                    if(currentEnvironment.enemyArray[i, j].Count == 1)
-                        Console.Out.WriteLine(i + " " + j);
+                    Position.Y = newPosition.Y;
+                    currentEnvironment.enemyArray[(int)Math.Round(oldPosition.X / 10), (int)Math.Round(oldPosition.Y / 10)].Remove(this);
+                    currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
+                }
+                
+            }
+            if (Color.White == collHandler.GetCollisionColor(new Vector2(newPosition.X, Position.Y), collHandler.Controller.CollisionColors, 2.0f))
+            {
+                if (IsAlive && currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5 && !onSameGridElement(newPosition, Player.Instance.Position))  //if next part of grid contains less then 5 Enemies
+                {
+                    Position.X = newPosition.X;
+                    currentEnvironment.enemyArray[(int)Math.Round(oldPosition.X / 10), (int)Math.Round(oldPosition.Y / 10)].Remove(this);
+                    currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
                 }
             }
-            */
+        }
+
+        bool onSameGridElement(Vector2 a, Vector2 b)
+        {
+            Vector2 aOnGrid = new Vector2((int)Math.Round(a.X / Settings.Instance.GridSize), (int)Math.Round(a.Y / Settings.Instance.GridSize));
+            Vector2 bOnGrid = new Vector2((int)Math.Round(b.X / Settings.Instance.GridSize), (int)Math.Round(b.Y / Settings.Instance.GridSize));
+
+            return aOnGrid.X == bOnGrid.X && aOnGrid.Y == bOnGrid.Y;
         }
 
         public void SetAsDead()
@@ -108,8 +122,14 @@ namespace EmodiaQuest.Core.NPCs
             {
                 IsAlive = false;    
             }
-            Console.WriteLine("Enemy at" + Position + " died");
-        } 
+            Console.WriteLine("Enemy at " + Position + " died");
+        }
+
+        public void SetAsAlive()
+        {
+            IsAlive = true;
+            currentEnvironment.enemyArray[(int) Math.Round(Position.X/10), (int) Math.Round(Position.Y/10)].Add(this);
+        }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {

@@ -274,7 +274,6 @@ namespace EmodiaQuest.Core
 
             // interaction
             int gridBlockSize = 10;
-            Vector2 currentGridPos = new Vector2((float) Math.Round(Position.X / gridBlockSize), (float) Math.Round(Position.Y / 10));
             Vector2 frontDirection = new Vector2((float) Math.Round(Math.Sin(Angle)), (float) Math.Round(Math.Cos(Angle)));
             Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridBlockSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridBlockSize) + frontDirection.Y));
 
@@ -285,7 +284,6 @@ namespace EmodiaQuest.Core
                 // top left 
                 if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
                 {
-                    Console.WriteLine("top left");
                     for (int i = 0; i < 2; i++)
                     {
                         for (int j = 0; j < 2; j++)
@@ -322,7 +320,6 @@ namespace EmodiaQuest.Core
                 } // bot left
                 else if ((int) frontDirection.X == -1 && (int) frontDirection.Y == 1)
                 {
-                    Console.WriteLine("bot left");
                     for (int i = 0; i < 2; i++)
                     {
                         for (int j = -1; j < 1; j++)
@@ -341,7 +338,6 @@ namespace EmodiaQuest.Core
                 } // bot right (X = 1, Y = 1)
                 else
                 {
-                    Console.WriteLine("bot right");
                     for (int i = -1; i < 1; i++)
                     {
                         for (int j = -1; j < 1; j++)
