@@ -50,6 +50,9 @@ namespace EmodiaQuest.Core
             Controller.CreatePlacementMap(PlacementMap);
             Controller.CreateItemMap(ItemMap);
 
+            //initialise enemy array
+            Controller.CreateEnemyArray();
+
             // Walls
             EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall1);
             EnvironmentController.Object wall2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall2"), new Color(2, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall2);
@@ -60,6 +63,8 @@ namespace EmodiaQuest.Core
             EnvironmentController.Object grasGround = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"), new Color(0, 100, 0), new Vector2(1, 1));
             // Items
             EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
+
+            Player.Instance.GameEnv = Controller;
 
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall1.Model, wall1.Color, 0);
@@ -76,7 +81,7 @@ namespace EmodiaQuest.Core
             Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing
-            enemy1 = new Enemy(new Vector3(250, 0, 300), Controller);
+            enemy1 = new Enemy(new Vector2(250, 300), Controller);
             enemy1.LoadContent(this.Content);
         }
 

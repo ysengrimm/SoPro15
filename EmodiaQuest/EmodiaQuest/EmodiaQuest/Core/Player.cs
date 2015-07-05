@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using EmodiaQuest.Core.NPCs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -23,7 +24,6 @@ namespace EmodiaQuest.Core
         private Vector2 lastPos; //position from last step (fixes false kamera focus)
         public float MovementOffset, ItemOffset;
         public float Angle;
-
 
         // The Model
         private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
@@ -73,6 +73,18 @@ namespace EmodiaQuest.Core
         public CollisionHandler CollisionHandler
         {
             set { collisionHandler = value; }
+        }
+
+        private bool gameIsInFocus = false;
+        public bool GameIsInFocus
+        {
+            set { gameIsInFocus= value; }
+        }
+
+        private EnvironmentController gameEnv;
+        public EnvironmentController GameEnv
+        {
+            set { gameEnv = value; }
         }
 
         private Player()
@@ -160,10 +172,14 @@ namespace EmodiaQuest.Core
 
         public void Update(GameTime gameTime, MouseState mouseState)
         {
-            //scale position to 0.0 to 1.0 then center the +/- change
-            Angle += (float) -(((mouseState.X/windowSize.X) - 0.5) * RotationSpeed);
-            // reset mouse position to window center
-            Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));
+            // only set fixed mouse pos if game is in focus
+            if (gameIsInFocus)
+            {
+                //scale position to 0.0 to 1.0 then center the +/- change
+                Angle += (float)-(((mouseState.X / windowSize.X) - 0.5) * RotationSpeed);
+                // reset mouse position to window center
+                Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));    
+            }
 
             lastPos = Position;
             movement = Position;
@@ -255,6 +271,146 @@ namespace EmodiaQuest.Core
                     break;
             }
             LastPlayerState = PlayerState;
+
+            // interaction
+            int gridBlockSize = 10;
+            Vector2 currentGridPos = new Vector2((float) Math.Round(Position.X / gridBlockSize), (float) Math.Round(Position.Y / 10));
+            Vector2 frontDirection = new Vector2((float) Math.Round(Math.Sin(Angle)), (float) Math.Round(Math.Cos(Angle)));
+            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridBlockSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridBlockSize) + frontDirection.Y));
+
+            // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
+            // only == 2 in edges, else normal 3 in a row
+            if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
+            {
+                // top left 
+                if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
+                {
+                    Console.WriteLine("top left");
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // top right
+                else if ((int)frontDirection.X == 1 && (int)frontDirection.Y == -1)
+                {
+                    for (int i = -1; i < 1; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // bot left
+                else if ((int) frontDirection.X == -1 && (int) frontDirection.Y == 1)
+                {
+                    Console.WriteLine("bot left");
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = -1; j < 1; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // bot right (X = 1, Y = 1)
+                else
+                {
+                    Console.WriteLine("bot right");
+                    for (int i = -1; i < 1; i++)
+                    {
+                        for (int j = -1; j < 1; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+            else
+            {
+                // left or right
+                if ((int) Math.Abs(frontDirection.X) == 1 && (int) frontDirection.Y == 0)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
+                        if (currentBlockEnemyList.Count > 0)
+                        {
+                            Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                            if (mouseState.LeftButton == ButtonState.Pressed)
+                            {
+                                currentClosestEnemy.SetAsDead();
+                            }
+                        }
+                    }
+                }
+                else // top or bottom
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y + j];
+                        if (currentBlockEnemyList.Count > 0)
+                        {
+                            Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                            if (mouseState.LeftButton == ButtonState.Pressed)
+                            {
+                                currentClosestEnemy.SetAsDead();
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private Enemy getClosestMonster(List<Enemy> enemyList)
+        {
+            float currentCosest = float.MaxValue;
+            Enemy closestEnemy = null;
+            foreach (var enemy in enemyList)
+            {
+                float dist = (float) EuclideanDistance(Position, enemy.Position);
+                if (dist < currentCosest)
+                {
+                    currentCosest = dist;
+                    closestEnemy = enemy;
+                }
+            }
+            return closestEnemy;
         }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)

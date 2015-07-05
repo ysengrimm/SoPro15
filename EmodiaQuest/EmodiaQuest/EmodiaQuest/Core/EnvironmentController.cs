@@ -24,6 +24,7 @@ namespace EmodiaQuest.Core
         public Color[,] PlacementColors, CollisionColors, ItemColors;
 
         public List<GameObject> Ground, Wall, Items, Accessoires, Buildings;
+        public List<NPCs.Enemy>[,] enemyArray;
 
         /// <summary>
         /// This list only contains objects you can collide with
@@ -56,6 +57,22 @@ namespace EmodiaQuest.Core
             Buildings = new List<GameObject>();
 
             CollisionObjList = new List<Object>();
+
+
+        }
+        /// <summary>
+        /// Initialises Array with Lists of Enemy
+        /// </summary>
+        public void CreateEnemyArray()
+        {
+            enemyArray = new List<NPCs.Enemy>[PlacementMap.Width, PlacementMap.Height];
+            for (int i = 0; i < PlacementMap.Width; i++)
+            {
+                for (int j = 0; j < PlacementMap.Height; j++)
+                {
+                    enemyArray[i, j] = new List<NPCs.Enemy>();
+                }
+            }
         }
 
         /// <summary>

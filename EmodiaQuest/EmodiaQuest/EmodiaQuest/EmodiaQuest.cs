@@ -57,7 +57,7 @@ namespace EmodiaQuest
             
             // GUI init
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.loadContent();
-            
+            EmodiaQuest.Core.GUI.Settings_GUI.Instance.loadContent(Content);
             //EmodiaQuest.Core.GUI.Controls_GUI.Instance.Mouse_GUI.
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);
@@ -134,6 +134,8 @@ namespace EmodiaQuest
                     MouseState mState = Mouse.GetState();
                     Player.Instance.Update(gameTime, mState);
 
+                    // check if game is in focus
+                    Player.Instance.GameIsInFocus = IsActive;
                     //just for enemytesting in the safeworld
                     safeWorld.UpdateSafeworld(gameTime);
                     // HUD/NetStat

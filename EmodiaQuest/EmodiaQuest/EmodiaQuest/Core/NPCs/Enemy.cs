@@ -36,18 +36,22 @@ namespace EmodiaQuest.Core.NPCs
         private Ai enemyAi;
 
         // Enemystats
-        public Vector3 Position;
+        public Vector2 Position;
+        public Vector2 oldPosition;
         public float MaxEnemyHealth;
         public float Armor;
         public float MovementSpeed;
         public float TrackingRadius;
 
+        public bool IsAlive { get; set; }
+
         // Constructor
-        public Enemy(Vector3 position, EnvironmentController currentEnvironment)
+        public Enemy(Vector2 position, EnvironmentController currentEnvironment)
         {
             this.currentEnvironment = currentEnvironment;
             this.Position = position;
-            this.TrackingRadius = 20f;
+            currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
+            this.TrackingRadius = 30f;
             MovementSpeed = 0.25f;
             this.enemyAi = new Ai(position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
         }
@@ -60,29 +64,68 @@ namespace EmodiaQuest.Core.NPCs
             MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
             //enemyModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
             enemyModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
+
+            IsAlive = true;
         }
 
 
         public void Update(GameTime gameTime)
         {
+            oldPosition = Position;
+
             enemyAi.updateAi(Position);;
-            Position = Vector3.Add(enemyAi.TrackingDirection, Position);
+            Vector2 newPosition = Vector2.Add(enemyAi.TrackingDirection, Position);
+
+            //all this should be tested
+            //if next part of grid contains less then 5 enemies:
+            //let Enymy walk
+            //remove from old List
+            //add to new List
+            // TODO: /10 shouldn't be a magic number
+            if (IsAlive && currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5)  //if next part of grid contains less then 5 Enemies
+            {
+                Position = newPosition;
+                currentEnvironment.enemyArray[(int)Math.Round(oldPosition.X / 10), (int)Math.Round(oldPosition.Y / 10)].Remove(this);
+                currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);      
+            }
+
+            //to test current position in array
+            /*
+            for (int i = 0; i < currentEnvironment.enemyArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < currentEnvironment.enemyArray.GetLength(1); j++)
+                {
+                    if(currentEnvironment.enemyArray[i, j].Count == 1)
+                        Console.Out.WriteLine(i + " " + j);
+                }
+            }
+            */
         }
 
-
+        public void SetAsDead()
+        {
+            if (currentEnvironment.enemyArray[(int) Math.Round(Position.X/10), (int) Math.Round(Position.Y/10)].Remove(this))
+            {
+                IsAlive = false;    
+            }
+            Console.WriteLine("Enemy at" + Position + " died");
+        } 
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
-            foreach (ModelMesh mesh in enemyModel.Meshes)
+            if (IsAlive)
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach (ModelMesh mesh in enemyModel.Meshes)
                 {
-                    effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateTranslation(Position) * world;
-                    effect.View = view;
-                    effect.Projection = projection;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.World = Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y))*world;
+                        effect.View = view;
+                        effect.Projection = projection;
+                    }
+                    mesh.Draw();
                 }
-                mesh.Draw();
             }
         }
 
