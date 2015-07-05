@@ -82,13 +82,17 @@ namespace EmodiaQuest.Core
 
             // temporary enemy testing
             enemy1 = new Enemy(new Vector2(250, 300), Controller);
-            enemy1.LoadContent(this.Content);
+            enemy1.LoadContent(Content);
         }
 
         //just for testing the enemy
         public void UpdateSafeworld(GameTime gametime)
         {
             enemy1.Update(gametime);
+            if (Keyboard.GetState().IsKeyDown(Keys.F5))
+            {
+                enemy1.SetAsAlive();
+            }
         }
 
         /// <summary>
