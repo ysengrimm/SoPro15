@@ -113,12 +113,15 @@ namespace EmodiaQuest.Core
             */
 
             //loading default mesh
+            //playerModel = contentMngr.Load<Model>("fbxContent/player/MainChar_stand_34f");
             playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
 
             //loading Animation Models
+            //standingM = contentMngr.Load<Model>("fbxContent/player/MainChar_stand_34f");
             standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
-            //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
+            //walkingM = contentMngr.Load<Model>("fbxContent/player/MainChar_walk_34f");
             walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
+            //jumpingM = contentMngr.Load<Model>("fbxContent/player/MainChar_walk_34f");
             jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
 
             //Loading Skinning Data
@@ -131,11 +134,17 @@ namespace EmodiaQuest.Core
             walkingAP = new AnimationPlayer(walkingSD);
             jumpingAP = new AnimationPlayer(jumpingSD);
 
-            //loading Animation 
+            //loading Animation
+            
             standingC = standingSD.AnimationClips["Stand"];
             walkingC = walkingSD.AnimationClips["Run"];
             jumpingC = jumpingSD.AnimationClips["Jump"];
-
+            
+            /*
+            standingC = standingSD.AnimationClips["stand"];
+            walkingC = walkingSD.AnimationClips["walk"];
+            jumpingC = jumpingSD.AnimationClips["walk"];
+            */
             //Safty Start Animations
             standingAP.StartClip(standingC);
             walkingAP.StartClip(walkingC);
@@ -287,14 +296,13 @@ namespace EmodiaQuest.Core
                         case PlayerState.Jumping:
                             effect.SetBoneTransforms(jumpingBones);
                             break;
-                        case PlayerState.WalkJumping:
+                        case PlayerState.WalkJumping:                          
                             blendingBones = walkingBones;
                             for (var i = 0; i < walkingBones.Length; i++)
                             {
                                 blendingBones[i] = Matrix.Multiply(walkingBones[i], jumpingBones[i]);
                             }
-                            
-                            effect.SetBoneTransforms(blendingBones);
+                            effect.SetBoneTransforms(blendingBones);                           
                             break;
                     }
                     effect.EnableDefaultLighting();
@@ -304,8 +312,7 @@ namespace EmodiaQuest.Core
                     effect.Projection = projection;
 
 
-
-                    effect.SpecularColor = new Vector3(0.25f);
+                   effect.SpecularColor = new Vector3(0.25f);
                     effect.SpecularPower = 16;
                 }
                 mesh.Draw();
