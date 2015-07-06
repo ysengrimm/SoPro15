@@ -149,6 +149,7 @@
     <Compile Include="Core\SafeWorld.cs" />
     <Compile Include="Core\Screens\Screen.cs" />
     <Compile Include="Core\Settings.cs" />
+    <Compile Include="Core\Skybox.cs" />
     <Compile Include="Core\Storycontroller.cs" />
     <Compile Include="Core\Screens\VideoScreen.cs" />
     <Compile Include="Enums_Overall.cs" />

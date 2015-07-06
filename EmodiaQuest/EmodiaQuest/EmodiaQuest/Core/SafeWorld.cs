@@ -24,6 +24,7 @@ namespace EmodiaQuest.Core
         public EnvironmentController Controller;
         public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager Content;
+        public Skybox Skybox;
 
         public Enemy enemy1;
         
@@ -42,6 +43,8 @@ namespace EmodiaQuest.Core
         /// </summary>
         public override void LoadContent()
         {
+            Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"));
+
             // load some Maps
             PlacementMap = Content.Load<Texture2D>("maps/safeWorld_PlacementMap");
             ItemMap = Content.Load<Texture2D>("maps/safeWorld_ItemMap");
@@ -116,6 +119,7 @@ namespace EmodiaQuest.Core
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
             Controller.DrawEnvironment(world, view, projection);
+            Skybox.Draw(world, view, projection);
         }
 
     }
