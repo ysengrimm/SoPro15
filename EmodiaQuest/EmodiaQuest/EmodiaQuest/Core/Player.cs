@@ -147,13 +147,13 @@ namespace EmodiaQuest.Core
             jumpingAP = new AnimationPlayer(jumpingSD);
 
             //loading Animation
-            
+
             standingC = standingSD.AnimationClips["Stand"];
             walkingC = walkingSD.AnimationClips["Run"];
             jumpingC = jumpingSD.AnimationClips["Jump"];
             
             /*
-            standingC = standingSD.AnimationClips["stand"];
+            standingC = standingSD.AnimationClips["walk"];
             walkingC = walkingSD.AnimationClips["walk"];
             jumpingC = jumpingSD.AnimationClips["walk"];
             */
@@ -253,7 +253,7 @@ namespace EmodiaQuest.Core
             }
             stateTime -= gameTime.ElapsedGameTime.Milliseconds;
 
-            //update only the animation which is required if the changed Playerstate      
+            //update only the animation which is required if the changed Playerstate
             switch(PlayerState)
             {
                 case PlayerState.Standing:
@@ -270,6 +270,7 @@ namespace EmodiaQuest.Core
                     jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
             }
+
             LastPlayerState = PlayerState;
 
             // interaction
@@ -412,7 +413,6 @@ namespace EmodiaQuest.Core
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             // Bone updates for each required animation   
-            
             switch (PlayerState)
             {
                 case PlayerState.Standing:
@@ -429,8 +429,8 @@ namespace EmodiaQuest.Core
                     jumpingBones = jumpingAP.GetSkinTransforms();
                     break;
             }
-            
-            foreach (var mesh in playerModel.Meshes)
+
+            foreach (ModelMesh mesh in playerModel.Meshes)
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
@@ -450,22 +450,21 @@ namespace EmodiaQuest.Core
                             break;
                         case PlayerState.WalkJumping:                          
                             blendingBones = walkingBones;
-                            for (var i = 0; i < walkingBones.Length; i++)
+                            for (int i = 0; i < walkingBones.Length; i++)
                             {
                                 blendingBones[i] = Matrix.Multiply(walkingBones[i], jumpingBones[i]);
                             }
                             effect.SetBoneTransforms(blendingBones);                           
                             break;
                     }
+
                     effect.EnableDefaultLighting();
-                    effect.DiffuseColor = new Vector3(255, 0, 0);
                     effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
 
-
                    effect.SpecularColor = new Vector3(0.25f);
-                    effect.SpecularPower = 16;
+                   effect.SpecularPower = 16;
                 }
                 mesh.Draw();
             }

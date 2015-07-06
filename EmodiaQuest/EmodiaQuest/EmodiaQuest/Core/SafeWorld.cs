@@ -43,7 +43,7 @@ namespace EmodiaQuest.Core
         /// </summary>
         public override void LoadContent()
         {
-            Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"));
+            Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
 
             // load some Maps
             PlacementMap = Content.Load<Texture2D>("maps/safeWorld_PlacementMap");
@@ -96,6 +96,7 @@ namespace EmodiaQuest.Core
             {
                 enemy1.SetAsAlive();
             }
+            Skybox.Position = new Vector3(Player.Instance.Position.X, 70, Player.Instance.Position.Y);
         }
 
         /// <summary>

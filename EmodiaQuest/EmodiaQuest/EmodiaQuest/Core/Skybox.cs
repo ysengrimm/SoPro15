@@ -15,18 +15,33 @@ namespace EmodiaQuest.Core
 
     public class Skybox
     {
-        public Vector3 Position = new Vector3(250, 150, 250);
-        public float Scale = 1000;
+        private Vector3 position;
+        public Vector3 Position
+        {
+            set { position = value; }
+            get { return position; }
+        }
+
+        private float height;
+        public float Height
+        {
+            set { height = value; }
+            get { return height; }
+        }
+
+        public float Scale = 1001;
         public Model Model;
 
         /// <summary>
         /// Creates a new map from a pixelmap
         /// <param name="model">A model for the .</param>
         /// </summary>
-        public Skybox(Model model)
+        public Skybox(Model model, Vector2 position)
         {
             this.Model = model;
+            Position = new Vector3(position.X, this.height, position.Y);
         }
+
 
         /// <summary>
         /// Creates a new map from a pixelmap
@@ -40,10 +55,13 @@ namespace EmodiaQuest.Core
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effect.EnableDefaultLighting();
+                    //effect.EnableDefaultLighting();
+                    
                     effect.World = world * Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(0, -(float)Math.PI/2, (float)Math.PI / 2) * Matrix.CreateTranslation(Position);
                     effect.View = view;
                     effect.Projection = projection;
+                    effect.PreferPerPixelLighting = true;
+                    effect.VertexColorEnabled = true;
                 }
                 mesh.Draw();
             }
