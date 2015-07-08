@@ -239,7 +239,7 @@ namespace EmodiaQuest.Core
             else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
             {
                 PlayerState = PlayerState.Walking;
-                stateTime = walkingDuration/3f;
+                stateTime = walkingDuration;
             }
             else if(Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 10)
             {
@@ -249,7 +249,7 @@ namespace EmodiaQuest.Core
             else if(lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
             {
                 PlayerState = PlayerState.Standing;
-                stateTime = standingDuration/4f;
+                stateTime = standingDuration;
             }
             stateTime -= gameTime.ElapsedGameTime.Milliseconds;
 
