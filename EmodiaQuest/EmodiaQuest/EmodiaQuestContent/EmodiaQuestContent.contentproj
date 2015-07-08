@@ -243,25 +243,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fbxContent\player\MainChar_run_34f.fbx">
-      <Name>MainChar_run_34f</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="fbxContent\player\MainChar_stand_34f.fbx">
-      <Name>MainChar_stand_34f</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
-    </Compile>
-    <Compile Include="fbxContent\player\MainChar_walk_34f.fbx">
-      <Name>MainChar_walk_34f</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="fbxContent\skybox.fbx">
       <Name>skybox</Name>
       <Importer>FbxImporter</Importer>
@@ -276,6 +257,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="fbxContent\player\makeHuman_selfRig_13.fbx">
+      <Name>makeHuman_selfRig_13</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>

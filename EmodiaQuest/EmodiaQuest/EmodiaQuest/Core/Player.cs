@@ -125,16 +125,16 @@ namespace EmodiaQuest.Core
             */
 
             //loading default mesh
-            //playerModel = contentMngr.Load<Model>("fbxContent/player/MainChar_stand_34f");
-            playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
+            playerModel = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13");
+            //playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
 
             //loading Animation Models
-            //standingM = contentMngr.Load<Model>("fbxContent/player/MainChar_stand_34f");
-            standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
-            //walkingM = contentMngr.Load<Model>("fbxContent/player/MainChar_walk_34f");
-            walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
-            //jumpingM = contentMngr.Load<Model>("fbxContent/player/MainChar_walk_34f");
-            jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
+            standingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13");
+            //standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
+            walkingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13");
+            //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
+            jumpingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13");
+            //jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
 
             //Loading Skinning Data
             standingSD = standingM.Tag as SkinningData;
@@ -147,16 +147,16 @@ namespace EmodiaQuest.Core
             jumpingAP = new AnimationPlayer(jumpingSD);
 
             //loading Animation
-
+            /*
             standingC = standingSD.AnimationClips["Stand"];
             walkingC = walkingSD.AnimationClips["Run"];
             jumpingC = jumpingSD.AnimationClips["Jump"];
+            */
             
-            /*
             standingC = standingSD.AnimationClips["walk"];
             walkingC = walkingSD.AnimationClips["walk"];
             jumpingC = jumpingSD.AnimationClips["walk"];
-            */
+            
             //Safty Start Animations
             standingAP.StartClip(standingC);
             walkingAP.StartClip(walkingC);
@@ -432,9 +432,10 @@ namespace EmodiaQuest.Core
 
             foreach (ModelMesh mesh in playerModel.Meshes)
             {
+                Console.WriteLine("Meshes:" + mesh.MeshParts.Count);
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
-                    
+                    Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
                     
                     switch (PlayerState)
@@ -459,7 +460,7 @@ namespace EmodiaQuest.Core
                     }
 
                     effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                    effect.World = Matrix.CreateRotationX((float)(-0.5*Math.PI)) * Matrix.CreateRotationY(Angle)  * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
 
