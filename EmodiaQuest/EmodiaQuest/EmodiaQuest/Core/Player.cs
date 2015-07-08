@@ -125,15 +125,15 @@ namespace EmodiaQuest.Core
             */
 
             //loading default mesh
-            playerModel = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13");
+            playerModel = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_stand");
             //playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
 
             //loading Animation Models
-            standingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13");
+            standingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_stand");
             //standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
-            walkingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13");
+            walkingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_walk");
             //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
-            jumpingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13");
+            jumpingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_walk");
             //jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
 
             //Loading Skinning Data
@@ -153,7 +153,7 @@ namespace EmodiaQuest.Core
             jumpingC = jumpingSD.AnimationClips["Jump"];
             */
             
-            standingC = standingSD.AnimationClips["walk"];
+            standingC = standingSD.AnimationClips["stand"];
             walkingC = walkingSD.AnimationClips["walk"];
             jumpingC = jumpingSD.AnimationClips["walk"];
             
