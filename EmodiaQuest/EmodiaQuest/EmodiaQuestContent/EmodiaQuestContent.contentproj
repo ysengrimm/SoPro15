@@ -257,11 +257,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fbxContent\player\makeHuman_selfRig_13.fbx">
-      <Name>makeHuman_selfRig_13</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
-    </Compile>
     <Compile Include="fbxContent\player\makeHuman_selfRig_13_stand.fbx">
       <Name>makeHuman_selfRig_13_stand</Name>
       <Importer>FbxImporter</Importer>
@@ -297,6 +292,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Texturen\Playertexturen\young_lightskinned_female_diffuse.png">
+      <Name>young_lightskinned_female_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

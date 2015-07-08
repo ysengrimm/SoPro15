@@ -25,6 +25,9 @@ namespace EmodiaQuest.Core
         public float MovementOffset, ItemOffset;
         public float Angle;
 
+        //Textures for the Model
+        private Texture2D defaultTex;
+
         // The Model
         private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
         // Skinning Data
@@ -124,6 +127,8 @@ namespace EmodiaQuest.Core
             animationPlayer.StartClip(clip);
             */
 
+            //loading Textures
+            defaultTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/young_lightskinned_female_diffuse");
             //loading default mesh
             playerModel = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_stand");
             //playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
@@ -166,6 +171,10 @@ namespace EmodiaQuest.Core
             standingDuration = standingC.Duration.Milliseconds/1f;
             walkingDuration = walkingC.Duration.Milliseconds/1f;
             jumpingDuration = jumpingC.Duration.Milliseconds/1f;
+            Console.WriteLine("StandingDuration: " + standingC.Duration.TotalMilliseconds);
+            Console.WriteLine("StandingKeyframes: " + standingC.Keyframes.Count);
+            Console.WriteLine("WalkingDuration: " + walkingC.Duration.TotalMilliseconds);
+            Console.WriteLine("WalkingKeyframes: " + walkingC.Keyframes.Count);
             stateTime = 0;
 
         }
@@ -432,10 +441,10 @@ namespace EmodiaQuest.Core
 
             foreach (ModelMesh mesh in playerModel.Meshes)
             {
-                Console.WriteLine("Meshes:" + mesh.MeshParts.Count);
+                //Console.WriteLine("Meshes:" + mesh.MeshParts.Count);
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
-                    Console.WriteLine("Effects:" + mesh.Effects.Count);
+                    //Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
                     
                     switch (PlayerState)
@@ -466,6 +475,7 @@ namespace EmodiaQuest.Core
 
                    effect.SpecularColor = new Vector3(0.25f);
                    effect.SpecularPower = 16;
+                   effect.Texture = defaultTex;
                 }
                 mesh.Draw();
             }
