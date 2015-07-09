@@ -127,7 +127,7 @@ namespace EmodiaQuest
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
 
-                    Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 10f, 5, Player.Instance.Position.Y + 10f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y), 
+                    Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 9f, 5, Player.Instance.Position.Y + 9f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y), 
                         Matrix.CreateRotationY((float) (Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
                     Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y), Vector3.UnitY);
 

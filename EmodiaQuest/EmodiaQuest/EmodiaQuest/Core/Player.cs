@@ -26,7 +26,8 @@ namespace EmodiaQuest.Core
         public float Angle;
 
         //Textures for the Model
-        private Texture2D defaultTex;
+        private Texture2D defaultBodyTex;
+        private Texture2D defaultHairTex;
 
         // The Model
         private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
@@ -128,17 +129,18 @@ namespace EmodiaQuest.Core
             */
 
             //loading Textures
-            defaultTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/young_lightskinned_female_diffuse");
+            defaultBodyTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/young_lightskinned_male_diffuse");
+            defaultHairTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/male02_diffuse_black");
             //loading default mesh
-            playerModel = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_stand");
+            playerModel = contentMngr.Load<Model>("fbxContent/player/Main_Char_t_pose");
             //playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
 
             //loading Animation Models
-            standingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_stand");
+            standingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_idle_stand");
             //standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
-            walkingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_walk");
+            walkingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
             //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
-            jumpingM = contentMngr.Load<Model>("fbxContent/player/makeHuman_selfRig_13_walk");
+            jumpingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
             //jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
 
             //Loading Skinning Data
@@ -158,7 +160,7 @@ namespace EmodiaQuest.Core
             jumpingC = jumpingSD.AnimationClips["Jump"];
             */
             
-            standingC = standingSD.AnimationClips["stand"];
+            standingC = standingSD.AnimationClips["idle_stand"];
             walkingC = walkingSD.AnimationClips["walk"];
             jumpingC = jumpingSD.AnimationClips["walk"];
             
@@ -243,12 +245,12 @@ namespace EmodiaQuest.Core
             if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 PlayerState = PlayerState.WalkJumping;
-                stateTime = jumpingDuration;
+                stateTime = standingDuration;
             }
             else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
             {
                 PlayerState = PlayerState.Walking;
-                stateTime = walkingDuration;
+                stateTime = walkingDuration/2f;
             }
             else if(Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 10)
             {
@@ -470,12 +472,28 @@ namespace EmodiaQuest.Core
 
                     effect.EnableDefaultLighting();
                     effect.World = Matrix.CreateRotationX((float)(-0.5*Math.PI)) * Matrix.CreateRotationY(Angle)  * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                    //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
 
                    effect.SpecularColor = new Vector3(0.25f);
                    effect.SpecularPower = 16;
-                   effect.Texture = defaultTex;
+                   effect.PreferPerPixelLighting = true;
+
+                    // Textures
+                   if (mesh.Name == "MainChar_body")
+                   {
+                       effect.Texture = defaultBodyTex;
+                   }
+                   else if(mesh.Name == "MainChar_hair")
+                   {
+                       effect.Texture = defaultHairTex;
+                   }
+                   else
+                   {
+                       effect.Texture = defaultBodyTex;
+                   }
+
                 }
                 mesh.Draw();
             }

@@ -182,9 +182,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Texturen\Playertexturen\testPlayerV1Texture.png">
-      <Name>testPlayerV1Texture</Name>
-    </Compile>
     <ProjectReference Include="..\SkinnedModelPipeline\SkinnedModelPipeline.csproj">
       <Project>{4636c7e1-b845-4b83-b96d-64a11b8a4515}</Project>
       <Name>SkinnedModelPipeline</Name>
@@ -267,6 +264,21 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\player\Main_Char_idle_stand.fbx">
+      <Name>Main_Char_idle_stand</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Main_Char_t_pose.fbx">
+      <Name>Main_Char_t_pose</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Main_Char_walk.fbx">
+      <Name>Main_Char_walk</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -294,8 +306,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Texturen\Playertexturen\young_lightskinned_female_diffuse.png">
-      <Name>young_lightskinned_female_diffuse</Name>
+    <Compile Include="Texturen\Playertexturen\brown_eye.png">
+      <Name>brown_eye</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Texturen\Playertexturen\male02_diffuse_black.png">
+      <Name>male02_diffuse_black</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Texturen\Playertexturen\young_lightskinned_male_diffuse.png">
+      <Name>young_lightskinned_male_diffuse</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
