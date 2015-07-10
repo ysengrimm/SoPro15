@@ -15,8 +15,8 @@ namespace EmodiaQuest.Core
     public class Ai
     {
         // Implements behavior for NPCs ( normal NPCs and the enemies:  A*!?)
-        private Vector3 playerPosition;
-        private Vector3 ownPosition;
+        private Vector2 playerPosition;
+        private Vector2 ownPosition;
         private EnemyState currentState;
         private EnemyState lastState;
         private float trackingRadius;
@@ -25,8 +25,8 @@ namespace EmodiaQuest.Core
         private bool hasTracked = false;
 
 
-        private Vector3 trackingDirection;
-        public Vector3 TrackingDirection
+        private Vector2 trackingDirection;
+        public Vector2 TrackingDirection
         {
             get { return trackingDirection; }
         }
@@ -41,9 +41,9 @@ namespace EmodiaQuest.Core
         /// <param name="trackingRadius"></param>
         /// <param name="ownMovementSpeed"></param>
         /// <param name="currentEnvironment"></param>
-        public Ai(Vector3 ownPosition, EnemyState currentState, EnemyState lastState, float trackingRadius, float ownMovementSpeed, EnvironmentController currentEnvironment)
+        public Ai(Vector2 ownPosition, EnemyState currentState, EnemyState lastState, float trackingRadius, float ownMovementSpeed, EnvironmentController currentEnvironment)
         {
-            this.playerPosition = new Vector3(Player.Instance.Position.X, 0, Player.Instance.Position.Y);
+            this.playerPosition = new Vector2(Player.Instance.Position.X, Player.Instance.Position.Y);
             this.ownPosition = ownPosition;
             this.currentState = currentState;
             this.lastState = lastState;
@@ -57,7 +57,7 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void CalculateTracking()
         {
-            if (EuclideanDistance(new Vector2(playerPosition.X, playerPosition.Z), new Vector2(ownPosition.X, ownPosition.Z)) < trackingRadius)
+            if (EuclideanDistance(new Vector2(playerPosition.X, playerPosition.Y), new Vector2(ownPosition.X, ownPosition.Y)) < trackingRadius)
             {
                 hasTracked = true;
             }
@@ -71,11 +71,11 @@ namespace EmodiaQuest.Core
         {
             if (hasTracked)
             {
-                trackingDirection = Vector3.Multiply(Vector3.Normalize(Vector3.Subtract(playerPosition, ownPosition)),ownMovementSpeed);
+                trackingDirection = Vector2.Multiply(Vector2.Normalize(Vector2.Subtract(playerPosition, ownPosition)),ownMovementSpeed);
             }
             else
             {
-                trackingDirection = new Vector3(0);
+                trackingDirection = new Vector2(0);
             }
         }
 
@@ -85,9 +85,9 @@ namespace EmodiaQuest.Core
         /// if the player isn´t in the tracking range, the tracking direction will be set to 0
         /// </summary>
         /// <param name="ownPosition"></param>
-        public void updateAi(Vector3 ownPosition)
+        public void updateAi(Vector2 ownPosition)
         {
-            this.playerPosition = new Vector3(Player.Instance.Position.X, 0, Player.Instance.Position.Y);
+            this.playerPosition = new Vector2(Player.Instance.Position.X, Player.Instance.Position.Y);
             this.ownPosition = ownPosition;
             CalculateTracking();
             CalculateTrackingDirection();

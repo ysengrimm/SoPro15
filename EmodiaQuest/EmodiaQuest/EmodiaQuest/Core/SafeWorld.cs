@@ -24,6 +24,7 @@ namespace EmodiaQuest.Core
         public EnvironmentController Controller;
         public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager Content;
+        public Skybox Skybox;
 
         public Enemy enemy1;
         
@@ -42,6 +43,8 @@ namespace EmodiaQuest.Core
         /// </summary>
         public override void LoadContent()
         {
+            Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
+
             // load some Maps
             PlacementMap = Content.Load<Texture2D>("maps/safeWorld_PlacementMap");
             ItemMap = Content.Load<Texture2D>("maps/safeWorld_ItemMap");
@@ -64,6 +67,8 @@ namespace EmodiaQuest.Core
             // Items
             EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
 
+            Player.Instance.GameEnv = Controller;
+
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall1.Model, wall1.Color, 0);
             Controller.InsertObj(Controller.Wall, wall2.Model, wall2.Color, 0);
@@ -79,14 +84,19 @@ namespace EmodiaQuest.Core
             Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing
-            enemy1 = new Enemy(new Vector3(250, 0, 300), Controller);
-            enemy1.LoadContent(this.Content);
+            enemy1 = new Enemy(new Vector2(250, 300), Controller);
+            enemy1.LoadContent(Content);
         }
 
         //just for testing the enemy
         public void UpdateSafeworld(GameTime gametime)
         {
             enemy1.Update(gametime);
+            if (Keyboard.GetState().IsKeyDown(Keys.F5))
+            {
+                enemy1.SetAsAlive();
+            }
+            Skybox.Position = new Vector3(Player.Instance.Position.X, 70, Player.Instance.Position.Y);
         }
 
         /// <summary>
@@ -110,6 +120,7 @@ namespace EmodiaQuest.Core
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
             Controller.DrawEnvironment(world, view, projection);
+            Skybox.Draw(world, view, projection);
         }
 
     }

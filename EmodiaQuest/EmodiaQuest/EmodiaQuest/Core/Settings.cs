@@ -21,6 +21,11 @@ namespace EmodiaQuest.Core
         /// </summary>
         public bool DebugMode = false;
 
+        /// <summary>
+        /// Size of a grid element.
+        /// </summary>
+        public int GridSize = 10;
+
         /********************************
          *      Graphics Settings        *
          ********************************/
@@ -56,7 +61,7 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Player movement speed.
         /// </summary>
-        public float PlayerSpeed = 0.5f;
+        public float PlayerSpeed = 0.25f;
 
         /// <summary>
         /// Player camera rotation speed.

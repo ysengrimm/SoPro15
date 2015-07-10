@@ -46,7 +46,7 @@ namespace EmodiaQuest.Core
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position) * world;
+                    effect.World = world * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
                     effect.View = view;
                     effect.Projection = projection;
                 }

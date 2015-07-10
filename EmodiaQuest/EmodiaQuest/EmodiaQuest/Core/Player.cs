@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using EmodiaQuest.Core.NPCs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -24,6 +25,9 @@ namespace EmodiaQuest.Core
         public float MovementOffset, ItemOffset;
         public float Angle;
 
+        //Textures for the Model
+        private Texture2D defaultBodyTex;
+        private Texture2D defaultHairTex;
 
         // The Model
         private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
@@ -41,6 +45,7 @@ namespace EmodiaQuest.Core
         private float standingDuration;
         private float walkingDuration;
         private float jumpingDuration;
+        private float swordFightingDuration;
         private float stateTime;
 
         // Playerstats
@@ -73,6 +78,18 @@ namespace EmodiaQuest.Core
         public CollisionHandler CollisionHandler
         {
             set { collisionHandler = value; }
+        }
+
+        private bool gameIsInFocus = false;
+        public bool GameIsInFocus
+        {
+            set { gameIsInFocus= value; }
+        }
+
+        private EnvironmentController gameEnv;
+        public EnvironmentController GameEnv
+        {
+            set { gameEnv = value; }
         }
 
         private Player()
@@ -112,49 +129,77 @@ namespace EmodiaQuest.Core
             animationPlayer.StartClip(clip);
             */
 
+            //loading Textures
+            defaultBodyTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/young_lightskinned_male_diffuse");
+            defaultHairTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/male02_diffuse_black");
             //loading default mesh
-            playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
+            playerModel = contentMngr.Load<Model>("fbxContent/player/Main_Char_t_pose");
+            //playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
 
             //loading Animation Models
-            standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
+            standingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_idle_stand");
+            //standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
+            walkingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
             //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
-            walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
-            jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
+            jumpingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
+            //jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
+            swordfightingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
 
             //Loading Skinning Data
             standingSD = standingM.Tag as SkinningData;
             walkingSD = walkingM.Tag as SkinningData;
             jumpingSD = jumpingM.Tag as SkinningData;
+            swordfightingSD = swordfightingM.Tag as SkinningData;
 
             //Load an animation Player for each animation
             standingAP = new AnimationPlayer(standingSD);
             walkingAP = new AnimationPlayer(walkingSD);
             jumpingAP = new AnimationPlayer(jumpingSD);
+            swordfightingAP = new AnimationPlayer(swordfightingSD);
 
-            //loading Animation 
+            //loading Animation
+            /*
             standingC = standingSD.AnimationClips["Stand"];
             walkingC = walkingSD.AnimationClips["Run"];
             jumpingC = jumpingSD.AnimationClips["Jump"];
-
+            */
+            
+            standingC = standingSD.AnimationClips["idle_stand"];
+            walkingC = walkingSD.AnimationClips["walk"];
+            jumpingC = jumpingSD.AnimationClips["walk"];
+            swordfightingC = swordfightingSD.AnimationClips["swordFighting"];
+            
             //Safty Start Animations
             standingAP.StartClip(standingC);
             walkingAP.StartClip(walkingC);
             jumpingAP.StartClip(jumpingC);
+            swordfightingAP.StartClip(swordfightingC);
 
             //assign the specific animationTimes
             standingDuration = standingC.Duration.Milliseconds/1f;
             walkingDuration = walkingC.Duration.Milliseconds/1f;
             jumpingDuration = jumpingC.Duration.Milliseconds/1f;
+            swordFightingDuration = swordfightingC.Duration.Milliseconds/1f;
+            /*
+            Console.WriteLine("StandingDuration: " + standingC.Duration.TotalMilliseconds);
+            Console.WriteLine("StandingKeyframes: " + standingC.Keyframes.Count);
+            Console.WriteLine("WalkingDuration: " + walkingC.Duration.TotalMilliseconds);
+            Console.WriteLine("WalkingKeyframes: " + walkingC.Keyframes.Count);
+            */
             stateTime = 0;
 
         }
 
         public void Update(GameTime gameTime, MouseState mouseState)
         {
-            //scale position to 0.0 to 1.0 then center the +/- change
-            Angle += (float) -(((mouseState.X/windowSize.X) - 0.5) * RotationSpeed);
-            // reset mouse position to window center
-            Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));
+            // only set fixed mouse pos if game is in focus
+            if (gameIsInFocus)
+            {
+                //scale position to 0.0 to 1.0 then center the +/- change
+                Angle += (float)-(((mouseState.X / windowSize.X) - 0.5) * RotationSpeed);
+                // reset mouse position to window center
+                Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));    
+            }
 
             lastPos = Position;
             movement = Position;
@@ -205,16 +250,20 @@ namespace EmodiaQuest.Core
 
             }
             //update playerState
-
-            if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
+            if ( mouseState.LeftButton == ButtonState.Pressed)
+            {
+                PlayerState = PlayerState.Swordfighting;
+                stateTime = swordFightingDuration;
+            }
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 PlayerState = PlayerState.WalkJumping;
-                stateTime = jumpingDuration;
+                stateTime = standingDuration;
             }
             else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
             {
                 PlayerState = PlayerState.Walking;
-                stateTime = walkingDuration/3f;
+                stateTime = walkingDuration/2f;
             }
             else if(Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 10)
             {
@@ -224,11 +273,11 @@ namespace EmodiaQuest.Core
             else if(lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
             {
                 PlayerState = PlayerState.Standing;
-                stateTime = standingDuration/4f;
+                stateTime = standingDuration;
             }
             stateTime -= gameTime.ElapsedGameTime.Milliseconds;
 
-            //update only the animation which is required if the changed Playerstate      
+            //update only the animation which is required if the changed Playerstate
             switch(PlayerState)
             {
                 case PlayerState.Standing:
@@ -240,18 +289,157 @@ namespace EmodiaQuest.Core
                 case PlayerState.Jumping:
                     jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
+                case PlayerState.Swordfighting:
+                    swordfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
                 case PlayerState.WalkJumping:
                     walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
             }
+
             LastPlayerState = PlayerState;
+
+            // interaction
+            int gridBlockSize = 10;
+            Vector2 frontDirection = new Vector2((float) Math.Round(Math.Sin(Angle)), (float) Math.Round(Math.Cos(Angle)));
+            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridBlockSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridBlockSize) + frontDirection.Y));
+
+            // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
+            // only == 2 in edges, else normal 3 in a row
+            if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
+            {
+                // top left 
+                if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // top right
+                else if ((int)frontDirection.X == 1 && (int)frontDirection.Y == -1)
+                {
+                    for (int i = -1; i < 1; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // bot left
+                else if ((int) frontDirection.X == -1 && (int) frontDirection.Y == 1)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = -1; j < 1; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                } // bot right (X = 1, Y = 1)
+                else
+                {
+                    for (int i = -1; i < 1; i++)
+                    {
+                        for (int j = -1; j < 1; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                            if (currentBlockEnemyList.Count > 0)
+                            {
+                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                {
+                                    currentClosestEnemy.SetAsDead();
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+            else
+            {
+                // left or right
+                if ((int) Math.Abs(frontDirection.X) == 1 && (int) frontDirection.Y == 0)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y +j];
+                        if (currentBlockEnemyList.Count > 0)
+                        {
+                            Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                            if (mouseState.LeftButton == ButtonState.Pressed)
+                            {
+                                currentClosestEnemy.SetAsDead();
+                            }
+                        }
+                    }
+                }
+                else // top or bottom
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
+                        if (currentBlockEnemyList.Count > 0)
+                        {
+                            Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                            if (mouseState.LeftButton == ButtonState.Pressed)
+                            {
+                                currentClosestEnemy.SetAsDead();
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private Enemy getClosestMonster(List<Enemy> enemyList)
+        {
+            float currentCosest = float.MaxValue;
+            Enemy closestEnemy = null;
+            foreach (var enemy in enemyList)
+            {
+                float dist = (float) EuclideanDistance(Position, enemy.Position);
+                if (dist < currentCosest)
+                {
+                    currentCosest = dist;
+                    closestEnemy = enemy;
+                }
+            }
+            return closestEnemy;
         }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             // Bone updates for each required animation   
-            
             switch (PlayerState)
             {
                 case PlayerState.Standing:
@@ -259,6 +447,9 @@ namespace EmodiaQuest.Core
                     break;
                 case PlayerState.Walking:
                     walkingBones = walkingAP.GetSkinTransforms();
+                    break;
+                case PlayerState.Swordfighting:
+                    swordfightingBones = swordfightingAP.GetSkinTransforms();
                     break;
                 case PlayerState.Jumping:
                     jumpingBones = jumpingAP.GetSkinTransforms();
@@ -268,12 +459,13 @@ namespace EmodiaQuest.Core
                     jumpingBones = jumpingAP.GetSkinTransforms();
                     break;
             }
-            
-            foreach (var mesh in playerModel.Meshes)
+
+            foreach (ModelMesh mesh in playerModel.Meshes)
             {
+                //Console.WriteLine("Meshes:" + mesh.MeshParts.Count);
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
-                    
+                    //Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
                     
                     switch (PlayerState)
@@ -284,29 +476,46 @@ namespace EmodiaQuest.Core
                         case PlayerState.Walking:
                             effect.SetBoneTransforms(walkingBones);
                             break;
+                        case PlayerState.Swordfighting:
+                            effect.SetBoneTransforms(swordfightingBones);
+                            break;
                         case PlayerState.Jumping:
                             effect.SetBoneTransforms(jumpingBones);
                             break;
-                        case PlayerState.WalkJumping:
+                        case PlayerState.WalkJumping:                          
                             blendingBones = walkingBones;
-                            for (var i = 0; i < walkingBones.Length; i++)
+                            for (int i = 0; i < walkingBones.Length; i++)
                             {
                                 blendingBones[i] = Matrix.Multiply(walkingBones[i], jumpingBones[i]);
                             }
-                            
-                            effect.SetBoneTransforms(blendingBones);
+                            effect.SetBoneTransforms(blendingBones);                           
                             break;
                     }
+
                     effect.EnableDefaultLighting();
-                    effect.DiffuseColor = new Vector3(255, 0, 0);
-                    effect.World = Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                    effect.World = Matrix.CreateRotationX((float)(-0.5*Math.PI)) * Matrix.CreateRotationY(Angle)  * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                    //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
 
+                   effect.SpecularColor = new Vector3(0.25f);
+                   effect.SpecularPower = 16;
+                   effect.PreferPerPixelLighting = true;
 
+                    // Textures
+                   if (mesh.Name == "MainChar_body")
+                   {
+                       effect.Texture = defaultBodyTex;
+                   }
+                   else if(mesh.Name == "MainChar_hair")
+                   {
+                       effect.Texture = defaultHairTex;
+                   }
+                   else
+                   {
+                       effect.Texture = defaultBodyTex;
+                   }
 
-                    effect.SpecularColor = new Vector3(0.25f);
-                    effect.SpecularPower = 16;
                 }
                 mesh.Draw();
             }
