@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace EmodiaQuest.Core.GUI.Screens
 {
+    
     class Menu_GUI
     {
         private static Menu_GUI instance;
@@ -39,9 +40,9 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             // Beware: Hardcoded values...
             //this.platform.addButton(30, 50, 40, 15, "nextState");
-            this.platform.addButton(30, 50, 40, 15, "nextState", "Start Game");
+            this.platform.addButton(35, 50, 30, 15, "nextState", "Start Game");
             //this.platform.addButton(30, 70, 40, 15, "quit");
-            this.platform.addButton(30, 70, 40, 15, "quit", "Quit Game");
+            this.platform.addButton(35, 75, 30, 15, "options", "Options");
 
             //this.platform.addPlainText(22.5f, 10.0f, "monoFont_big", "MAIN MENU", true);
             this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "MAIN MENU", true);
@@ -49,10 +50,14 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.addPlainText(50.0f, 80.0f, "monoFont_small", "New game", true);
             //this.platform.addPlainText(50.0f, 90.0f, "monoFont_small", "Quit game", true);
 
-            this.platform.addSlider(30, 85, 40, 15, 0, 100, "testslide");
+            //this.platform.addSlider(30, 85, 40, 15, 0, 100, "testslide");
 
-
+            
         }
+
+        
+
+
         // FAKE FAKE FAKE
         public void update()
         {
@@ -72,13 +77,14 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "nextState":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
                     break;
-                //case "quit":
-                //    this.exitValue = true;
-                //    break;
+                case "options":
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
+                    break;
                 default:
                     Console.WriteLine("No such Function.");
                     break;
             }
+            this.functionCalled = null;
         }
     }
 }

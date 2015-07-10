@@ -11,6 +11,10 @@ namespace EmodiaQuest.Core.GUI
 {
     public class Platform_GUI
     {
+        //Eventhandler
+        public event GUI_Delegate_Slider OnSliderValue;
+        public event GUI_Delegate_Button OnButtonValue;
+
         private List<Button_GUI> buttons = new List<Button_GUI>();
         private List<PlainText_GUI> ptexts = new List<PlainText_GUI>();
         private List<ItemSocket_GUI> sockets = new List<ItemSocket_GUI>();
@@ -25,7 +29,7 @@ namespace EmodiaQuest.Core.GUI
         private string functionCalled = null;
 
         //MainwindowRes
-        public static Vector2 MainWindowSize { get; set; } 
+        public static Vector2 MainWindowSize { get; set; }
         public static int MainWindowWidthInt { get; set; }
         public static int MainWindowHeightInt { get; set; }
 
@@ -149,6 +153,10 @@ namespace EmodiaQuest.Core.GUI
                     if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name == bb.Function)
                     {
                         this.functionCalled = bb.onClick();
+                        if (OnButtonValue != null)
+                        {
+                            OnButtonValue(this, new ButtonEvent_GUI(bb.Function));
+                        }
                     }
                 }
                 else
@@ -191,6 +199,14 @@ namespace EmodiaQuest.Core.GUI
                     sl.Slider_State = SliderState_GUI.Normal;
                     //Console.WriteLine(monoFont_small.MeasureString("A").Y);
                     //Console.WriteLine(monoFont_big.MeasureString("MAIN MENU").X);
+                    int eValue = (int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX);
+                    if (eValue > sl.MaxValue)
+                        eValue = sl.MaxValue;
+                    if(OnSliderValue!=null)
+                    {
+                        OnSliderValue(this, new SliderEvent_GUI(eValue));
+                    }
+                    
                     //Console.WriteLine((int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX));
                 }
             }

@@ -61,6 +61,8 @@ namespace EmodiaQuest
             //EmodiaQuest.Core.GUI.Controls_GUI.Instance.Mouse_GUI.
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);
+            EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.loadContent(Content);
+
             EmodiaQuest.Core.NetGraph.Instance.LoadContent(Content);
 
             // Safeworld Init
@@ -141,6 +143,10 @@ namespace EmodiaQuest
 
                     break;
                 case GameStates_Overall.OptionsScreen:
+                    EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
+                    EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.update();
+                    if (kState.IsKeyDown(Keys.Escape))
+                        this.Exit();
                     break;
                 default:
                     break;
@@ -183,6 +189,9 @@ namespace EmodiaQuest
                     
                     break;
                 case GameStates_Overall.OptionsScreen:
+                    
+                    this.IsMouseVisible = true;
+                    EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.draw(spriteBatch);
                     break;
                 default:
                     break;

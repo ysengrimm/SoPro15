@@ -76,6 +76,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     Console.WriteLine("Function name does not exist");
                     break;
             }
+            this.functionCalled = null;
         }
     }
 }
