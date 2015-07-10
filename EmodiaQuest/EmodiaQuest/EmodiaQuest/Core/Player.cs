@@ -45,6 +45,7 @@ namespace EmodiaQuest.Core
         private float standingDuration;
         private float walkingDuration;
         private float jumpingDuration;
+        private float swordFightingDuration;
         private float stateTime;
 
         // Playerstats
@@ -142,16 +143,19 @@ namespace EmodiaQuest.Core
             //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
             jumpingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
             //jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
+            swordfightingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
 
             //Loading Skinning Data
             standingSD = standingM.Tag as SkinningData;
             walkingSD = walkingM.Tag as SkinningData;
             jumpingSD = jumpingM.Tag as SkinningData;
+            swordfightingSD = swordfightingM.Tag as SkinningData;
 
             //Load an animation Player for each animation
             standingAP = new AnimationPlayer(standingSD);
             walkingAP = new AnimationPlayer(walkingSD);
             jumpingAP = new AnimationPlayer(jumpingSD);
+            swordfightingAP = new AnimationPlayer(swordfightingSD);
 
             //loading Animation
             /*
@@ -163,20 +167,25 @@ namespace EmodiaQuest.Core
             standingC = standingSD.AnimationClips["idle_stand"];
             walkingC = walkingSD.AnimationClips["walk"];
             jumpingC = jumpingSD.AnimationClips["walk"];
+            swordfightingC = swordfightingSD.AnimationClips["swordFighting"];
             
             //Safty Start Animations
             standingAP.StartClip(standingC);
             walkingAP.StartClip(walkingC);
             jumpingAP.StartClip(jumpingC);
+            swordfightingAP.StartClip(swordfightingC);
 
             //assign the specific animationTimes
             standingDuration = standingC.Duration.Milliseconds/1f;
             walkingDuration = walkingC.Duration.Milliseconds/1f;
             jumpingDuration = jumpingC.Duration.Milliseconds/1f;
+            swordFightingDuration = swordfightingC.Duration.Milliseconds/1f;
+            /*
             Console.WriteLine("StandingDuration: " + standingC.Duration.TotalMilliseconds);
             Console.WriteLine("StandingKeyframes: " + standingC.Keyframes.Count);
             Console.WriteLine("WalkingDuration: " + walkingC.Duration.TotalMilliseconds);
             Console.WriteLine("WalkingKeyframes: " + walkingC.Keyframes.Count);
+            */
             stateTime = 0;
 
         }
@@ -241,8 +250,12 @@ namespace EmodiaQuest.Core
 
             }
             //update playerState
-
-            if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
+            if ( mouseState.LeftButton == ButtonState.Pressed)
+            {
+                PlayerState = PlayerState.Swordfighting;
+                stateTime = swordFightingDuration;
+            }
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 PlayerState = PlayerState.WalkJumping;
                 stateTime = standingDuration;
@@ -275,6 +288,9 @@ namespace EmodiaQuest.Core
                     break;
                 case PlayerState.Jumping:
                     jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case PlayerState.Swordfighting:
+                    swordfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
                 case PlayerState.WalkJumping:
                     walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
@@ -432,6 +448,9 @@ namespace EmodiaQuest.Core
                 case PlayerState.Walking:
                     walkingBones = walkingAP.GetSkinTransforms();
                     break;
+                case PlayerState.Swordfighting:
+                    swordfightingBones = swordfightingAP.GetSkinTransforms();
+                    break;
                 case PlayerState.Jumping:
                     jumpingBones = jumpingAP.GetSkinTransforms();
                     break;
@@ -456,6 +475,9 @@ namespace EmodiaQuest.Core
                             break;
                         case PlayerState.Walking:
                             effect.SetBoneTransforms(walkingBones);
+                            break;
+                        case PlayerState.Swordfighting:
+                            effect.SetBoneTransforms(swordfightingBones);
                             break;
                         case PlayerState.Jumping:
                             effect.SetBoneTransforms(jumpingBones);
