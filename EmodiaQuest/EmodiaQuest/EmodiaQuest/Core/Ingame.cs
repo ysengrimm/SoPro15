@@ -16,7 +16,7 @@ using EmodiaQuest.Rendering;
 namespace EmodiaQuest.Core
 {
 
-    public class Ingame : Microsoft.Xna.Framework.Game
+    public class Ingame
     {
         private static Ingame instance;
 
@@ -35,8 +35,7 @@ namespace EmodiaQuest.Core
         }
 
         public WorldState ActiveWorld;
-        GraphicsDeviceManager graphics;
-        //public ContentManager Content;
+        public ContentManager Content;
         /// <summary>
         /// The one and only Safeworld
         /// </summary>
@@ -50,11 +49,10 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Loading the safeworld and all dungeons
         /// </summary>
-        public void LoadIngame(ContentManager content, Vector2 screenSize, GraphicsDeviceManager graphics)
+        public void LoadIngame(ContentManager content, Vector2 screenSize)
         {
-            this.graphics = graphics;
             ActiveWorld = WorldState.Safeworld;
-            this.Content = content;
+
             // loading Safeworld
             Safeworld = new SafeWorld(content);
             Safeworld.LoadContent();
@@ -104,17 +102,24 @@ namespace EmodiaQuest.Core
             switch (ActiveWorld)
             {
                 case WorldState.Safeworld:
-                    GraphicsDevice.DepthStencilState = new DepthStencilState { DepthBufferEnable = true };
                     Renderer.Instance.DrawSafeWorld(Safeworld);
-                    Renderer.Instance.DrawPlayer(Player.Instance);
                     break;
                 case WorldState.Dungeon:
-                    Renderer.Instance.DrawDungeon(Dungeon);
-                    Renderer.Instance.DrawPlayer(Player.Instance);
+                    Renderer.Instance.DrawDungeon(Dungeon);                    
                     break;
             }
+            Renderer.Instance.DrawPlayer(Player.Instance);
 
+        }
 
+        public void OnChangeToDungeon()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnChangeToSafeworld()
+        {
+            throw new NotImplementedException();
         }
 
     }
