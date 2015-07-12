@@ -306,7 +306,14 @@ namespace EmodiaQuest.Core
                                     {
                                         for (int l = j - (int)telobj.Dimension.X / 2; l < j + 1 + (int)telobj.Dimension.X / 2; l++)
                                         {
-                                            orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                            if(k == i && l == j)
+                                            {
+                                                orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                            }
+                                            else
+                                            {
+                                                orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                            }
                                         }
                                     }
                                 }
@@ -321,7 +328,14 @@ namespace EmodiaQuest.Core
                                     {
                                         for (int l = j - (int)telobj.Dimension.Y / 2; l < j + 1 + (int)telobj.Dimension.Y / 2; l++)
                                         {
-                                            orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                            if (k == i && l == j)
+                                            {
+                                                orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                            }
+                                            else
+                                            {
+                                                orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                            }
                                         }
                                     }
                                 }
