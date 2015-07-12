@@ -40,7 +40,7 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Method for loading Models and other stuff
         /// </summary>
-        public abstract void LoadContent();
+        public abstract void LoadContent(ContentManager content);
 
         /// <summary>
         /// Method for drawing the whole GameScreen

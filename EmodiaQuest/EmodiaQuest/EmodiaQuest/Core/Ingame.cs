@@ -37,32 +37,39 @@ namespace EmodiaQuest.Core
         public WorldState ActiveWorld;
         public ContentManager Content;
         /// <summary>
-        /// The one and only Safeworld
-        /// </summary>
-        public SafeWorld Safeworld;
-        /// <summary>
         /// A List of Dungeons we are albe to switch to
         /// </summary>
         public Dungeon Dungeon;
-
-
+        /// <summary>
+        /// Textures for the Skyboxes in both worlds
+        /// </summary>
+        public Texture2D SkyBoxTex_Interstellar, SkyBoxTex_ViolentDays;
         /// <summary>
         /// Loading the safeworld and all dungeons
         /// </summary>
         public void LoadIngame(ContentManager content, Vector2 screenSize)
         {
-            ActiveWorld = WorldState.Safeworld;
+            this.Content = content;
+            // Loading skybox textures
+            SkyBoxTex_Interstellar = Content.Load<Texture2D>("Texturen/Skybox/interstellar_large");
+            SkyBoxTex_ViolentDays = Content.Load<Texture2D>("Texturen/Skybox/violentdays_large");
 
+            ActiveWorld = WorldState.Safeworld;
             // loading Safeworld
-            Safeworld = new SafeWorld(content);
-            Safeworld.LoadContent();
+            SafeWorld.Instance.LoadContent(Content);
             // loading the dungeon
-            Dungeon = new Dungeon(content);       
-            Dungeon.LoadContent();
+            Dungeon = new Dungeon();       
+            Dungeon.LoadContent(Content);
 
             // setting the collision for the safeworld as default
-            CollisionHandler.Instance.SetEnvironmentController(this.Safeworld.Controller);
+            CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
 
+            //Initialize the matrizes with reasonable values
+            Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(Player.Instance.Position.X + 3f, 3, Player.Instance.Position.Y + 3f), new Vector3(Player.Instance.Position.X, 1, Player.Instance.Position.Y), Vector3.UnitY);
+            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), Settings.Instance.Resolution.X / Settings.Instance.Resolution.Y, 0.1f, Settings.Instance.ViewDistance); //Setting farplane = render distance
+
+            // Loading Player
             Player.Instance.Position = new Vector2(250, 350);
             Player.Instance.CollisionHandler = CollisionHandler.Instance;
             Player.Instance.WindowSize = screenSize;
@@ -73,24 +80,25 @@ namespace EmodiaQuest.Core
 
         public void UpdateIngame(GameTime gameTime)
         {
-            switch(ActiveWorld)
-            {
-                case WorldState.Safeworld:
-                    this.Safeworld.UpdateSafeworld(gameTime);
-                    break;
-                case WorldState.Dungeon:
-                    this.Dungeon.UpdateDungeon(gameTime);
-                    break;
-            }
-
-            // Camera Update
+            // Update camera and view matrices
             Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 9f, 5, Player.Instance.Position.Y + 9f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
-            Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
+                Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
             Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y), Vector3.UnitY);
 
             // Playerupdate
             MouseState mState = Mouse.GetState();
             Player.Instance.Update(gameTime, mState);
+
+            // Decides, which world should be updated
+            switch (ActiveWorld)
+            {
+                case WorldState.Safeworld:
+                    SafeWorld.Instance.UpdateSafeworld(gameTime);
+                    break;
+                case WorldState.Dungeon:
+                    this.Dungeon.UpdateDungeon(gameTime);
+                    break;
+            }
 
             // Netstat update
             EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.PlayerState.ToString());
@@ -102,24 +110,25 @@ namespace EmodiaQuest.Core
             switch (ActiveWorld)
             {
                 case WorldState.Safeworld:
-                    Renderer.Instance.DrawSafeWorld(Safeworld);
+                    Renderer.Instance.DrawSafeWorld(SafeWorld.Instance);
                     break;
                 case WorldState.Dungeon:
                     Renderer.Instance.DrawDungeon(Dungeon);                    
                     break;
             }
             Renderer.Instance.DrawPlayer(Player.Instance);
-
         }
 
-        public void OnChangeToDungeon()
+        public void ChangeToDungeon()
         {
-            throw new NotImplementedException();
+            ActiveWorld = WorldState.Dungeon;
+            Player.Instance.Position = new Vector2(250, 350);
         }
 
-        public void OnChangeToSafeworld()
+        public void ChangeToSafeworld()
         {
-            throw new NotImplementedException();
+            ActiveWorld = WorldState.Safeworld;
+            Player.Instance.Position = new Vector2(250, 350);
         }
 
     }

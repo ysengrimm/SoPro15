@@ -24,9 +24,8 @@ namespace EmodiaQuest.Core
 
         public Enemy enemy1;
         
-        public Dungeon(ContentManager content)
+        public Dungeon()
         {
-            this.Content = content;
             Controller = new EnvironmentController();
         }
 
@@ -37,8 +36,9 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Method for loading relevant content for SafeWorld
         /// </summary>
-        public override void LoadContent()
+        public override void LoadContent(ContentManager content)
         {
+            this.Content = content;
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
 
             // load some Maps
@@ -121,7 +121,7 @@ namespace EmodiaQuest.Core
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
             Controller.DrawEnvironment(world, view, projection);
-            Skybox.Draw(world, view, projection);
+            Skybox.Draw(world, view, projection, Ingame.Instance.SkyBoxTex_ViolentDays);
         }
 
     }

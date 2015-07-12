@@ -294,11 +294,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
-    <None Include="Texturen\Skybox\interstellar_large.jpg">
+    <Compile Include="Texturen\Skybox\interstellar_large.jpg">
       <Name>interstellar_large</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
+    </Compile>
     <None Include="Texturen\Skybox\miramar_large.jpg">
       <Name>miramar_large</Name>
       <Importer>TextureImporter</Importer>
@@ -309,11 +309,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
-    <None Include="Texturen\Skybox\violentdays_large.jpg">
+    <Compile Include="Texturen\Skybox\violentdays_large.jpg">
       <Name>violentdays_large</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Texturen\Playertexturen\brown_eye.png">

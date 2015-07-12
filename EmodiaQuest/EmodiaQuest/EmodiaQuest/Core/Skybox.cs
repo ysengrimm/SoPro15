@@ -49,7 +49,7 @@ namespace EmodiaQuest.Core
         /// <param name="projektion">A projektion-matrix.</param>
         /// <param name="view">A view-matrix.</param>
         /// </summary>
-        public void Draw(Matrix world, Matrix view, Matrix projection)
+        public void Draw(Matrix world, Matrix view, Matrix projection, Texture2D texture)
         {
             foreach (ModelMesh mesh in Model.Meshes)
             {
@@ -62,6 +62,7 @@ namespace EmodiaQuest.Core
                     effect.Projection = projection;
                     effect.PreferPerPixelLighting = true;
                     effect.VertexColorEnabled = true;
+                    effect.Texture = texture;
                 }
                 mesh.Draw();
             }

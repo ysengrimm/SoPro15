@@ -21,18 +21,27 @@ namespace EmodiaQuest.Core
     /// </summary>
     public class SafeWorld : Game
     {
+        private static SafeWorld instance;
+
+        private SafeWorld() { }
+
+        public static SafeWorld Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new SafeWorld();
+                }
+                return instance;
+            }
+        }
         public EnvironmentController Controller;
         public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager Content;
         public Skybox Skybox;
-
         public Enemy enemy1;
         
-        public SafeWorld(ContentManager content)
-        {
-            this.Content = content;
-            Controller = new EnvironmentController();
-        }
 
         /// <summary>
         /// Method for initialising Models and so on in SafeWorld
@@ -41,10 +50,12 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Method for loading relevant content for SafeWorld
         /// </summary>
-        public override void LoadContent()
+        public override void LoadContent(ContentManager content)
         {
+            this.Content = content;
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
-
+            // Environment Controller dor the Safeworld
+            Controller = new EnvironmentController();
             // load some Maps
             PlacementMap = Content.Load<Texture2D>("maps/safeWorld_PlacementMap");
             ItemMap = Content.Load<Texture2D>("maps/safeWorld_ItemMap");
@@ -125,7 +136,7 @@ namespace EmodiaQuest.Core
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
             Controller.DrawEnvironment(world, view, projection);
-            Skybox.Draw(world, view, projection);
+            Skybox.Draw(world, view, projection, Ingame.Instance.SkyBoxTex_Interstellar);
         }
 
     }

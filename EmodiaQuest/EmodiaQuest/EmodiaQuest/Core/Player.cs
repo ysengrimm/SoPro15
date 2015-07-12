@@ -42,6 +42,7 @@ namespace EmodiaQuest.Core
         // The playerState, which will be needed to update the right animation
         public PlayerState PlayerState = PlayerState.Standing;
         public PlayerState LastPlayerState = PlayerState.Standing;
+        private WorldState activeWorld = WorldState.Safeworld;
         private float standingDuration;
         private float walkingDuration;
         private float jumpingDuration;
@@ -248,7 +249,19 @@ namespace EmodiaQuest.Core
             // Collsiion with Teleporters
             if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.CollisionColors, 0))
             {
-                Console.WriteLine("You get teleported!");
+                
+                if (activeWorld == WorldState.Safeworld)
+                {
+                    Console.WriteLine("You get teleported to a Dungeon!");
+                    Ingame.Instance.ChangeToDungeon();
+                    activeWorld = WorldState.Dungeon;
+                }
+                else if (activeWorld == WorldState.Dungeon)
+                {
+                    Console.WriteLine("You get teleported to the SafeWorld!");
+                    Ingame.Instance.ChangeToSafeworld();
+                    activeWorld = WorldState.Safeworld;
+                }
             }
 
             //Collision with Items
