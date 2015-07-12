@@ -42,12 +42,10 @@ namespace EmodiaQuest.Core
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
 
             // load some Maps
-            PlacementMap = Content.Load<Texture2D>("maps/safeWorld_PlacementMap");
-            ItemMap = Content.Load<Texture2D>("maps/safeWorld_ItemMap");
+            PlacementMap = Content.Load<Texture2D>("maps/dungeonWorld_PlacementMap");
 
             // generate some Maps
             Controller.CreatePlacementMap(PlacementMap);
-            Controller.CreateItemMap(ItemMap);
 
             //initialise enemy array
             Controller.CreateEnemyArray();
@@ -74,11 +72,11 @@ namespace EmodiaQuest.Core
             Controller.InsertObj(Controller.Buildings, house1.Model, house1.Color, 0);
             Controller.InsertObj(Controller.Teleporter, wallDoor.Model, wallDoor.Color, 0);
             // Insert items
-            Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
+            //Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
             //now after all collision objects are choosen generate and load collision map
-            Controller.GenerateCollisionMap(Content);
-            CollisionMap = Content.Load<Texture2D>("maps/safeWorld_CollisionMap");
+            Controller.GenerateCollisionMap(Content, WorldState.Dungeon);
+            CollisionMap = Content.Load<Texture2D>("maps/Dungeon_CollisionMap");
             Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing

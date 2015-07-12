@@ -263,21 +263,26 @@ namespace EmodiaQuest.Core
                     activeWorld = WorldState.Safeworld;
                 }
             }
-
+            
             //Collision with Items
-            if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
+            if(collisionHandler.Controller.ItemColors != null) // this is, because in a Dungeon we might don´t have a Itemmap
             {
-                for(var i = 0; i < collisionHandler.Controller.Items.Count; i++)
+                if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
                 {
-                    var temp = new Vector2(collisionHandler.Controller.Items.ElementAt(i).position.X, collisionHandler.Controller.Items.ElementAt(i).position.Z);
-                if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
-                {
-                    collisionHandler.Controller.Items.RemoveAt(i);
-                    //Console.Out.WriteLine("+1 Point");
-                }
-                }
+                    for (var i = 0; i < collisionHandler.Controller.Items.Count; i++)
+                    {
+                        var temp = new Vector2(collisionHandler.Controller.Items.ElementAt(i).position.X, collisionHandler.Controller.Items.ElementAt(i).position.Z);
+                        if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
+                        {
+                            collisionHandler.Controller.Items.RemoveAt(i);
+                            //Console.Out.WriteLine("+1 Point");
+                        }
+                    }
 
+                }
             }
+            
+            
             //update playerState
             if ( mouseState.LeftButton == ButtonState.Pressed)
             {

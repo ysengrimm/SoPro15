@@ -123,12 +123,14 @@ namespace EmodiaQuest.Core
         {
             ActiveWorld = WorldState.Dungeon;
             Player.Instance.Position = new Vector2(250, 350);
+            CollisionHandler.Instance.SetEnvironmentController(Dungeon.Controller);
         }
 
         public void ChangeToSafeworld()
         {
             ActiveWorld = WorldState.Safeworld;
             Player.Instance.Position = new Vector2(250, 350);
+            CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
         }
 
     }

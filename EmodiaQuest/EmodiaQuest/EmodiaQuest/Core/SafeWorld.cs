@@ -92,7 +92,7 @@ namespace EmodiaQuest.Core
             Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
             //now after all collision objects are choosen generate and load collision map
-            Controller.GenerateCollisionMap(Content);
+            Controller.GenerateCollisionMap(Content, WorldState.Safeworld);
             CollisionMap = Content.Load<Texture2D>("maps/safeWorld_CollisionMap");
             Controller.CreateCollisionMap(CollisionMap);
 

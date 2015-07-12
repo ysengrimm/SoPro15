@@ -228,7 +228,7 @@ namespace EmodiaQuest.Core
         /// Method, wich generates a collision map from a placement map.
         /// Uses dimension and rotation of objects to generate black pixels on right positions
         /// </summary>
-        public void GenerateCollisionMap(ContentManager content)
+        public void GenerateCollisionMap(ContentManager content, WorldState collisionWorld)
         {
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
@@ -334,7 +334,15 @@ namespace EmodiaQuest.Core
             gimage.DrawImage(orgImage, 0, 0);
             
             //save new image
-            orgImage.Save(contentPath + @"maps\safeWorld_CollisionMap.png", ImageFormat.Png);
+            if (collisionWorld == WorldState.Safeworld)
+            {
+                orgImage.Save(contentPath + @"maps\safeWorld_CollisionMap.png", ImageFormat.Png);
+            }
+            else if(collisionWorld == WorldState.Dungeon)
+            {
+                orgImage.Save(contentPath + @"maps\Dungeon_CollisionMap.png", ImageFormat.Png);
+            }
+
         }
 
         public void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
