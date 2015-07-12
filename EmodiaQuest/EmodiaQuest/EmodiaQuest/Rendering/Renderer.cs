@@ -91,6 +91,14 @@ namespace EmodiaQuest.Rendering
         {
             safeWorld.DrawGameScreen(world, view, projection);          
         }
+        /// <summary>
+        /// draws ever object, which is listed in the Dungeon
+        /// </summary>
+        /// <param name="dungeon"></param>
+        public void DrawDungeon(Dungeon dungeon)
+        {
+            dungeon.DrawGameScreen(world, view, projection);
+        }
 
         /// <summary>
         /// draws the player object

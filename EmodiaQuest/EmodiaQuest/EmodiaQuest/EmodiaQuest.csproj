@@ -114,6 +114,7 @@
     <Compile Include="Core\GUI\Settings_GUI.cs" />
     <Compile Include="Core\GUI\SliderEvent_GUI.cs" />
     <Compile Include="Core\GUI\SpriteFonts_GUI.cs" />
+    <Compile Include="Core\Ingame.cs" />
     <Compile Include="Core\NPCs\EnemyState.cs" />
     <Compile Include="Core\GUI\Button_GUI.cs" />
     <Compile Include="Core\GUI\Controls_GUI.cs" />
@@ -156,6 +157,8 @@
     <Compile Include="Core\Skybox.cs" />
     <Compile Include="Core\Storycontroller.cs" />
     <Compile Include="Core\Screens\VideoScreen.cs" />
+    <Compile Include="Core\TeleporterObject.cs" />
+    <Compile Include="Core\WorldState.cs" />
     <Compile Include="Enums_Overall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Programm.cs" />

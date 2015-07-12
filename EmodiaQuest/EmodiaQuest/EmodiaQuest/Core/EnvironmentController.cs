@@ -23,8 +23,14 @@ namespace EmodiaQuest.Core
         public Texture2D PlacementMap, CollisionMap, ItemMap;
         public Color[,] PlacementColors, CollisionColors, ItemColors;
 
-        public List<GameObject> Ground, Wall, Items, Accessoires, Buildings;
+        public List<GameObject> Ground, Wall, Items, Accessoires, Buildings, Teleporter;
         public List<NPCs.Enemy>[,] enemyArray;
+
+        /// <summary>
+        /// This list only contains objects you can change world with
+        /// </summary>
+        public List<TeleObject> TeleporterObjList;
+
 
         /// <summary>
         /// This list only contains objects you can collide with
@@ -45,6 +51,29 @@ namespace EmodiaQuest.Core
             }
         }
 
+        public struct TeleObject
+        {
+            public Model Model;
+            public Color Color;
+            public Vector2 Dimension;
+            public Vector2 TeleVector;
+
+            /// <summary>
+            /// This struct supports the use of creating teleportfields in the collision map
+            /// </summary>
+            /// <param name="model"> The model of the teleporter object</param>
+            /// <param name="color"> The color, which is used for the teleporter object </param>
+            /// <param name="dimension"> The dimension, of the teleporter object</param>
+            /// <param name="teleVector"> the Vecor, where the Teleport is, relative to the placement middle</param>
+            public TeleObject(Model model, Color color, Vector2 dimension, Vector2 teleVector)
+            {
+                this.Model = model;
+                this.Color = color;
+                this.Dimension = dimension;
+                this.TeleVector = teleVector;
+            }
+        }
+
         //lets items jump :D
         float jump = 0;
 
@@ -55,9 +84,10 @@ namespace EmodiaQuest.Core
             Items = new List<GameObject>();
             Accessoires = new List<GameObject>();
             Buildings = new List<GameObject>();
+            Teleporter = new List<GameObject>();
 
             CollisionObjList = new List<Object>();
-
+            TeleporterObjList = new List<TeleObject>();
 
         }
         /// <summary>
@@ -215,7 +245,8 @@ namespace EmodiaQuest.Core
                 }
             }
 
-            foreach(Object obj in CollisionObjList){
+            foreach (Object obj in CollisionObjList)
+            {
                 for (int i = 0; i < orgImage.Width; i++)
                 {
                     for (int j = 0; j < orgImage.Height; j++)
@@ -230,7 +261,7 @@ namespace EmodiaQuest.Core
                             {
                                 for (int k = i - (int)obj.Dimension.Y / 2; k < i + 1 + (int)obj.Dimension.Y / 2; k++)
                                 {
-                                    for (int l = j - (int)obj.Dimension.X / 2; l < j + 1 +  (int)obj.Dimension.X / 2; l++)
+                                    for (int l = j - (int)obj.Dimension.X / 2; l < j + 1 + (int)obj.Dimension.X / 2; l++)
                                     {
                                         orgImage.SetPixel(k, l, System.Drawing.Color.Black);
                                     }
@@ -254,8 +285,50 @@ namespace EmodiaQuest.Core
                         }
                     }
                 }
-            }
 
+            }
+                // The teleport objects will be escpecially added to the collision map
+                foreach (TeleObject telobj in TeleporterObjList)
+                {
+                    for (int i = 0; i < orgImage.Width; i++)
+                    {
+                        for (int j = 0; j < orgImage.Height; j++)
+                        {
+                            if (PlacementColors[i, j].R == telobj.Color.R && PlacementColors[i, j].G == telobj.Color.G)
+                            {
+                                // example: house with dimensions like XXX ... so it's 1x3
+
+                                // with rotation like 0° or 180°
+                                // this part will generate black pixels like XXX
+                                if (PlacementColors[i, j].B == 0 || PlacementColors[i, j].B == 2)
+                                {
+                                    for (int k = i - (int)telobj.Dimension.Y / 2; k < i + 1 + (int)telobj.Dimension.Y / 2; k++)
+                                    {
+                                        for (int l = j - (int)telobj.Dimension.X / 2; l < j + 1 + (int)telobj.Dimension.X / 2; l++)
+                                        {
+                                            orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                        }
+                                    }
+                                }
+
+                                // with rotation like 90° or 270°
+                                // this part will generate black pixels like X
+                                //                                           X  <- actual position of house
+                                //                                           X
+                                else if (PlacementColors[i, j].B == 1 || PlacementColors[i, j].B == 3)
+                                {
+                                    for (int k = i - (int)telobj.Dimension.X / 2; k < i + 1 + (int)telobj.Dimension.X / 2; k++)
+                                    {
+                                        for (int l = j - (int)telobj.Dimension.Y / 2; l < j + 1 + (int)telobj.Dimension.Y / 2; l++)
+                                        {
+                                            orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+            }
             //draw things in new image
             System.Drawing.Graphics gimage = System.Drawing.Graphics.FromImage(orgImage);
             gimage.DrawImage(orgImage, 0, 0);
@@ -285,6 +358,10 @@ namespace EmodiaQuest.Core
                 obj.drawGameobject(world, view, projection);
             }
             foreach (GameObject obj in Buildings)
+            {
+                obj.drawGameobject(world, view, projection);
+            }
+            foreach (GameObject obj in Teleporter)
             {
                 obj.drawGameobject(world, view, projection);
             }

@@ -225,7 +225,7 @@ namespace EmodiaQuest.Core
                 movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
             }
 
-            //Collision with Walls
+            // Collision with Walls
             if (Color.White == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
                 position.Y = movement.Y;
@@ -233,6 +233,22 @@ namespace EmodiaQuest.Core
             if (Color.White == collisionHandler.GetCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
                 position.X = movement.X;
+            }
+
+            // Running towards teleporters
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            {
+                position.Y = movement.Y;
+            }
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            {
+                position.X = movement.X;
+            }
+
+            // Collsiion with Teleporters
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.CollisionColors, 0))
+            {
+                Console.WriteLine("You get teleported!");
             }
 
             //Collision with Items
