@@ -180,7 +180,11 @@ namespace EmodiaQuest.Core.GUI
 
                     if (Slider_GUI.isInside(mouseHandle.X, mouseHandle.Y, sl.SliderPosX, sl.SliderPosY, sl.SliderWidth, sl.SliderHeight))
                     {
-                        sl.Slider_State = SliderState_GUI.Pressed;
+                        if (pushed_name_slider == sl.Function)
+                        {
+                            sl.Slider_State = SliderState_GUI.Pressed;
+                        }
+                        
                         //if (pushed_name == sl.Function)
                         //{
 
