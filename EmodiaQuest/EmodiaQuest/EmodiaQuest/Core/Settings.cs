@@ -42,7 +42,7 @@ namespace EmodiaQuest.Core
         //public Vector2 Resolution = new Vector2(1280, 720);
         public Vector2 Resolution = PossibleResolutions[0];
 
-        public bool Fullscreen;
+        public bool Fullscreen = false;
 
         /// <summary>
         /// Far plane distance
@@ -97,8 +97,8 @@ namespace EmodiaQuest.Core
 
             GridSize = 10;
 
-            //TODO Resotion Fix
-            //Resolution = PossibleResolutions[0];
+            //TODO Resolution Fix
+            //Resolution = PossibleResolutions[2];
 
             Fullscreen = false;
 
