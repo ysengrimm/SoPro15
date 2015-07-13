@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="Core\GUI\ButtonEvent_GUI.cs" />
     <Compile Include="Core\GUI\Delegates_GUI.cs" />
+    <Compile Include="Core\GUI\Label_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Options_GUI.cs" />
     <Compile Include="Core\GUI\Settings_GUI.cs" />
     <Compile Include="Core\GUI\SliderEvent_GUI.cs" />

@@ -12,6 +12,24 @@ namespace EmodiaQuest.Core.GUI.Screens
     
     class Menu_GUI
     {
+        //EventHandler
+        static void ButtonEventValue(object source, ButtonEvent_GUI e)
+        {
+            Console.WriteLine(e.ButtonFunction);
+            switch (e.ButtonFunction)
+            {
+                case "nextState":
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+                    break;
+                case "options":
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
+                    break;
+                default:
+                    Console.WriteLine("No such Function.");
+                    break;
+            }
+        }
+
         private static Menu_GUI instance;
 
         private Menu_GUI() { }
@@ -30,7 +48,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private Platform_GUI platform = new Platform_GUI();
 
-        private string functionCalled = null;
+        //private string functionCalled = null;
 
         public void loadContent(ContentManager Content)
         {
@@ -39,27 +57,24 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.setBackground(Content, "Content_GUI/menu_background");
             this.platform.setBackground(Content, "Content_GUI/menu_full_small");
 
-            // Beware: Hardcoded values...
-            //this.platform.addButton(30, 50, 40, 15, "nextState");
-            this.platform.addButton(35, 50, 30, 15, "nextState", "Start Game");
-            //this.platform.addButton(30, 70, 40, 15, "quit");
-            this.platform.addButton(35, 75, 30, 15, "options", "Options");
+            this.platform.addButton(35, 60, 30, 8, "nextState", "Start Game");
+            this.platform.addButton(35, 75, 30, 8, "options", "Options");
+
+            //this.platform.addLabel(30, 10, 40, 20, "MENU", true);
 
             //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "MAIN MENU", true);
 
-            //this.platform.addSlider(30, 85, 40, 15, 0, 100, "testslide");
-
-            
+            //EventHandler;
+            platform.OnButtonValue += new GUI_Delegate_Button(ButtonEventValue);
         }
 
         
 
-
-        // FAKE FAKE FAKE
         public void update()
         {
-            if ((this.functionCalled = this.platform.update()) != null)
-                this.functionCall();
+            this.platform.update();
+            //if ((this.functionCalled = this.platform.update()) != null)
+            //    this.functionCall();
         }
 
         public void draw(SpriteBatch spritebatch)
@@ -67,21 +82,15 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.draw(spritebatch);
         }
 
-        private void functionCall()
-        {
-            switch (this.functionCalled)
-            {
-                case "nextState":
-                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
-                    break;
-                case "options":
-                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
-                    break;
-                default:
-                    Console.WriteLine("No such Function.");
-                    break;
-            }
-            this.functionCalled = null;
-        }
+        //private void functionCall()
+        //{
+        //    switch (this.functionCalled)
+        //    {
+        //        default:
+        //            Console.WriteLine("No such Function.");
+        //            break;
+        //    }
+        //    this.functionCalled = null;
+        //}
     }
 }

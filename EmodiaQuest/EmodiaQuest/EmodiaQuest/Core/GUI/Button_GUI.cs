@@ -15,12 +15,12 @@ namespace EmodiaQuest.Core.GUI
         public int Width { get; set; }
         public int Height { get; set; }
         public string Function { get; set; }
-        public bool isVisible = true;
-        private string buttonText = null;
+        public bool IsVisible = true;
         public int TextXPos { get; set; }
         public int TextYPos { get; set; }
-        public float textScaleFactor { get; set; }
+        public float TextScaleFactor { get; set; }
 
+        private string buttonText = null;
         private ButtonState_GUI button_State = ButtonState_GUI.Normal;
 
         public Button_GUI(int xPos, int yPos, int width, int height, string function)
@@ -42,7 +42,7 @@ namespace EmodiaQuest.Core.GUI
             this.ButtonText = buttonText;
             this.TextXPos = textXPos;
             this.TextYPos = textYPos;
-            this.textScaleFactor = textScaleFactor;
+            this.TextScaleFactor = textScaleFactor;
         }
 
         public Button_GUI(int xPos, int yPos, int width, int height, string function, bool isVisible)
@@ -52,7 +52,7 @@ namespace EmodiaQuest.Core.GUI
             this.Width = width;
             this.Height = height;
             this.Function = function;
-            this.isVisible = isVisible;
+            this.IsVisible = isVisible;
         }
 
         public static bool isInside(int mouse_xPos, int mouse_yPos, int button_xPos, int button_yPos, int button_width, int button_height)

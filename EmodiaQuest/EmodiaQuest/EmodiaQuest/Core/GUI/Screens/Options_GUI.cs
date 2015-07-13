@@ -16,6 +16,7 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             Console.WriteLine(e.SliderValue);
         }
+
         static void ButtonEventValue(object source, ButtonEvent_GUI e)
         {
             switch (e.ButtonFunction)
@@ -48,8 +49,6 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private Platform_GUI platform = new Platform_GUI();
 
-        private string functionCalled = null;
-
         public void loadContent(ContentManager Content)
         {
             this.platform.loadContent(Content);
@@ -62,10 +61,9 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "OPTIONS MENU", true);
 
             this.platform.addSlider(35, 50, 30, 8, 0, 100, "volumeChange");
+            //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
-            this.platform.addButton(35, 75, 30, 15, "mainmenu", "Main Menu");
-
-            //this.platform.addButton(30, 35, 40, 10, "changeToMainMenu", "test<button");
+            this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Main Menu");
 
             //EventHandler;
             platform.OnSliderValue += new GUI_Delegate_Slider(SliderEventValue);
@@ -75,29 +73,12 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         public void update()
         {
-            if ((this.functionCalled = this.platform.update()) != null)
-                this.functionCall();
-
-            //this.platform.breathing();
+            this.platform.update();
         }
 
         public void draw(SpriteBatch spritebatch)
         {
             this.platform.draw(spritebatch);
-        }
-
-        private void functionCall()
-        {
-            switch (this.functionCalled)
-            {
-                case "mainmenu":
-                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
-                    break;
-                default:
-                    Console.WriteLine("Function name does not exist");
-                    break;
-            }
-            this.functionCalled = null;
         }
     }
 }

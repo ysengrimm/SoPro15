@@ -20,12 +20,14 @@ namespace EmodiaQuest.Core.GUI
         private List<ItemSocket_GUI> sockets = new List<ItemSocket_GUI>();
         private List<PlainImage_GUI> pimages = new List<PlainImage_GUI>();
         private List<Slider_GUI> sliders = new List<Slider_GUI>();
+        private List<Label_GUI> labels = new List<Label_GUI>();
 
         public static List<SpriteFonts_GUI> fonts = new List<SpriteFonts_GUI>();
 
         private MouseState mouseHandle;
         private MouseState mouseHandle_Old;
-        private string pushed_name = null;
+        private string pushed_name_button = null;
+        private string pushed_name_slider = null;
         private string functionCalled = null;
 
         //MainwindowRes
@@ -62,6 +64,9 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D slider_foreground_normal;
         private Texture2D slider_foreground_pressed;
 
+        // Label Textures
+        private Texture2D label;
+
         // Fonts
         private SpriteFont monoFont_big;
         private SpriteFont dice_big;
@@ -78,11 +83,12 @@ namespace EmodiaQuest.Core.GUI
         //private float scaleFactor_monoFont_small;
 
         public void loadContent(ContentManager Content)
-        {            
-            
+        {
+
 
             // Button Content
-            button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
+            //button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
+            button_n = Content.Load<Texture2D>("Content_GUI/label");
             button_m = Content.Load<Texture2D>("Content_GUI/button_mouseOver");
             button_p = Content.Load<Texture2D>("Content_GUI/button_pressed");
 
@@ -97,9 +103,12 @@ namespace EmodiaQuest.Core.GUI
             plainImage = Content.Load<Texture2D>("Content_GUI/pixel_black");
 
             // Slider Content
-            slider_background = Content.Load<Texture2D>("Content_GUI/slider_background");
+            slider_background = Content.Load<Texture2D>("Content_GUI/slider_background_new");
             slider_foreground_normal = Content.Load<Texture2D>("Content_GUI/slider_foreground_normal");
             slider_foreground_pressed = Content.Load<Texture2D>("Content_GUI/slider_foreground_pressed");
+
+            // Label Content
+            label = Content.Load<Texture2D>("Content_GUI/label");
 
             //fonts.Add()
             //dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
@@ -111,7 +120,7 @@ namespace EmodiaQuest.Core.GUI
             monoFont_small = Content.Load<SpriteFont>("Content_GUI/monoFont_small");
 
             //Console.WriteLine(monoFont_big.MeasureString("12345"));
-            
+
 
         }
 
@@ -127,7 +136,7 @@ namespace EmodiaQuest.Core.GUI
 
 
 
-        public string update()
+        public void update()
         {
             functionCalled = null;
             mouseHandle = Controls_GUI.Instance.Mouse_GUI;
@@ -138,19 +147,19 @@ namespace EmodiaQuest.Core.GUI
                 {
                     if (mouseHandle.LeftButton == ButtonState.Pressed)
                     {
-                        if (pushed_name == bb.Function)
+                        if (pushed_name_button == bb.Function)
                         {
                             bb.Button_State = ButtonState_GUI.Pressed;
                         }
                         if (mouseHandle_Old.LeftButton == ButtonState.Released)
                         {
-                            pushed_name = bb.Function;
+                            pushed_name_button = bb.Function;
                         }
                     }
                     else
                         bb.Button_State = ButtonState_GUI.MouseOver;
 
-                    if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name == bb.Function)
+                    if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name_button == bb.Function)
                     {
                         this.functionCalled = bb.onClick();
                         if (OnButtonValue != null)
@@ -161,58 +170,62 @@ namespace EmodiaQuest.Core.GUI
                 }
                 else
                     bb.Button_State = ButtonState_GUI.Normal;
+
             }
             foreach (Slider_GUI sl in sliders)
             {
                 int sliderhandle = mouseHandle.X - sl.SliderWidth / 2;
                 if (mouseHandle.LeftButton == ButtonState.Pressed)
                 {
-                    
+
                     if (Slider_GUI.isInside(mouseHandle.X, mouseHandle.Y, sl.SliderPosX, sl.SliderPosY, sl.SliderWidth, sl.SliderHeight))
                     {
                         sl.Slider_State = SliderState_GUI.Pressed;
                         //if (pushed_name == sl.Function)
                         //{
-                            
+
                         //    //bb.Button_State = ButtonState_GUI.Pressed;
                         //    // Direkte Übergabe? Ne, da das mit Grafik-Stuff schief geht
                         //}
                         if (mouseHandle_Old.LeftButton == ButtonState.Released)
                         {
-                            pushed_name = sl.Function;
+                            pushed_name_slider = sl.Function;
                         }
                     }
 
-                    if (pushed_name == sl.Function)
-                    {    
+                    if (pushed_name_slider == sl.Function)
+                    {
                         sl.SliderPosX = sliderhandle;
                         if (sliderhandle <= sl.SliderMinX)
                             sl.SliderPosX = sl.SliderMinX;
                         else if (sliderhandle >= sl.SliderMaxX)
                             sl.SliderPosX = sl.SliderMaxX;
-                    }                        
+                    }
                 }
 
-                if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name == sl.Function)
+                if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name_slider == sl.Function)
                 {
-                    pushed_name = null;
+                    pushed_name_slider = null;
                     sl.Slider_State = SliderState_GUI.Normal;
                     //Console.WriteLine(monoFont_small.MeasureString("A").Y);
                     //Console.WriteLine(monoFont_big.MeasureString("MAIN MENU").X);
                     int eValue = (int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX);
                     if (eValue > sl.MaxValue)
                         eValue = sl.MaxValue;
-                    if(OnSliderValue!=null)
+                    if (OnSliderValue != null)
                     {
                         OnSliderValue(this, new SliderEvent_GUI(eValue));
                     }
-                    
+
                     //Console.WriteLine((int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX));
                 }
             }
-
+            if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed)
+            {
+                pushed_name_button = null;
+                pushed_name_slider = null;
+            }
             mouseHandle_Old = mouseHandle;
-            return this.functionCalled;
         }
 
         public void draw(SpriteBatch spritebatch)
@@ -233,11 +246,23 @@ namespace EmodiaQuest.Core.GUI
 
 
             //spritebatch.Draw(overlay, new Rectangle(0, 0, 800, 480), Color.White*0.7f);
+            foreach (Label_GUI ls in labels)
+            {
+                if (ls.TextScaleFactor <= 0.01f)
+                    //spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.XPos, ls.YPos)
+                    Console.WriteLine();
+                else
+                {
+                    spritebatch.Draw(label, new Rectangle(ls.XPos, ls.YPos, ls.Width, ls.Height), drawColor);
+                    spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.TextXPos, ls.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);
+                }
+            }
+
 
 
             foreach (Button_GUI bb in buttons)
             {
-                if (bb.isVisible)
+                if (bb.IsVisible)
                 {
                     if (bb.Button_State == ButtonState_GUI.Normal)
                         spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
@@ -248,15 +273,15 @@ namespace EmodiaQuest.Core.GUI
                 }
                 if (bb.ButtonText != null)
                 {
-                    spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(bb.TextXPos, bb.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), bb.textScaleFactor, SpriteEffects.None, 0.0f);
+                    spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(bb.TextXPos, bb.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), bb.TextScaleFactor, SpriteEffects.None, 0.0f);
                 }
             }
-            foreach (PlainImage_GUI pi in pimages)               
+            foreach (PlainImage_GUI pi in pimages)
                 spritebatch.Draw(plainImage, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), pi.Color);
 
             foreach (PlainText_GUI pt in ptexts)
                 spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), OverallFontScale, SpriteEffects.None, 0.0f);
-                //spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor);                
+            //spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor);                
             foreach (Slider_GUI sl in sliders)
             {
                 spritebatch.Draw(slider_background, new Rectangle(sl.XPos, sl.YPos, sl.Width, sl.Height), drawColor);
@@ -270,7 +295,7 @@ namespace EmodiaQuest.Core.GUI
             spritebatch.End();
         }
 
-        
+
 
         public void addButton(float xPos, float yPos, float width, float height, string name)
         {
@@ -288,12 +313,17 @@ namespace EmodiaQuest.Core.GUI
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
 
             Vector2 spriteFontSize = monoFont_small.MeasureString(buttonText);
-            
+
             // 0.7 Factor is the scale for the text for now to make it fit in the box
             float textScaleFactor = (MainWindowSize.Y * height * 0.01f * 0.7f) / spriteFontSize.Y;
             //Console.WriteLine(textScaleFactor);
-            int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2) - (MainWindowSize.X*0.01));
-            int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - (textScaleFactor * spriteFontSize.Y / 2) + (MainWindowSize.Y * 0.01));
+            //int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2) - (MainWindowSize.X*0.01));
+            //int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - (textScaleFactor * spriteFontSize.Y / 2) + (MainWindowSize.Y * 0.01));
+
+            int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2));
+
+            // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
+            int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
             //int textY = (int)((MainWindowSize.Y * yPos * 0.01f) - (textScaleFactor * spriteFontSize.Y) / 2);
             buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name, buttonText, textX, textY, textScaleFactor));
         }
@@ -310,9 +340,11 @@ namespace EmodiaQuest.Core.GUI
         {
             int xPosAbs;
             int yPosAbs;
-            
-            
+
+
             Vector2 spriteFontSize;
+
+            //float textScaleFactor = (MainWindowSize.Y * height * 0.01f * 0.7f) / spriteFontSize.Y;
 
             // Oh my god this is so ugly. I can't believe it myself.
             switch (chooseFont)
@@ -321,6 +353,8 @@ namespace EmodiaQuest.Core.GUI
                     spriteFontSize = dice_big.MeasureString(text);
                     if (centered)
                     {
+                        //int a =   (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2));
+
                         xPosAbs = (int)((MainWindowSize.X * xPos * 0.01) - spriteFontSize.X * OverallFontScale / 2);
                         yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
                         //yPosAbs = (int)((MainWindowSize.Y * yPos * 0.01) - spriteFontSize.Y * OverallFontScale / 2);
@@ -364,7 +398,7 @@ namespace EmodiaQuest.Core.GUI
                     Console.WriteLine("No such font");
                     break;
             }
-            
+
         }
 
         public void addPlainImage(float xPos, float yPos, float width, float height, Color color)
@@ -383,6 +417,36 @@ namespace EmodiaQuest.Core.GUI
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             sliders.Add(new Slider_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, minValue, maxValue, name));
+        }
+
+        public void addLabel(float xPos, float yPos, float width, float height, string labelText, bool withBackground)
+        {
+
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
+
+            if (withBackground)
+            {
+
+                Vector2 spriteFontSize = monoFont_big.MeasureString(labelText);
+
+                // 0.9 Factor is the scale for the text for now to make it fit in the box
+                float textScaleFactor = (MainWindowSize.Y * height * 0.01f * 0.9f) / spriteFontSize.Y;
+
+                int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2));
+
+                // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
+                int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
+
+                labels.Add(new Label_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, monoFont_big, labelText, textX, textY, textScaleFactor));
+            }
+            else
+            {
+                labels.Add(new Label_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, monoFont_big, labelText, 0, 0, 0));
+            }
+
         }
 
 

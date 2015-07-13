@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace EmodiaQuest.Core.GUI
 {
-    class PlainText_GUI
+    public class PlainText_GUI
     {
         public int XPos { get; set; }
         public int YPos { get; set; }
