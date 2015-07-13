@@ -53,14 +53,16 @@ namespace EmodiaQuest.Core.GUI
             this.SliderWidth = (int)(Height * 0.6);
             this.SliderHeight = (int)(Height * 0.6);
 
-            this.SliderPosX = XPos + (int)(Width * 0.06) - SliderWidth / 4;
+            //this.SliderPosX = XPos + (int)(Width * 0.06) - SliderWidth / 4;
+            this.SliderPosX = XPos + (int)(Width * 0.02);
             this.SliderPosY = YPos + (int)(Height * 0.2);
 
             this.SliderMinX = SliderPosX;
-            this.SliderMaxX = this.XPos + this.Width - SliderWidth - SliderWidth / 4;
+            //this.SliderMaxX = this.XPos + this.Width - SliderWidth - SliderWidth / 4;
+            this.SliderMaxX = this.XPos + this.Width - (int)(this.Width * 0.02) - SliderWidth;
 
-            this.FactorX = (SliderMaxX-SliderMinX) / (float)(MaxValue - MinValue + 1);
-            
+            // For each subtraction to get a width, you need to add one!
+            this.FactorX = (SliderMaxX-SliderMinX+1) / (float)(MaxValue - MinValue + 1);            
         }
 
         public static bool isInside(int mouse_xPos, int mouse_yPos, int slider_xPos, int slider_yPos, int slider_width, int slider_height)

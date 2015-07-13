@@ -61,6 +61,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "OPTIONS MENU", true);
 
             this.platform.addSlider(35, 50, 30, 8, 0, 100, "volumeChange");
+            this.platform.addSlider(35, 40, 30, 8, 0, 2, "3values");
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Main Menu");

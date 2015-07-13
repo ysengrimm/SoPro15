@@ -200,6 +200,21 @@ namespace EmodiaQuest.Core.GUI
                             sl.SliderPosX = sl.SliderMinX;
                         else if (sliderhandle >= sl.SliderMaxX)
                             sl.SliderPosX = sl.SliderMaxX;
+
+                        int testValue = (int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX);
+                        float factorXY = sl.MaxValue - sl.MinValue;
+                        
+                        int sliderWidth = sl.SliderMaxX - sl.SliderMinX;
+                        Console.WriteLine("here:");
+                        Console.WriteLine(factorXY);
+                        Console.WriteLine(sliderWidth);
+                        Console.WriteLine(sl.SliderMinX);
+                        sl.SliderPosX = (int)(sl.SliderMinX + sliderWidth * (1 / factorXY) * (float)(testValue - sl.MinValue));
+                        //if (sl.SliderPosX <= sl.SliderMinX)
+                        //    sl.SliderPosX = sl.SliderMinX;
+                        //else if (sl.SliderPosX >= sl.SliderMaxX)
+                        //    sl.SliderPosX = sl.SliderMaxX;
+
                     }
                 }
 
@@ -210,8 +225,8 @@ namespace EmodiaQuest.Core.GUI
                     //Console.WriteLine(monoFont_small.MeasureString("A").Y);
                     //Console.WriteLine(monoFont_big.MeasureString("MAIN MENU").X);
                     int eValue = (int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX);
-                    if (eValue > sl.MaxValue)
-                        eValue = sl.MaxValue;
+                    //if (eValue > sl.MaxValue)
+                    //    eValue = sl.MaxValue;
                     if (OnSliderValue != null)
                     {
                         OnSliderValue(this, new SliderEvent_GUI(eValue));

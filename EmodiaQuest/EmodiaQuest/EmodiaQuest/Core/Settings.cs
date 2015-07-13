@@ -19,12 +19,12 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Debug output
         /// </summary>
-        public bool DebugMode = false;
+        public bool DebugMode;
 
         /// <summary>
         /// Size of a grid element.
         /// </summary>
-        public int GridSize = 10;
+        public int GridSize;
 
         /********************************
          *      Graphics Settings        *
@@ -32,20 +32,22 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// All possible resolutions (all 16:9)
         /// </summary>
-        /// TODO: why static ?!
+        /// //TODO No static
         public static Vector2[] PossibleResolutions = { new Vector2(854, 480), new Vector2(1280, 720), new Vector2(1920, 1080) };
 
         /// <summary>
         /// Resolution for the game
         /// </summary>
-        public Vector2 Resolution = PossibleResolutions[1];
 
-        public bool Fullscreen = false;
+        //public Vector2 Resolution = new Vector2(1280, 720);
+        public Vector2 Resolution = PossibleResolutions[0];
+
+        public bool Fullscreen;
 
         /// <summary>
         /// Far plane distance
         /// </summary>
-        public float ViewDistance = 900f;
+        public float ViewDistance;
 
         /********************************
          *      Audio Settings        *
@@ -53,7 +55,7 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Volume of the sound
         /// </summary>
-        public float Volume = 1.0f;
+        public float Volume;
 
         /********************************
          *      Player Settings        *
@@ -61,17 +63,17 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Player movement speed.
         /// </summary>
-        public float PlayerSpeed = 0.25f;
+        public float PlayerSpeed;
 
         /// <summary>
         /// Player camera rotation speed.
         /// </summary>
-        public float PlayerRotationSpeed = 2f;
+        public float PlayerRotationSpeed;
 
         /// <summary>
         /// Player health
         /// </summary>
-        public float MaxPlayerHealth = 100f;
+        public float MaxPlayerHealth;
 
 
         /********************************
@@ -81,13 +83,39 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Human enemy speed
         /// </summary>
-        public float HumanEnemySpeed = 0.5f;
+        public float HumanEnemySpeed;
 
         /// <summary>
         /// Player health
         /// </summary>
-        public float MaxHumanEnemyHealth = 100f;
+        public float MaxHumanEnemyHealth;
 
+
+        public void loadContent()
+        {
+            DebugMode = false;
+
+            GridSize = 10;
+
+            //TODO Resotion Fix
+            //Resolution = PossibleResolutions[0];
+
+            Fullscreen = false;
+
+            ViewDistance = 900f;
+
+            Volume = 1.0f;
+
+            PlayerSpeed = 0.25f;
+
+            PlayerRotationSpeed = 2f;
+
+            MaxPlayerHealth = 100f;
+
+            HumanEnemySpeed = 0.5f;
+
+            MaxHumanEnemyHealth = 100f;
+        }
 
 
     }

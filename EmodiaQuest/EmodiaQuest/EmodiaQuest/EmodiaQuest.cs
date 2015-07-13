@@ -31,6 +31,7 @@ namespace EmodiaQuest
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            // What is this doing here???
             // set window size
             graphics.PreferredBackBufferWidth = (int)Settings.Instance.Resolution.X;
             graphics.PreferredBackBufferHeight = (int) Settings.Instance.Resolution.Y;
@@ -54,6 +55,9 @@ namespace EmodiaQuest
             // This is how it should look:
             // Notice how it can be called without an instance!
             
+            // Settings init
+            EmodiaQuest.Core.Settings.Instance.loadContent();
+
             // GUI init
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.loadContent();
             EmodiaQuest.Core.GUI.Settings_GUI.Instance.loadContent(Content);
@@ -169,7 +173,7 @@ namespace EmodiaQuest
         }
 
         /// <summary>
-        /// This is called when the game should draw itself.
+        /// This is called when the game graphic is drawn.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
