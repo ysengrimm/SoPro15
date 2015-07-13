@@ -58,7 +58,6 @@ namespace EmodiaQuest.Core
         /// Enables collision handling
         /// </summary>
         /// <param name="controller">Current enviroment controller</param>
-        /// <param name="player">Current player</param>
         public void SetEnvironmentController(EnvironmentController controller)
         {
             this.Controller = controller;

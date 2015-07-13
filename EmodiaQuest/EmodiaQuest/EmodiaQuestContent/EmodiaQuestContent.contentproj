@@ -284,16 +284,21 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\gameobjects\mauerTor30x10.fbx">
+      <Name>mauerTor30x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
-    <None Include="Texturen\Skybox\interstellar_large.jpg">
+    <Compile Include="Texturen\Skybox\interstellar_large.jpg">
       <Name>interstellar_large</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
+    </Compile>
     <None Include="Texturen\Skybox\miramar_large.jpg">
       <Name>miramar_large</Name>
       <Importer>TextureImporter</Importer>
@@ -304,11 +309,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
-    <None Include="Texturen\Skybox\violentdays_large.jpg">
+    <Compile Include="Texturen\Skybox\violentdays_large.jpg">
       <Name>violentdays_large</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Texturen\Playertexturen\brown_eye.png">
@@ -342,15 +347,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content_GUI\slider_background_new.png">
-      <Name>slider_background_new</Name>
+    <Compile Include="maps\dungeonWorld_PlacementMap.png">
+      <Name>dungeonWorld_PlacementMap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content_GUI\label.png">
-      <Name>label</Name>
+    <Compile Include="maps\Dungeon_CollisionMap.png">
+      <Name>Dungeon_CollisionMap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

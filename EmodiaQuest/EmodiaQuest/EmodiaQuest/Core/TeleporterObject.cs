@@ -12,36 +12,25 @@ using Microsoft.Xna.Framework.Media;
 
 namespace EmodiaQuest.Core
 {
-
-    public class Skybox
+    public class TeleporterObject
     {
-        private Vector3 position;
-        public Vector3 Position
-        {
-            set { position = value; }
-            get { return position; }
-        }
-
-        private float height;
-        public float Height
-        {
-            set { height = value; }
-            get { return height; }
-        }
-
-        public float Scale = 1001;
-        public Model Model;
+        public Vector3 position;
+        public int rotation;
+        public Model model;
 
         /// <summary>
         /// Creates a new map from a pixelmap
         /// <param name="model">A model for the .</param>
+        /// <param name="position">Position of object.</param>
+        /// <param name="rotation">Creates rotation of object: 0 -> 0°, 1 -> 90° etc.</param>
         /// </summary>
-        public Skybox(Model model, Vector2 position)
+        public TeleporterObject(Model model, Vector3 position, int rotation)     
         {
-            this.Model = model;
-            Position = new Vector3(position.X, this.height, position.Y);
+            this.model = model;
+            this.position = position;
+            if(rotation  == 0 || rotation  == 1 || rotation  == 2 || rotation  == 3)
+                this.rotation = rotation;
         }
-
 
         /// <summary>
         /// Creates a new map from a pixelmap
@@ -49,24 +38,19 @@ namespace EmodiaQuest.Core
         /// <param name="projektion">A projektion-matrix.</param>
         /// <param name="view">A view-matrix.</param>
         /// </summary>
-        public void Draw(Matrix world, Matrix view, Matrix projection, Texture2D texture)
+        public void drawTeleporterObject(Matrix world, Matrix view, Matrix projection)
         {
-            foreach (ModelMesh mesh in Model.Meshes)
+            foreach (ModelMesh mesh in model.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    //effect.EnableDefaultLighting();
-                    
-                    effect.World = world * Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(0, -(float)Math.PI/2, (float)Math.PI / 2) * Matrix.CreateTranslation(Position);
+                    effect.EnableDefaultLighting();
+                    effect.World = world * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
                     effect.View = view;
                     effect.Projection = projection;
-                    effect.PreferPerPixelLighting = true;
-                    effect.VertexColorEnabled = true;
-                    effect.Texture = texture;
                 }
                 mesh.Draw();
             }
         }
-
     }
 }

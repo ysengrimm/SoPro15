@@ -42,6 +42,7 @@ namespace EmodiaQuest.Core
         // The playerState, which will be needed to update the right animation
         public PlayerState PlayerState = PlayerState.Standing;
         public PlayerState LastPlayerState = PlayerState.Standing;
+        private WorldState activeWorld = WorldState.Safeworld;
         private float standingDuration;
         private float walkingDuration;
         private float jumpingDuration;
@@ -225,7 +226,7 @@ namespace EmodiaQuest.Core
                 movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
             }
 
-            //Collision with Walls
+            // Collision with Walls
             if (Color.White == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
                 position.Y = movement.Y;
@@ -235,20 +236,53 @@ namespace EmodiaQuest.Core
                 position.X = movement.X;
             }
 
-            //Collision with Items
-            if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
+            // Running towards teleporters
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
-                for(var i = 0; i < collisionHandler.Controller.Items.Count; i++)
-                {
-                    var temp = new Vector2(collisionHandler.Controller.Items.ElementAt(i).position.X, collisionHandler.Controller.Items.ElementAt(i).position.Z);
-                if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
-                {
-                    collisionHandler.Controller.Items.RemoveAt(i);
-                    //Console.Out.WriteLine("+1 Point");
-                }
-                }
-
+                position.Y = movement.Y;
             }
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            {
+                position.X = movement.X;
+            }
+
+            // Collsiion with Teleporters
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.CollisionColors, 0))
+            {
+                
+                if (activeWorld == WorldState.Safeworld)
+                {
+                    Console.WriteLine("You get teleported to a Dungeon!");
+                    Ingame.Instance.ChangeToDungeon();
+                    activeWorld = WorldState.Dungeon;
+                }
+                else if (activeWorld == WorldState.Dungeon)
+                {
+                    Console.WriteLine("You get teleported to the SafeWorld!");
+                    Ingame.Instance.ChangeToSafeworld();
+                    activeWorld = WorldState.Safeworld;
+                }
+            }
+            
+            //Collision with Items
+            if(collisionHandler.Controller.ItemColors != null) // this is, because in a Dungeon we might don´t have a Itemmap
+            {
+                if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
+                {
+                    for (var i = 0; i < collisionHandler.Controller.Items.Count; i++)
+                    {
+                        var temp = new Vector2(collisionHandler.Controller.Items.ElementAt(i).position.X, collisionHandler.Controller.Items.ElementAt(i).position.Z);
+                        if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
+                        {
+                            collisionHandler.Controller.Items.RemoveAt(i);
+                            //Console.Out.WriteLine("+1 Point");
+                        }
+                    }
+
+                }
+            }
+            
+            
             //update playerState
             if ( mouseState.LeftButton == ButtonState.Pressed)
             {

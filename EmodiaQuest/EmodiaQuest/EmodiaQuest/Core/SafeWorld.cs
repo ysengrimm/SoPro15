@@ -21,18 +21,27 @@ namespace EmodiaQuest.Core
     /// </summary>
     public class SafeWorld : Game
     {
+        private static SafeWorld instance;
+
+        private SafeWorld() { }
+
+        public static SafeWorld Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new SafeWorld();
+                }
+                return instance;
+            }
+        }
         public EnvironmentController Controller;
         public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager Content;
         public Skybox Skybox;
-
         public Enemy enemy1;
         
-        public SafeWorld(ContentManager content)
-        {
-            this.Content = content;
-            Controller = new EnvironmentController();
-        }
 
         /// <summary>
         /// Method for initialising Models and so on in SafeWorld
@@ -41,10 +50,12 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Method for loading relevant content for SafeWorld
         /// </summary>
-        public override void LoadContent()
+        public override void LoadContent(ContentManager content)
         {
+            this.Content = content;
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
-
+            // Environment Controller dor the Safeworld
+            Controller = new EnvironmentController();
             // load some Maps
             PlacementMap = Content.Load<Texture2D>("maps/safeWorld_PlacementMap");
             ItemMap = Content.Load<Texture2D>("maps/safeWorld_ItemMap");
@@ -61,6 +72,7 @@ namespace EmodiaQuest.Core
             EnvironmentController.Object wall2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall2"), new Color(2, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall2);
             // Buildings
             EnvironmentController.Object house1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/haus1_dim30x10"), new Color(100, 0, 0), new Vector2(1, 3)); Controller.CollisionObjList.Add(house1);
+            EnvironmentController.TeleObject wallDoor = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/mauerTor30x10"), new Color(3, 0, 0), new Vector2(1, 3), new Vector2(0, 0)); Controller.TeleporterObjList.Add(wallDoor);
             // Grounds
             EnvironmentController.Object brownWay = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/brownway_dim10x10"), new Color(100, 100, 0), new Vector2(1, 1));
             EnvironmentController.Object grasGround = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"), new Color(0, 100, 0), new Vector2(1, 1));
@@ -75,11 +87,12 @@ namespace EmodiaQuest.Core
             Controller.InsertObj(Controller.Ground, brownWay.Model, brownWay.Color, 0);
             Controller.InsertObj(Controller.Ground, grasGround.Model, grasGround.Color, 0);
             Controller.InsertObj(Controller.Buildings, house1.Model, house1.Color, 0);
+            Controller.InsertObj(Controller.Teleporter, wallDoor.Model, wallDoor.Color, 0);
             // Insert items
             Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
             //now after all collision objects are choosen generate and load collision map
-            Controller.GenerateCollisionMap(Content);
+            Controller.GenerateCollisionMap(Content, WorldState.Safeworld);
             CollisionMap = Content.Load<Texture2D>("maps/safeWorld_CollisionMap");
             Controller.CreateCollisionMap(CollisionMap);
 
@@ -88,14 +101,17 @@ namespace EmodiaQuest.Core
             enemy1.LoadContent(Content);
         }
 
-        //just for testing the enemy
+        
         public void UpdateSafeworld(GameTime gametime)
         {
+            //just for testing the enemy
             enemy1.Update(gametime);
             if (Keyboard.GetState().IsKeyDown(Keys.F5))
             {
                 enemy1.SetAsAlive();
             }
+
+            // Update for the Skybox
             Skybox.Position = new Vector3(Player.Instance.Position.X, 70, Player.Instance.Position.Y);
         }
 
@@ -120,7 +136,7 @@ namespace EmodiaQuest.Core
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
             Controller.DrawEnvironment(world, view, projection);
-            Skybox.Draw(world, view, projection);
+            Skybox.Draw(world, view, projection, Ingame.Instance.SkyBoxTex_Interstellar);
         }
 
     }
