@@ -99,7 +99,7 @@ namespace EmodiaQuest.Core
                 }
                 else
                 {
-                    Console.WriteLine("a enemy would be placed an a rock! Try again to place the Enemy");
+                    //Console.WriteLine("a enemy would be placed an a rock! Try again to place the Enemy");
                     i--;
                 }
             }
@@ -107,7 +107,7 @@ namespace EmodiaQuest.Core
             {
                 enemy.LoadContent(Content);
             }
-            Console.WriteLine(EnemyList.Count);
+            //Console.WriteLine(EnemyList.Count);
         }
 
         

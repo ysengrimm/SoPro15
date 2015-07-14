@@ -25,6 +25,7 @@ namespace EmodiaQuest.Core
 
         public List<GameObject> Ground, Wall, Items, Accessoires, Buildings, Teleporter;
         public List<NPCs.Enemy>[,] enemyArray;
+        public List<NPCs.NPC> NPCList;
 
         /// <summary>
         /// This list only contains objects you can change world with
@@ -88,6 +89,8 @@ namespace EmodiaQuest.Core
 
             CollisionObjList = new List<Object>();
             TeleporterObjList = new List<TeleObject>();
+
+            NPCList = new List<NPCs.NPC>();
 
         }
         /// <summary>
