@@ -58,7 +58,7 @@ namespace EmodiaQuest.Core
             // loading Safeworld
             SafeWorld.Instance.LoadContent(Content);
             // loading the dungeon
-            Dungeon = new Dungeon();       
+            Dungeon = new Dungeon(300);       
             Dungeon.LoadContent(Content);
 
             // setting the collision for the safeworld as default
@@ -75,6 +75,7 @@ namespace EmodiaQuest.Core
             Player.Instance.WindowSize = screenSize;
             Player.Instance.ContentMngr = Content;
             Player.Instance.LoadContent();
+            Player.Instance.GameEnv = SafeWorld.Instance.Controller;
 
         }
 
@@ -122,6 +123,7 @@ namespace EmodiaQuest.Core
         public void ChangeToDungeon()
         {
             ActiveWorld = WorldState.Dungeon;
+            Player.Instance.GameEnv = this.Dungeon.Controller;
             Player.Instance.Position = new Vector2(270, 330);
             CollisionHandler.Instance.SetEnvironmentController(Dungeon.Controller);
 
@@ -130,6 +132,7 @@ namespace EmodiaQuest.Core
         public void ChangeToSafeworld()
         {
             ActiveWorld = WorldState.Safeworld;
+            Player.Instance.GameEnv = SafeWorld.Instance.EnviromentController;
             Player.Instance.Position = new Vector2(270, 330);
             CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
 

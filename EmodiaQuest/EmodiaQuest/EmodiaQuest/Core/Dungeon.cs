@@ -22,12 +22,18 @@ namespace EmodiaQuest.Core
         public ContentManager Content;
         public Skybox Skybox;
 
-        public Enemy enemy1;
-        
-        public Dungeon()
+        public List<Enemy> EnemyList;
+        private int numEnemies;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numEnemies"> The numbers of Enemies, which will be placed in this Dungeon</param>
+        public Dungeon(int numEnemies)
         {
             Controller = new EnvironmentController();
+            this.numEnemies = numEnemies;
         }
+        private Random r;
 
         /// <summary>
         /// Method for initialising Models and so on in SafeWorld
@@ -62,8 +68,6 @@ namespace EmodiaQuest.Core
             // Items
             EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
 
-            Player.Instance.GameEnv = Controller;
-
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall1.Model, wall1.Color, 0);
             Controller.InsertObj(Controller.Wall, wall2.Model, wall2.Color, 0);
@@ -80,18 +84,39 @@ namespace EmodiaQuest.Core
             Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing
-            enemy1 = new Enemy(new Vector2(250, 300), Controller);
-            enemy1.LoadContent(Content);
+            EnemyList = new List<Enemy>();
+            r = new Random();
+            for(int i = 0; i < numEnemies; i++)
+            {
+                float x1 = (float)r.NextDouble() * 500;
+                float y1 = (float)r.NextDouble() * 500;
+                int x = (int) x1 / Settings.Instance.GridSize;
+                int y = (int) y1 / Settings.Instance.GridSize;
+                if(Controller.CollisionColors[x, y] != Color.Black && Controller.enemyArray[x,y].Count < 1)
+                {
+                    Enemy enemy = new Enemy(new Vector2(x1, y1), Controller);
+                    EnemyList.Add(enemy);
+                }
+                else
+                {
+                    Console.WriteLine("a enemy would be placed an a rock! Try again to place the Enemy");
+                    i--;
+                }
+            }
+            foreach (Enemy enemy in EnemyList)
+            {
+                enemy.LoadContent(Content);
+            }
+            Console.WriteLine(EnemyList.Count);
         }
 
         
         public void UpdateDungeon(GameTime gametime)
         {
             //just for testing the enemy
-            enemy1.Update(gametime);
-            if (Keyboard.GetState().IsKeyDown(Keys.F5))
+            foreach (Enemy enemy in EnemyList)
             {
-                enemy1.SetAsAlive();
+                enemy.Update(gametime); ;
             }
 
             // Update for the Skybox
@@ -109,8 +134,10 @@ namespace EmodiaQuest.Core
         public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             DrawEnvironment(world, view, projection);
-            enemy1.Draw(world, view, projection);
-            //drawNPCs();
+            foreach (Enemy enemy in EnemyList)
+            {
+                enemy.Draw(world, view, projection);
+            }
             //drawHUD();
             //drawPlayer(); <--- nope is in EmodiaQuest.cs
             
