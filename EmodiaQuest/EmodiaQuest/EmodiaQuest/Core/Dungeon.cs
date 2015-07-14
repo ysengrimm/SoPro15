@@ -22,12 +22,14 @@ namespace EmodiaQuest.Core
         public ContentManager Content;
         public Skybox Skybox;
 
-        public Enemy enemy1;
-        
-        public Dungeon()
+        public List<Enemy> EnemyList;
+        private int numEnemies;
+        public Dungeon(int numEnemies)
         {
             Controller = new EnvironmentController();
+            this.numEnemies = numEnemies;
         }
+        private Random r;
 
         /// <summary>
         /// Method for initialising Models and so on in SafeWorld
@@ -80,18 +82,37 @@ namespace EmodiaQuest.Core
             Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing
-            enemy1 = new Enemy(new Vector2(250, 300), Controller);
-            enemy1.LoadContent(Content);
+            EnemyList = new List<Enemy>();
+            r = new Random();
+            for(int i = 0; i < numEnemies; i++)
+            {
+                float x1 = (float)r.NextDouble() * 500;
+                float y1 = (float)r.NextDouble() * 500;
+                if(Controller.CollisionColors[(int) x1 / Settings.Instance.GridSize, (int) y1 / Settings.Instance.GridSize] != Color.Black)
+                {
+                    Enemy enemy = new Enemy(new Vector2(x1, y1), Controller);
+                    EnemyList.Add(enemy);
+                }
+                else
+                {
+                    Console.WriteLine("a enemy would be placed an a rock! Try again to place the Enemy");
+                    i--;
+                }
+            }
+            foreach (Enemy enemy in EnemyList)
+            {
+                enemy.LoadContent(Content);
+            }
+            Console.WriteLine(EnemyList.Count);
         }
 
         
         public void UpdateDungeon(GameTime gametime)
         {
             //just for testing the enemy
-            enemy1.Update(gametime);
-            if (Keyboard.GetState().IsKeyDown(Keys.F5))
+            foreach (Enemy enemy in EnemyList)
             {
-                enemy1.SetAsAlive();
+                enemy.Update(gametime); ;
             }
 
             // Update for the Skybox
@@ -109,8 +130,10 @@ namespace EmodiaQuest.Core
         public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             DrawEnvironment(world, view, projection);
-            enemy1.Draw(world, view, projection);
-            //drawNPCs();
+            foreach (Enemy enemy in EnemyList)
+            {
+                enemy.Draw(world, view, projection);
+            }
             //drawHUD();
             //drawPlayer(); <--- nope is in EmodiaQuest.cs
             

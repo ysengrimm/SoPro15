@@ -40,7 +40,6 @@ namespace EmodiaQuest.Core
         public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager Content;
         public Skybox Skybox;
-        public Enemy enemy1;
         
 
         /// <summary>
@@ -64,8 +63,8 @@ namespace EmodiaQuest.Core
             Controller.CreatePlacementMap(PlacementMap);
             Controller.CreateItemMap(ItemMap);
 
-            //initialise enemy array
-            Controller.CreateEnemyArray();
+            //initialise enemy array <---- mabey we can reuse it for NPCs
+            
 
             // Walls
             EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall1);
@@ -96,21 +95,11 @@ namespace EmodiaQuest.Core
             CollisionMap = Content.Load<Texture2D>("maps/safeWorld_CollisionMap");
             Controller.CreateCollisionMap(CollisionMap);
 
-            // temporary enemy testing
-            enemy1 = new Enemy(new Vector2(250, 300), Controller);
-            enemy1.LoadContent(Content);
         }
 
         
         public void UpdateSafeworld(GameTime gametime)
         {
-            //just for testing the enemy
-            enemy1.Update(gametime);
-            if (Keyboard.GetState().IsKeyDown(Keys.F5))
-            {
-                enemy1.SetAsAlive();
-            }
-
             // Update for the Skybox
             Skybox.Position = new Vector3(Player.Instance.Position.X, 70, Player.Instance.Position.Y);
         }
@@ -126,10 +115,8 @@ namespace EmodiaQuest.Core
         public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             DrawEnvironment(world, view, projection);
-            enemy1.Draw(world, view, projection);
             //drawNPCs();
-            //drawHUD();
-            //drawPlayer(); <--- nope is in EmodiaQuest.cs
+            //drawHUD(); <--- mabey the Hud should be in the ingame
             
         }
 
