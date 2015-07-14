@@ -439,26 +439,44 @@ namespace EmodiaQuest.Core.GUI
             sliders.Add(new Slider_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, minValue, maxValue, name));
         }
 
-        public void addLabel(float xPos, float yPos, float height, string labelText, bool centered)
+        public void addLabel(float xPos, float yPos, float height, string labelFont, string labelText, bool centered)
         {
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             //int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
 
+            SpriteFont lFont;
+            switch (labelFont)
+            {
+                case "dice_big":
+                    lFont = dice_big;
+                    break;
+                case "monoFont_big":
+                    lFont = monoFont_big;
+                    break;
+                case "monoFont_small":
+                    lFont = monoFont_small;
+                    break;
+                default:
+                    lFont = dice_big;
+                    break;
+            }
 
+            //Vector2 spriteFontSize = monoFont_big.MeasureString(labelText);
+            Vector2 spriteFontSize = lFont.MeasureString(labelText);
 
-            Vector2 spriteFontSize = monoFont_big.MeasureString(labelText);
             float textScaleFactor = (MainWindowSize.Y * height * 0.01f) / spriteFontSize.Y;
             if (centered)
             {
                 xPosAbs -= (int)(spriteFontSize.X * textScaleFactor / 2);
             }
 
-            labels.Add(new Label_GUI(xPosAbs, yPosAbs, 0, heightAbs, monoFont_big, labelText, textScaleFactor, centered));
+            //labels.Add(new Label_GUI(xPosAbs, yPosAbs, 0, heightAbs, monoFont_big, labelText, textScaleFactor, centered));
+            labels.Add(new Label_GUI(xPosAbs, yPosAbs, 0, heightAbs, lFont, labelText, textScaleFactor, centered));
 
         }
-        public void addLabel(float xPos, float yPos, float width, float height, string labelText)
+        public void addLabel(float xPos, float yPos, float width, float height, string labelFont, string labelText)
         {
 
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
@@ -466,9 +484,24 @@ namespace EmodiaQuest.Core.GUI
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
 
-            
+            SpriteFont lFont;
+            switch (labelFont)
+            {
+                case "dice_big":
+                    lFont = dice_big;
+                    break;
+                case "monoFont_big":
+                    lFont = monoFont_big;
+                    break;
+                case "monoFont_small":
+                    lFont = monoFont_small;
+                    break;
+                default:
+                    lFont = dice_big;
+                    break;
+            }
 
-            Vector2 spriteFontSize = monoFont_big.MeasureString(labelText);
+            Vector2 spriteFontSize = lFont.MeasureString(labelText);
 
 
             // 0.9 Factor is the scale for the text for now to make it fit in the box
@@ -479,7 +512,7 @@ namespace EmodiaQuest.Core.GUI
             // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
             int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
 
-            labels.Add(new Label_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, monoFont_big, labelText, textX, textY, textScaleFactor));
+            labels.Add(new Label_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, lFont, labelText, textX, textY, textScaleFactor));
 
 
         }
