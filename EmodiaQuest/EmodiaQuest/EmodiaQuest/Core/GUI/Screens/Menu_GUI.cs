@@ -60,7 +60,10 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addButton(35, 60, 30, 8, "nextState", "Start Game");
             this.platform.addButton(35, 75, 30, 8, "options", "Options");
 
-            //this.platform.addLabel(30, 10, 40, 20, "MENU", true);
+            this.platform.addLabel(50, 0, 20, "dice_big", "Menu", true);
+            this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", true);
+            this.platform.addLabel(30, 50, 40, 20, "monoFont_big", "labelText");
+
 
             //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "MAIN MENU", true);
 
