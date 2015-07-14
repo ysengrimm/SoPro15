@@ -15,7 +15,6 @@ namespace EmodiaQuest.Core.GUI.Screens
         //EventHandler
         static void ButtonEventValue(object source, ButtonEvent_GUI e)
         {
-            Console.WriteLine(e.ButtonFunction);
             switch (e.ButtonFunction)
             {
                 case "nextState":
@@ -62,8 +61,8 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             this.platform.addLabel(50, 0, 20, "dice_big", "Menu", true);
             this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", true);
-            this.platform.addLabel(30, 50, 40, 20, "monoFont_big", "labelText");
-
+            this.platform.addLabel(30, 50, 40, 20, "monoFont_big", "labelText", "label1");
+            //this.platform.updateLabel("label1", "newText");
 
             //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "MAIN MENU", true);
 

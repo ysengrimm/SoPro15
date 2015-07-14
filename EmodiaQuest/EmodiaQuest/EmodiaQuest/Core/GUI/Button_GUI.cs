@@ -74,10 +74,10 @@ namespace EmodiaQuest.Core.GUI
             return false;
         }
 
-        public string onClick()
-        {
-            return this.Function;
-        }
+        //public string onClick()
+        //{
+        //    return this.Function;
+        //}
 
         public ButtonState_GUI Button_State
         {

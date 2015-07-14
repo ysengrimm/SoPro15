@@ -14,7 +14,18 @@ namespace EmodiaQuest.Core.GUI.Screens
         //EventHandler
         static void SliderEventValue(object source, SliderEvent_GUI e)
         {
-            Console.WriteLine(e.SliderValue);
+            switch (e.Function)
+            {
+                case "volumeChange":
+                    EmodiaQuest.Core.Settings.Instance.Volume = e.SliderValue/100;
+                    break;
+                case "resolutionChange":
+                    EmodiaQuest.Core.Settings.Instance.Resolution = EmodiaQuest.Core.Settings.PossibleResolutions[e.SliderValue];
+                    break;
+                default:
+                    Console.WriteLine("Function name does not exist");
+                    break;
+            }
         }
 
         static void ButtonEventValue(object source, ButtonEvent_GUI e)
@@ -58,10 +69,11 @@ namespace EmodiaQuest.Core.GUI.Screens
             //Volume
             this.platform.setBackground(Content, "Content_GUI/menu_background");
 
-            this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "OPTIONS MENU", true);
+            //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "OPTIONS MENU", true);
+            this.platform.addLabel(50, 10, 18, "dice_big", "Options", true);
 
             this.platform.addSlider(35, 50, 30, 8, 0, 100, "volumeChange");
-            this.platform.addSlider(35, 40, 30, 8, 0, 2, "3values");
+            this.platform.addSlider(35, 40, 30, 8, 0, 2, "resolutionChange");
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Main Menu");
