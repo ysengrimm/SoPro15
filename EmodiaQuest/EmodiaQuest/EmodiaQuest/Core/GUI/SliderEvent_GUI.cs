@@ -7,12 +7,16 @@ namespace EmodiaQuest.Core.GUI
 {
     public class SliderEvent_GUI : EventArgs
     {
-        private int sliderValue;
-        public int SliderValue{get{return sliderValue;}}
+        private int sliderValue;        
+        public int SliderValue { get { return sliderValue; } }
 
-        public SliderEvent_GUI(int sliderValue)
+        private string function;
+        public string Function { get { return function; } }
+
+        public SliderEvent_GUI(int sliderValue, string function)
         {
             this.sliderValue = sliderValue;
+            this.function = function;
         }
     }
 }

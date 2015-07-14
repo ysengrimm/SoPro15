@@ -55,8 +55,11 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.addButton(0, 0, mainWindowWidth, mainwindowHeight, "clickToPlay", false);
             this.platform.addButton(0, 0, 100, 100, "clickToPlay", false);
         
-            this.platform.addPlainText(50.0f, 20.0f, "dice_big", "EMODIA", true);
-            this.platform.addPlainText(50.0f, 20.0f, "dice_big", "\nQUEST", true);
+            //this.platform.addPlainText(50.0f, 20.0f, "dice_big", "EMODIA", true);
+            //this.platform.addPlainText(50.0f, 20.0f, "dice_big", "\nQUEST", true);
+            this.platform.addLabel(50, 15, 25, "dice_big", "EMODIA", true);
+            this.platform.addLabel(50, 40, 25, "dice_big", "QUEST", true);
+            
 
             //EventHandler;
             platform.OnButtonValue += new GUI_Delegate_Button(ButtonEventValue);

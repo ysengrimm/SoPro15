@@ -85,7 +85,6 @@ namespace EmodiaQuest.Core.GUI
         public void loadContent(ContentManager Content)
         {
 
-
             // Button Content
             //button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
             button_n = Content.Load<Texture2D>("Content_GUI/label");
@@ -141,6 +140,8 @@ namespace EmodiaQuest.Core.GUI
             functionCalled = null;
             mouseHandle = Controls_GUI.Instance.Mouse_GUI;
 
+            
+
             foreach (Button_GUI bb in buttons)
             {
                 if (Button_GUI.isInside(mouseHandle.X, mouseHandle.Y, bb.XPos, bb.YPos, bb.Width, bb.Height))
@@ -161,7 +162,7 @@ namespace EmodiaQuest.Core.GUI
 
                     if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name_button == bb.Function)
                     {
-                        this.functionCalled = bb.onClick();
+                        //this.functionCalled = bb.onClick();
                         if (OnButtonValue != null)
                         {
                             OnButtonValue(this, new ButtonEvent_GUI(bb.Function));
@@ -209,10 +210,10 @@ namespace EmodiaQuest.Core.GUI
                         float factorXY = sl.MaxValue - sl.MinValue;
 
                         int sliderWidth = sl.SliderMaxX - sl.SliderMinX;
-                        Console.WriteLine("here:");
-                        Console.WriteLine(factorXY);
-                        Console.WriteLine(sliderWidth);
-                        Console.WriteLine(sl.SliderMinX);
+                        //Console.WriteLine("here:");
+                        //Console.WriteLine(factorXY);
+                        //Console.WriteLine(sliderWidth);
+                        //Console.WriteLine(sl.SliderMinX);
                         sl.SliderPosX = (int)(sl.SliderMinX + sliderWidth * (1 / factorXY) * (float)(testValue - sl.MinValue));
                         //if (sl.SliderPosX <= sl.SliderMinX)
                         //    sl.SliderPosX = sl.SliderMinX;
@@ -233,7 +234,7 @@ namespace EmodiaQuest.Core.GUI
                     //    eValue = sl.MaxValue;
                     if (OnSliderValue != null)
                     {
-                        OnSliderValue(this, new SliderEvent_GUI(eValue));
+                        OnSliderValue(this, new SliderEvent_GUI(eValue, sl.Function));
                     }
 
                     //Console.WriteLine((int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX));
@@ -476,7 +477,7 @@ namespace EmodiaQuest.Core.GUI
             labels.Add(new Label_GUI(xPosAbs, yPosAbs, 0, heightAbs, lFont, labelText, textScaleFactor, centered));
 
         }
-        public void addLabel(float xPos, float yPos, float width, float height, string labelFont, string labelText)
+        public void addLabel(float xPos, float yPos, float width, float height, string labelFont, string labelText, string labelName)
         {
 
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
@@ -505,16 +506,27 @@ namespace EmodiaQuest.Core.GUI
 
 
             // 0.9 Factor is the scale for the text for now to make it fit in the box
-            float textScaleFactor = (MainWindowSize.Y * height * 0.01f * 0.9f) / spriteFontSize.Y;
+            float textScaleFactor = (MainWindowSize.Y * height * 0.01f * 0.8f) / spriteFontSize.Y;
 
             int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2));
 
             // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
             int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
 
-            labels.Add(new Label_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, lFont, labelText, textX, textY, textScaleFactor));
+            labels.Add(new Label_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, lFont, labelText, labelName, textX, textY, textScaleFactor));
+        }
 
-
+        public void updateLabel(string labelName, string newLabeltext)
+        {
+            //foreach(var n in people.Where(p=>p.sex == male))
+            //foreach (Label_GUI ls in labels)
+            //{
+            //    if()
+            //}
+            foreach (Label_GUI ls in labels.Where(n => n.LabelName == labelName))
+            {
+                ls.LabelText = newLabeltext;
+            }
         }
 
 

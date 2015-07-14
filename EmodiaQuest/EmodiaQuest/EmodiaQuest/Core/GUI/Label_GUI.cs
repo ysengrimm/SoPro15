@@ -17,6 +17,7 @@ namespace EmodiaQuest.Core.GUI
         public int TextYPos { get; set; }
         public SpriteFont SpriteFont { get; set; }
         public string LabelText { get; set; }
+        public string LabelName { get; set; }
         public float TextScaleFactor { get; set; }
         public bool Centered { get; set; }
 
@@ -32,7 +33,7 @@ namespace EmodiaQuest.Core.GUI
             this.Centered = centered;
         }
 
-        public Label_GUI(int xPos, int yPos, int width, int height, SpriteFont spriteFont, string labelText, int textXPos, int textYPos, float textScaleFactor)
+        public Label_GUI(int xPos, int yPos, int width, int height, SpriteFont spriteFont, string labelText, string labelName, int textXPos, int textYPos, float textScaleFactor)
         {
             this.XPos = xPos;
             this.YPos = yPos;
@@ -40,6 +41,7 @@ namespace EmodiaQuest.Core.GUI
             this.Height = height;
             this.SpriteFont = spriteFont;
             this.LabelText = labelText;
+            this.LabelName = labelName;
             this.TextXPos = textXPos;
             this.TextYPos = textYPos;
             this.TextScaleFactor = textScaleFactor;
