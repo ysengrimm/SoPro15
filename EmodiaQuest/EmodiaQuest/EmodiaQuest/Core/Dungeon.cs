@@ -24,6 +24,10 @@ namespace EmodiaQuest.Core
 
         public List<Enemy> EnemyList;
         private int numEnemies;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numEnemies"> The numbers of Enemies, which will be placed in this Dungeon</param>
         public Dungeon(int numEnemies)
         {
             Controller = new EnvironmentController();
@@ -64,8 +68,6 @@ namespace EmodiaQuest.Core
             // Items
             EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
 
-            Player.Instance.GameEnv = Controller;
-
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall1.Model, wall1.Color, 0);
             Controller.InsertObj(Controller.Wall, wall2.Model, wall2.Color, 0);
@@ -88,7 +90,9 @@ namespace EmodiaQuest.Core
             {
                 float x1 = (float)r.NextDouble() * 500;
                 float y1 = (float)r.NextDouble() * 500;
-                if(Controller.CollisionColors[(int) x1 / Settings.Instance.GridSize, (int) y1 / Settings.Instance.GridSize] != Color.Black)
+                int x = (int) x1 / Settings.Instance.GridSize;
+                int y = (int) y1 / Settings.Instance.GridSize;
+                if(Controller.CollisionColors[x, y] != Color.Black && Controller.enemyArray[x,y].Count < 1)
                 {
                     Enemy enemy = new Enemy(new Vector2(x1, y1), Controller);
                     EnemyList.Add(enemy);

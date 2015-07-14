@@ -64,6 +64,7 @@ namespace EmodiaQuest.Core
             Controller.CreateItemMap(ItemMap);
 
             //initialise enemy array <---- mabey we can reuse it for NPCs
+            Controller.CreateEnemyArray();
             
 
             // Walls
@@ -77,8 +78,6 @@ namespace EmodiaQuest.Core
             EnvironmentController.Object grasGround = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"), new Color(0, 100, 0), new Vector2(1, 1));
             // Items
             EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
-
-            Player.Instance.GameEnv = Controller;
 
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall1.Model, wall1.Color, 0);
