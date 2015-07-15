@@ -103,10 +103,11 @@ namespace EmodiaQuest.Core
 
             // Netstat update
             EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.PlayerState.ToString());
+            // TODO: HUD update (playerhealth etc.)
 
         }
 
-        public void DrawIngame()
+        public void DrawIngame(SpriteBatch spriteBatch)
         {
             switch (ActiveWorld)
             {
@@ -118,6 +119,13 @@ namespace EmodiaQuest.Core
                     break;
             }
             Renderer.Instance.DrawPlayer(Player.Instance);
+
+            // NetStat
+            EmodiaQuest.Core.NetGraph.Instance.Draw(spriteBatch);
+            // HUD
+            EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.draw(spriteBatch);
+            // TODO: Damage Numbers over enemies
+            // TODO: dialogue window for interaction with npcs
         }
 
         public void ChangeToDungeon()

@@ -175,10 +175,7 @@ namespace EmodiaQuest
                     this.IsMouseVisible = false;
                     GraphicsDevice.DepthStencilState = new DepthStencilState { DepthBufferEnable = true };
                    
-                    Ingame.Instance.DrawIngame();
-                    // HUD/NetStat
-                    EmodiaQuest.Core.NetGraph.Instance.Draw(spriteBatch);
-                    EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.draw(spriteBatch);
+                    Ingame.Instance.DrawIngame(spriteBatch);
                     
                     break;
                 case GameStates_Overall.OptionsScreen:

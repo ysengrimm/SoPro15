@@ -63,8 +63,7 @@ namespace EmodiaQuest.Core
             Controller.CreatePlacementMap(PlacementMap);
             Controller.CreateItemMap(ItemMap);
 
-            //initialise enemy array <---- mabey we can reuse it for NPCs
-            //Controller.CreateEnemyArray();
+            //initialise enemy array <---- mabey we can reuse it for NPCs ( we don´t reuse it, because its way too much calculation for just some npcs)
             
 
             // Walls
