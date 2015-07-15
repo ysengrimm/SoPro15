@@ -82,9 +82,9 @@ namespace EmodiaQuest.Core
         public void UpdateIngame(GameTime gameTime)
         {
             // Update camera and view matrices
-            Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 9f, 5, Player.Instance.Position.Y + 9f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
+            Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
                 Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
-            Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y), Vector3.UnitY);
+            Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 2.5f, Player.Instance.Position.Y), Vector3.UnitY);
 
             // Playerupdate
             MouseState mState = Mouse.GetState();
