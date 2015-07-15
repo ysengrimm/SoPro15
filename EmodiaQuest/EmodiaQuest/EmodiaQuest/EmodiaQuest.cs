@@ -68,27 +68,6 @@ namespace EmodiaQuest
 
             EmodiaQuest.Core.NetGraph.Instance.LoadContent(Content);
 
-            /* Ingame
-            // Safeworld Init
-            SafeWorld.Instance.LoadContent(Content);
-            // Collision Init
-            CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
-
-            
-
-            // Init player
-            Player.Instance.Position = new Vector2(250, 350);
-            Player.Instance.CollisionHandler = CollisionHandler.Instance;
-            Player.Instance.WindowSize = screenSize;
-            Player.Instance.ContentMngr = Content;
-            Player.Instance.LoadContent();
-
-            //Initialize the matrizes with reasonable values
-            Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(Player.Instance.Position.X + 3f, 3, Player.Instance.Position.Y + 3f), new Vector3(Player.Instance.Position.X, 1, Player.Instance.Position.Y), Vector3.UnitY);
-            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), Settings.Instance.Resolution.X / Settings.Instance.Resolution.Y, 0.1f, Settings.Instance.ViewDistance); //Setting farplane = render distance
-            */
-
             // set screen size
             screenSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
 
@@ -145,20 +124,10 @@ namespace EmodiaQuest
                     //Close Game with Escape
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
-                    /* Ingame
-                    Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 9f, 5, Player.Instance.Position.Y + 9f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y), 
-                        Matrix.CreateRotationY((float) (Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
-                    Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y), Vector3.UnitY);
-
-                    MouseState mState = Mouse.GetState();
-                    Player.Instance.Update(gameTime, mState);
-                    */
+                   
                     // check if game is in focus
                     Player.Instance.GameIsInFocus = IsActive;
-                    /*Ingame
-                    //just for enemytesting in the safeworld
-                    SafeWorld.Instance.UpdateSafeworld(gameTime);
-                    */
+                   
                     Ingame.Instance.UpdateIngame(gameTime);
 
                     // HUD/NetStat
@@ -204,10 +173,7 @@ namespace EmodiaQuest
                 case GameStates_Overall.IngameScreen:
                     this.IsMouseVisible = false;
                     GraphicsDevice.DepthStencilState = new DepthStencilState { DepthBufferEnable = true };
-                    /* Ingame
-                    Renderer.Instance.DrawSafeWorld(SafeWorld.Instance);
-                    Renderer.Instance.DrawPlayer(Player.Instance);
-                    */
+                   
                     Ingame.Instance.DrawIngame();
                     // HUD/NetStat
                     EmodiaQuest.Core.NetGraph.Instance.Draw(spriteBatch);

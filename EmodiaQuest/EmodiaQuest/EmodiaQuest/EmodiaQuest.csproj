@@ -137,6 +137,7 @@
     <Compile Include="Core\NetGraph.cs" />
     <Compile Include="Core\NPCs\Ai.cs" />
     <Compile Include="Core\CollisionHandler.cs" />
+    <Compile Include="Core\NPCs\NPCState.cs" />
     <Compile Include="Core\PlayerState.cs" />
     <Compile Include="Core\Screens\CreditScreen.cs" />
     <Compile Include="Core\Dungeon.cs" />

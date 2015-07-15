@@ -64,7 +64,7 @@ namespace EmodiaQuest.Core
             Controller.CreateItemMap(ItemMap);
 
             //initialise enemy array <---- mabey we can reuse it for NPCs
-            Controller.CreateEnemyArray();
+            //Controller.CreateEnemyArray();
             
 
             // Walls
