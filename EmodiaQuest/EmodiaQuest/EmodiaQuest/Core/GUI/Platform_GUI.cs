@@ -456,7 +456,7 @@ namespace EmodiaQuest.Core.GUI
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
-            sliders.Add(new Slider_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, minValue, maxValue, name));
+            sliders.Add(new Slider_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, minValue, maxValue, name));
         }
 
         public void addLabel(float xPos, float yPos, float height, string labelFont, string labelText, bool centered)
@@ -625,6 +625,14 @@ namespace EmodiaQuest.Core.GUI
                 pi.YPos = (int)(MainWindowSize.Y * pi.YPosRelative * 0.01);
                 pi.Width = (int)(MainWindowSize.X * pi.WidthRelative * 0.01);
                 pi.Height = (int)(MainWindowSize.Y * pi.HeightRelative * 0.01);
+            }
+            foreach(Slider_GUI sl in sliders)
+            {
+                sl.XPos = (int)(MainWindowSize.X * sl.XPosRelative * 0.01);
+                sl.YPos = (int)(MainWindowSize.Y * sl.YPosRelative * 0.01);
+                sl.Width = (int)(MainWindowSize.X * sl.WidthRelative * 0.01);
+                sl.Height = (int)(MainWindowSize.Y * sl.HeightRelative * 0.01);
+                sl.setSliderStartPosition(sl.XPos, sl.YPos, sl.Width, sl.Height);
             }
         }
 

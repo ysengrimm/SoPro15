@@ -127,7 +127,6 @@
     <Compile Include="Core\GUI\Screens\Menu_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Start_GUI.cs" />
     <Compile Include="Core\GUI\Slider_GUI.cs" />
-    <Compile Include="Core\GUI\Textbox_GUI.cs" />
     <Compile Include="Core\Items\ItemStash.cs" />
     <Compile Include="Core\Items\Item_Armor.cs" />
     <Compile Include="Core\Items\Item_Quest.cs" />

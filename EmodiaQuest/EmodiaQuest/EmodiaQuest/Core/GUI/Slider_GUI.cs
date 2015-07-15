@@ -12,11 +12,15 @@ namespace EmodiaQuest.Core.GUI
     {
         // Slider geht von 6 bis 94 Prozent
         // Und Breite ist 7 Mal die Hoehe
+        public float XPosRelative { get; set; }
+        public float YPosRelative { get; set; }
         public int XPos { get; set; }
         public int YPos { get; set; }
-        public string Function { get; set; }
+        public float WidthRelative { get; set; }
+        public float HeightRelative { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public string Function { get; set; }
         public int SliderMinX { get; set; }
         public int SliderMaxX { get; set; }
         public int SliderPosX { get; set; }
@@ -30,10 +34,14 @@ namespace EmodiaQuest.Core.GUI
 
         private SliderState_GUI slider_State = SliderState_GUI.Normal;
 
-        public Slider_GUI(int xPos, int yPos, int width, int height, int minValue, int maxValue, string function)
+        public Slider_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, int minValue, int maxValue, string function)
         {
+            this.XPosRelative = xPosRelative;
+            this.YPosRelative = yPosRelative;
             this.XPos = xPos;
             this.YPos = yPos;
+            this.WidthRelative = widthRelative;
+            this.HeightRelative = heightRelative;
             this.Width = width;
             this.Height = height;
             this.CurrentValue = minValue;
@@ -48,7 +56,7 @@ namespace EmodiaQuest.Core.GUI
             return this.Function;
         }
 
-        private void setSliderStartPosition(int XPos, int YPos, int Width, int Height)
+        public void setSliderStartPosition(int XPos, int YPos, int Width, int Height)
         {
             this.SliderWidth = (int)(Height * 0.6);
             this.SliderHeight = (int)(Height * 0.6);
