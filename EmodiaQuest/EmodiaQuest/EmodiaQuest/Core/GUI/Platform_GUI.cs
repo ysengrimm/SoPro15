@@ -11,7 +11,12 @@ namespace EmodiaQuest.Core.GUI
 {
     public class Platform_GUI
     {
-        //Eventhandler
+        // Selfcontaining List
+        public static List<Platform_GUI> platforms = new List<Platform_GUI>();
+
+
+
+        // Eventhandler
         public event GUI_Delegate_Slider OnSliderValue;
         public event GUI_Delegate_Button OnButtonValue;
 
@@ -28,9 +33,9 @@ namespace EmodiaQuest.Core.GUI
         private MouseState mouseHandle_Old;
         private string pushed_name_button = null;
         private string pushed_name_slider = null;
-        private string functionCalled = null;
+        //private string functionCalled = null;
 
-        //MainwindowRes
+        // MainwindowRes
         public static Vector2 MainWindowSize { get; set; }
         public static int MainWindowWidthInt { get; set; }
         public static int MainWindowHeightInt { get; set; }
@@ -57,7 +62,9 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D overlay;
 
         // PlainImages Textures
-        private Texture2D plainImage;
+        private Texture2D HUD_small;
+        private Texture2D pixel_black;
+        private Texture2D pixel_white;
 
         // Slider Textures
         private Texture2D slider_background;
@@ -99,7 +106,9 @@ namespace EmodiaQuest.Core.GUI
             overlay = Content.Load<Texture2D>("Content_GUI/pixel_white");
 
             // PlainImage Content
-            plainImage = Content.Load<Texture2D>("Content_GUI/pixel_black");
+            HUD_small = Content.Load<Texture2D>("Content_GUI/HUD_small");
+            pixel_black = Content.Load<Texture2D>("Content_GUI/pixel_black");
+            pixel_white = Content.Load<Texture2D>("Content_GUI/pixel_white");
 
             // Slider Content
             slider_background = Content.Load<Texture2D>("Content_GUI/slider_background_new");
@@ -120,6 +129,9 @@ namespace EmodiaQuest.Core.GUI
 
             //Console.WriteLine(monoFont_big.MeasureString("12345"));
 
+            // Add platform to its own platform List
+            platforms.Add(this);
+
 
         }
 
@@ -137,10 +149,10 @@ namespace EmodiaQuest.Core.GUI
 
         public void update()
         {
-            functionCalled = null;
+            //functionCalled = null;
             mouseHandle = Controls_GUI.Instance.Mouse_GUI;
 
-            
+
 
             foreach (Button_GUI bb in buttons)
             {
@@ -270,9 +282,9 @@ namespace EmodiaQuest.Core.GUI
             {
                 if (ls.Width < 0.01f)
                 {
-                    spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.XPos, ls.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);     
+                    spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.XPos, ls.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);
                 }
-                    else
+                else
                 {
                     spritebatch.Draw(label, new Rectangle(ls.XPos, ls.YPos, ls.Width, ls.Height), drawColor);
                     spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.TextXPos, ls.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);
@@ -298,7 +310,7 @@ namespace EmodiaQuest.Core.GUI
                 }
             }
             foreach (PlainImage_GUI pi in pimages)
-                spritebatch.Draw(plainImage, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), pi.Color);
+                spritebatch.Draw(pi.Image, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), drawColor);
 
             foreach (PlainText_GUI pt in ptexts)
                 spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), OverallFontScale, SpriteEffects.None, 0.0f);
@@ -317,15 +329,6 @@ namespace EmodiaQuest.Core.GUI
         }
 
 
-
-        public void addButton(float xPos, float yPos, float width, float height, string name)
-        {
-            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
-            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
-            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
-            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
-            buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name));
-        }
         public void addButton(float xPos, float yPos, float width, float height, string name, string buttonText)
         {
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
@@ -346,7 +349,7 @@ namespace EmodiaQuest.Core.GUI
             // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
             int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
             //int textY = (int)((MainWindowSize.Y * yPos * 0.01f) - (textScaleFactor * spriteFontSize.Y) / 2);
-            buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name, buttonText, textX, textY, textScaleFactor));
+            buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, buttonText, textX, textY, textScaleFactor));
         }
         public void addButton(float xPos, float yPos, float width, float height, string name, bool isVisible)
         {
@@ -354,7 +357,7 @@ namespace EmodiaQuest.Core.GUI
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
-            buttons.Add(new Button_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, name, isVisible));
+            buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, isVisible));
         }
 
         public void addPlainText(float xPos, float yPos, string chooseFont, string text, bool centered)
@@ -422,13 +425,29 @@ namespace EmodiaQuest.Core.GUI
 
         }
 
-        public void addPlainImage(float xPos, float yPos, float width, float height, Color color)
+        public void addPlainImage(float xPos, float yPos, float width, float height, string image)
         {
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
-            pimages.Add(new PlainImage_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, color));
+            Texture2D plTexture;
+            switch (image)
+            {
+                case "HUD_small":
+                    plTexture = HUD_small;
+                    break;
+                case "pixel_white":
+                    plTexture = pixel_white;
+                    break;
+                case "pixel_black":
+                    plTexture = pixel_black;
+                    break;
+                default:
+                    plTexture = pixel_black;
+                    break;
+            }
+            pimages.Add(new PlainImage_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, plTexture));
         }
 
         public void addSlider(float xPos, float yPos, float width, float height, int minValue, int maxValue, string name)
@@ -474,12 +493,11 @@ namespace EmodiaQuest.Core.GUI
             }
 
             //labels.Add(new Label_GUI(xPosAbs, yPosAbs, 0, heightAbs, monoFont_big, labelText, textScaleFactor, centered));
-            labels.Add(new Label_GUI(xPosAbs, yPosAbs, 0, heightAbs, lFont, labelText, textScaleFactor, centered));
+            labels.Add(new Label_GUI(xPos, yPos, xPosAbs, yPosAbs, 0, height, 0, heightAbs, lFont, labelText, textScaleFactor, centered));
 
         }
         public void addLabel(float xPos, float yPos, float width, float height, string labelFont, string labelText, string labelName)
         {
-
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
@@ -513,7 +531,7 @@ namespace EmodiaQuest.Core.GUI
             // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
             int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
 
-            labels.Add(new Label_GUI(xPosAbs, yPosAbs, widthAbs, heightAbs, lFont, labelText, labelName, textX, textY, textScaleFactor));
+            labels.Add(new Label_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, lFont, labelText, labelName, textX, textY, textScaleFactor));
         }
 
         public void updateLabel(string labelName, string newLabeltext)
@@ -526,6 +544,87 @@ namespace EmodiaQuest.Core.GUI
             foreach (Label_GUI ls in labels.Where(n => n.LabelName == labelName))
             {
                 ls.LabelText = newLabeltext;
+            }
+        }
+
+        // Updates the resolutions in every platform instance
+        public static void updateAllResolutions(int x, int y)
+        {
+            foreach (Platform_GUI pltfrms in platforms)
+            {
+                pltfrms.updateResolution(x, y);
+            }
+        }
+
+        // Updates this platform resolution
+        public void updateResolution(int x, int y)
+        {
+            MainWindowWidthInt = x;
+            MainWindowHeightInt = y;
+            MainWindowSize = new Vector2(x, y);
+
+            foreach (Button_GUI bb in buttons)
+            {
+                if (bb.ButtonText == null)
+                {
+                    bb.XPos = (int)(MainWindowSize.X * bb.XPosRelative * 0.01);
+                    bb.YPos = (int)(MainWindowSize.Y * bb.YPosRelative * 0.01);
+                    bb.Width = (int)(MainWindowSize.X * bb.WidthRelative * 0.01);
+                    bb.Height = (int)(MainWindowSize.Y * bb.HeightRelative * 0.01);
+                }
+                else
+                {
+                    bb.XPos = (int)(MainWindowSize.X * bb.XPosRelative * 0.01);
+                    bb.YPos = (int)(MainWindowSize.Y * bb.YPosRelative * 0.01);
+                    bb.Width = (int)(MainWindowSize.X * bb.WidthRelative * 0.01);
+                    bb.Height = (int)(MainWindowSize.Y * bb.HeightRelative * 0.01);
+
+                    Vector2 spriteFontSize = monoFont_small.MeasureString(bb.ButtonText);
+
+                    bb.TextScaleFactor = (MainWindowSize.Y * bb.HeightRelative * 0.01f * 0.7f) / spriteFontSize.Y;
+
+                    bb.TextXPos = (int)(((MainWindowSize.X * bb.XPosRelative * 0.01f)) + (MainWindowSize.X * bb.WidthRelative * 0.01f / 2) - (bb.TextScaleFactor * spriteFontSize.X / 2));
+                    bb.TextYPos = (int)(((MainWindowSize.Y * bb.YPosRelative * 0.01f)) + (MainWindowSize.Y * bb.HeightRelative * 0.01f / 2) - ((bb.TextScaleFactor - 0.15f) * spriteFontSize.Y / 2));
+                }
+            }
+
+            foreach (Label_GUI ls in labels)
+            {
+                if (ls.Width < 0.01f)
+                {
+                    ls.XPos = (int)(MainWindowSize.X * ls.XPosRelative * 0.01);
+                    ls.YPos = (int)(MainWindowSize.Y * ls.YPosRelative * 0.01);
+                    ls.Height = (int)(MainWindowSize.Y * ls.HeightRelative * 0.01);
+
+                    Vector2 spriteFontSize = ls.SpriteFont.MeasureString(ls.LabelText);
+
+                    ls.TextScaleFactor = (MainWindowSize.Y * ls.HeightRelative * 0.01f) / spriteFontSize.Y;
+                    if (ls.Centered)
+                    {
+                        ls.XPos -= (int)(spriteFontSize.X * ls.TextScaleFactor / 2);
+                    }
+                }
+                else
+                {
+                    ls.XPos = (int)(MainWindowSize.X * ls.XPosRelative * 0.01);
+                    ls.YPos = (int)(MainWindowSize.Y * ls.YPosRelative * 0.01);
+                    ls.Width = (int)(MainWindowSize.X * ls.WidthRelative * 0.01);
+                    ls.Height = (int)(MainWindowSize.Y * ls.HeightRelative * 0.01);
+
+                    Vector2 spriteFontSize = ls.SpriteFont.MeasureString(ls.LabelText);
+
+                    ls.TextScaleFactor = (MainWindowSize.Y * ls.HeightRelative * 0.01f * 0.8f) / spriteFontSize.Y;
+
+                    ls.TextXPos = (int)(((MainWindowSize.X * ls.XPosRelative * 0.01f)) + (MainWindowSize.X * ls.WidthRelative * 0.01f / 2) - (ls.TextScaleFactor * spriteFontSize.X / 2));
+                    ls.TextYPos = (int)(((MainWindowSize.Y * ls.YPosRelative * 0.01f)) + (MainWindowSize.Y * ls.HeightRelative * 0.01f / 2) - ((ls.TextScaleFactor - 0.15f) * spriteFontSize.Y / 2));
+                }
+            }
+            foreach (PlainImage_GUI pi in pimages)
+            {
+                pi.XPos = (int)(MainWindowSize.X * pi.XPosRelative * 0.01);
+                pi.YPos = (int)(MainWindowSize.Y * pi.YPosRelative * 0.01);
+                pi.Width = (int)(MainWindowSize.X * pi.WidthRelative * 0.01);
+                pi.Height = (int)(MainWindowSize.Y * pi.HeightRelative * 0.01);
             }
         }
 

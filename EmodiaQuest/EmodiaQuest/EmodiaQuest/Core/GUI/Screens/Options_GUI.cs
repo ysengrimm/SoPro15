@@ -77,6 +77,9 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Main Menu");
+           // this.platform.addPlainImage
+
+            //this.platform.addPlainImage(10, 10, 30, 30, "HUD_small");
 
             //EventHandler;
             platform.OnSliderValue += new GUI_Delegate_Slider(SliderEventValue);

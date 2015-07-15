@@ -10,8 +10,12 @@ namespace EmodiaQuest.Core.GUI
 {
     class Button_GUI
     {
+        public float XPosRelative { get; set; }
+        public float YPosRelative { get; set; }
         public int XPos { get; set; }
         public int YPos { get; set; }
+        public float WidthRelative { get; set; }
+        public float HeightRelative { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public string Function { get; set; }
@@ -23,19 +27,14 @@ namespace EmodiaQuest.Core.GUI
         private string buttonText = null;
         private ButtonState_GUI button_State = ButtonState_GUI.Normal;
 
-        public Button_GUI(int xPos, int yPos, int width, int height, string function)
+        public Button_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, string function, string buttonText, int textXPos, int textYPos, float textScaleFactor)
         {
+            this.XPosRelative = xPosRelative;
+            this.YPosRelative = yPosRelative;
             this.XPos = xPos;
             this.YPos = yPos;
-            this.Width = width;
-            this.Height = height;
-            this.Function = function;
-        }
-
-        public Button_GUI(int xPos, int yPos, int width, int height, string function, string buttonText, int textXPos, int textYPos, float textScaleFactor)
-        {
-            this.XPos = xPos;
-            this.YPos = yPos;
+            this.WidthRelative = widthRelative;
+            this.HeightRelative = heightRelative;
             this.Width = width;
             this.Height = height;
             this.Function = function;
@@ -45,10 +44,14 @@ namespace EmodiaQuest.Core.GUI
             this.TextScaleFactor = textScaleFactor;
         }
 
-        public Button_GUI(int xPos, int yPos, int width, int height, string function, bool isVisible)
+        public Button_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, string function, bool isVisible)
         {
+            this.XPosRelative = xPosRelative;
+            this.YPosRelative = yPosRelative;
             this.XPos = xPos;
             this.YPos = yPos;
+            this.WidthRelative = widthRelative;
+            this.HeightRelative = heightRelative;
             this.Width = width;
             this.Height = height;
             this.Function = function;

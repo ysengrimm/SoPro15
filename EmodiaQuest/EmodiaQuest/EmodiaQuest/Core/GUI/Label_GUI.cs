@@ -9,10 +9,14 @@ namespace EmodiaQuest.Core.GUI
 {
     public class Label_GUI
     {
+        public float XPosRelative { get; set; }
+        public float YPosRelative { get; set; }
         public int XPos { get; set; }
         public int YPos { get; set; }
+        public float WidthRelative { get; set; }
+        public float HeightRelative { get; set; }
         public int Width { get; set; }
-        public int Height { get; set; }
+        public int Height { get; set; }        
         public int TextXPos { get; set; }
         public int TextYPos { get; set; }
         public SpriteFont SpriteFont { get; set; }
@@ -21,10 +25,14 @@ namespace EmodiaQuest.Core.GUI
         public float TextScaleFactor { get; set; }
         public bool Centered { get; set; }
 
-        public Label_GUI(int xPos, int yPos, int width, int height, SpriteFont spriteFont, string labelText, float textScaleFactor, bool centered)
+        public Label_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, SpriteFont spriteFont, string labelText, float textScaleFactor, bool centered)
         {
+            this.XPosRelative = xPosRelative;
+            this.YPosRelative = yPosRelative;
             this.XPos = xPos;
             this.YPos = yPos;
+            this.WidthRelative = widthRelative;
+            this.HeightRelative = heightRelative;
             this.Width = width;
             this.Height = height;
             this.SpriteFont = spriteFont;
@@ -33,10 +41,14 @@ namespace EmodiaQuest.Core.GUI
             this.Centered = centered;
         }
 
-        public Label_GUI(int xPos, int yPos, int width, int height, SpriteFont spriteFont, string labelText, string labelName, int textXPos, int textYPos, float textScaleFactor)
+        public Label_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, SpriteFont spriteFont, string labelText, string labelName, int textXPos, int textYPos, float textScaleFactor)
         {
+            this.XPosRelative = xPosRelative;
+            this.YPosRelative = yPosRelative;
             this.XPos = xPos;
             this.YPos = yPos;
+            this.WidthRelative = widthRelative;
+            this.HeightRelative = heightRelative;
             this.Width = width;
             this.Height = height;
             this.SpriteFont = spriteFont;
