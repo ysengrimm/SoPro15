@@ -81,10 +81,6 @@ namespace EmodiaQuest.Core
 
             //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content, WorldState.Dungeon);
-            
-            /********************************************************************************
-             * ******************************************************************************
-             * ******************************************************************************
 
             // temporary enemy testing
             EnemyList = new List<Enemy>();
@@ -95,7 +91,7 @@ namespace EmodiaQuest.Core
                 float y1 = (float)r.NextDouble() * 500;
                 int x = (int) x1 / Settings.Instance.GridSize;
                 int y = (int) y1 / Settings.Instance.GridSize;
-                if (Controller.Collisionmap.GetPixel(x, y) != System.Drawing.Color.Black && Controller.enemyArray[x, y].Count < 1)
+                if (Controller.Collisionmap.GetPixel(x, y).Name != "ff000000" && Controller.enemyArray[x, y].Count < 1)
                 {
                     Enemy enemy = new Enemy(new Vector2(x1, y1), Controller);
                     EnemyList.Add(enemy);
@@ -110,25 +106,17 @@ namespace EmodiaQuest.Core
             {
                 enemy.LoadContent(Content);
             }
-            //Console.WriteLine(EnemyList.Count);
-             
-             * ******************************************************************************
-             * ******************************************************************************
-             * ******************************************************************************
-             */
+        
         }
 
         
         public void UpdateDungeon(GameTime gametime)
         {
-            /*****************************************************
             //just for testing the enemy
             foreach (Enemy enemy in EnemyList)
             {
                 enemy.Update(gametime); ;
             }
-             * ******************************************************
-            */
             // Update for the Skybox
             Skybox.Position = new Vector3(Player.Instance.Position.X, 70, Player.Instance.Position.Y);
         }
@@ -144,13 +132,10 @@ namespace EmodiaQuest.Core
         public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             DrawEnvironment(world, view, projection);
-            /******************************************************
             foreach (Enemy enemy in EnemyList)
             {
                 enemy.Draw(world, view, projection);
             }
-             * ****************************************************
-             */
             //drawHUD();
             //drawPlayer(); <--- nope is in EmodiaQuest.cs
             
