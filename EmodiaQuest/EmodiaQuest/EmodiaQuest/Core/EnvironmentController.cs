@@ -17,7 +17,11 @@ namespace EmodiaQuest.Core
 {
     public class EnvironmentController
     {
-        public System.Drawing.Bitmap Placementmap, Collisionmap, Itemmap;
+        // TODO: Controll the whole environment, is used for getting easy access of everything wich is static, needs to be rendered or has collsion
+        // will have a lot of lists with items
+
+        public Texture2D PlacementMap, CollisionMap, ItemMap;
+        public Color[,] PlacementColors, CollisionColors, ItemColors;
 
         public List<GameObject> Ground, Wall, Items, Accessoires, Buildings, Teleporter;
         public List<NPCs.Enemy>[,] enemyArray;
@@ -89,18 +93,86 @@ namespace EmodiaQuest.Core
             NPCList = new List<NPCs.NPC>();
 
         }
-
         /// <summary>
         /// Initialises Array with Lists of Enemy
         /// </summary>
         public void CreateEnemyArray()
         {
-            enemyArray = new List<NPCs.Enemy>[Placementmap.Width, Placementmap.Height];
-            for (int i = 0; i < Placementmap.Width; i++)
+            enemyArray = new List<NPCs.Enemy>[PlacementMap.Width, PlacementMap.Height];
+            for (int i = 0; i < PlacementMap.Width; i++)
             {
-                for (int j = 0; j < Placementmap.Height; j++)
+                for (int j = 0; j < PlacementMap.Height; j++)
                 {
                     enemyArray[i, j] = new List<NPCs.Enemy>();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a new placement map from a pixelmap
+        /// <param name="map">A Texture2D with loaded placement map-picture.</param>
+        /// </summary>
+        public void CreatePlacementMap(Texture2D map)
+        {
+            Color[] colors1D;
+
+            this.PlacementMap = map;
+
+            colors1D = new Color[map.Width * map.Height];
+            map.GetData(colors1D);
+
+            PlacementColors = new Color[map.Width, map.Height];
+            for (int x = 0; x < map.Width; x++)
+            {
+                for (int y = 0; y < map.Height; y++)
+                {
+                    PlacementColors[x, y] = colors1D[x + y * map.Width];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a new collision map from a pixelmap
+        /// <param name="map">A Texture2D with loaded collision map-picture.</param>
+        /// </summary>
+        public void CreateCollisionMap(Texture2D map)
+        {
+            Color[] colors1D;
+
+            this.CollisionMap = map;
+
+            colors1D = new Color[map.Width * map.Height];
+            map.GetData(colors1D);
+
+            CollisionColors = new Color[map.Width, map.Height];
+            for (int x = 0; x < map.Width; x++)
+            {
+                for (int y = 0; y < map.Height; y++)
+                {
+                    CollisionColors[x, y] = colors1D[x + y * map.Width];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a new item map from a pixelmap
+        /// <param name="map">A Texture2D with loaded item map-picture.</param>
+        /// </summary>
+        public void CreateItemMap(Texture2D map)
+        {
+            Color[] colors1D;
+
+            this.ItemMap = map;
+
+            colors1D = new Color[map.Width * map.Height];
+            map.GetData(colors1D);
+
+            ItemColors = new Color[map.Width, map.Height];
+            for (int x = 0; x < map.Width; x++)
+            {
+                for (int y = 0; y < map.Height; y++)
+                {
+                    ItemColors[x, y] = colors1D[x + y * map.Width];
                 }
             }
         }
@@ -116,17 +188,17 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void InsertObj(List<GameObject> objList, Model model, Color color, int height)
         {
-            for (int i = 0; i < Placementmap.Width; i++)
+            for (int i = 0; i < PlacementMap.Width; i++)
             {
-                for (int j = 0; j < Placementmap.Height; j++)
+                for (int j = 0; j < PlacementMap.Height; j++)
                 {
-                    if (Placementmap.GetPixel(i, j).R == color.R && Placementmap.GetPixel(i, j).G == color.G)
+                    if (PlacementColors[i, j].R == color.R && PlacementColors[i, j].G == color.G)
                     {
-                        if (Placementmap.GetPixel(i, j).B > 3)
+                        if(PlacementColors[i, j].B > 3)
                         {
-                            Console.WriteLine("GameObject has a wrong rotation: Blue Channel!" + Placementmap.GetPixel(i, j));
+                            Console.WriteLine("GameObject has a wrong rotation: Blue Channel!" + PlacementColors[i,j]);
                         }
-                        objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), Placementmap.GetPixel(i, j).B));
+                        objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), PlacementColors[i, j].B));
                     }    
                 }
             }
@@ -143,13 +215,13 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void InsertItem(List<GameObject> itemList, Model model, Color color, int height)
         {
-            for (int i = 0; i < Itemmap.Width; i++)
+            for (int i = 0; i < ItemMap.Width; i++)
             {
-                for (int j = 0; j < Itemmap.Height; j++)
+                for (int j = 0; j < ItemMap.Height; j++)
                 {
-                    if (Itemmap.GetPixel(i, j).R == color.R && Itemmap.GetPixel(i, j).G == color.G)
+                    if (ItemColors[i, j].R == color.R && ItemColors[i, j].G == color.G)
                     {
-                        itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), Itemmap.GetPixel(i, j).B));
+                        itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), ItemColors[i, j].B));
                     }
                 }
             }
@@ -165,7 +237,7 @@ namespace EmodiaQuest.Core
             //at first gets path of debug directory and then replace the end to get path of content folder
             string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
 
-            System.Drawing.Bitmap orgImage = new System.Drawing.Bitmap(Placementmap.Width, Placementmap.Height);
+            System.Drawing.Bitmap orgImage = new System.Drawing.Bitmap(PlacementMap.Width, PlacementMap.Height);
 
             // clears map
             for (int i = 0; i < orgImage.Width; i++)
@@ -182,13 +254,13 @@ namespace EmodiaQuest.Core
                 {
                     for (int j = 0; j < orgImage.Height; j++)
                     {
-                        if (Placementmap.GetPixel(i, j).R == obj.Color.R && Placementmap.GetPixel(i, j).G == obj.Color.G)
+                        if (PlacementColors[i, j].R == obj.Color.R && PlacementColors[i, j].G == obj.Color.G)
                         {
                             // example: house with dimensions like XXX ... so it's 1x3
 
                             // with rotation like 0° or 180°
                             // this part will generate black pixels like XXX
-                            if (Placementmap.GetPixel(i, j).B == 0 || Placementmap.GetPixel(i, j).B == 2)
+                            if (PlacementColors[i, j].B == 0 || PlacementColors[i, j].B == 2)
                             {
                                 for (int k = i - (int)obj.Dimension.Y / 2; k < i + 1 + (int)obj.Dimension.Y / 2; k++)
                                 {
@@ -203,7 +275,7 @@ namespace EmodiaQuest.Core
                             // this part will generate black pixels like X
                             //                                           X  <- actual position of house
                             //                                           X
-                            else if (Placementmap.GetPixel(i, j).B == 1 || Placementmap.GetPixel(i, j).B == 3)
+                            else if (PlacementColors[i, j].B == 1 || PlacementColors[i, j].B == 3)
                             {
                                 for (int k = i - (int)obj.Dimension.X / 2; k < i + 1 + (int)obj.Dimension.X / 2; k++)
                                 {
@@ -216,63 +288,78 @@ namespace EmodiaQuest.Core
                         }
                     }
                 }
-            }
 
-            // The teleport objects will be escpecially added to the collision map
-            // Function like foreach above
-            foreach (TeleObject telobj in TeleporterObjList)
-            {
-                for (int i = 0; i < orgImage.Width; i++)
+            }
+                // The teleport objects will be escpecially added to the collision map
+                foreach (TeleObject telobj in TeleporterObjList)
                 {
-                    for (int j = 0; j < orgImage.Height; j++)
+                    for (int i = 0; i < orgImage.Width; i++)
                     {
-                        if (Placementmap.GetPixel(i, j).R == telobj.Color.R && Placementmap.GetPixel(i, j).G == telobj.Color.G)
+                        for (int j = 0; j < orgImage.Height; j++)
                         {
-                            if (Placementmap.GetPixel(i, j).B == 0 || Placementmap.GetPixel(i, j).B == 2)
+                            if (PlacementColors[i, j].R == telobj.Color.R && PlacementColors[i, j].G == telobj.Color.G)
                             {
-                                for (int k = i - (int)telobj.Dimension.Y / 2; k < i + 1 + (int)telobj.Dimension.Y / 2; k++)
+                                // example: house with dimensions like XXX ... so it's 1x3
+
+                                // with rotation like 0° or 180°
+                                // this part will generate black pixels like XXX
+                                if (PlacementColors[i, j].B == 0 || PlacementColors[i, j].B == 2)
                                 {
-                                    for (int l = j - (int)telobj.Dimension.X / 2; l < j + 1 + (int)telobj.Dimension.X / 2; l++)
+                                    for (int k = i - (int)telobj.Dimension.Y / 2; k < i + 1 + (int)telobj.Dimension.Y / 2; k++)
                                     {
-                                        if(k == i && l == j)
+                                        for (int l = j - (int)telobj.Dimension.X / 2; l < j + 1 + (int)telobj.Dimension.X / 2; l++)
                                         {
-                                            orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
-                                        }
-                                        else
-                                        {
-                                            orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                            if(k == i && l == j)
+                                            {
+                                                orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                            }
+                                            else
+                                            {
+                                                orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else if (Placementmap.GetPixel(i, j).B == 1 || Placementmap.GetPixel(i, j).B == 3)
-                            {
-                                for (int k = i - (int)telobj.Dimension.X / 2; k < i + 1 + (int)telobj.Dimension.X / 2; k++)
+
+                                // with rotation like 90° or 270°
+                                // this part will generate black pixels like X
+                                //                                           X  <- actual position of house
+                                //                                           X
+                                else if (PlacementColors[i, j].B == 1 || PlacementColors[i, j].B == 3)
                                 {
-                                    for (int l = j - (int)telobj.Dimension.Y / 2; l < j + 1 + (int)telobj.Dimension.Y / 2; l++)
+                                    for (int k = i - (int)telobj.Dimension.X / 2; k < i + 1 + (int)telobj.Dimension.X / 2; k++)
                                     {
-                                        if (k == i && l == j)
+                                        for (int l = j - (int)telobj.Dimension.Y / 2; l < j + 1 + (int)telobj.Dimension.Y / 2; l++)
                                         {
-                                            orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
-                                        }
-                                        else
-                                        {
-                                            orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                            if (k == i && l == j)
+                                            {
+                                                orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                            }
+                                            else
+                                            {
+                                                orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                }
             }
             //draw things in new image
             System.Drawing.Graphics gimage = System.Drawing.Graphics.FromImage(orgImage);
             gimage.DrawImage(orgImage, 0, 0);
             
             //save new image
-            orgImage.Save(contentPath + @"maps\" + collisionWorld.ToString() + "_CollisionMap.png", ImageFormat.Png);
-            Collisionmap = new System.Drawing.Bitmap(orgImage);
+            if (collisionWorld == WorldState.Safeworld)
+            {
+                orgImage.Save(contentPath + @"maps\safeWorld_CollisionMap.png", ImageFormat.Png);
+            }
+            else if(collisionWorld == WorldState.Dungeon)
+            {
+                orgImage.Save(contentPath + @"maps\Dungeon_CollisionMap.png", ImageFormat.Png);
+            }
+
         }
 
         public void DrawEnvironment(Matrix world, Matrix view, Matrix projection)

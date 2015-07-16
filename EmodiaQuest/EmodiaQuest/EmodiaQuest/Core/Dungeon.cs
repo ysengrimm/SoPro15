@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -49,10 +48,10 @@ namespace EmodiaQuest.Core
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
 
             // load some Maps
-            //gets >current< content path
-            //at first gets path of debug directory and then replace the end to get path of content folder
-            string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
-            Controller.Placementmap = new System.Drawing.Bitmap(contentPath + @"maps\Dungeon_PlacementMap.png");
+            PlacementMap = Content.Load<Texture2D>("maps/dungeonWorld_PlacementMap");
+
+            // generate some Maps
+            Controller.CreatePlacementMap(PlacementMap);
 
             //initialise enemy array
             Controller.CreateEnemyArray();
@@ -79,8 +78,10 @@ namespace EmodiaQuest.Core
             // Insert items
             //Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
-            //now after all collision objects are choosen generate collision map
+            //now after all collision objects are choosen generate and load collision map
             Controller.GenerateCollisionMap(Content, WorldState.Dungeon);
+            CollisionMap = Content.Load<Texture2D>("maps/Dungeon_CollisionMap");
+            Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing
             EnemyList = new List<Enemy>();
@@ -91,7 +92,7 @@ namespace EmodiaQuest.Core
                 float y1 = (float)r.NextDouble() * 500;
                 int x = (int) x1 / Settings.Instance.GridSize;
                 int y = (int) y1 / Settings.Instance.GridSize;
-                if (Controller.Collisionmap.GetPixel(x, y).Name != "ff000000" && Controller.enemyArray[x, y].Count < 1)
+                if(Controller.CollisionColors[x, y] != Color.Black && Controller.enemyArray[x,y].Count < 1)
                 {
                     Enemy enemy = new Enemy(new Vector2(x1, y1), Controller);
                     EnemyList.Add(enemy);
@@ -106,7 +107,7 @@ namespace EmodiaQuest.Core
             {
                 enemy.LoadContent(Content);
             }
-        
+            //Console.WriteLine(EnemyList.Count);
         }
 
         
@@ -117,6 +118,7 @@ namespace EmodiaQuest.Core
             {
                 enemy.Update(gametime); ;
             }
+
             // Update for the Skybox
             Skybox.Position = new Vector3(Player.Instance.Position.X, 70, Player.Instance.Position.Y);
         }
