@@ -225,29 +225,29 @@ namespace EmodiaQuest.Core
                 movement.Y += PlayerSpeed * (float)Math.Cos(Angle + 3 * Math.PI / 2);
                 movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
             }
-
+            
             // Collision with Walls
-            if (Color.White == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            if (Color.White == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.Collisionmap, MovementOffset))
             {
                 position.Y = movement.Y;
             }
-            if (Color.White == collisionHandler.GetCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            if (Color.White == collisionHandler.GetCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.Collisionmap, MovementOffset))
             {
                 position.X = movement.X;
             }
 
             // Running towards teleporters
-            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.Collisionmap, MovementOffset))
             {
                 position.Y = movement.Y;
             }
-            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(movement.X, Position.Y), collisionHandler.Controller.Collisionmap, MovementOffset))
             {
                 position.X = movement.X;
             }
 
             // Collsiion with Teleporters
-            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.CollisionColors, 0))
+            if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.Collisionmap, 0))
             {
                 
                 if (activeWorld == WorldState.Safeworld)
@@ -265,9 +265,9 @@ namespace EmodiaQuest.Core
             }
             
             //Collision with Items
-            if(collisionHandler.Controller.ItemColors != null) // this is, because in a Dungeon we might don´t have a Itemmap
+            if(collisionHandler.Controller.Itemmap != null) // this is, because in a Dungeon we might don´t have a Itemmap
             {
-                if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
+                if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.Itemmap, ItemOffset))
                 {
                     for (var i = 0; i < collisionHandler.Controller.Items.Count; i++)
                     {

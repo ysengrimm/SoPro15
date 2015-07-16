@@ -37,7 +37,7 @@ namespace EmodiaQuest.Core
             }
         }
         public EnvironmentController Controller;
-        public Texture2D CollisionMap, PlacementMap, ItemMap;
+        //public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager Content;
         public Skybox Skybox;
         
@@ -55,13 +55,13 @@ namespace EmodiaQuest.Core
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
             // Environment Controller dor the Safeworld
             Controller = new EnvironmentController();
-            // load some Maps
-            PlacementMap = Content.Load<Texture2D>("maps/safeWorld_PlacementMap");
-            ItemMap = Content.Load<Texture2D>("maps/safeWorld_ItemMap");
 
-            // generate some Maps
-            Controller.CreatePlacementMap(PlacementMap);
-            Controller.CreateItemMap(ItemMap);
+            //load some maps
+            //gets >current< content path
+            //at first gets path of debug directory and then replace the end to get path of content folder
+            string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
+            Controller.Placementmap = new System.Drawing.Bitmap(contentPath + @"maps\Safeworld_PlacementMap.png");
+            Controller.Itemmap = new System.Drawing.Bitmap(contentPath + @"maps\Safeworld_ItemMap.png");
 
             //initialise enemy array <---- mabey we can reuse it for NPCs ( we don´t reuse it, because its way too much calculation for just some npcs)
             
@@ -88,10 +88,8 @@ namespace EmodiaQuest.Core
             // Insert items
             Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
-            //now after all collision objects are choosen generate and load collision map
+            //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content, WorldState.Safeworld);
-            CollisionMap = Content.Load<Texture2D>("maps/safeWorld_CollisionMap");
-            Controller.CreateCollisionMap(CollisionMap);
 
         }
 

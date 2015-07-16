@@ -87,7 +87,7 @@ namespace EmodiaQuest.Core.NPCs
             // TODO: /10 shouldn't be a magic number
             
             // object collision
-            if (Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.CollisionColors, 2.0f))
+            if (Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.Collisionmap, 2.0f))
             {
                 if (IsAlive && currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5 && !onSameGridElement(newPosition, Player.Instance.Position))  //if next part of grid contains less then 5 Enemies
                 {
@@ -97,7 +97,7 @@ namespace EmodiaQuest.Core.NPCs
                 }
                 
             }
-            if (Color.White == collHandler.GetCollisionColor(new Vector2(newPosition.X, Position.Y), collHandler.Controller.CollisionColors, 2.0f))
+            if (Color.White == collHandler.GetCollisionColor(new Vector2(newPosition.X, Position.Y), collHandler.Controller.Collisionmap, 2.0f))
             {
                 if (IsAlive && currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5 && !onSameGridElement(newPosition, Player.Instance.Position))  //if next part of grid contains less then 5 Enemies
                 {

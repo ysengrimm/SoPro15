@@ -80,18 +80,6 @@
     <Folder Include="Texturen\Buttons\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="maps\safeWorld_CollisionMap.png">
-      <Name>safeWorld_CollisionMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="maps\safeWorld_PlacementMap.png">
-      <Name>safeWorld_PlacementMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="fbxContent\gameobjects\testCube.fbx">
       <Name>testCube</Name>
       <Importer>FbxImporter</Importer>
@@ -152,13 +140,6 @@
   <ItemGroup>
     <Compile Include="Content_GUI\menu_background.png">
       <Name>menu_background</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="maps\safeWorld_ItemMap.png">
-      <Name>safeWorld_ItemMap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -347,13 +328,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="maps\dungeonWorld_PlacementMap.png">
-      <Name>dungeonWorld_PlacementMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="maps\Dungeon_CollisionMap.png">
       <Name>Dungeon_CollisionMap</Name>
       <Importer>TextureImporter</Importer>
@@ -370,6 +344,32 @@
   <ItemGroup>
     <Compile Include="Content_GUI\slider_background_new.png">
       <Name>slider_background_new</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="maps\SafeWorld_CollisionMap.png">
+      <Name>SafeWorld_CollisionMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="maps\SafeWorld_PlacementMap.png">
+      <Name>SafeWorld_PlacementMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="maps\Dungeon_PlacementMap.png">
+      <Name>Dungeon_PlacementMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="maps\SafeWorld_ItemMap.png">
+      <Name>SafeWorld_ItemMap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
