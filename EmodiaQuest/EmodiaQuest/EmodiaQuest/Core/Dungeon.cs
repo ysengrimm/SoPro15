@@ -137,10 +137,7 @@ namespace EmodiaQuest.Core
             foreach (Enemy enemy in EnemyList)
             {
                 enemy.Draw(world, view, projection);
-            }
-            //drawHUD();
-            //drawPlayer(); <--- nope is in EmodiaQuest.cs
-            
+            }          
         }
 
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)

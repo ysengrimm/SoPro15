@@ -43,6 +43,7 @@ namespace EmodiaQuest.Core
         public PlayerState ActivePlayerState = PlayerState.Standing;
         public PlayerState LastPlayerState = PlayerState.Standing;
         public PlayerState TempPlayerState = PlayerState.Standing;
+        public Weapon activeWeapon = Weapon.Hammer;
         private WorldState activeWorld = WorldState.Safeworld;
         private float standingDuration;
         private float walkingDuration;
@@ -199,6 +200,16 @@ namespace EmodiaQuest.Core
 
         public void Update(GameTime gameTime, MouseState mouseState)
         {
+            // update weapon
+
+            if(Keyboard.GetState().IsKeyDown(Keys.D1))
+            {
+                activeWeapon = Weapon.Stock;
+            }
+            if(Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                activeWeapon = Weapon.Hammer;
+            }
             // only set fixed mouse pos if game is in focus
             if (gameIsInFocus)
             {
@@ -294,7 +305,7 @@ namespace EmodiaQuest.Core
             {
                 ActivePlayerState = PlayerState.Swordfighting;
                 stateTime = swordFightingDuration;
-                fixedBlendDuration = 100;
+                fixedBlendDuration = 150;
             }
             else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 0)
             {
@@ -594,34 +605,34 @@ namespace EmodiaQuest.Core
                     //Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
                     
-                    if (isBlending == true)
+                    if (isBlending)
                     {
                         float percentageOfBlending = activeBlendTime / fixedBlendDuration;
                         switch (ActivePlayerState)
                         {
                             case PlayerState.Standing:
-                                    for (int i = 0; i < blendingBones.Length; i++)
+                                for (int i = 0; i < blendingBones.Length; i++)
                                 {
                                     blendingBones[i] = Matrix.Lerp(blendingBones[i], standingBones[i], 1-percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);                             
                                 break;
                             case PlayerState.Walking:
-                                    for (int i = 0; i < blendingBones.Length; i++)
+                                for (int i = 0; i < blendingBones.Length; i++)
                                 {
                                     blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1-percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
                             case PlayerState.Swordfighting:
-                                    for (int i = 0; i < blendingBones.Length; i++)
+                                for (int i = 0; i < blendingBones.Length; i++)
                                 {
                                     blendingBones[i] = Matrix.Lerp(blendingBones[i], swordfightingBones[i], 1-percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
                             case PlayerState.Jumping:
-                                    for (int i = 0; i < blendingBones.Length; i++)
+                                for (int i = 0; i < blendingBones.Length; i++)
                                 {
                                     blendingBones[i] = Matrix.Lerp(blendingBones[i], jumpingBones[i], 1-percentageOfBlending);
                                 }
@@ -684,7 +695,16 @@ namespace EmodiaQuest.Core
                    }
 
                 }
-                mesh.Draw();
+                Console.WriteLine(mesh.Name);
+                if (mesh.Name == "Stock" && activeWeapon != Weapon.Stock)
+                {
+
+                }
+                else if (mesh.Name == "Hammer" && activeWeapon != Weapon.Hammer)
+                {
+
+                }
+                else mesh.Draw();
             }
         }
 
