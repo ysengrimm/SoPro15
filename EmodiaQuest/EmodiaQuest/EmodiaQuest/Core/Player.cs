@@ -40,14 +40,19 @@ namespace EmodiaQuest.Core
         // The Bone Matrices for each animation
         private Matrix[] blendingBones, standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones;
         // The playerState, which will be needed to update the right animation
-        public PlayerState PlayerState = PlayerState.Standing;
+        public PlayerState ActivePlayerState = PlayerState.Standing;
         public PlayerState LastPlayerState = PlayerState.Standing;
+        public PlayerState TempPlayerState = PlayerState.Standing;
         private WorldState activeWorld = WorldState.Safeworld;
         private float standingDuration;
         private float walkingDuration;
         private float jumpingDuration;
         private float swordFightingDuration;
         private float stateTime;
+        private float fixedBlendDuration;
+        // public for Netstat
+        public float activeBlendTime;
+        public bool isBlending;
 
         // Playerstats
         public float Hp;
@@ -142,7 +147,7 @@ namespace EmodiaQuest.Core
             //standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
             walkingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
             //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
-            jumpingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
+            jumpingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
             //jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
             swordfightingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
 
@@ -167,7 +172,7 @@ namespace EmodiaQuest.Core
             
             standingC = standingSD.AnimationClips["idle_stand"];
             walkingC = walkingSD.AnimationClips["walk"];
-            jumpingC = jumpingSD.AnimationClips["walk"];
+            jumpingC = jumpingSD.AnimationClips["swordFighting"];
             swordfightingC = swordfightingSD.AnimationClips["swordFighting"];
             
             //Safty Start Animations
@@ -188,7 +193,8 @@ namespace EmodiaQuest.Core
             Console.WriteLine("WalkingKeyframes: " + walkingC.Keyframes.Count);
             */
             stateTime = 0;
-
+            // DUration of Blending Animations in milliseconds
+            fixedBlendDuration = 500;
         }
 
         public void Update(GameTime gameTime, MouseState mouseState)
@@ -284,35 +290,43 @@ namespace EmodiaQuest.Core
             
             
             //update playerState
-            if ( mouseState.LeftButton == ButtonState.Pressed)
+            if ( mouseState.LeftButton == ButtonState.Pressed && stateTime <= 0)
             {
-                PlayerState = PlayerState.Swordfighting;
+                ActivePlayerState = PlayerState.Swordfighting;
                 stateTime = swordFightingDuration;
+                fixedBlendDuration = 100;
             }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 0)
             {
-                PlayerState = PlayerState.WalkJumping;
-                stateTime = standingDuration;
+                ActivePlayerState = PlayerState.WalkJumping;
+                fixedBlendDuration = 250;
             }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 0)
             {
-                PlayerState = PlayerState.Walking;
-                stateTime = walkingDuration/2f;
+                ActivePlayerState = PlayerState.Walking;
+                fixedBlendDuration = 250;
             }
-            else if(Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 10)
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 0)
             {
-                PlayerState = PlayerState.Jumping;
-                stateTime = jumpingDuration;
+                ActivePlayerState = PlayerState.Jumping;
+                fixedBlendDuration = 250;
             }
-            else if(lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
+            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
             {
-                PlayerState = PlayerState.Standing;
-                stateTime = standingDuration;
+                ActivePlayerState = PlayerState.Standing;
+                fixedBlendDuration = 250;
             }
-            stateTime -= gameTime.ElapsedGameTime.Milliseconds;
+
+
+            if(stateTime >0)
+            {
+                stateTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+
 
             //update only the animation which is required if the changed Playerstate
-            switch(PlayerState)
+            //Update the active animation
+            switch(ActivePlayerState)
             {
                 case PlayerState.Standing:
                     standingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
@@ -332,7 +346,59 @@ namespace EmodiaQuest.Core
                     break;
             }
 
-            LastPlayerState = PlayerState;
+            // Secure, that the last Playerstate is always a other Playerstate, than the acutal
+            if(ActivePlayerState != TempPlayerState)
+            {
+                LastPlayerState = TempPlayerState;
+                // When the playerState changes, we need to blend
+                isBlending = true;
+                activeBlendTime = fixedBlendDuration;
+            }
+
+
+            // if the Time for blending is over, set it on false;
+            if(activeBlendTime <= 0)
+            {
+                isBlending = false;
+                if(activeBlendTime < 0)
+                {
+                    activeBlendTime = 0;
+                }
+            }
+            else
+            {
+                // update the blendDuration
+                activeBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+
+            // Update the last animation (only 500 milliseconds after the last changing state required)
+            if (isBlending == true)
+            {
+                switch (LastPlayerState)
+                {
+                    case PlayerState.Standing:
+                        standingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Walking:
+                        walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Jumping:
+                        jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Swordfighting:
+                        swordfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.WalkJumping:
+                        walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                }
+            }
+
+
+            //Update Temp PlayerState
+            TempPlayerState = ActivePlayerState;
+
 
             // interaction
             int gridBlockSize = 10;
@@ -478,7 +544,7 @@ namespace EmodiaQuest.Core
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             // Bone updates for each required animation   
-            switch (PlayerState)
+            switch (ActivePlayerState)
             {
                 case PlayerState.Standing:
                     standingBones = standingAP.GetSkinTransforms();
@@ -494,8 +560,30 @@ namespace EmodiaQuest.Core
                     break;
                 case PlayerState.WalkJumping:
                     walkingBones = walkingAP.GetSkinTransforms();
-                    jumpingBones = jumpingAP.GetSkinTransforms();
                     break;
+            }
+
+            if (isBlending == true)
+            {
+                // Bone updates for each required animation for blending 
+                switch (LastPlayerState)
+                {
+                    case PlayerState.Standing:
+                        blendingBones = standingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Walking:
+                        blendingBones = walkingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Swordfighting:
+                        blendingBones = swordfightingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Jumping:
+                        blendingBones = jumpingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.WalkJumping:
+                        blendingBones = walkingAP.GetSkinTransforms();
+                        break;
+                }
             }
 
             foreach (ModelMesh mesh in playerModel.Meshes)
@@ -506,35 +594,76 @@ namespace EmodiaQuest.Core
                     //Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
                     
-                    switch (PlayerState)
+                    if (isBlending == true)
                     {
-                        case PlayerState.Standing:
-                            effect.SetBoneTransforms(standingBones);
-                            break;
-                        case PlayerState.Walking:
-                            effect.SetBoneTransforms(walkingBones);
-                            break;
-                        case PlayerState.Swordfighting:
-                            effect.SetBoneTransforms(swordfightingBones);
-                            break;
-                        case PlayerState.Jumping:
-                            effect.SetBoneTransforms(jumpingBones);
-                            break;
-                        case PlayerState.WalkJumping:                          
-                            blendingBones = walkingBones;
-                            for (int i = 0; i < walkingBones.Length; i++)
-                            {
-                                blendingBones[i] = Matrix.Multiply(walkingBones[i], jumpingBones[i]);
-                            }
-                            effect.SetBoneTransforms(blendingBones);                           
-                            break;
+                        float percentageOfBlending = activeBlendTime / fixedBlendDuration;
+                        switch (ActivePlayerState)
+                        {
+                            case PlayerState.Standing:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], standingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);                             
+                                break;
+                            case PlayerState.Walking:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                            case PlayerState.Swordfighting:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], swordfightingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                            case PlayerState.Jumping:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], jumpingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                            case PlayerState.WalkJumping:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                        }
                     }
+                    else
+                    {
+                        switch (ActivePlayerState)
+                        {
+                            case PlayerState.Standing:
+                                effect.SetBoneTransforms(standingBones);
+                                break;
+                            case PlayerState.Walking:
+                                effect.SetBoneTransforms(walkingBones);
+                                break;
+                            case PlayerState.Swordfighting:
+                                effect.SetBoneTransforms(swordfightingBones);
+                                break;
+                            case PlayerState.Jumping:
+                                effect.SetBoneTransforms(jumpingBones);
+                                break;
+                            case PlayerState.WalkJumping:
+                                effect.SetBoneTransforms(walkingBones);
+                                break;
+                        }
+                    }
+                    
 
-                    effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateRotationX((float)(-0.5*Math.PI)) * Matrix.CreateRotationY(Angle)  * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
-                    //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
-                    effect.View = view;
-                    effect.Projection = projection;
+                   effect.EnableDefaultLighting();
+                   effect.World = Matrix.CreateRotationX((float)(-0.5*Math.PI)) * Matrix.CreateRotationY(Angle)  * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                   //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                   effect.View = view;
+                   effect.Projection = projection;
 
                    effect.SpecularColor = new Vector3(0.25f);
                    effect.SpecularPower = 16;
