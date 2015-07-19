@@ -42,6 +42,9 @@ namespace EmodiaQuest.Core.NPCs
         public float Armor;
         public float MovementSpeed;
         public float TrackingRadius;
+        public float CircleCollision;
+
+        private float gridSize = Settings.Instance.GridSize;
 
         public bool IsAlive { get; set; }
 
@@ -56,6 +59,7 @@ namespace EmodiaQuest.Core.NPCs
             this.TrackingRadius = 30f;
             MovementSpeed = 0.25f;
             this.enemyAi = new Ai(position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+            CircleCollision = 1.5f;
         }
 
 
@@ -76,35 +80,46 @@ namespace EmodiaQuest.Core.NPCs
         {
             oldPosition = Position;
 
-            enemyAi.updateAi(Position);;
+            enemyAi.updateAi(Position);
             Vector2 newPosition = Vector2.Add(enemyAi.TrackingDirection, Position);
 
-            //all this should be tested
-            //if next part of grid contains less then 5 enemies:
-            //let Enymy walk
-            //remove from old List
-            //add to new List
-            // TODO: /10 shouldn't be a magic number
-            
             // object collision
-            if (Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.CollisionColors, 2.0f))
+            if (IsAlive && Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.CollisionColors, 2.0f))
             {
-                if (IsAlive && currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5 && !onSameGridElement(newPosition, Player.Instance.Position))  //if next part of grid contains less then 5 Enemies
+                if (currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5 && !onSameGridElement(newPosition, Player.Instance.Position))
                 {
                     Position.Y = newPosition.Y;
-                    currentEnvironment.enemyArray[(int)Math.Round(oldPosition.X / 10), (int)Math.Round(oldPosition.Y / 10)].Remove(this);
-                    currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
-                }
-                
-            }
-            if (Color.White == collHandler.GetCollisionColor(new Vector2(newPosition.X, Position.Y), collHandler.Controller.CollisionColors, 2.0f))
-            {
-                if (IsAlive && currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5 && !onSameGridElement(newPosition, Player.Instance.Position))  //if next part of grid contains less then 5 Enemies
-                {
                     Position.X = newPosition.X;
+
+                    Vector2 currentGridPos = new Vector2((float)Math.Round(newPosition.X / gridSize), (float)Math.Round(newPosition.Y / gridSize));
+                    for (int i = -1; i < 2; i++)
+                    {
+                        for (int j = -1; j < 2; j++)
+                        {
+                            List<Enemy> currentBlockEnemyList = currentEnvironment.enemyArray[(int)currentGridPos.X + i, (int)currentGridPos.Y + j];
+                            if (currentBlockEnemyList.Count <= 0) continue;
+                            foreach (var enemy in currentBlockEnemyList)
+                            {
+                                if (this != enemy)
+                                {
+                                    var dx = (Position.X - enemy.Position.X) * (Position.X - enemy.Position.X);
+                                    var dy = (Position.Y - enemy.Position.Y) * (Position.Y - enemy.Position.Y);
+                                    if (Math.Sqrt(dx + dy) < (CircleCollision + enemy.CircleCollision))
+                                    {
+                                        Position.X = oldPosition.X;
+                                        Position.Y = oldPosition.Y;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+
                     currentEnvironment.enemyArray[(int)Math.Round(oldPosition.X / 10), (int)Math.Round(oldPosition.Y / 10)].Remove(this);
                     currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
                 }
+
+                
             }
         }
 
