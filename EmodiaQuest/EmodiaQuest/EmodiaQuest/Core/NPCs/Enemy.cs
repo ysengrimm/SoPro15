@@ -98,6 +98,17 @@ namespace EmodiaQuest.Core.NPCs
                         {
                             List<Enemy> currentBlockEnemyList = currentEnvironment.enemyArray[(int)currentGridPos.X + i, (int)currentGridPos.Y + j];
                             if (currentBlockEnemyList.Count <= 0) continue;
+
+                            // enemy - player collision
+                            var pdx = (Position.X - Player.Instance.Position.X) * (Position.X - Player.Instance.Position.X);
+                            var pdy = (Position.Y - Player.Instance.Position.Y) * (Position.Y - Player.Instance.Position.Y);
+                            if (Math.Sqrt(pdx + pdy) < (CircleCollision + Player.Instance.CollisionRadius))
+                            {
+                                Position.X = oldPosition.X;
+                                Position.Y = oldPosition.Y;
+                            }
+
+                            // enemy - enemy collision
                             foreach (var enemy in currentBlockEnemyList)
                             {
                                 if (this != enemy)
