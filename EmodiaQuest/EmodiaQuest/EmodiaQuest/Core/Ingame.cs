@@ -87,8 +87,7 @@ namespace EmodiaQuest.Core
             Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 2.5f, Player.Instance.Position.Y), Vector3.UnitY);
 
             // Playerupdate
-            MouseState mState = Mouse.GetState();
-            Player.Instance.Update(gameTime, mState);
+            Player.Instance.Update(gameTime);
 
             // Decides, which world should be updated
             switch (ActiveWorld)
@@ -102,7 +101,7 @@ namespace EmodiaQuest.Core
             }
 
             // Netstat update
-            EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.PlayerState.ToString());
+            EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.ActivePlayerState.ToString(), Player.Instance.LastPlayerState.ToString());
             // TODO: HUD update (playerhealth etc.)
 
         }

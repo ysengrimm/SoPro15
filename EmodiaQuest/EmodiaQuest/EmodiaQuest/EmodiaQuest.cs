@@ -132,7 +132,7 @@ namespace EmodiaQuest
                     Ingame.Instance.UpdateIngame(gameTime);
 
                     // HUD/NetStat
-                    EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.PlayerState.ToString());
+                    EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.ActivePlayerState.ToString(), Player.Instance.LastPlayerState.ToString());
                     EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.update();
                     break;
                 case GameStates_Overall.OptionsScreen:

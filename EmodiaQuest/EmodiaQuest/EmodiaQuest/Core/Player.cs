@@ -25,6 +25,23 @@ namespace EmodiaQuest.Core
         public float MovementOffset, ItemOffset;
         public float Angle;
 
+        // Collision
+        public float CollisionRadius;
+        private float gridSize = Settings.Instance.GridSize;
+
+        // click handling
+        private MouseState lastMouseState;
+        private MouseState currentMouseState;
+
+        // Playerstats
+        public float Hp;
+        public float Armor;
+        public float PlayerSpeed;
+        public float RotationSpeed;
+
+        /**
+         * Animation and Model
+        **/
         //Textures for the Model
         private Texture2D defaultBodyTex;
         private Texture2D defaultHairTex;
@@ -40,20 +57,20 @@ namespace EmodiaQuest.Core
         // The Bone Matrices for each animation
         private Matrix[] blendingBones, standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones;
         // The playerState, which will be needed to update the right animation
-        public PlayerState PlayerState = PlayerState.Standing;
+        public PlayerState ActivePlayerState = PlayerState.Standing;
         public PlayerState LastPlayerState = PlayerState.Standing;
+        public PlayerState TempPlayerState = PlayerState.Standing;
+        public Weapon activeWeapon = Weapon.Hammer;
         private WorldState activeWorld = WorldState.Safeworld;
         private float standingDuration;
         private float walkingDuration;
         private float jumpingDuration;
         private float swordFightingDuration;
         private float stateTime;
-
-        // Playerstats
-        public float Hp;
-        public float Armor;
-        public float PlayerSpeed;
-        public float RotationSpeed;
+        private float fixedBlendDuration;
+        // public for Netstat
+        public float activeBlendTime;
+        public bool isBlending;
 
         // Properties
         private Vector2 windowSize;
@@ -93,16 +110,12 @@ namespace EmodiaQuest.Core
             set { gameEnv = value; }
         }
 
-        private Player()
-        {
-       
-        }
+        private Player() { }
 
         public static Player Instance
         {
             get { return _instance ?? (_instance = new Player()); }
         }
-
 
         public void LoadContent()
         {
@@ -116,8 +129,12 @@ namespace EmodiaQuest.Core
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
-
             Angle = 0;
+            CollisionRadius = 1.5f;
+
+            /**
+            * Animation and Model
+            **/
 
             //playerModel = contentMngr.Load<Model>("fbxContent/player/MainChar_run_34f");
             /*
@@ -142,7 +159,7 @@ namespace EmodiaQuest.Core
             //standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
             walkingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
             //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
-            jumpingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
+            jumpingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
             //jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
             swordfightingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
 
@@ -167,7 +184,7 @@ namespace EmodiaQuest.Core
             
             standingC = standingSD.AnimationClips["idle_stand"];
             walkingC = walkingSD.AnimationClips["walk"];
-            jumpingC = jumpingSD.AnimationClips["walk"];
+            jumpingC = jumpingSD.AnimationClips["swordFighting"];
             swordfightingC = swordfightingSD.AnimationClips["swordFighting"];
             
             //Safty Start Animations
@@ -188,22 +205,46 @@ namespace EmodiaQuest.Core
             Console.WriteLine("WalkingKeyframes: " + walkingC.Keyframes.Count);
             */
             stateTime = 0;
-
+            // DUration of Blending Animations in milliseconds
+            fixedBlendDuration = 500;
         }
 
-        public void Update(GameTime gameTime, MouseState mouseState)
+        public void Update(GameTime gameTime)
         {
+            // update weapon
+            if(Keyboard.GetState().IsKeyDown(Keys.D1))
+            {
+                activeWeapon = Weapon.Stock;
+            }
+            if(Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                activeWeapon = Weapon.Hammer;
+            }
+
+            lastMouseState = currentMouseState;
+            currentMouseState = Mouse.GetState();
+
             // only set fixed mouse pos if game is in focus
             if (gameIsInFocus)
             {
                 //scale position to 0.0 to 1.0 then center the +/- change
-                Angle += (float)-(((mouseState.X / windowSize.X) - 0.5) * RotationSpeed);
+                Angle += (float)-(((currentMouseState.X / windowSize.X) - 0.5) * RotationSpeed);
                 // reset mouse position to window center
                 Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));    
             }
 
             lastPos = Position;
             movement = Position;
+
+            // running ;)
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
+            {
+                PlayerSpeed += 0.5f;
+            }
+            else
+            {
+                PlayerSpeed = Settings.Instance.PlayerSpeed;
+            }
             
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -265,7 +306,7 @@ namespace EmodiaQuest.Core
             }
             
             //Collision with Items
-            if(collisionHandler.Controller.ItemColors != null) // this is, because in a Dungeon we might don´t have a Itemmap
+            if(collisionHandler.Controller.ItemColors != null) // because in a Dungeon we might not have an Itemmap
             {
                 if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
                 {
@@ -284,35 +325,43 @@ namespace EmodiaQuest.Core
             
             
             //update playerState
-            if ( mouseState.LeftButton == ButtonState.Pressed)
+            if ( currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 0)
             {
-                PlayerState = PlayerState.Swordfighting;
+                ActivePlayerState = PlayerState.Swordfighting;
                 stateTime = swordFightingDuration;
+                fixedBlendDuration = 150;
             }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10 && Keyboard.GetState().IsKeyDown(Keys.Space))
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 0)
             {
-                PlayerState = PlayerState.WalkJumping;
-                stateTime = standingDuration;
+                ActivePlayerState = PlayerState.WalkJumping;
+                fixedBlendDuration = 250;
             }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 10)
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 0)
             {
-                PlayerState = PlayerState.Walking;
-                stateTime = walkingDuration/2f;
+                ActivePlayerState = PlayerState.Walking;
+                fixedBlendDuration = 250;
             }
-            else if(Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 10)
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 0)
             {
-                PlayerState = PlayerState.Jumping;
-                stateTime = jumpingDuration;
+                ActivePlayerState = PlayerState.Jumping;
+                fixedBlendDuration = 250;
             }
-            else if(lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
+            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
             {
-                PlayerState = PlayerState.Standing;
-                stateTime = standingDuration;
+                ActivePlayerState = PlayerState.Standing;
+                fixedBlendDuration = 250;
             }
-            stateTime -= gameTime.ElapsedGameTime.Milliseconds;
+
+
+            if(stateTime >0)
+            {
+                stateTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+
 
             //update only the animation which is required if the changed Playerstate
-            switch(PlayerState)
+            //Update the active animation
+            switch(ActivePlayerState)
             {
                 case PlayerState.Standing:
                     standingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
@@ -332,17 +381,89 @@ namespace EmodiaQuest.Core
                     break;
             }
 
-            LastPlayerState = PlayerState;
+            // Secure, that the last Playerstate is always a other Playerstate, than the acutal
+            if(ActivePlayerState != TempPlayerState)
+            {
+                LastPlayerState = TempPlayerState;
+                // When the playerState changes, we need to blend
+                isBlending = true;
+                activeBlendTime = fixedBlendDuration;
+            }
+
+
+            // if the Time for blending is over, set it on false;
+            if(activeBlendTime <= 0)
+            {
+                isBlending = false;
+                if(activeBlendTime < 0)
+                {
+                    activeBlendTime = 0;
+                }
+            }
+            else
+            {
+                // update the blendDuration
+                activeBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+
+            // Update the last animation (only 500 milliseconds after the last changing state required)
+            if (isBlending == true)
+            {
+                switch (LastPlayerState)
+                {
+                    case PlayerState.Standing:
+                        standingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Walking:
+                        walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Jumping:
+                        jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Swordfighting:
+                        swordfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.WalkJumping:
+                        walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                }
+            }
+
+
+            //Update Temp PlayerState
+            TempPlayerState = ActivePlayerState;
 
             // interaction
-            int gridBlockSize = 10;
             Vector2 frontDirection = new Vector2((float) Math.Round(Math.Sin(Angle)), (float) Math.Round(Math.Cos(Angle)));
-            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridBlockSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridBlockSize) + frontDirection.Y));
+            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridSize) + frontDirection.Y));
 
             // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
             // only == 2 in edges, else normal 3 in a row
             if(Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
+                // collision with enemies
+                Vector2 currentGridPos = new Vector2((float)Math.Round(position.X / gridSize), (float)Math.Round(position.Y / gridSize));
+                for (int i = -1; i < 2; i++)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)currentGridPos.X + i, (int)currentGridPos.Y + j];
+                        if (currentBlockEnemyList.Count <= 0) continue;
+                        foreach (var enemy in currentBlockEnemyList)
+                        {
+                            var dx = (Position.X - enemy.Position.X) * (Position.X - enemy.Position.X);
+                            var dy = (Position.Y - enemy.Position.Y) * (Position.Y - enemy.Position.Y);
+                            if (Math.Sqrt(dx + dy) < (CollisionRadius + enemy.CircleCollision))
+                            {
+                                position.X = lastPos.X;
+                                position.Y = lastPos.Y;
+                            }
+                        }
+                    }
+                }
+
+                // interaction checks
                 if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
                 {
                     // top left 
@@ -356,7 +477,7 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (mouseState.LeftButton == ButtonState.Pressed)
+                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
                                         currentClosestEnemy.SetAsDead();
                                     }
@@ -374,7 +495,7 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (mouseState.LeftButton == ButtonState.Pressed)
+                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
                                         currentClosestEnemy.SetAsDead();
                                     }
@@ -392,7 +513,7 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (mouseState.LeftButton == ButtonState.Pressed)
+                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
                                         currentClosestEnemy.SetAsDead();
                                     }
@@ -410,7 +531,7 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (mouseState.LeftButton == ButtonState.Pressed)
+                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
                                         currentClosestEnemy.SetAsDead();
                                     }
@@ -431,7 +552,7 @@ namespace EmodiaQuest.Core
                             if (currentBlockEnemyList.Count > 0)
                             {
                                 Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                 {
                                     currentClosestEnemy.SetAsDead();
                                 }
@@ -446,7 +567,7 @@ namespace EmodiaQuest.Core
                             if (currentBlockEnemyList.Count > 0)
                             {
                                 Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                 {
                                     currentClosestEnemy.SetAsDead();
                                 }
@@ -478,7 +599,7 @@ namespace EmodiaQuest.Core
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             // Bone updates for each required animation   
-            switch (PlayerState)
+            switch (ActivePlayerState)
             {
                 case PlayerState.Standing:
                     standingBones = standingAP.GetSkinTransforms();
@@ -494,8 +615,30 @@ namespace EmodiaQuest.Core
                     break;
                 case PlayerState.WalkJumping:
                     walkingBones = walkingAP.GetSkinTransforms();
-                    jumpingBones = jumpingAP.GetSkinTransforms();
                     break;
+            }
+
+            if (isBlending == true)
+            {
+                // Bone updates for each required animation for blending 
+                switch (LastPlayerState)
+                {
+                    case PlayerState.Standing:
+                        blendingBones = standingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Walking:
+                        blendingBones = walkingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Swordfighting:
+                        blendingBones = swordfightingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Jumping:
+                        blendingBones = jumpingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.WalkJumping:
+                        blendingBones = walkingAP.GetSkinTransforms();
+                        break;
+                }
             }
 
             foreach (ModelMesh mesh in playerModel.Meshes)
@@ -506,35 +649,76 @@ namespace EmodiaQuest.Core
                     //Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
                     
-                    switch (PlayerState)
+                    if (isBlending)
                     {
-                        case PlayerState.Standing:
-                            effect.SetBoneTransforms(standingBones);
-                            break;
-                        case PlayerState.Walking:
-                            effect.SetBoneTransforms(walkingBones);
-                            break;
-                        case PlayerState.Swordfighting:
-                            effect.SetBoneTransforms(swordfightingBones);
-                            break;
-                        case PlayerState.Jumping:
-                            effect.SetBoneTransforms(jumpingBones);
-                            break;
-                        case PlayerState.WalkJumping:                          
-                            blendingBones = walkingBones;
-                            for (int i = 0; i < walkingBones.Length; i++)
-                            {
-                                blendingBones[i] = Matrix.Multiply(walkingBones[i], jumpingBones[i]);
-                            }
-                            effect.SetBoneTransforms(blendingBones);                           
-                            break;
+                        float percentageOfBlending = activeBlendTime / fixedBlendDuration;
+                        switch (ActivePlayerState)
+                        {
+                            case PlayerState.Standing:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], standingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);                             
+                                break;
+                            case PlayerState.Walking:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                            case PlayerState.Swordfighting:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], swordfightingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                            case PlayerState.Jumping:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], jumpingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                            case PlayerState.WalkJumping:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1-percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                        }
                     }
+                    else
+                    {
+                        switch (ActivePlayerState)
+                        {
+                            case PlayerState.Standing:
+                                effect.SetBoneTransforms(standingBones);
+                                break;
+                            case PlayerState.Walking:
+                                effect.SetBoneTransforms(walkingBones);
+                                break;
+                            case PlayerState.Swordfighting:
+                                effect.SetBoneTransforms(swordfightingBones);
+                                break;
+                            case PlayerState.Jumping:
+                                effect.SetBoneTransforms(jumpingBones);
+                                break;
+                            case PlayerState.WalkJumping:
+                                effect.SetBoneTransforms(walkingBones);
+                                break;
+                        }
+                    }
+                    
 
-                    effect.EnableDefaultLighting();
-                    effect.World = Matrix.CreateRotationX((float)(-0.5*Math.PI)) * Matrix.CreateRotationY(Angle)  * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
-                    //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
-                    effect.View = view;
-                    effect.Projection = projection;
+                   effect.EnableDefaultLighting();
+                   effect.World = Matrix.CreateRotationX((float)(-0.5*Math.PI)) * Matrix.CreateRotationY(Angle)  * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                   //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                   effect.View = view;
+                   effect.Projection = projection;
 
                    effect.SpecularColor = new Vector3(0.25f);
                    effect.SpecularPower = 16;
@@ -555,7 +739,16 @@ namespace EmodiaQuest.Core
                    }
 
                 }
-                mesh.Draw();
+                Console.WriteLine(mesh.Name);
+                if (mesh.Name == "Stock" && activeWeapon != Weapon.Stock)
+                {
+
+                }
+                else if (mesh.Name == "Hammer" && activeWeapon != Weapon.Hammer)
+                {
+
+                }
+                else mesh.Draw();
             }
         }
 
