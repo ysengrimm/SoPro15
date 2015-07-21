@@ -218,15 +218,15 @@ namespace EmodiaQuest.Core.GUI
                         else if (sliderhandle >= sl.SliderMaxX)
                             sl.SliderPosX = sl.SliderMaxX;
 
-                        int testValue = (int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX);
-                        float factorXY = sl.MaxValue - sl.MinValue;
+                        int eValue = (int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX);
+                        float factorXY = 1 / (float)(sl.MaxValue - sl.MinValue);
 
                         int sliderWidth = sl.SliderMaxX - sl.SliderMinX;
                         //Console.WriteLine("here:");
                         //Console.WriteLine(factorXY);
                         //Console.WriteLine(sliderWidth);
                         //Console.WriteLine(sl.SliderMinX);
-                        sl.SliderPosX = (int)(sl.SliderMinX + sliderWidth * (1 / factorXY) * (float)(testValue - sl.MinValue));
+                        sl.SliderPosX = (int)(sl.SliderMinX + sliderWidth * (factorXY) * (float)(eValue - sl.MinValue));
                         //if (sl.SliderPosX <= sl.SliderMinX)
                         //    sl.SliderPosX = sl.SliderMinX;
                         //else if (sl.SliderPosX >= sl.SliderMaxX)
@@ -241,9 +241,18 @@ namespace EmodiaQuest.Core.GUI
                     sl.Slider_State = SliderState_GUI.Normal;
                     //Console.WriteLine(monoFont_small.MeasureString("A").Y);
                     //Console.WriteLine(monoFont_big.MeasureString("MAIN MENU").X);
+                    //Console.WriteLine("Hier:");
+                    //Console.WriteLine(sl.MaxValue);
+                    //Console.WriteLine(sl.SliderPosX);
+                    //Console.WriteLine(sl.SliderMaxX);
                     int eValue = (int)((sl.SliderPosX - sl.SliderMinX) / sl.FactorX);
-                    //if (eValue > sl.MaxValue)
-                    //    eValue = sl.MaxValue;
+                    if (sl.SliderPosX <= sl.SliderMinX)
+                        eValue = sl.MinValue;
+                    // That's a little cheat right there, but who cares. It works just fine. (The +1)
+                    if (sl.SliderPosX + 1 >= sl.SliderMaxX)
+                        eValue = sl.MaxValue;
+                    //Console.WriteLine(eValue);
+                    sl.CurrentValue = eValue;
                     if (OnSliderValue != null)
                     {
                         OnSliderValue(this, new SliderEvent_GUI(eValue, sl.Function));
@@ -450,16 +459,16 @@ namespace EmodiaQuest.Core.GUI
             pimages.Add(new PlainImage_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, plTexture));
         }
 
-        public void addSlider(float xPos, float yPos, float width, float height, int minValue, int maxValue, string name)
+        public void addSlider(float xPos, float yPos, float width, float height, int minValue, int maxValue, int startValue, string name)
         {
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
-            sliders.Add(new Slider_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, minValue, maxValue, name));
+            sliders.Add(new Slider_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, minValue, maxValue, startValue, name));
         }
 
-        public void addLabel(float xPos, float yPos, float height, string labelFont, string labelText, bool centered)
+        public void addLabel(float xPos, float yPos, float height, string labelFont, string labelText, string labelName, bool centered)
         {
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
@@ -493,7 +502,7 @@ namespace EmodiaQuest.Core.GUI
             }
 
             //labels.Add(new Label_GUI(xPosAbs, yPosAbs, 0, heightAbs, monoFont_big, labelText, textScaleFactor, centered));
-            labels.Add(new Label_GUI(xPos, yPos, xPosAbs, yPosAbs, 0, height, 0, heightAbs, lFont, labelText, textScaleFactor, centered));
+            labels.Add(new Label_GUI(xPos, yPos, xPosAbs, yPosAbs, 0, height, 0, heightAbs, lFont, labelText, labelName, textScaleFactor, centered));
 
         }
         public void addLabel(float xPos, float yPos, float width, float height, string labelFont, string labelText, string labelName)
@@ -544,6 +553,34 @@ namespace EmodiaQuest.Core.GUI
             foreach (Label_GUI ls in labels.Where(n => n.LabelName == labelName))
             {
                 ls.LabelText = newLabeltext;
+                if (ls.Width < 0.01f)
+                {
+                    ls.XPos = (int)(MainWindowSize.X * ls.XPosRelative * 0.01);
+                    ls.YPos = (int)(MainWindowSize.Y * ls.YPosRelative * 0.01);
+                    ls.Height = (int)(MainWindowSize.Y * ls.HeightRelative * 0.01);
+
+                    Vector2 spriteFontSize = ls.SpriteFont.MeasureString(ls.LabelText);
+
+                    ls.TextScaleFactor = (MainWindowSize.Y * ls.HeightRelative * 0.01f) / spriteFontSize.Y;
+                    if (ls.Centered)
+                    {
+                        ls.XPos -= (int)(spriteFontSize.X * ls.TextScaleFactor / 2);
+                    }
+                }
+                else
+                {
+                    ls.XPos = (int)(MainWindowSize.X * ls.XPosRelative * 0.01);
+                    ls.YPos = (int)(MainWindowSize.Y * ls.YPosRelative * 0.01);
+                    ls.Width = (int)(MainWindowSize.X * ls.WidthRelative * 0.01);
+                    ls.Height = (int)(MainWindowSize.Y * ls.HeightRelative * 0.01);
+
+                    Vector2 spriteFontSize = ls.SpriteFont.MeasureString(ls.LabelText);
+
+                    ls.TextScaleFactor = (MainWindowSize.Y * ls.HeightRelative * 0.01f * 0.8f) / spriteFontSize.Y;
+
+                    ls.TextXPos = (int)(((MainWindowSize.X * ls.XPosRelative * 0.01f)) + (MainWindowSize.X * ls.WidthRelative * 0.01f / 2) - (ls.TextScaleFactor * spriteFontSize.X / 2));
+                    ls.TextYPos = (int)(((MainWindowSize.Y * ls.YPosRelative * 0.01f)) + (MainWindowSize.Y * ls.HeightRelative * 0.01f / 2) - ((ls.TextScaleFactor - 0.15f) * spriteFontSize.Y / 2));
+                }
             }
         }
 

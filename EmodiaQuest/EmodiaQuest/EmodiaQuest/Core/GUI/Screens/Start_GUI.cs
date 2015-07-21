@@ -57,8 +57,8 @@ namespace EmodiaQuest.Core.GUI.Screens
         
             //this.platform.addPlainText(50.0f, 20.0f, "dice_big", "EMODIA", true);
             //this.platform.addPlainText(50.0f, 20.0f, "dice_big", "\nQUEST", true);
-            this.platform.addLabel(50, 15, 25, "dice_big", "EMODIA", true);
-            this.platform.addLabel(50, 40, 25, "dice_big", "QUEST", true);
+            this.platform.addLabel(50, 15, 25, "dice_big", "EMODIA", "headline1", true);
+            this.platform.addLabel(50, 40, 25, "dice_big", "QUEST", "headline2", true);
             
 
             //EventHandler;

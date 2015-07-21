@@ -12,15 +12,23 @@ namespace EmodiaQuest.Core.GUI.Screens
     class Options_GUI
     {
         //EventHandler
-        static void SliderEventValue(object source, SliderEvent_GUI e)
+        void SliderEventValue(object source, SliderEvent_GUI e)
         {
             switch (e.Function)
             {
                 case "volumeChange":
-                    EmodiaQuest.Core.Settings.Instance.Volume = e.SliderValue/100;
+                    EmodiaQuest.Core.Settings.Instance.Volume = (float)(e.SliderValue)/100;
+                    this.platform.updateLabel("volume", e.SliderValue.ToString());
                     break;
                 case "resolutionChange":
                     EmodiaQuest.Core.Settings.Instance.Resolution = EmodiaQuest.Core.Settings.PossibleResolutions[e.SliderValue];
+                    int resX = (int)EmodiaQuest.Core.Settings.Instance.Resolution.X;
+                    int resY = (int)EmodiaQuest.Core.Settings.Instance.Resolution.Y;
+                    this.platform.updateLabel("resolution", resX + " x " + resY);
+                    GraphicsCopy.PreferredBackBufferWidth = resX;
+                    GraphicsCopy.PreferredBackBufferHeight = resY;
+                    GraphicsCopy.ApplyChanges();
+                    EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -28,7 +36,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             }
         }
 
-        static void ButtonEventValue(object source, ButtonEvent_GUI e)
+        void ButtonEventValue(object source, ButtonEvent_GUI e)
         {
             switch (e.ButtonFunction)
             {
@@ -59,6 +67,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
 
         private Platform_GUI platform = new Platform_GUI();
+        public GraphicsDeviceManager GraphicsCopy { get; set; }
 
         public void loadContent(ContentManager Content)
         {
@@ -70,10 +79,13 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.setBackground(Content, "Content_GUI/menu_background");
 
             //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "OPTIONS MENU", true);
-            this.platform.addLabel(50, 10, 18, "dice_big", "Options", true);
+            this.platform.addLabel(50, 10, 18, "dice_big", "Options", "Options", true);
 
-            this.platform.addSlider(35, 50, 30, 8, 0, 100, "volumeChange");
-            this.platform.addSlider(35, 40, 30, 8, 0, 2, "resolutionChange");
+            this.platform.addSlider(20, 40, 30, 8, 0, 2, 1, "resolutionChange");
+            this.platform.addSlider(20, 50, 30, 8, 0, 100, 100, "volumeChange");            
+
+            this.platform.addLabel(60, 40, 30, 8, "monoFont_small", "res1", "resolution");
+            this.platform.addLabel(60, 50, 30, 8, "monoFont_small", "100", "volume");
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Main Menu");
@@ -82,8 +94,8 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.addPlainImage(10, 10, 30, 30, "HUD_small");
 
             //EventHandler;
-            platform.OnSliderValue += new GUI_Delegate_Slider(SliderEventValue);
-            platform.OnButtonValue += new GUI_Delegate_Button(ButtonEventValue);
+            platform.OnSliderValue += new GUI_Delegate_Slider(this.SliderEventValue);
+            platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
         }
 
 

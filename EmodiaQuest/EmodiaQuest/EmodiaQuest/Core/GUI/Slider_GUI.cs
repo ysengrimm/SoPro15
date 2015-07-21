@@ -34,7 +34,7 @@ namespace EmodiaQuest.Core.GUI
 
         private SliderState_GUI slider_State = SliderState_GUI.Normal;
 
-        public Slider_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, int minValue, int maxValue, string function)
+        public Slider_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, int minValue, int maxValue, int currentValue, string function)
         {
             this.XPosRelative = xPosRelative;
             this.YPosRelative = yPosRelative;
@@ -47,6 +47,7 @@ namespace EmodiaQuest.Core.GUI
             this.CurrentValue = minValue;
             this.MinValue = minValue;
             this.MaxValue = maxValue;
+            this.CurrentValue = currentValue;
             this.Function = function;
             setSliderStartPosition(xPos, yPos, width, height);
         }
@@ -67,10 +68,17 @@ namespace EmodiaQuest.Core.GUI
 
             this.SliderMinX = SliderPosX;
             //this.SliderMaxX = this.XPos + this.Width - SliderWidth - SliderWidth / 4;
-            this.SliderMaxX = this.XPos + this.Width - (int)(this.Width * 0.02) - SliderWidth;
+            this.SliderMaxX = XPos + Width - (int)(Width * 0.02) - SliderWidth;
 
             // For each subtraction to get a width, you need to add one!
-            this.FactorX = (SliderMaxX-SliderMinX+1) / (float)(MaxValue - MinValue + 1);            
+            this.FactorX = (SliderMaxX-SliderMinX+1) / (float)(MaxValue - MinValue + 1);   
+         
+            // TRY
+            int eValue = CurrentValue;
+            float factorXY = 1 / (float)(MaxValue - MinValue);
+
+            int sliderWidth = SliderMaxX - SliderMinX;
+            SliderPosX = (int)(SliderMinX + sliderWidth * (factorXY) * (float)(eValue - MinValue));
         }
 
         public static bool isInside(int mouse_xPos, int mouse_yPos, int slider_xPos, int slider_yPos, int slider_width, int slider_height)

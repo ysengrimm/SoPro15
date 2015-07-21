@@ -65,6 +65,7 @@ namespace EmodiaQuest
             EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.loadContent(Content);
+            EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.GraphicsCopy = graphics;
             EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.loadContent(Content);
 
             EmodiaQuest.Core.NetGraph.Instance.LoadContent(Content);
