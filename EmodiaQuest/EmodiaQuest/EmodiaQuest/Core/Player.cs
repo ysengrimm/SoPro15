@@ -25,16 +25,35 @@ namespace EmodiaQuest.Core
         public float MovementOffset, ItemOffset;
         public float Angle;
 
+        // Eventhandler
+        public event EmodiaQuest.Core.Delegates_CORE.ChangeValueDelegate OnChangeValue;
+
         // Collision
         public float CollisionRadius;
         private float gridSize = Settings.Instance.GridSize;
 
-        // click handling
+        // mouse click handling
         private MouseState lastMouseState;
         private MouseState currentMouseState;
 
+        // key click handling
+        private KeyboardState lastKeyboardState;
+        private KeyboardState currentKeyboardState;
+
         // Playerstats
-        public float Hp;
+        private float hp = 100;
+        public float Hp
+        {
+            get { return this.hp; }
+            set
+            {
+                this.hp = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(this.hp, "hp"));
+                }
+            }
+        }
         public float Armor;
         public float PlayerSpeed;
         public float RotationSpeed;
@@ -119,12 +138,15 @@ namespace EmodiaQuest.Core
 
         public void LoadContent()
         {
+            // Initialize KeyboardState
+            lastKeyboardState = Keyboard.GetState();
+
             // Initialize player stuff
             PlayerSpeed = Settings.Instance.PlayerSpeed;
             RotationSpeed = Settings.Instance.PlayerRotationSpeed;
 
             // set defaults
-            Hp = 100;
+            Hp = 100; // Settings.Instance.MaxPlayerHealth ?
             Armor = 0;
 
             MovementOffset = 2.0f;
@@ -221,8 +243,13 @@ namespace EmodiaQuest.Core
                 activeWeapon = Weapon.Hammer;
             }
 
+            //This is not save. In the very first frame, lastMouseState is undefined, since currentMouseState is undefined
+            // It just has the default-value, whenever a MouseState is declared
             lastMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
+
+            // Keyboard update. Keyboard is save
+            currentKeyboardState = Keyboard.GetState();
 
             // only set fixed mouse pos if game is in focus
             if (gameIsInFocus)
@@ -577,6 +604,15 @@ namespace EmodiaQuest.Core
 
                 }
             }
+
+            // Get Keyboard input to change overall GameState
+            if (currentKeyboardState.IsKeyDown(Keys.O) && !lastKeyboardState.IsKeyDown(Keys.O))
+            {
+                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
+            }
+
+            // Update Keyboard State
+            lastKeyboardState = currentKeyboardState;
             
         }
 

@@ -11,6 +11,11 @@ namespace EmodiaQuest.Core.GUI.Screens
 {
     class Options_GUI
     {
+
+        // key click handling
+        private KeyboardState lastKeyboardState;
+        private KeyboardState currentKeyboardState;
+
         //EventHandler
         void SliderEventValue(object source, SliderEvent_GUI e)
         {
@@ -19,16 +24,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "volumeChange":
                     EmodiaQuest.Core.Settings.Instance.Volume = (float)(e.SliderValue)/100;
                     this.platform.updateLabel("volume", e.SliderValue.ToString());
+                    GraphicsCopy.IsFullScreen = true;
+                    GraphicsCopy.ApplyChanges();
+
                     break;
                 case "resolutionChange":
                     EmodiaQuest.Core.Settings.Instance.Resolution = EmodiaQuest.Core.Settings.PossibleResolutions[e.SliderValue];
                     int resX = (int)EmodiaQuest.Core.Settings.Instance.Resolution.X;
                     int resY = (int)EmodiaQuest.Core.Settings.Instance.Resolution.Y;
                     this.platform.updateLabel("resolution", resX + " x " + resY);
+                    EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
                     GraphicsCopy.PreferredBackBufferWidth = resX;
                     GraphicsCopy.PreferredBackBufferHeight = resY;
-                    GraphicsCopy.ApplyChanges();
-                    EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
+                    GraphicsCopy.ApplyChanges();                    
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -42,6 +50,13 @@ namespace EmodiaQuest.Core.GUI.Screens
             {
                 case "changeToMainMenu":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
+                    break;
+                case "switchFullscreen":
+                    if(EmodiaQuest.Core.Settings.Instance.Fullscreen)
+                        this.platform.updateLabel("fullscreenMode", "Windowed");
+                    else
+                        this.platform.updateLabel("fullscreenMode", "Fullscreen");
+                    EmodiaQuest.Core.Settings.Instance.Fullscreen = !EmodiaQuest.Core.Settings.Instance.Fullscreen;
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -71,6 +86,9 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         public void loadContent(ContentManager Content)
         {
+            // Initialize KeyboardState
+            lastKeyboardState = Keyboard.GetState();
+
             this.platform.loadContent(Content);
 
             //Resolution
@@ -88,7 +106,12 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addLabel(60, 50, 30, 8, "monoFont_small", "100", "volume");
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
+            this.platform.addButton(20, 60, 30, 8, "switchFullscreen", "Screen Mode");
+            this.platform.addLabel(60, 60, 30, 8, "monoFont_small", "Windowed", "fullscreenMode");
+
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Main Menu");
+
+            //this.platform.addButton(35, 60, 30, 8, "nextState", "Start Game");
            // this.platform.addPlainImage
 
             //this.platform.addPlainImage(10, 10, 30, 30, "HUD_small");
@@ -101,11 +124,24 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         public void update()
         {
+            // Keyboard update. Keyboard is save
+            currentKeyboardState = Keyboard.GetState();
+
             this.platform.update();
+
+            // Get Keyboard input to change overall GameState
+            if (currentKeyboardState.IsKeyDown(Keys.O) && !lastKeyboardState.IsKeyDown(Keys.O))
+            {
+                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+            }
+
+            // Update Keyboard State
+            lastKeyboardState = currentKeyboardState;
         }
 
         public void draw(SpriteBatch spritebatch)
         {
+
             this.platform.draw(spritebatch);
         }
     }

@@ -34,6 +34,19 @@ namespace EmodiaQuest.Core
             }
         }
 
+        void IngameEventValue(object source, ChangeValueEvent e)
+        {
+            switch (e.Function)
+            {
+                case "hp":
+                    // Set MaxValue for HP-display
+                    break;
+                default:
+                    Console.WriteLine("Function name does not exist");
+                    break;
+            }
+        }
+
         public WorldState ActiveWorld;
         public ContentManager Content;
         /// <summary>
@@ -114,7 +127,7 @@ namespace EmodiaQuest.Core
                     Renderer.Instance.DrawSafeWorld(SafeWorld.Instance);
                     break;
                 case WorldState.Dungeon:
-                    Renderer.Instance.DrawDungeon(Dungeon);                    
+                    Renderer.Instance.DrawDungeon(Dungeon);
                     break;
             }
             Renderer.Instance.DrawPlayer(Player.Instance);

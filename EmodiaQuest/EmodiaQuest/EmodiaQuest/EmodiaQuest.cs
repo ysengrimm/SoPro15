@@ -57,6 +57,7 @@ namespace EmodiaQuest
             
             // Settings init
             EmodiaQuest.Core.Settings.Instance.loadContent();
+            EmodiaQuest.Core.Settings.Instance.GraphicsCopy = graphics;
 
             // GUI init
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.loadContent();
@@ -108,15 +109,6 @@ namespace EmodiaQuest
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
-                    //testtest
-                    if (kState.IsKeyDown(Keys.Enter))
-                    {                        
-                        graphics.PreferredBackBufferWidth = 400;
-                        graphics.PreferredBackBufferHeight = 300;
-                        graphics.ApplyChanges();
-                        //EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.updateResolution(400, 300);
-                        EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(400, 300);
-                    }
                     break;                    
                 case GameStates_Overall.IngameScreen:
 

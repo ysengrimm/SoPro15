@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace EmodiaQuest.Core
 {
-    class Settings
+    public class Settings
     {
         private static Settings instance;
 
@@ -40,9 +41,55 @@ namespace EmodiaQuest.Core
         /// </summary>
 
         //public Vector2 Resolution = new Vector2(1280, 720);
-        public Vector2 Resolution = PossibleResolutions[0];
 
-        public bool Fullscreen = false;
+        /// <summary>
+        /// Copy of the Graphics Device
+        /// </summary>
+        public GraphicsDeviceManager GraphicsCopy { get; set; }
+
+        private Vector2 resolution = PossibleResolutions[0];
+        public Vector2 Resolution
+        {
+            get{return this.resolution;}
+            set
+            {
+                this.resolution = value;
+                float monitorWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                float monitorHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                if(value.X > monitorWidth)
+                {
+                    this.resolution.X = monitorWidth;
+                    this.resolution.Y = monitorHeight;
+                    GraphicsCopy.IsFullScreen = true;
+                    GraphicsCopy.ApplyChanges();
+                }
+                if (value.Y > monitorHeight)
+                {
+                    this.resolution.X = monitorWidth;
+                    this.resolution.Y = monitorHeight;
+                    GraphicsCopy.IsFullScreen = true;
+                    GraphicsCopy.ApplyChanges();
+                }
+            }
+        }
+
+        private bool fullscreen = false;
+
+        public bool Fullscreen
+        {
+            get { return fullscreen; }
+            set 
+            {
+                if(value!= this.fullscreen)
+                {
+                    GraphicsCopy.IsFullScreen = value;
+                    GraphicsCopy.ApplyChanges();
+                }
+                this.fullscreen = value;
+
+            }
+        }
+
 
         /// <summary>
         /// Far plane distance
@@ -90,6 +137,8 @@ namespace EmodiaQuest.Core
         /// </summary>
         public float MaxHumanEnemyHealth;
 
+        
+
 
         public void loadContent()
         {
@@ -110,7 +159,7 @@ namespace EmodiaQuest.Core
 
             PlayerRotationSpeed = 2f;
 
-            MaxPlayerHealth = 100f;
+            MaxPlayerHealth = 100.0f;
 
             HumanEnemySpeed = 0.5f;
 

@@ -108,6 +108,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ChangeValueEvent.cs" />
+    <Compile Include="Core\Delegates_CORE.cs" />
     <Compile Include="Core\Weapon.cs" />
     <Compile Include="Core\GUI\ButtonEvent_GUI.cs" />
     <Compile Include="Core\GUI\Delegates_GUI.cs" />

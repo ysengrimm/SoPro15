@@ -12,7 +12,7 @@ namespace EmodiaQuest.Core.GUI.Screens
     
     class Menu_GUI
     {
-        //EventHandler
+        // EventHandler
         void ButtonEventValue(object source, ButtonEvent_GUI e)
         {
             switch (e.ButtonFunction)
@@ -60,8 +60,8 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addButton(35, 75, 30, 8, "options", "Options");
 
             this.platform.addLabel(50, 0, 20, "dice_big", "Menu" ,"Menu", true);
-            this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", "Menu2", true);
-            this.platform.addLabel(30, 50, 40, 20, "monoFont_big", "labelText", "label1");
+            //this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", "Menu2", true);
+            //this.platform.addLabel(30, 50, 40, 20, "monoFont_big", "labelText", "label1");
             //this.platform.updateLabel("label1", "newText");
 
             //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "MAIN MENU", true);
