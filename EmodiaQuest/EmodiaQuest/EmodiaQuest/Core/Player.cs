@@ -238,8 +238,11 @@ namespace EmodiaQuest.Core
 
             // running ;)
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
-            {
-                PlayerSpeed += 0.5f;
+            {         
+                if(PlayerSpeed < 0.6)
+                {
+                    PlayerSpeed += 0.025f;
+                }
             }
             else
             {
