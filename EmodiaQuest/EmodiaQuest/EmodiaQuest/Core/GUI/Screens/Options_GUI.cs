@@ -81,7 +81,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "OPTIONS MENU", true);
             this.platform.addLabel(50, 10, 18, "dice_big", "Options", "Options", true);
 
-            this.platform.addSlider(20, 40, 30, 8, 0, 2, 1, "resolutionChange");
+            this.platform.addSlider(20, 40, 30, 8, 0, 2, 0, "resolutionChange");
             this.platform.addSlider(20, 50, 30, 8, 0, 100, 100, "volumeChange");            
 
             this.platform.addLabel(60, 40, 30, 8, "monoFont_small", "res1", "resolution");
