@@ -48,7 +48,7 @@ namespace EmodiaQuest.Core
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
 
             // load some Maps
-            PlacementMap = Content.Load<Texture2D>("maps/dungeonWorld_PlacementMap");
+            PlacementMap = Content.Load<Texture2D>("maps/Dungeon_PlacementMap");
 
             // generate some Maps
             Controller.CreatePlacementMap(PlacementMap);

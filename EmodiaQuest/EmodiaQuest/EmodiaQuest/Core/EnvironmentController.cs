@@ -290,75 +290,61 @@ namespace EmodiaQuest.Core
                 }
 
             }
-                // The teleport objects will be escpecially added to the collision map
-                foreach (TeleObject telobj in TeleporterObjList)
-                {
-                    for (int i = 0; i < orgImage.Width; i++)
-                    {
-                        for (int j = 0; j < orgImage.Height; j++)
-                        {
-                            if (PlacementColors[i, j].R == telobj.Color.R && PlacementColors[i, j].G == telobj.Color.G)
-                            {
-                                // example: house with dimensions like XXX ... so it's 1x3
 
-                                // with rotation like 0° or 180°
-                                // this part will generate black pixels like XXX
-                                if (PlacementColors[i, j].B == 0 || PlacementColors[i, j].B == 2)
+            // The teleport objects will be escpecially added to the collision map
+            // Function as above
+            foreach (TeleObject telobj in TeleporterObjList)
+            {
+                for (int i = 0; i < orgImage.Width; i++)
+                {
+                    for (int j = 0; j < orgImage.Height; j++)
+                    {
+                        if (PlacementColors[i, j].R == telobj.Color.R && PlacementColors[i, j].G == telobj.Color.G)
+                        {
+                            if (PlacementColors[i, j].B == 0 || PlacementColors[i, j].B == 2)
+                            {
+                                for (int k = i - (int)telobj.Dimension.Y / 2; k < i + 1 + (int)telobj.Dimension.Y / 2; k++)
                                 {
-                                    for (int k = i - (int)telobj.Dimension.Y / 2; k < i + 1 + (int)telobj.Dimension.Y / 2; k++)
+                                    for (int l = j - (int)telobj.Dimension.X / 2; l < j + 1 + (int)telobj.Dimension.X / 2; l++)
                                     {
-                                        for (int l = j - (int)telobj.Dimension.X / 2; l < j + 1 + (int)telobj.Dimension.X / 2; l++)
+                                        if(k == i && l == j)
                                         {
-                                            if(k == i && l == j)
-                                            {
-                                                orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
-                                            }
-                                            else
-                                            {
-                                                orgImage.SetPixel(k, l, System.Drawing.Color.Black);
-                                            }
+                                            orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                        }
+                                        else
+                                        {
+                                            orgImage.SetPixel(k, l, System.Drawing.Color.Black);
                                         }
                                     }
                                 }
-
-                                // with rotation like 90° or 270°
-                                // this part will generate black pixels like X
-                                //                                           X  <- actual position of house
-                                //                                           X
-                                else if (PlacementColors[i, j].B == 1 || PlacementColors[i, j].B == 3)
+                            }
+                            else if (PlacementColors[i, j].B == 1 || PlacementColors[i, j].B == 3)
+                            {
+                                for (int k = i - (int)telobj.Dimension.X / 2; k < i + 1 + (int)telobj.Dimension.X / 2; k++)
                                 {
-                                    for (int k = i - (int)telobj.Dimension.X / 2; k < i + 1 + (int)telobj.Dimension.X / 2; k++)
+                                    for (int l = j - (int)telobj.Dimension.Y / 2; l < j + 1 + (int)telobj.Dimension.Y / 2; l++)
                                     {
-                                        for (int l = j - (int)telobj.Dimension.Y / 2; l < j + 1 + (int)telobj.Dimension.Y / 2; l++)
+                                        if (k == i && l == j)
                                         {
-                                            if (k == i && l == j)
-                                            {
-                                                orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
-                                            }
-                                            else
-                                            {
-                                                orgImage.SetPixel(k, l, System.Drawing.Color.Black);
-                                            }
+                                            orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                        }
+                                        else
+                                        {
+                                            orgImage.SetPixel(k, l, System.Drawing.Color.Black);
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                }
             }
             //draw things in new image
             System.Drawing.Graphics gimage = System.Drawing.Graphics.FromImage(orgImage);
             gimage.DrawImage(orgImage, 0, 0);
             
             //save new image
-            if (collisionWorld == WorldState.Safeworld)
-            {
-                orgImage.Save(contentPath + @"maps\safeWorld_CollisionMap.png", ImageFormat.Png);
-            }
-            else if(collisionWorld == WorldState.Dungeon)
-            {
-                orgImage.Save(contentPath + @"maps\Dungeon_CollisionMap.png", ImageFormat.Png);
-            }
+            orgImage.Save(contentPath + @"maps\" + collisionWorld.ToString() + "_CollisionMap.png", ImageFormat.Png);
 
         }
 

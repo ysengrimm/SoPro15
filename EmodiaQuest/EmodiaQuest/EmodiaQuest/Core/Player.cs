@@ -25,6 +25,23 @@ namespace EmodiaQuest.Core
         public float MovementOffset, ItemOffset;
         public float Angle;
 
+        // Collision
+        public float CollisionRadius;
+        private float gridSize = Settings.Instance.GridSize;
+
+        // click handling
+        private MouseState lastMouseState;
+        private MouseState currentMouseState;
+
+        // Playerstats
+        public float Hp;
+        public float Armor;
+        public float PlayerSpeed;
+        public float RotationSpeed;
+
+        /**
+         * Animation and Model
+        **/
         //Textures for the Model
         private Texture2D defaultBodyTex;
         private Texture2D defaultHairTex;
@@ -54,12 +71,6 @@ namespace EmodiaQuest.Core
         // public for Netstat
         public float activeBlendTime;
         public bool isBlending;
-
-        // Playerstats
-        public float Hp;
-        public float Armor;
-        public float PlayerSpeed;
-        public float RotationSpeed;
 
         // Properties
         private Vector2 windowSize;
@@ -99,16 +110,12 @@ namespace EmodiaQuest.Core
             set { gameEnv = value; }
         }
 
-        private Player()
-        {
-       
-        }
+        private Player() { }
 
         public static Player Instance
         {
             get { return _instance ?? (_instance = new Player()); }
         }
-
 
         public void LoadContent()
         {
@@ -122,8 +129,12 @@ namespace EmodiaQuest.Core
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
-
             Angle = 0;
+            CollisionRadius = 1.5f;
+
+            /**
+            * Animation and Model
+            **/
 
             //playerModel = contentMngr.Load<Model>("fbxContent/player/MainChar_run_34f");
             /*
@@ -198,10 +209,9 @@ namespace EmodiaQuest.Core
             fixedBlendDuration = 500;
         }
 
-        public void Update(GameTime gameTime, MouseState mouseState)
+        public void Update(GameTime gameTime)
         {
             // update weapon
-
             if(Keyboard.GetState().IsKeyDown(Keys.D1))
             {
                 activeWeapon = Weapon.Stock;
@@ -210,17 +220,31 @@ namespace EmodiaQuest.Core
             {
                 activeWeapon = Weapon.Hammer;
             }
+
+            lastMouseState = currentMouseState;
+            currentMouseState = Mouse.GetState();
+
             // only set fixed mouse pos if game is in focus
             if (gameIsInFocus)
             {
                 //scale position to 0.0 to 1.0 then center the +/- change
-                Angle += (float)-(((mouseState.X / windowSize.X) - 0.5) * RotationSpeed);
+                Angle += (float)-(((currentMouseState.X / windowSize.X) - 0.5) * RotationSpeed);
                 // reset mouse position to window center
                 Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));    
             }
 
             lastPos = Position;
             movement = Position;
+
+            // running ;)
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
+            {
+                PlayerSpeed += 0.5f;
+            }
+            else
+            {
+                PlayerSpeed = Settings.Instance.PlayerSpeed;
+            }
             
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -282,7 +306,7 @@ namespace EmodiaQuest.Core
             }
             
             //Collision with Items
-            if(collisionHandler.Controller.ItemColors != null) // this is, because in a Dungeon we might don´t have a Itemmap
+            if(collisionHandler.Controller.ItemColors != null) // because in a Dungeon we might not have an Itemmap
             {
                 if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
                 {
@@ -301,7 +325,7 @@ namespace EmodiaQuest.Core
             
             
             //update playerState
-            if ( mouseState.LeftButton == ButtonState.Pressed && stateTime <= 0)
+            if ( currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 0)
             {
                 ActivePlayerState = PlayerState.Swordfighting;
                 stateTime = swordFightingDuration;
@@ -410,16 +434,36 @@ namespace EmodiaQuest.Core
             //Update Temp PlayerState
             TempPlayerState = ActivePlayerState;
 
-
             // interaction
-            int gridBlockSize = 10;
             Vector2 frontDirection = new Vector2((float) Math.Round(Math.Sin(Angle)), (float) Math.Round(Math.Cos(Angle)));
-            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridBlockSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridBlockSize) + frontDirection.Y));
+            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridSize) + frontDirection.Y));
 
             // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
             // only == 2 in edges, else normal 3 in a row
             if(Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
+                // collision with enemies
+                Vector2 currentGridPos = new Vector2((float)Math.Round(position.X / gridSize), (float)Math.Round(position.Y / gridSize));
+                for (int i = -1; i < 2; i++)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)currentGridPos.X + i, (int)currentGridPos.Y + j];
+                        if (currentBlockEnemyList.Count <= 0) continue;
+                        foreach (var enemy in currentBlockEnemyList)
+                        {
+                            var dx = (Position.X - enemy.Position.X) * (Position.X - enemy.Position.X);
+                            var dy = (Position.Y - enemy.Position.Y) * (Position.Y - enemy.Position.Y);
+                            if (Math.Sqrt(dx + dy) < (CollisionRadius + enemy.CircleCollision))
+                            {
+                                position.X = lastPos.X;
+                                position.Y = lastPos.Y;
+                            }
+                        }
+                    }
+                }
+
+                // interaction checks
                 if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
                 {
                     // top left 
@@ -433,7 +477,7 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (mouseState.LeftButton == ButtonState.Pressed)
+                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
                                         currentClosestEnemy.SetAsDead();
                                     }
@@ -451,7 +495,7 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (mouseState.LeftButton == ButtonState.Pressed)
+                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
                                         currentClosestEnemy.SetAsDead();
                                     }
@@ -469,7 +513,7 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (mouseState.LeftButton == ButtonState.Pressed)
+                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
                                         currentClosestEnemy.SetAsDead();
                                     }
@@ -487,7 +531,7 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (mouseState.LeftButton == ButtonState.Pressed)
+                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
                                         currentClosestEnemy.SetAsDead();
                                     }
@@ -508,7 +552,7 @@ namespace EmodiaQuest.Core
                             if (currentBlockEnemyList.Count > 0)
                             {
                                 Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                 {
                                     currentClosestEnemy.SetAsDead();
                                 }
@@ -523,7 +567,7 @@ namespace EmodiaQuest.Core
                             if (currentBlockEnemyList.Count > 0)
                             {
                                 Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                if (mouseState.LeftButton == ButtonState.Pressed)
+                                if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                 {
                                     currentClosestEnemy.SetAsDead();
                                 }
