@@ -36,11 +36,10 @@ namespace EmodiaQuest.Core
         private string lastPlayerState = "0";
         private string isBlending = "0";
         private string activeBlendDuration = "0";
-        
+        private float playerHP;
 
         public void LoadContent(ContentManager content)
         {
-
             backgroundForFrames = content.Load<Texture2D>("Content_GUI/pixel_black");
             monoFont_small = content.Load<SpriteFont>("Content_GUI/monoFont_small");
 
@@ -48,7 +47,7 @@ namespace EmodiaQuest.Core
             //Console.WriteLine(monoFont_small.MeasureString("1"));
         }
 
-        public void Update(GameTime gameTime, float playerX, float playerY, string activePlayerState, string lastPlayerState)
+        public void Update(GameTime gameTime, float playerX, float playerY, string activePlayerState, string lastPlayerState, float playerHP)
         {
             // get frames
             frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -60,6 +59,7 @@ namespace EmodiaQuest.Core
             this.lastPlayerState = lastPlayerState;
             this.activeBlendDuration = Player.Instance.activeBlendTime.ToString();
             this.isBlending = Player.Instance.isBlending.ToString();
+            this.playerHP = playerHP;
         }
 
         public void Draw(SpriteBatch spritebatch)
@@ -68,7 +68,7 @@ namespace EmodiaQuest.Core
             spritebatch.Begin();
             // Add draws
             //spritebatch.Draw(backgroundForFrames, new Rectangle(Settings.Instance.Resolution.X - 180, 0, 180, 40*3), new Color(0, 0, 0, 80));
-            spritebatch.Draw(backgroundForFrames, new Rectangle((int) (Settings.Instance.Resolution.X - 230), 0, 230, 42 * 7), new Color(0, 0, 0, 80));
+            spritebatch.Draw(backgroundForFrames, new Rectangle((int) (Settings.Instance.Resolution.X - 230), 0, 230, 42 * 8), new Color(0, 0, 0, 80));
             spritebatch.DrawString(monoFont_small, frameString, new Vector2(Settings.Instance.Resolution.X - 178, 0), Color.White);
             spritebatch.DrawString(monoFont_small, "F:", new Vector2(Settings.Instance.Resolution.X - 218, 0), Color.White);
             spritebatch.DrawString(monoFont_small, "x:", new Vector2(Settings.Instance.Resolution.X - 218, 40), Color.White);
@@ -77,12 +77,14 @@ namespace EmodiaQuest.Core
             spritebatch.DrawString(monoFont_small, "L:", new Vector2(Settings.Instance.Resolution.X - 218, 160), Color.White);
             spritebatch.DrawString(monoFont_small, "D:", new Vector2(Settings.Instance.Resolution.X - 218, 200), Color.White);
             spritebatch.DrawString(monoFont_small, "B:", new Vector2(Settings.Instance.Resolution.X - 218, 240), Color.White);
+            spritebatch.DrawString(monoFont_small, "HP:", new Vector2(Settings.Instance.Resolution.X - 218, 280), Color.White);
             spritebatch.DrawString(monoFont_small, playerXString, new Vector2(Settings.Instance.Resolution.X - 178, 40), Color.White);
             spritebatch.DrawString(monoFont_small, playerYString, new Vector2(Settings.Instance.Resolution.X - 178, 80), Color.White);
             spritebatch.DrawString(monoFont_small, activePlayerState, new Vector2(Settings.Instance.Resolution.X - 178, 120), Color.White);
             spritebatch.DrawString(monoFont_small, lastPlayerState, new Vector2(Settings.Instance.Resolution.X - 178, 160), Color.White);
             spritebatch.DrawString(monoFont_small, activeBlendDuration, new Vector2(Settings.Instance.Resolution.X - 178, 200), Color.White);
             spritebatch.DrawString(monoFont_small, isBlending, new Vector2(Settings.Instance.Resolution.X - 178, 240), Color.White);
+            spritebatch.DrawString(monoFont_small, playerHP.ToString(), new Vector2(Settings.Instance.Resolution.X - 150, 280), Color.White);
             spritebatch.End();
         }
 
