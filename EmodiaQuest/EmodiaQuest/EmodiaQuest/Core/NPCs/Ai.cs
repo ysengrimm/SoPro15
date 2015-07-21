@@ -71,7 +71,7 @@ namespace EmodiaQuest.Core
         {
             if (hasTracked)
             {
-                trackingDirection = Vector2.Multiply(Vector2.Normalize(Vector2.Subtract(playerPosition, ownPosition)),ownMovementSpeed);
+                trackingDirection = Vector2.Multiply(Vector2.Normalize(Vector2.Subtract(playerPosition, ownPosition)), ownMovementSpeed);
             }
             else
             {

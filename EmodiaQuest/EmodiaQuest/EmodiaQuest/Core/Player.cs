@@ -55,8 +55,10 @@ namespace EmodiaQuest.Core
             }
         }
         public float Armor;
+        public float Damage;
         public float PlayerSpeed;
         public float RotationSpeed;
+        public float AttackSpeed;
 
         /**
          * Animation and Model
@@ -117,7 +119,7 @@ namespace EmodiaQuest.Core
             set { collisionHandler = value; }
         }
 
-        private bool gameIsInFocus = false;
+        private bool gameIsInFocus;
         public bool GameIsInFocus
         {
             set { gameIsInFocus= value; }
@@ -148,11 +150,15 @@ namespace EmodiaQuest.Core
             // set defaults
             Hp = 100; // Settings.Instance.MaxPlayerHealth ?
             Armor = 0;
+            Damage = 50;
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
             Angle = 0;
             CollisionRadius = 1.5f;
+            AttackSpeed = 0.3f;
+            attackTimer = 0;
+            attackThreshold = 10;
 
             /**
             * Animation and Model
@@ -265,8 +271,11 @@ namespace EmodiaQuest.Core
 
             // running ;)
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
-            {
-                PlayerSpeed += 0.5f;
+            {         
+                if(PlayerSpeed < 0.6)
+                {
+                    PlayerSpeed += 0.025f;
+                }
             }
             else
             {
@@ -434,7 +443,7 @@ namespace EmodiaQuest.Core
             }
 
             // Update the last animation (only 500 milliseconds after the last changing state required)
-            if (isBlending == true)
+            if (isBlending)
             {
                 switch (LastPlayerState)
                 {
@@ -469,6 +478,7 @@ namespace EmodiaQuest.Core
             // only == 2 in edges, else normal 3 in a row
             if(Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
+                attackTimer += AttackSpeed;
                 // collision with enemies
                 Vector2 currentGridPos = new Vector2((float)Math.Round(position.X / gridSize), (float)Math.Round(position.Y / gridSize));
                 for (int i = -1; i < 2; i++)
@@ -504,9 +514,10 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
-                                        currentClosestEnemy.SetAsDead();
+                                        currentClosestEnemy.Attack(Damage);
+                                        attackTimer = 0;
                                     }
                                 }
                             }
@@ -522,9 +533,10 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
-                                        currentClosestEnemy.SetAsDead();
+                                        currentClosestEnemy.Attack(Damage);
+                                        attackTimer = 0;
                                     }
                                 }
                             }
@@ -540,9 +552,10 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                    if ( attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
-                                        currentClosestEnemy.SetAsDead();
+                                        currentClosestEnemy.Attack(Damage);
+                                        attackTimer = 0;
                                     }
                                 }
                             }
@@ -558,9 +571,10 @@ namespace EmodiaQuest.Core
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                     {
-                                        currentClosestEnemy.SetAsDead();
+                                        currentClosestEnemy.Attack(Damage);
+                                        attackTimer = 0;
                                     }
                                 }
                             }
@@ -579,9 +593,10 @@ namespace EmodiaQuest.Core
                             if (currentBlockEnemyList.Count > 0)
                             {
                                 Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                 {
-                                    currentClosestEnemy.SetAsDead();
+                                    currentClosestEnemy.Attack(Damage);
+                                    attackTimer = 0;
                                 }
                             }
                         }
@@ -594,9 +609,10 @@ namespace EmodiaQuest.Core
                             if (currentBlockEnemyList.Count > 0)
                             {
                                 Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                if (lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                                 {
-                                    currentClosestEnemy.SetAsDead();
+                                    currentClosestEnemy.Attack(Damage);
+                                    attackTimer = 0;
                                 }
                             }
                         }
@@ -632,6 +648,15 @@ namespace EmodiaQuest.Core
             return closestEnemy;
         }
 
+        public void Attack(float damage)
+        {
+            Hp -= damage;
+            if (Hp <= 0)
+            {
+                Hp = 100;
+            }
+        }
+
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             // Bone updates for each required animation   
@@ -654,7 +679,7 @@ namespace EmodiaQuest.Core
                     break;
             }
 
-            if (isBlending == true)
+            if (isBlending)
             {
                 // Bone updates for each required animation for blending 
                 switch (LastPlayerState)
@@ -775,7 +800,7 @@ namespace EmodiaQuest.Core
                    }
 
                 }
-                Console.WriteLine(mesh.Name);
+                //Console.WriteLine(mesh.Name);
                 if (mesh.Name == "Stock" && activeWeapon != Weapon.Stock)
                 {
 

@@ -15,8 +15,31 @@ namespace EmodiaQuest.Core.NPCs
 {
     public class Enemy
     {
-        // implements damage, range, mesh, texture etc (Are Questing Npcs also part of this class!?) NO!
+        // Variables for Ai
+        private EnvironmentController currentEnvironment;
+        private Ai enemyAi;
 
+        // Enemystats
+        public Vector2 Position;
+        private Vector2 oldPosition;
+        public float MaxEnemyHealth;
+        public float Armor;
+        public float MovementSpeed;
+        public float TrackingRadius;
+        public float CircleCollision;
+        public float AttackRange;
+        public float Damage;
+
+        private float gridSize = Settings.Instance.GridSize;
+
+        public bool IsAlive { get; set; }
+
+        private CollisionHandler collHandler;
+
+
+        /**
+         * Animation and Model
+        **/
         // The Model
         private Model enemyModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM, runningM, idleM;
         // Skinning Data
@@ -31,35 +54,13 @@ namespace EmodiaQuest.Core.NPCs
         public EnemyState CurrentEnemyState = EnemyState.Standing;
         public EnemyState LastEnemyState = EnemyState.Standing;
 
-        // Variables for Ai
-        private EnvironmentController currentEnvironment;
-        private Ai enemyAi;
 
-        // Enemystats
-        public Vector2 Position;
-        public Vector2 oldPosition;
-        public float MaxEnemyHealth;
-        public float Armor;
-        public float MovementSpeed;
-        public float TrackingRadius;
-        public float CircleCollision;
-
-        private float gridSize = Settings.Instance.GridSize;
-
-        public bool IsAlive { get; set; }
-
-        private CollisionHandler collHandler;
-
-        // Constructor
         public Enemy(Vector2 position, EnvironmentController currentEnvironment)
         {
             this.currentEnvironment = currentEnvironment;
-            this.Position = position;
+            Position = position;
+
             currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
-            this.TrackingRadius = 30f;
-            MovementSpeed = 0.25f;
-            this.enemyAi = new Ai(position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
-            CircleCollision = 1.5f;
         }
 
 
@@ -68,11 +69,21 @@ namespace EmodiaQuest.Core.NPCs
         {
             MovementSpeed = Settings.Instance.HumanEnemySpeed;
             MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-            //enemyModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
-            enemyModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
+            AttackRange = 2;
+            Damage = 5;
+
+            // movement
+            TrackingRadius = 30f;
+            MovementSpeed = 0.25f;
+            enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+
+            // collision
+            CircleCollision = 1.5f;
+            collHandler = CollisionHandler.Instance;
 
             IsAlive = true;
-            collHandler = CollisionHandler.Instance;
+
+            enemyModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
         }
 
 
@@ -125,12 +136,98 @@ namespace EmodiaQuest.Core.NPCs
                         }
                     }
                     
-
                     currentEnvironment.enemyArray[(int)Math.Round(oldPosition.X / 10), (int)Math.Round(oldPosition.Y / 10)].Remove(this);
                     currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
                 }
+            }
 
-                
+            // interaction
+            Vector2 frontDirection = new Vector2(enemyAi.TrackingDirection.X, enemyAi.TrackingDirection.Y);
+            //Console.WriteLine(Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y));
+            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridSize) + enemyAi.TrackingDirection.Y));
+
+            // interaction checks
+            if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
+            {
+                Console.WriteLine(">= 2");
+                // top left 
+                if ((int) frontDirection.X == -1 && (int) frontDirection.Y == -1)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            if (onSameGridElement(new Vector2(gridPosInView.X + i, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                            {
+                                Player.Instance.Attack(Damage);
+                            }
+                        }
+                    }
+                } // top right
+                else if ((int) frontDirection.X == 1 && (int) frontDirection.Y == -1)
+                {
+                    for (int i = -1; i < 1; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            if (onSameGridElement(new Vector2(gridPosInView.X + i, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                            {
+                                Player.Instance.Attack(Damage);
+                            }
+                        }
+                    }
+                } // bot left
+                else if ((int) frontDirection.X == -1 && (int) frontDirection.Y == 1)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = -1; j < 1; j++)
+                        {
+                            if (onSameGridElement(new Vector2(gridPosInView.X + i, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                            {
+                                Player.Instance.Attack(Damage);
+                            }
+                        }
+                    }
+                } // bot right (X = 1, Y = 1)
+                else
+                {
+                    for (int i = -1; i < 1; i++)
+                    {
+                        for (int j = -1; j < 1; j++)
+                        {
+                            if (onSameGridElement(new Vector2(gridPosInView.X + i, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                            {
+                                Player.Instance.Attack(Damage);
+                            }
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                // left or right
+                if ((int) Math.Abs(frontDirection.X) == 1 && (int) frontDirection.Y == 0)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        if (onSameGridElement(new Vector2(gridPosInView.X, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                        {
+                            Player.Instance.Attack(Damage);
+                        }
+                    }
+                }
+                else // top or bottom
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        if (onSameGridElement(new Vector2(gridPosInView.X + j, gridPosInView.Y), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                        {
+                            Player.Instance.Attack(Damage);
+                        }
+                    }
+                }
             }
         }
 
@@ -142,11 +239,14 @@ namespace EmodiaQuest.Core.NPCs
             return aOnGrid.X == bOnGrid.X && aOnGrid.Y == bOnGrid.Y;
         }
 
-        public void SetAsDead()
+        public void Attack(float damage)
         {
-            if (currentEnvironment.enemyArray[(int) Math.Round(Position.X/10), (int) Math.Round(Position.Y/10)].Remove(this))
+            MaxEnemyHealth -= damage;
+
+            if (!(MaxEnemyHealth <= 0)) return;
+            if (currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Remove(this))
             {
-                IsAlive = false;    
+                IsAlive = false;
             }
             Console.WriteLine("Enemy at " + Position + " died");
         }
@@ -175,7 +275,10 @@ namespace EmodiaQuest.Core.NPCs
             }
         }
 
-
+        private double EuclideanDistance(Vector2 p1, Vector2 p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+        }
         
     }
 }

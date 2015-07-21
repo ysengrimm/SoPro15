@@ -114,7 +114,7 @@ namespace EmodiaQuest.Core
             }
 
             // Netstat update
-            EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.ActivePlayerState.ToString(), Player.Instance.LastPlayerState.ToString());
+            EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.ActivePlayerState.ToString(), Player.Instance.LastPlayerState.ToString(), Player.Instance.Hp);
             // TODO: HUD update (playerhealth etc.)
 
         }
