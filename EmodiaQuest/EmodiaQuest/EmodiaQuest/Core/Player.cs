@@ -19,6 +19,10 @@ namespace EmodiaQuest.Core
     {
         private static Player _instance;
 
+        // FASTFIX
+        float attackTimer{get;set;}
+        float attackThreshold{get;set;}
+
         // For movement and camera update
         private Vector2 movement; // future position
         private Vector2 lastPos; //position from last step (fixes false kamera focus)
