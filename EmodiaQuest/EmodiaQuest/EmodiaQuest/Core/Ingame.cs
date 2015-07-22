@@ -39,7 +39,7 @@ namespace EmodiaQuest.Core
             switch (e.Function)
             {
                 case "hp":
-                    // Set MaxValue for HP-display
+                    Console.WriteLine("HP is set to: " + e.ChangeValue);
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");

@@ -630,6 +630,11 @@ namespace EmodiaQuest.Core
             {
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
             }
+            // Get Keyboard input to change overall GameState
+            if (currentKeyboardState.IsKeyDown(Keys.I) && !lastKeyboardState.IsKeyDown(Keys.I))
+            {
+                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.InventoryScreen;
+            }
 
             // Update Keyboard State
             lastKeyboardState = currentKeyboardState;

@@ -68,6 +68,7 @@ namespace EmodiaQuest
             EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.GraphicsCopy = graphics;
             EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.loadContent(Content);
+            EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.loadContent(Content);
 
             EmodiaQuest.Core.NetGraph.Instance.LoadContent(Content);
 
@@ -134,6 +135,11 @@ namespace EmodiaQuest
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
                     break;
+                case GameStates_Overall.InventoryScreen:
+                    EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.update();
+                    if (kState.IsKeyDown(Keys.Escape))
+                        this.Exit();
+                    break;
                 default:
                     break;
             }
@@ -175,6 +181,11 @@ namespace EmodiaQuest
                     
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.draw(spriteBatch);
+                    break;
+                case GameStates_Overall.InventoryScreen:
+
+                    this.IsMouseVisible = true;
+                    EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.draw(spriteBatch);
                     break;
                 default:
                     break;
