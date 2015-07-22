@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using EmodiaQuest.Core.GUI;
 
 namespace EmodiaQuest.Core
 {
@@ -34,7 +35,7 @@ namespace EmodiaQuest.Core
         /// All possible resolutions (all 16:9)
         /// </summary>
         /// //TODO No static
-        public static Vector2[] PossibleResolutions = { new Vector2(854, 480), new Vector2(1280, 720), new Vector2(1920, 1080) };
+        public static IntVector2[] PossibleResolutions = { new IntVector2(854, 480), new IntVector2(1280, 720), new IntVector2(1920, 1080) };
 
         /// <summary>
         /// Resolution for the game
@@ -47,29 +48,57 @@ namespace EmodiaQuest.Core
         /// </summary>
         public GraphicsDeviceManager GraphicsCopy { get; set; }
 
-        private Vector2 resolution = PossibleResolutions[0];
-        public Vector2 Resolution
+        private IntVector2 resolution = PossibleResolutions[0];
+        public IntVector2 Resolution
         {
             get{return this.resolution;}
             set
             {
-                this.resolution = value;
-                float monitorWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                float monitorHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                if(value.X > monitorWidth)
+                //this.resolution = value;
+                //float monitorWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                //float monitorHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                //if(value.X > monitorWidth)
+                //{
+                //    this.resolution.X = monitorWidth;
+                //    this.resolution.Y = monitorHeight;
+                //    //GraphicsCopy.IsFullScreen = true;
+                //    //GraphicsCopy.ApplyChanges();
+                //    this.fullscreen = true;
+                //}
+                //else if (value.Y > monitorHeight)
+                //{
+                //    this.resolution.X = monitorWidth;
+                //    this.resolution.Y = monitorHeight;
+                //    //GraphicsCopy.IsFullScreen = true;
+                //    //GraphicsCopy.ApplyChanges();
+                //    this.fullscreen = true;
+                //}
+                //else
+                //{
+                //    //GraphicsCopy.PreferredBackBufferWidth = resX;
+                //    //GraphicsCopy.PreferredBackBufferHeight = resY;
+
+                //}
+                //GraphicsCopy.ApplyChanges();
+
+                int monitorWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                int monitorHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+                if (value.X > monitorWidth || value.Y > monitorHeight)
                 {
                     this.resolution.X = monitorWidth;
+                    GraphicsCopy.PreferredBackBufferWidth = this.resolution.X;
                     this.resolution.Y = monitorHeight;
-                    GraphicsCopy.IsFullScreen = true;
-                    GraphicsCopy.ApplyChanges();
+                    GraphicsCopy.PreferredBackBufferHeight = this.resolution.Y;
+                    this.Fullscreen = true;
                 }
-                if (value.Y > monitorHeight)
+                else
                 {
-                    this.resolution.X = monitorWidth;
-                    this.resolution.Y = monitorHeight;
-                    GraphicsCopy.IsFullScreen = true;
-                    GraphicsCopy.ApplyChanges();
+                    this.resolution = value;
+                    GraphicsCopy.PreferredBackBufferWidth = this.resolution.X;
+                    GraphicsCopy.PreferredBackBufferHeight = this.resolution.Y;
                 }
+                GraphicsCopy.ApplyChanges();
             }
         }
 

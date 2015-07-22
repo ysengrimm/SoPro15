@@ -33,8 +33,8 @@ namespace EmodiaQuest
 
             // What is this doing here???
             // set window size
-            graphics.PreferredBackBufferWidth = (int)Settings.Instance.Resolution.X;
-            graphics.PreferredBackBufferHeight = (int) Settings.Instance.Resolution.Y;
+            graphics.PreferredBackBufferWidth = Settings.Instance.Resolution.X;
+            graphics.PreferredBackBufferHeight = Settings.Instance.Resolution.Y;
 
             // set fullscreen
             graphics.IsFullScreen = Settings.Instance.Fullscreen;

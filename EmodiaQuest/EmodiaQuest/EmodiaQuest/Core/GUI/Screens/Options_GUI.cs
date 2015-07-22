@@ -24,19 +24,21 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "volumeChange":
                     EmodiaQuest.Core.Settings.Instance.Volume = (float)(e.SliderValue)/100;
                     this.platform.updateLabel("volume", e.SliderValue.ToString());
-                    GraphicsCopy.IsFullScreen = true;
                     GraphicsCopy.ApplyChanges();
-
                     break;
                 case "resolutionChange":
                     EmodiaQuest.Core.Settings.Instance.Resolution = EmodiaQuest.Core.Settings.PossibleResolutions[e.SliderValue];
-                    int resX = (int)EmodiaQuest.Core.Settings.Instance.Resolution.X;
-                    int resY = (int)EmodiaQuest.Core.Settings.Instance.Resolution.Y;
+                    int resX = EmodiaQuest.Core.Settings.Instance.Resolution.X;
+                    int resY = EmodiaQuest.Core.Settings.Instance.Resolution.Y;
                     this.platform.updateLabel("resolution", resX + " x " + resY);
                     EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
-                    GraphicsCopy.PreferredBackBufferWidth = resX;
-                    GraphicsCopy.PreferredBackBufferHeight = resY;
-                    GraphicsCopy.ApplyChanges();                    
+                    //GraphicsCopy.PreferredBackBufferWidth = resX;
+                    //GraphicsCopy.PreferredBackBufferHeight = resY;
+                    //GraphicsCopy.ApplyChanges();
+                    if (EmodiaQuest.Core.Settings.Instance.Fullscreen)
+                        this.platform.updateLabel("fullscreenMode", "Fullscreen");
+                    else
+                        this.platform.updateLabel("fullscreenMode", "Windowed");
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -51,12 +53,12 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "changeToMainMenu":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
                     break;
-                case "switchFullscreen":
-                    if(EmodiaQuest.Core.Settings.Instance.Fullscreen)
-                        this.platform.updateLabel("fullscreenMode", "Windowed");
-                    else
-                        this.platform.updateLabel("fullscreenMode", "Fullscreen");
+                case "switchFullscreen":                    
                     EmodiaQuest.Core.Settings.Instance.Fullscreen = !EmodiaQuest.Core.Settings.Instance.Fullscreen;
+                    if (EmodiaQuest.Core.Settings.Instance.Fullscreen)
+                        this.platform.updateLabel("fullscreenMode", "Fullscreen");
+                    else
+                        this.platform.updateLabel("fullscreenMode", "Windowed");
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -102,7 +104,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addSlider(20, 40, 30, 8, 0, 2, 0, "resolutionChange");
             this.platform.addSlider(20, 50, 30, 8, 0, 100, 100, "volumeChange");            
 
-            this.platform.addLabel(60, 40, 30, 8, "monoFont_small", "res1", "resolution");
+            this.platform.addLabel(60, 40, 30, 8, "monoFont_small", "854 x 480", "resolution");
             this.platform.addLabel(60, 50, 30, 8, "monoFont_small", "100", "volume");
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 

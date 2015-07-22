@@ -36,7 +36,7 @@ namespace EmodiaQuest.Core.GUI
         //private string functionCalled = null;
 
         // MainwindowRes
-        public static Vector2 MainWindowSize { get; set; }
+        public static IntVector2 MainWindowSize { get; set; }
         public static int MainWindowWidthInt { get; set; }
         public static int MainWindowHeightInt { get; set; }
 
@@ -598,7 +598,7 @@ namespace EmodiaQuest.Core.GUI
         {
             MainWindowWidthInt = x;
             MainWindowHeightInt = y;
-            MainWindowSize = new Vector2(x, y);
+            MainWindowSize = new IntVector2(x, y);
 
             foreach (Button_GUI bb in buttons)
             {

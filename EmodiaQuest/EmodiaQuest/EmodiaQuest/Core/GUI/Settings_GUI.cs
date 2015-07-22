@@ -36,8 +36,8 @@ namespace EmodiaQuest.Core.GUI
         public void setResolution()
         {
             Platform_GUI.MainWindowSize = EmodiaQuest.Core.Settings.Instance.Resolution;
-            Platform_GUI.MainWindowWidthInt = (int)EmodiaQuest.Core.Settings.Instance.Resolution.X;
-            Platform_GUI.MainWindowHeightInt = (int)EmodiaQuest.Core.Settings.Instance.Resolution.Y;
+            Platform_GUI.MainWindowWidthInt = EmodiaQuest.Core.Settings.Instance.Resolution.X;
+            Platform_GUI.MainWindowHeightInt = EmodiaQuest.Core.Settings.Instance.Resolution.Y;
         }
 
         public void setFontSprites(ContentManager Content)
