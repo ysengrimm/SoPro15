@@ -42,15 +42,18 @@ namespace EmodiaQuest.Core.NPCs
         public float Armor;
         public float MovementSpeed;
         public float TrackingRadius;
-        public enum NPCName { Name1, Name2, Name3, Name4}
+        public enum NPCName { Jack, Yorlgon, Konstantin, Namensloser}
 
-        public NPCName name = NPCName.Name1;
+        public NPCName Name = NPCName.Namensloser;
+        public NPCProfession Profession = NPCProfession.Arbeitslos;
 
         private CollisionHandler collHandler;
 
         // Constructor
-        public NPC(Vector2 position, EnvironmentController currentEnvironment)
+        public NPC(Vector2 position, EnvironmentController currentEnvironment, NPCName name, NPCProfession profession)
         {
+            this.Name = name;
+            this.Profession = profession;
             this.currentEnvironment = currentEnvironment;
             this.Position = position;
             this.TrackingRadius = 30f;
@@ -64,6 +67,7 @@ namespace EmodiaQuest.Core.NPCs
 
             npcModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
             collHandler = CollisionHandler.Instance;
+            Console.WriteLine(npcModel.Meshes.Count);
         }
 
 
@@ -79,7 +83,7 @@ namespace EmodiaQuest.Core.NPCs
             //let Enymy walk
             //remove from old List
             //add to new List
-            // TODO: /10 shouldn't be a magic number
+            // TODO: /10 shouldn't be a magic number <-- we have a GridSize in the Settings now!
 
         }
 
@@ -97,6 +101,5 @@ namespace EmodiaQuest.Core.NPCs
                 mesh.Draw();
             }
         }
-
     }
 }

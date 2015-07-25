@@ -40,6 +40,8 @@ namespace EmodiaQuest.Core
         public Texture2D CollisionMap, PlacementMap, ItemMap;
         public ContentManager Content;
         public Skybox Skybox;
+
+        public List<NPC> NPCList;
         
 
         /// <summary>
@@ -62,8 +64,6 @@ namespace EmodiaQuest.Core
             // generate some Maps
             Controller.CreatePlacementMap(PlacementMap);
             Controller.CreateItemMap(ItemMap);
-
-            //initialise enemy array <---- mabey we can reuse it for NPCs ( we don´t reuse it, because its way too much calculation for just some npcs)
             
 
             // Walls
@@ -93,6 +93,21 @@ namespace EmodiaQuest.Core
             CollisionMap = Content.Load<Texture2D>("maps/safeWorld_CollisionMap");
             Controller.CreateCollisionMap(CollisionMap);
 
+            // Create NPCList
+            NPCList = new List<NPC>();
+            // Create NPCs
+            NPC Jack = new NPC(new Vector2(200,200), Controller, NPC.NPCName.Jack, NPCProfession.Wirt);
+            NPC Yorlgon = new NPC(new Vector2(200,220), Controller, NPC.NPCName.Yorlgon, NPCProfession.Schmied);
+            NPC Konstantin = new NPC(new Vector2(200, 240), Controller, NPC.NPCName.Konstantin, NPCProfession.Haendler);
+
+            Jack.LoadContent(Content);
+            Yorlgon.LoadContent(Content);
+            Konstantin.LoadContent(Content);
+            
+            NPCList.Add(Jack);
+            NPCList.Add(Yorlgon);
+            NPCList.Add(Konstantin);
+            
         }
 
         
@@ -113,9 +128,12 @@ namespace EmodiaQuest.Core
         public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             DrawEnvironment(world, view, projection);
-            //drawNPCs();
-            //drawHUD(); <--- mabey the Hud should be in the ingame
-            
+            //Draw the NPCs
+            foreach(NPC npc in NPCList)
+            {
+                npc.Draw(world, view, projection);
+            }
+           
         }
 
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)

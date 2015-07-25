@@ -112,6 +112,7 @@
     <Compile Include="Core\Delegates_CORE.cs" />
     <Compile Include="Core\GUI\IntVector2.cs" />
     <Compile Include="Core\GUI\Screens\Inventory_GUI.cs" />
+    <Compile Include="Core\NPCs\NPCProfession.cs" />
     <Compile Include="Core\Weapon.cs" />
     <Compile Include="Core\GUI\ButtonEvent_GUI.cs" />
     <Compile Include="Core\GUI\Delegates_GUI.cs" />
