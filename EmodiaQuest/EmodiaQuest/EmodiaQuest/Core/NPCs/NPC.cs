@@ -67,7 +67,6 @@ namespace EmodiaQuest.Core.NPCs
 
             npcModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
             collHandler = CollisionHandler.Instance;
-            Console.WriteLine(npcModel.Meshes.Count);
         }
 
 

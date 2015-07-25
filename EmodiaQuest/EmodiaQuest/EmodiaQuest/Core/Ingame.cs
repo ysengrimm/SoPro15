@@ -77,11 +77,6 @@ namespace EmodiaQuest.Core
             // setting the collision for the safeworld as default
             CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
 
-            //Initialize the matrizes with reasonable values
-            Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(Player.Instance.Position.X + 3f, 3, Player.Instance.Position.Y + 3f), new Vector3(Player.Instance.Position.X, 1, Player.Instance.Position.Y), Vector3.UnitY);
-            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), Settings.Instance.Resolution.X / Settings.Instance.Resolution.Y, 0.1f, Settings.Instance.ViewDistance); //Setting farplane = render distance
-
             // Loading Player
             Player.Instance.Position = new Vector2(250, 350);
             Player.Instance.CollisionHandler = CollisionHandler.Instance;
@@ -89,6 +84,11 @@ namespace EmodiaQuest.Core
             Player.Instance.ContentMngr = Content;
             Player.Instance.LoadContent();
             Player.Instance.GameEnv = SafeWorld.Instance.Controller;
+
+            //Initialize the matrizes with reasonable values
+            Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(Player.Instance.Position.X + 3f, 3, Player.Instance.Position.Y + 3f), new Vector3(Player.Instance.Position.X, 1, Player.Instance.Position.Y), Vector3.UnitY);
+            Renderer.Instance.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), (float)Settings.Instance.Resolution.X / Settings.Instance.Resolution.Y, 0.1f, Settings.Instance.ViewDistance); //Setting farplane = render distance
 
         }
 

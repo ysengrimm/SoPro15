@@ -253,6 +253,15 @@ namespace EmodiaQuest.Core
                 activeWeapon = Weapon.Hammer;
             }
 
+            //Update interaction with NPCs
+            for (int index = 0; index < SafeWorld.Instance.NPCList.Count; index++)
+            {
+                if (EuclideanDistance(SafeWorld.Instance.NPCList.ElementAt(index).Position, this.Position) < 9f)
+                {
+                    Console.WriteLine("You can interact with: " + SafeWorld.Instance.NPCList.ElementAt(index).Name);
+                }
+            }
+
             //This is not save. In the very first frame, lastMouseState is undefined, since currentMouseState is undefined
             // It just has the default-value, whenever a MouseState is declared
             lastMouseState = currentMouseState;
