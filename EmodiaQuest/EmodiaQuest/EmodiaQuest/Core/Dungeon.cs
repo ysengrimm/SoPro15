@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -12,6 +13,7 @@ using Microsoft.Xna.Framework.Media;
 using EmodiaQuest.Core;
 using EmodiaQuest.Rendering;
 using EmodiaQuest.Core.NPCs;
+using EmodiaQuest.Core.DungeonGeneration;
 
 namespace EmodiaQuest.Core
 {
@@ -45,13 +47,15 @@ namespace EmodiaQuest.Core
         public override void LoadContent(ContentManager content)
         {
             this.Content = content;
+
+            //gets >current< content path
+            //at first gets path of debug directory and then replace the end to get path of content folder
+            string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
+            
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
-
-            // load some Maps
-            PlacementMap = Content.Load<Texture2D>("maps/Dungeon_PlacementMap");
-
-            // generate some Maps
-            Controller.CreatePlacementMap(PlacementMap);
+            
+            // generate new dungeon
+            LevelGenerator gen = new LevelGenerator(Controller);
 
             //initialise enemy array
             Controller.CreateEnemyArray();
@@ -78,10 +82,8 @@ namespace EmodiaQuest.Core
             // Insert items
             //Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
-            //now after all collision objects are choosen generate and load collision map
+            //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content, WorldState.Dungeon);
-            CollisionMap = Content.Load<Texture2D>("maps/Dungeon_CollisionMap");
-            Controller.CreateCollisionMap(CollisionMap);
 
             // temporary enemy testing
             EnemyList = new List<Enemy>();

@@ -64,7 +64,6 @@ namespace EmodiaQuest.Core
             // generate some Maps
             Controller.CreatePlacementMap(PlacementMap);
             Controller.CreateItemMap(ItemMap);
-            
 
             // Walls
             EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall1);
@@ -91,8 +90,6 @@ namespace EmodiaQuest.Core
             //now after all collision objects are choosen generate and load collision map
             
             Controller.GenerateCollisionMap(Content, WorldState.Safeworld);
-            CollisionMap = Content.Load<Texture2D>("maps/safeWorld_CollisionMap");
-            Controller.CreateCollisionMap(CollisionMap);
             
             // Create NPCList
             NPCList = new List<NPC>();

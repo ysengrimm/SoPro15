@@ -28,6 +28,12 @@ namespace EmodiaQuest.Core
         public List<NPCs.NPC> NPCList;
 
         /// <summary>
+        /// ONLY FOR DUNGEON
+        /// Start point of Player
+        /// </summary>
+        public Vector2 StartPoint;
+
+        /// <summary>
         /// This list only contains objects you can change world with
         /// </summary>
         public List<TeleObject> TeleporterObjList;
@@ -77,7 +83,7 @@ namespace EmodiaQuest.Core
 
         //lets items jump :D
         float jump = 0;
-
+        
         public EnvironmentController() 
         { 
             Ground = new List<GameObject>();
@@ -89,19 +95,22 @@ namespace EmodiaQuest.Core
 
             CollisionObjList = new List<Object>();
             TeleporterObjList = new List<TeleObject>();
-
+            
             NPCList = new List<NPCs.NPC>();
 
+            PlacementColors = new Color[Settings.Instance.MapWidth, Settings.Instance.MapHeight];
+            CollisionColors = new Color[Settings.Instance.MapWidth, Settings.Instance.MapHeight];
+            ItemColors = new Color[Settings.Instance.MapWidth, Settings.Instance.MapHeight];
         }
         /// <summary>
         /// Initialises Array with Lists of Enemy
         /// </summary>
         public void CreateEnemyArray()
         {
-            enemyArray = new List<NPCs.Enemy>[PlacementMap.Width, PlacementMap.Height];
-            for (int i = 0; i < PlacementMap.Width; i++)
+            enemyArray = new List<NPCs.Enemy>[Settings.Instance.MapWidth, Settings.Instance.MapHeight];
+            for (int i = 0; i < Settings.Instance.MapWidth; i++)
             {
-                for (int j = 0; j < PlacementMap.Height; j++)
+                for (int j = 0; j < Settings.Instance.MapHeight; j++)
                 {
                     enemyArray[i, j] = new List<NPCs.Enemy>();
                 }
@@ -121,35 +130,12 @@ namespace EmodiaQuest.Core
             colors1D = new Color[map.Width * map.Height];
             map.GetData(colors1D);
 
-            PlacementColors = new Color[map.Width, map.Height];
+            
             for (int x = 0; x < map.Width; x++)
             {
                 for (int y = 0; y < map.Height; y++)
                 {
                     PlacementColors[x, y] = colors1D[x + y * map.Width];
-                }
-            }
-        }
-
-        /// <summary>
-        /// Creates a new collision map from a pixelmap
-        /// <param name="map">A Texture2D with loaded collision map-picture.</param>
-        /// </summary>
-        public void CreateCollisionMap(Texture2D map)
-        {
-            Color[] colors1D;
-
-            this.CollisionMap = map;
-
-            colors1D = new Color[map.Width * map.Height];
-            map.GetData(colors1D);
-
-            CollisionColors = new Color[map.Width, map.Height];
-            for (int x = 0; x < map.Width; x++)
-            {
-                for (int y = 0; y < map.Height; y++)
-                {
-                    CollisionColors[x, y] = colors1D[x + y * map.Width];
                 }
             }
         }
@@ -188,9 +174,9 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void InsertObj(List<GameObject> objList, Model model, Color color, int height)
         {
-            for (int i = 0; i < PlacementMap.Width; i++)
+            for (int i = 0; i < Settings.Instance.MapWidth; i++)
             {
-                for (int j = 0; j < PlacementMap.Height; j++)
+                for (int j = 0; j < Settings.Instance.MapHeight; j++)
                 {
                     if (PlacementColors[i, j].R == color.R && PlacementColors[i, j].G == color.G)
                     {
@@ -237,7 +223,7 @@ namespace EmodiaQuest.Core
             //at first gets path of debug directory and then replace the end to get path of content folder
             string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
 
-            System.Drawing.Bitmap orgImage = new System.Drawing.Bitmap(PlacementMap.Width, PlacementMap.Height);
+            System.Drawing.Bitmap orgImage = new System.Drawing.Bitmap(Settings.Instance.MapWidth, Settings.Instance.MapHeight);
 
             // clears map
             for (int i = 0; i < orgImage.Width; i++)
@@ -245,6 +231,7 @@ namespace EmodiaQuest.Core
                 for (int j = 0; j < orgImage.Height; j++)
                 {
                     orgImage.SetPixel(i, j, System.Drawing.Color.White);
+                    CollisionColors[i, j] = Color.White;
                 }
             }
 
@@ -267,6 +254,7 @@ namespace EmodiaQuest.Core
                                     for (int l = j - (int)obj.Dimension.X / 2; l < j + 1 + (int)obj.Dimension.X / 2; l++)
                                     {
                                         orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                        CollisionColors[k, l] = Color.Black;
                                     }
                                 }
                             }
@@ -282,6 +270,7 @@ namespace EmodiaQuest.Core
                                     for (int l = j - (int)obj.Dimension.Y / 2; l < j + 1 + (int)obj.Dimension.Y / 2; l++)
                                     {
                                         orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                        CollisionColors[k, l] = Color.Black;
                                     }
                                 }
                             }
@@ -310,10 +299,12 @@ namespace EmodiaQuest.Core
                                         if(k == i && l == j)
                                         {
                                             orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                            CollisionColors[k, l] = Color.Violet;
                                         }
                                         else
                                         {
                                             orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                            CollisionColors[k, l] = Color.Black;
                                         }
                                     }
                                 }
@@ -327,10 +318,12 @@ namespace EmodiaQuest.Core
                                         if (k == i && l == j)
                                         {
                                             orgImage.SetPixel(k, l, System.Drawing.Color.Violet);
+                                            CollisionColors[k, l] = Color.Violet;
                                         }
                                         else
                                         {
                                             orgImage.SetPixel(k, l, System.Drawing.Color.Black);
+                                            CollisionColors[k, l] = Color.Black;
                                         }
                                     }
                                 }
