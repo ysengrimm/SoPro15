@@ -166,7 +166,20 @@ namespace EmodiaQuest.Core
         /// </summary>
         public float MaxHumanEnemyHealth;
 
-        
+
+        /********************************
+         *      Map Settings        *
+         ********************************/
+
+        public int MapWidth = 50;
+        public int MapHeight = 50;
+
+        //for dungeon generation
+
+        public int MaxRooms = 50;
+        public int MinRoomSize = 3;
+        public int MaxRoomSize = 5;
+
 
 
         public void loadContent()

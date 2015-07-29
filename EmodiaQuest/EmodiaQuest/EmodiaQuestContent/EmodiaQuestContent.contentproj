@@ -80,13 +80,6 @@
     <Folder Include="Texturen\Buttons\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="maps\SafeWorld_CollisionMap.png">
-      <Name>SafeWorld_CollisionMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="fbxContent\gameobjects\testCube.fbx">
       <Name>testCube</Name>
       <Importer>FbxImporter</Importer>
@@ -335,13 +328,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="maps\Dungeon_CollisionMap.png">
-      <Name>Dungeon_CollisionMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Content_GUI\label.png">
       <Name>label</Name>
       <Importer>TextureImporter</Importer>
@@ -356,11 +342,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="maps\Dungeon_PlacementMap.png">
-      <Name>Dungeon_PlacementMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="maps\SafeWorld_ItemMap.png">
       <Name>SafeWorld_ItemMap</Name>
       <Importer>TextureImporter</Importer>
