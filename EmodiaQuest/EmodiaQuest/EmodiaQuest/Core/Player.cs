@@ -237,7 +237,7 @@ namespace EmodiaQuest.Core
             Console.WriteLine("WalkingKeyframes: " + walkingC.Keyframes.Count);
             */
             stateTime = 0;
-            // DUration of Blending Animations in milliseconds
+            // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 500;
         }
 

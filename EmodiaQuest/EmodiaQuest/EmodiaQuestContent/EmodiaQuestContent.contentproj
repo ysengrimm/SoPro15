@@ -277,6 +277,16 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\NPC\NPC_male_idle.fbx">
+      <Name>NPC_male_idle</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\NPC_male_T-Pose.fbx">
+      <Name>NPC_male_T-Pose</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -375,6 +385,25 @@
   <ItemGroup>
     <Compile Include="Content_GUI\inventory_background.png">
       <Name>inventory_background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Texturen\NPCTexturen\Cloth\Hemd_blue.png">
+      <Name>Hemd_blue</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Texturen\NPCTexturen\Cloth\trousers_green.png">
+      <Name>trousers_green</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Texturen\NPCTexturen\Body\male\brown_eye.png">
+      <Name>brown_eye</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

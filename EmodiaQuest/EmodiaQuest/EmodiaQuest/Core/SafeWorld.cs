@@ -89,10 +89,11 @@ namespace EmodiaQuest.Core
             Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
             //now after all collision objects are choosen generate and load collision map
+            
             Controller.GenerateCollisionMap(Content, WorldState.Safeworld);
             CollisionMap = Content.Load<Texture2D>("maps/safeWorld_CollisionMap");
             Controller.CreateCollisionMap(CollisionMap);
-
+            
             // Create NPCList
             NPCList = new List<NPC>();
             // Create NPCs
@@ -115,6 +116,12 @@ namespace EmodiaQuest.Core
         {
             // Update for the Skybox
             Skybox.Position = new Vector3(Player.Instance.Position.X, 70, Player.Instance.Position.Y);
+
+            // Updates NPCs
+            foreach(NPC npc in NPCList)
+            {
+                npc.Update(gametime);
+            }
         }
 
         /// <summary>
