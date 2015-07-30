@@ -223,8 +223,9 @@ namespace EmodiaQuest.Core.NPCs
                 }
             }
 
-            npcAi.UpdateAi(Position);
-            Vector2 newPosition = Vector2.Add(npcAi.TrackingDirection, Position);
+            // this shrows a null pointer exception 
+            //npcAi.UpdateAi(Position);
+            //Vector2 newPosition = Vector2.Add(npcAi.TrackingDirection, Position);
 
             //Update Temp PNPCState
             TempNPCState = CurrentNPCState;
