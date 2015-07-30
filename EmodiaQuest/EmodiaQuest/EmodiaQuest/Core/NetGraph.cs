@@ -57,8 +57,8 @@ namespace EmodiaQuest.Core
             playerYString = playerY.ToString();
             this.activePlayerState = activePlayerState;
             this.lastPlayerState = lastPlayerState;
-            this.activeBlendDuration = Player.Instance.activeBlendTime.ToString();
-            this.isBlending = Player.Instance.isBlending.ToString();
+            this.activeBlendDuration = Player.Instance.ActiveBlendTime.ToString();
+            this.isBlending = Player.Instance.IsBlending.ToString();
             this.playerHP = playerHP;
         }
 

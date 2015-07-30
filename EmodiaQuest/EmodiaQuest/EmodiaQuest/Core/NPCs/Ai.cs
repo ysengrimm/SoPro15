@@ -24,12 +24,9 @@ namespace EmodiaQuest.Core
         private EnvironmentController currentEnvironment;
         private bool hasTracked = false;
 
+        public Vector2 TrackingDirection { get; private set; }
 
-        private Vector2 trackingDirection;
-        public Vector2 TrackingDirection
-        {
-            get { return trackingDirection; }
-        }
+        public float TrackingAngle { get; private set; }
 
 
         /// <summary>
@@ -57,11 +54,7 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void CalculateTracking()
         {
-            if (EuclideanDistance(new Vector2(playerPosition.X, playerPosition.Y), new Vector2(ownPosition.X, ownPosition.Y)) < trackingRadius)
-            {
-                hasTracked = true;
-            }
-            else hasTracked = false;
+            hasTracked = EuclideanDistance(new Vector2(playerPosition.X, playerPosition.Y), new Vector2(ownPosition.X, ownPosition.Y)) < trackingRadius;
         }
 
         /// <summary>
@@ -69,14 +62,8 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void CalculateTrackingDirection()
         {
-            if (hasTracked)
-            {
-                trackingDirection = Vector2.Multiply(Vector2.Normalize(Vector2.Subtract(playerPosition, ownPosition)), ownMovementSpeed);
-            }
-            else
-            {
-                trackingDirection = new Vector2(0);
-            }
+            TrackingDirection = hasTracked ? Vector2.Multiply(Vector2.Normalize(Vector2.Subtract(playerPosition, ownPosition)), ownMovementSpeed) : new Vector2(0);
+            TrackingAngle = (float) (hasTracked ? Math.Atan2(playerPosition.Y - ownPosition.Y, playerPosition.X - ownPosition.X) : 0.0f);
         }
 
         /// <summary>
@@ -84,11 +71,11 @@ namespace EmodiaQuest.Core
         /// updates the direction if the player is in tracking range
         /// if the player isn´t in the tracking range, the tracking direction will be set to 0
         /// </summary>
-        /// <param name="ownPosition"></param>
-        public void updateAi(Vector2 ownPosition)
+        /// <param name="position"></param>
+        public void UpdateAi(Vector2 position)
         {
-            this.playerPosition = new Vector2(Player.Instance.Position.X, Player.Instance.Position.Y);
-            this.ownPosition = ownPosition;
+            playerPosition = new Vector2(Player.Instance.Position.X, Player.Instance.Position.Y);
+            ownPosition = position;
             CalculateTracking();
             CalculateTrackingDirection();
         }

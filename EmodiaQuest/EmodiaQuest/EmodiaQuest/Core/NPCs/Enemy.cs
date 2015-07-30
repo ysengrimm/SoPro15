@@ -21,6 +21,8 @@ namespace EmodiaQuest.Core.NPCs
 
         // Enemystats
         public Vector2 Position;
+        public float ViewAngle;
+
         private Vector2 oldPosition;
         public float MaxEnemyHealth;
         public float Armor;
@@ -29,6 +31,11 @@ namespace EmodiaQuest.Core.NPCs
         public float CircleCollision;
         public float AttackRange;
         public float Damage;
+
+        private float attackTimer;
+        public float AttackThreshold;
+        public float AttackSpeed;
+
 
         private float gridSize = Settings.Instance.GridSize;
 
@@ -69,13 +76,18 @@ namespace EmodiaQuest.Core.NPCs
         {
             MovementSpeed = Settings.Instance.HumanEnemySpeed;
             MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-            AttackRange = 2;
+            AttackRange = 5;
             Damage = 5;
 
             // movement
             TrackingRadius = 30f;
             MovementSpeed = 0.25f;
             enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+            ViewAngle = -enemyAi.TrackingAngle;
+
+            attackTimer = 0;
+            AttackThreshold = 20;
+            AttackSpeed = 0.5f;
 
             // collision
             CircleCollision = 1.5f;
@@ -91,8 +103,11 @@ namespace EmodiaQuest.Core.NPCs
         {
             oldPosition = Position;
 
-            enemyAi.updateAi(Position);
+            attackTimer += AttackSpeed;
+
+            enemyAi.UpdateAi(Position);
             Vector2 newPosition = Vector2.Add(enemyAi.TrackingDirection, Position);
+            ViewAngle = -enemyAi.TrackingAngle;
 
             // object collision
             if (IsAlive && Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.CollisionColors, 2.0f))
@@ -142,89 +157,16 @@ namespace EmodiaQuest.Core.NPCs
             }
 
             // interaction
-            Vector2 frontDirection = new Vector2(enemyAi.TrackingDirection.X, enemyAi.TrackingDirection.Y);
-            //Console.WriteLine(Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y));
-            Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridSize) + enemyAi.TrackingDirection.Y));
-
-            // interaction checks
-            if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
+            if (IsAlive)
             {
-                Console.WriteLine(">= 2");
-                // top left 
-                if ((int) frontDirection.X == -1 && (int) frontDirection.Y == -1)
-                {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        for (int j = 0; j < 2; j++)
-                        {
-                            if (onSameGridElement(new Vector2(gridPosInView.X + i, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
-                            {
-                                Player.Instance.Attack(Damage);
-                            }
-                        }
-                    }
-                } // top right
-                else if ((int) frontDirection.X == 1 && (int) frontDirection.Y == -1)
-                {
-                    for (int i = -1; i < 1; i++)
-                    {
-                        for (int j = 0; j < 2; j++)
-                        {
-                            if (onSameGridElement(new Vector2(gridPosInView.X + i, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
-                            {
-                                Player.Instance.Attack(Damage);
-                            }
-                        }
-                    }
-                } // bot left
-                else if ((int) frontDirection.X == -1 && (int) frontDirection.Y == 1)
-                {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        for (int j = -1; j < 1; j++)
-                        {
-                            if (onSameGridElement(new Vector2(gridPosInView.X + i, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
-                            {
-                                Player.Instance.Attack(Damage);
-                            }
-                        }
-                    }
-                } // bot right (X = 1, Y = 1)
-                else
-                {
-                    for (int i = -1; i < 1; i++)
-                    {
-                        for (int j = -1; j < 1; j++)
-                        {
-                            if (onSameGridElement(new Vector2(gridPosInView.X + i, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
-                            {
-                                Player.Instance.Attack(Damage);
-                            }
-                        }
-                    }
-                }
-
-            }
-            else
-            {
-                // left or right
-                if ((int) Math.Abs(frontDirection.X) == 1 && (int) frontDirection.Y == 0)
+                for (int i = -1; i < 2; i++)
                 {
                     for (int j = -1; j < 2; j++)
                     {
-                        if (onSameGridElement(new Vector2(gridPosInView.X, gridPosInView.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                        if (attackTimer >= AttackThreshold && onSameGridElement(new Vector2(Position.X + i, Position.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
                         {
                             Player.Instance.Attack(Damage);
-                        }
-                    }
-                }
-                else // top or bottom
-                {
-                    for (int j = -1; j < 2; j++)
-                    {
-                        if (onSameGridElement(new Vector2(gridPosInView.X + j, gridPosInView.Y), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
-                        {
-                            Player.Instance.Attack(Damage);
+                            attackTimer = 0;
                         }
                     }
                 }
@@ -266,7 +208,7 @@ namespace EmodiaQuest.Core.NPCs
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y))*world;
+                        effect.World = Matrix.CreateRotationY(ViewAngle) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y))*world;
                         effect.View = view;
                         effect.Projection = projection;
                     }

@@ -152,9 +152,6 @@ namespace EmodiaQuest.Core.NPCs
         {
             oldPosition = Position;
 
-            //npcAi.updateAi(Position);
-            //Vector2 newPosition = Vector2.Add(npcAi.TrackingDirection, Position);
-
             //update only the animation which is required if the changed Playerstate
             //Update the active animation
             switch (CurrentNPCState)
@@ -226,6 +223,8 @@ namespace EmodiaQuest.Core.NPCs
                 }
             }
 
+            npcAi.UpdateAi(Position);
+            Vector2 newPosition = Vector2.Add(npcAi.TrackingDirection, Position);
 
             //Update Temp PNPCState
             TempNPCState = CurrentNPCState;

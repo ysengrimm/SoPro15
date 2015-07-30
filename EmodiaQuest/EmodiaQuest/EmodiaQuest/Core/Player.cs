@@ -20,8 +20,8 @@ namespace EmodiaQuest.Core
         private static Player _instance;
 
         // FASTFIX
-        float attackTimer{get;set;}
-        float attackThreshold{get;set;}
+        private float attackTimer;
+        private float attackThreshold;
 
         // For movement and camera update
         private Vector2 movement; // future position
@@ -48,13 +48,13 @@ namespace EmodiaQuest.Core
         private float hp = 100;
         public float Hp
         {
-            get { return this.hp; }
+            get { return hp; }
             set
             {
-                this.hp = value;
+                hp = value;
                 if (OnChangeValue != null)
                 {
-                    OnChangeValue(this, new ChangeValueEvent(this.hp, "hp"));
+                    OnChangeValue(this, new ChangeValueEvent(hp, "hp"));
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace EmodiaQuest.Core
         public PlayerState ActivePlayerState = PlayerState.Standing;
         public PlayerState LastPlayerState = PlayerState.Standing;
         public PlayerState TempPlayerState = PlayerState.Standing;
-        public Weapon activeWeapon = Weapon.Hammer;
+        public Weapon ActiveWeapon = Weapon.Hammer;
         private WorldState activeWorld = WorldState.Safeworld;
         private float standingDuration;
         private float walkingDuration;
@@ -94,8 +94,8 @@ namespace EmodiaQuest.Core
         private float stateTime;
         private float fixedBlendDuration;
         // public for Netstat
-        public float activeBlendTime;
-        public bool isBlending;
+        public float ActiveBlendTime;
+        public bool IsBlending;
 
         // Properties
         private Vector2 windowSize;
@@ -246,11 +246,11 @@ namespace EmodiaQuest.Core
             // update weapon
             if(Keyboard.GetState().IsKeyDown(Keys.D1))
             {
-                activeWeapon = Weapon.Stock;
+                ActiveWeapon = Weapon.Stock;
             }
             if(Keyboard.GetState().IsKeyDown(Keys.D2))
             {
-                activeWeapon = Weapon.Hammer;
+                ActiveWeapon = Weapon.Hammer;
             }
 
             //Update interaction with NPCs
@@ -435,28 +435,28 @@ namespace EmodiaQuest.Core
             {
                 LastPlayerState = TempPlayerState;
                 // When the playerState changes, we need to blend
-                isBlending = true;
-                activeBlendTime = fixedBlendDuration;
+                IsBlending = true;
+                ActiveBlendTime = fixedBlendDuration;
             }
 
 
             // if the Time for blending is over, set it on false;
-            if(activeBlendTime <= 0)
+            if(ActiveBlendTime <= 0)
             {
-                isBlending = false;
-                if(activeBlendTime < 0)
+                IsBlending = false;
+                if(ActiveBlendTime < 0)
                 {
-                    activeBlendTime = 0;
+                    ActiveBlendTime = 0;
                 }
             }
             else
             {
                 // update the blendDuration
-                activeBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
+                ActiveBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
             }
 
             // Update the last animation (only 500 milliseconds after the last changing state required)
-            if (isBlending)
+            if (IsBlending)
             {
                 switch (LastPlayerState)
                 {
@@ -697,7 +697,7 @@ namespace EmodiaQuest.Core
                     break;
             }
 
-            if (isBlending)
+            if (IsBlending)
             {
                 // Bone updates for each required animation for blending 
                 switch (LastPlayerState)
@@ -728,9 +728,9 @@ namespace EmodiaQuest.Core
                     //Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
                     
-                    if (isBlending)
+                    if (IsBlending)
                     {
-                        float percentageOfBlending = activeBlendTime / fixedBlendDuration;
+                        float percentageOfBlending = ActiveBlendTime / fixedBlendDuration;
                         switch (ActivePlayerState)
                         {
                             case PlayerState.Standing:
@@ -819,11 +819,11 @@ namespace EmodiaQuest.Core
 
                 }
                 //Console.WriteLine(mesh.Name);
-                if (mesh.Name == "Stock" && activeWeapon != Weapon.Stock)
+                if (mesh.Name == "Stock" && ActiveWeapon != Weapon.Stock)
                 {
 
                 }
-                else if (mesh.Name == "Hammer" && activeWeapon != Weapon.Hammer)
+                else if (mesh.Name == "Hammer" && ActiveWeapon != Weapon.Hammer)
                 {
 
                 }
