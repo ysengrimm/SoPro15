@@ -42,7 +42,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addLabel(50, 40, 10, "monoFont_big", "Stats", "stats", true);
             this.platform.addLabel(85, 0, 10, "monoFont_big", "Inventory", "inventory", true);
 
-            this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f, 100, 100 * 0.189f * 1.777f, "HUD_small");
+            this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD_small");
         }
 
         public void update()

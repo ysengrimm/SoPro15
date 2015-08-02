@@ -34,7 +34,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.loadContent(Content);
             this.platform.backgroundOff();
 
-            this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f, 100, 100 * 0.189f * 1.777f, "HUD_small");
+            this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD_small");
         }
 
         public void update()
