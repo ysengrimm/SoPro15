@@ -47,6 +47,26 @@ namespace EmodiaQuest.Core.GUI
 
         }
 
+        // Different possible control states for mouse and keyboard
+
+        public bool mousePressed()
+        {
+            if (currentMouseState.LeftButton == ButtonState.Pressed)
+                return true;
+            return false;
+        }
+        public bool mouseClickOn()
+        {
+            if (currentMouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
+                return true;
+            return false;
+        }
+        public bool mouseReleased()
+        {
+            if (currentMouseState.LeftButton == ButtonState.Released && lastMouseState.LeftButton == ButtonState.Pressed)
+                return true;
+            return false;
+        }
         public bool keyClicked(Microsoft.Xna.Framework.Input.Keys inputKey)
         {
             if (currentKeyboardState.IsKeyDown(inputKey) && !lastKeyboardState.IsKeyDown(inputKey))
