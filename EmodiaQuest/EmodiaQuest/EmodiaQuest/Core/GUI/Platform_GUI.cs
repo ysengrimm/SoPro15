@@ -26,6 +26,7 @@ namespace EmodiaQuest.Core.GUI
         private List<PlainImage_GUI> pimages = new List<PlainImage_GUI>();
         private List<Slider_GUI> sliders = new List<Slider_GUI>();
         private List<Label_GUI> labels = new List<Label_GUI>();
+        private List<InventoryItem_GUI> invItems = new List<InventoryItem_GUI>();
 
         public static List<SpriteFonts_GUI> fonts = new List<SpriteFonts_GUI>();
 
@@ -186,6 +187,12 @@ namespace EmodiaQuest.Core.GUI
                     bb.Button_State = ButtonState_GUI.Normal;
 
             }
+
+            foreach(InventoryItem_GUI ii in invItems)
+            {
+
+            }
+
             foreach (Slider_GUI sl in sliders)
             {
                 int sliderhandle = mouseHandle.X - sl.SliderWidth / 2;
@@ -319,6 +326,10 @@ namespace EmodiaQuest.Core.GUI
                 {
                     spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(bb.TextXPos, bb.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), bb.TextScaleFactor, SpriteEffects.None, 0.0f);
                 }
+            }
+            foreach (InventoryItem_GUI ii in invItems)
+            {
+                spritebatch.Draw(itemSocket, new Rectangle(ii.XPos, ii.YPos, ii.Width, ii.Height), drawColor);
             }
             foreach (PlainImage_GUI pi in pimages)
                 spritebatch.Draw(pi.Image, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), drawColor);
@@ -545,6 +556,16 @@ namespace EmodiaQuest.Core.GUI
             labels.Add(new Label_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, lFont, labelText, labelName, textX, textY, textScaleFactor));
         }
 
+        public void addInventoryItem(float xPos, float yPos, float width, float height)
+        {
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
+
+            invItems.Add(new InventoryItem_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs));
+        }
+
         public void updateLabel(string labelName, string newLabeltext)
         {
             //foreach(var n in people.Where(p=>p.sex == male))
@@ -625,6 +646,13 @@ namespace EmodiaQuest.Core.GUI
                     bb.TextXPos = (int)(((MainWindowSize.X * bb.XPosRelative * 0.01f)) + (MainWindowSize.X * bb.WidthRelative * 0.01f / 2) - (bb.TextScaleFactor * spriteFontSize.X / 2));
                     bb.TextYPos = (int)(((MainWindowSize.Y * bb.YPosRelative * 0.01f)) + (MainWindowSize.Y * bb.HeightRelative * 0.01f / 2) - ((bb.TextScaleFactor - 0.15f) * spriteFontSize.Y / 2));
                 }
+            }
+            foreach(InventoryItem_GUI ii in invItems)
+            {
+                ii.XPos = (int)(MainWindowSize.X * ii.XPosRelative * 0.01);
+                ii.YPos = (int)(MainWindowSize.Y * ii.YPosRelative * 0.01);
+                ii.Width = (int)(MainWindowSize.X * ii.WidthRelative * 0.01);
+                ii.Height = (int)(MainWindowSize.Y * ii.HeightRelative * 0.01);
             }
 
             foreach (Label_GUI ls in labels)

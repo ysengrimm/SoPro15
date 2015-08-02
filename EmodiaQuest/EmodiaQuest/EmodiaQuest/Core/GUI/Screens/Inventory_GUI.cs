@@ -42,6 +42,31 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addLabel(50, 40, 10, "monoFont_big", "Stats", "stats", true);
             this.platform.addLabel(85, 0, 10, "monoFont_big", "Inventory", "inventory", true);
 
+            // ItemSockets (Look out to only use 16 to 9 or it will not be a square!)
+            // First row
+            this.platform.addInventoryItem(69, 42, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f, 42, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 2, 42, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 3, 42, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 4, 42, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 5, 42, 4.5f, 8f);
+
+            // Second row
+            this.platform.addInventoryItem(69, 42 + 8.2f, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f, 42 + 8.2f, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 2, 42 + 8.2f, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 3, 42 + 8.2f, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 4, 42 + 8.2f, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 5, 42 + 8.2f, 4.5f, 8f);
+
+            // Third row
+            this.platform.addInventoryItem(69, 42 + 8.2f * 2, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f, 42 + 8.2f * 2, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 2, 42 + 8.2f * 2, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 3, 42 + 8.2f * 2, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 4, 42 + 8.2f * 2, 4.5f, 8f);
+            this.platform.addInventoryItem(69 + 4.7f * 5, 42 + 8.2f * 2, 4.5f, 8f);
+
             this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD_small");
         }
 
