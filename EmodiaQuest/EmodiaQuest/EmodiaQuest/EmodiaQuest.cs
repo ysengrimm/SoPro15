@@ -19,7 +19,7 @@ namespace EmodiaQuest
     public class EmodiaQuest_Game : Microsoft.Xna.Framework.Game
     {
         // Only this two and the enum-init should be here
-        GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
@@ -173,9 +173,7 @@ namespace EmodiaQuest
                 case GameStates_Overall.IngameScreen:
                     this.IsMouseVisible = false;
                     GraphicsDevice.DepthStencilState = new DepthStencilState { DepthBufferEnable = true };
-                   
-                    Ingame.Instance.DrawIngame(spriteBatch);
-                    
+                    Ingame.Instance.DrawIngame(spriteBatch);                  
                     break;
                 case GameStates_Overall.OptionsScreen:
                     
