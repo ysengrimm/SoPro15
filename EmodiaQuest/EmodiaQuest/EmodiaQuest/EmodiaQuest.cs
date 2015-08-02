@@ -97,16 +97,18 @@ namespace EmodiaQuest
         protected override void Update(GameTime gameTime)
         {
             KeyboardState kState = Keyboard.GetState();
+            EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
+
             switch (Gamestate_Game)
             {
                 case GameStates_Overall.StartScreen:
-                    EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
+                    //EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.update();
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
                     break;
                 case GameStates_Overall.MenuScreen:
-                    EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
+                    //EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
@@ -130,7 +132,7 @@ namespace EmodiaQuest
                     EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.update();
                     break;
                 case GameStates_Overall.OptionsScreen:
-                    EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
+                    //EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.update();
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();

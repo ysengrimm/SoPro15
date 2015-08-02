@@ -40,10 +40,6 @@ namespace EmodiaQuest.Core
         private MouseState lastMouseState;
         private MouseState currentMouseState;
 
-        // key click handling
-        private KeyboardState lastKeyboardState;
-        private KeyboardState currentKeyboardState;
-
         // Playerstats
         private float hp = 100;
         public float Hp
@@ -144,8 +140,8 @@ namespace EmodiaQuest.Core
 
         public void LoadContent()
         {
-            // Initialize KeyboardState
-            lastKeyboardState = Keyboard.GetState();
+            // Initialize mouseState
+            currentMouseState = Mouse.GetState();
 
             // Initialize player stuff
             PlayerSpeed = Settings.Instance.PlayerSpeed;
@@ -262,13 +258,8 @@ namespace EmodiaQuest.Core
                 }
             }
 
-            //This is not save. In the very first frame, lastMouseState is undefined, since currentMouseState is undefined
-            // It just has the default-value, whenever a MouseState is declared
             lastMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
-
-            // Keyboard update. Keyboard is save
-            currentKeyboardState = Keyboard.GetState();
 
             // only set fixed mouse pos if game is in focus
             if (gameIsInFocus)
@@ -635,19 +626,10 @@ namespace EmodiaQuest.Core
             }
 
             // Get Keyboard input to change overall GameState
-            if (currentKeyboardState.IsKeyDown(Keys.O) && !lastKeyboardState.IsKeyDown(Keys.O))
-            {
-                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
-            }
-            // Get Keyboard input to change overall GameState
-            if (currentKeyboardState.IsKeyDown(Keys.I) && !lastKeyboardState.IsKeyDown(Keys.I))
-            {
+            if(EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.I))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.InventoryScreen;
-            }
-
-            // Update Keyboard State
-            lastKeyboardState = currentKeyboardState;
-            
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.O))
+                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
         }
 
         private Enemy getClosestMonster(List<Enemy> enemyList)

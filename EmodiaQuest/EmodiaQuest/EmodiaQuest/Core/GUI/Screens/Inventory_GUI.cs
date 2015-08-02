@@ -27,16 +27,10 @@ namespace EmodiaQuest.Core.GUI.Screens
             }
         }
 
-        // key click handling
-        private KeyboardState lastKeyboardState;
-        private KeyboardState currentKeyboardState;
-
         private Platform_GUI platform = new Platform_GUI();
 
         public void loadContent(ContentManager Content)
         {
-            // Initialize KeyboardState
-            lastKeyboardState = Keyboard.GetState();
 
             this.platform.loadContent(Content);
 
@@ -53,19 +47,12 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         public void update()
         {
-            // Keyboard update. Keyboard is save
-            currentKeyboardState = Keyboard.GetState();
 
             this.platform.update();
 
             // Get Keyboard input to change overall GameState
-            if (currentKeyboardState.IsKeyDown(Keys.I) && !lastKeyboardState.IsKeyDown(Keys.I))
-            {
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.I))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
-            }
-
-            // Update Keyboard State
-            lastKeyboardState = currentKeyboardState;
         }
 
         public void draw(SpriteBatch spritebatch)

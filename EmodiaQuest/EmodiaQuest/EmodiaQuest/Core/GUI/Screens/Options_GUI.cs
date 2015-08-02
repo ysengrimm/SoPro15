@@ -11,11 +11,6 @@ namespace EmodiaQuest.Core.GUI.Screens
 {
     class Options_GUI
     {
-
-        // key click handling
-        private KeyboardState lastKeyboardState;
-        private KeyboardState currentKeyboardState;
-
         //EventHandler
         void SliderEventValue(object source, SliderEvent_GUI e)
         {
@@ -88,9 +83,6 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         public void loadContent(ContentManager Content)
         {
-            // Initialize KeyboardState
-            lastKeyboardState = Keyboard.GetState();
-
             this.platform.loadContent(Content);
 
             //Resolution
@@ -126,19 +118,11 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         public void update()
         {
-            // Keyboard update. Keyboard is save
-            currentKeyboardState = Keyboard.GetState();
-
             this.platform.update();
 
             // Get Keyboard input to change overall GameState
-            if (currentKeyboardState.IsKeyDown(Keys.O) && !lastKeyboardState.IsKeyDown(Keys.O))
-            {
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.O))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
-            }
-
-            // Update Keyboard State
-            lastKeyboardState = currentKeyboardState;
         }
 
         public void draw(SpriteBatch spritebatch)

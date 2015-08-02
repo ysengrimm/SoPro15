@@ -150,7 +150,8 @@ namespace EmodiaQuest.Core.GUI
         public void update()
         {
             //functionCalled = null;
-            mouseHandle = Controls_GUI.Instance.Mouse_GUI;
+            //mouseHandle = Controls_GUI.Instance.Mouse_GUI;
+            mouseHandle = Mouse.GetState();
 
 
 
@@ -266,6 +267,7 @@ namespace EmodiaQuest.Core.GUI
                 pushed_name_button = null;
                 pushed_name_slider = null;
             }
+
             mouseHandle_Old = mouseHandle;
         }
 

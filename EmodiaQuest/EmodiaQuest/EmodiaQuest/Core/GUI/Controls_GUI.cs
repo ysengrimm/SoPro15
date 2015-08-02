@@ -24,17 +24,34 @@ namespace EmodiaQuest.Core.GUI
 
         // Declare of the MouseState for the GUI
         // Should be set to the middle of the screen when opening menu TODO
-        public MouseState Mouse_GUI { get; set; }
+        //public MouseState Mouse_GUI { get; set; }
+        public MouseState lastMouseState;
+        public MouseState currentMouseState;
+
+        public KeyboardState lastKeyboardState;
+        public KeyboardState currentKeyboardState;
 
 
         public void loadContent()
         {
-            
+            currentMouseState = Mouse.GetState();
+            currentKeyboardState = Keyboard.GetState();
         }
         public void update()
         {
-            this.Mouse_GUI = Mouse.GetState();
+            lastMouseState = currentMouseState;
+            currentMouseState = Mouse.GetState();
 
+            lastKeyboardState = currentKeyboardState;
+            currentKeyboardState = Keyboard.GetState();
+
+        }
+
+        public bool keyClicked(Microsoft.Xna.Framework.Input.Keys inputKey)
+        {
+            if (currentKeyboardState.IsKeyDown(inputKey) && !lastKeyboardState.IsKeyDown(inputKey))
+                return true;
+            return false;
         }
     }
 }
