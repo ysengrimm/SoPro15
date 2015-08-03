@@ -63,7 +63,14 @@ namespace EmodiaQuest.Core
                 get { return playing; }
             }
 
-            public FXSound (int index, String name, SoundEffect soundEffect, float timer, float delay, bool playing)
+            private bool forceToPlay;
+            public bool ForceToPlay
+            {
+                set { forceToPlay = value; }
+                get { return forceToPlay; }
+            }
+
+            public FXSound (int index, String name, SoundEffect soundEffect, float timer, float delay, bool playing, bool forceToPlay)
             {
                 this.Index = index;
                 this.Name = name;
@@ -73,6 +80,7 @@ namespace EmodiaQuest.Core
                 this.activeTimer = Timer;
                 this.activeDelay = delay;
                 this.playing = playing;
+                this.forceToPlay = forceToPlay;
             }
         }
 
@@ -81,25 +89,63 @@ namespace EmodiaQuest.Core
         // FX 
         FXSound[] FXSounds;
 
-        FXSound Hit_1;
+        FXSound Hit_1, Plop_1;
 
         public void LoadJukebox(ContentManager content)
         {
             this.Content = content;
             FXNum = 100;
             FXSounds = new FXSound [FXNum];
-            Hit_1 = new FXSound(0, "Hit_1", Content.Load<SoundEffect>("Sounds/fx/Schlag_1"), Player.Instance.standingDuration / 1.5f, Player.Instance.standingDuration / 3f, false);
+            Hit_1 = new FXSound(0, "Hit_1", Content.Load<SoundEffect>("Sounds/fx/Schlag_1"), Player.Instance.standingDuration / 1.5f, Player.Instance.standingDuration / 3f, false, false);
+            Plop_1 = new FXSound(1, "Plop_1", Content.Load<SoundEffect>("Sounds/fx/Plop_1"), 200, 0, false, false);
             FXSounds[0] = Hit_1;
+            FXSounds[1] = Plop_1;
 
         }
 
         public void UpdateJukebox(GameTime gameTime)
         {
-
-            if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting || FXSounds[0].Playing)
+            switch (EmodiaQuest_Game.Gamestate_Game)
             {
-                playFX(0, gameTime);
+                case GameStates_Overall.MenuScreen:
+                    // Button Pressed Sound
+                    for(int i = 0; i < FXSounds.Length; i++)
+                    {
+                        if(FXSounds[i].ForceToPlay)
+                        {
+                            playFX(i, gameTime);
+                        }
+                    }
+                    break;
+                case GameStates_Overall.OptionsScreen:
+                    // Button Pressed Sound
+                    for (int i = 0; i < FXSounds.Length; i++)
+                    {
+                        if (FXSounds[i].ForceToPlay)
+                        {
+                            playFX(i, gameTime);
+                        }
+                    }
+                    break;
+
+                case GameStates_Overall.IngameScreen:
+                    // Button Pressed Sound
+                    for (int i = 0; i < FXSounds.Length; i++)
+                    {
+                        if (FXSounds[i].ForceToPlay)
+                        {
+                            playFX(i, gameTime);
+                        }
+                    }
+
+                    // PlayerSounds
+                    if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting || FXSounds[0].Playing)
+                    {
+                        playFX(0, gameTime);
+                    }
+                    break;
             }
+
         }
 
 
@@ -136,8 +182,14 @@ namespace EmodiaQuest.Core
                 FXSounds[index].ActiveDelay = FXSounds[index].Delay;
                 FXSounds[index].ActiveTimer = FXSounds[index].Timer;
                 FXSounds[index].Playing = false;
+                FXSounds[index].ForceToPlay = false;
             }
 
+        }
+
+        public void PlayAudioMouseFeedback(int i)
+        {
+            FXSounds[i].ForceToPlay = true;
         }
 
     }
