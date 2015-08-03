@@ -83,10 +83,10 @@ namespace EmodiaQuest.Core
         public PlayerState TempPlayerState = PlayerState.Standing;
         public Weapon ActiveWeapon = Weapon.Hammer;
         private WorldState activeWorld = WorldState.Safeworld;
-        private float standingDuration;
-        private float walkingDuration;
-        private float jumpingDuration;
-        private float swordFightingDuration;
+        public float standingDuration;
+        public float walkingDuration;
+        public float jumpingDuration;
+        public float swordFightingDuration;
         private float stateTime;
         private float fixedBlendDuration;
         // public for Netstat

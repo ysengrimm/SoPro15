@@ -77,6 +77,9 @@ namespace EmodiaQuest
 
             Ingame.Instance.LoadIngame(Content, screenSize);
 
+            // Load sound
+            Jukebox.Instance.LoadJukebox(Content);
+
             Mouse.WindowHandle = Window.Handle;
         }
 
@@ -99,6 +102,8 @@ namespace EmodiaQuest
             KeyboardState kState = Keyboard.GetState();
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
 
+            // Update Sound
+            Jukebox.Instance.UpdateJukebox(gameTime);
             switch (Gamestate_Game)
             {
                 case GameStates_Overall.StartScreen:
