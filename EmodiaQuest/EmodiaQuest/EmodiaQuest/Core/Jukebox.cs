@@ -95,6 +95,7 @@ namespace EmodiaQuest.Core
 
         public void UpdateJukebox(GameTime gameTime)
         {
+
             if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting || FXSounds[0].Playing)
             {
                 playFX(0, gameTime);
@@ -106,31 +107,32 @@ namespace EmodiaQuest.Core
         {
             if (FXSounds[index].Playing == false)
             {
-                Console.WriteLine("Start");
+                //Console.WriteLine("Start");
                 FXSounds[index].ActiveDelay -= gametime.ElapsedGameTime.Milliseconds;
                 FXSounds[index].Playing = true;
             }
             else if (FXSounds[index].Playing == true && FXSounds[index].ActiveDelay > 0)
             {
-                Console.WriteLine("Fading");
+                //Console.WriteLine("Fading");
                 FXSounds[index].ActiveDelay -= gametime.ElapsedGameTime.Milliseconds;
             }
             else if (FXSounds[index].Playing == true && FXSounds[index].ActiveDelay <= 0 && FXSounds[index].ActiveTimer == FXSounds[index].Timer)
             {
-                Console.WriteLine("PlayStart");
+                //Console.WriteLine("PlayStart");
                 FXSounds[index].ActiveDelay = 0;
                 SoundEffectInstance tempInstance = FXSounds[index].SoundEffect.CreateInstance();
+                tempInstance.Volume = Settings.Instance.Volume;
                 tempInstance.Play();
                 FXSounds[index].ActiveTimer -= gametime.ElapsedGameTime.Milliseconds;
             }
             else if (FXSounds[index].Playing == true && FXSounds[index].ActiveDelay == 0 && FXSounds[index].ActiveTimer > 0)
             {
-                Console.WriteLine("PlayStart");
+                //Console.WriteLine("Setting Timer back");
                 FXSounds[index].ActiveTimer -= gametime.ElapsedGameTime.Milliseconds;
             }
             else if (FXSounds[index].Playing == true && FXSounds[index].ActiveTimer <= 0)
             {
-                Console.WriteLine("Reset");
+                //Console.WriteLine("Reset");
                 FXSounds[index].ActiveDelay = FXSounds[index].Delay;
                 FXSounds[index].ActiveTimer = FXSounds[index].Timer;
                 FXSounds[index].Playing = false;
@@ -138,9 +140,5 @@ namespace EmodiaQuest.Core
 
         }
 
-        private void updateActiveFX(GameTime gameTime)
-        {
-
-        }
     }
 }
