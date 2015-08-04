@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace EmodiaQuest.Core.GUI.Screens
 {
-    class Options_GUI
+    public class Options_GUI
     {
         //EventHandler
         void SliderEventValue(object source, SliderEvent_GUI e)
@@ -18,22 +18,22 @@ namespace EmodiaQuest.Core.GUI.Screens
             {
                 case "volumeChange":
                     EmodiaQuest.Core.Settings.Instance.Volume = (float)(e.SliderValue)/100;
-                    this.platform.updateLabel("volume", e.SliderValue.ToString());
+                    this.platform.updateLabel("volume", "Volume: " + e.SliderValue.ToString());
                     GraphicsCopy.ApplyChanges();
                     break;
                 case "resolutionChange":
                     EmodiaQuest.Core.Settings.Instance.Resolution = EmodiaQuest.Core.Settings.PossibleResolutions[e.SliderValue];
                     int resX = EmodiaQuest.Core.Settings.Instance.Resolution.X;
                     int resY = EmodiaQuest.Core.Settings.Instance.Resolution.Y;
-                    this.platform.updateLabel("resolution", resX + " x " + resY);
+                    this.platform.updateLabel("resolution", "Resolution: " + resX + " x " + resY);
                     EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
                     //GraphicsCopy.PreferredBackBufferWidth = resX;
                     //GraphicsCopy.PreferredBackBufferHeight = resY;
                     //GraphicsCopy.ApplyChanges();
                     if (EmodiaQuest.Core.Settings.Instance.Fullscreen)
-                        this.platform.updateLabel("fullscreenMode", "Fullscreen");
+                        this.platform.updateLabel("fullscreenMode", "Mode: Fullscreen");
                     else
-                        this.platform.updateLabel("fullscreenMode", "Windowed");
+                        this.platform.updateLabel("fullscreenMode", "Mode: Windowed");
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -51,9 +51,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "switchFullscreen":                    
                     EmodiaQuest.Core.Settings.Instance.Fullscreen = !EmodiaQuest.Core.Settings.Instance.Fullscreen;
                     if (EmodiaQuest.Core.Settings.Instance.Fullscreen)
-                        this.platform.updateLabel("fullscreenMode", "Fullscreen");
+                        this.platform.updateLabel("fullscreenMode", "Mode: Fullscreen");
                     else
-                        this.platform.updateLabel("fullscreenMode", "Windowed");
+                        this.platform.updateLabel("fullscreenMode", "Mode: Windowed");
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -93,15 +93,16 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "OPTIONS MENU", true);
             this.platform.addLabel(50, 10, 18, "dice_big", "Options", "Options", true);
 
-            this.platform.addSlider(20, 40, 30, 8, 0, 2, 0, "resolutionChange");
-            this.platform.addSlider(20, 50, 30, 8, 0, 100, 100, "volumeChange");            
+            this.platform.addSlider(15, 40, 35, 8, 0, 2, 0, "resolutionChange");
+            this.platform.addSlider(15, 50, 35, 8, 0, 100, 100, "volumeChange");            
 
-            this.platform.addLabel(60, 40, 30, 8, "monoFont_small", "854 x 480", "resolution");
-            this.platform.addLabel(60, 50, 30, 8, "monoFont_small", "100", "volume");
+            this.platform.addLabel(55, 40, 35, 8, "monoFont_small", "Resolution: 854 x 480", "resolution");
+            this.platform.addLabel(55, 50, 35, 8, "monoFont_small", "Volume: 100", "volume");
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
-            this.platform.addButton(20, 60, 30, 8, "switchFullscreen", "Screen Mode");
-            this.platform.addLabel(60, 60, 30, 8, "monoFont_small", "Windowed", "fullscreenMode");
+            //this.platform.addButton(20, 60, 30, 8, "switchFullscreen", "Screen Mode");
+            this.platform.addButton(15, 60, 35, 8, "switchFullscreen", true);
+            this.platform.addLabel(55, 60, 35, 8, "monoFont_small", "Mode: Windowed", "fullscreenMode");
 
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Main Menu");
 
