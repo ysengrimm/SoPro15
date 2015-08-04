@@ -34,6 +34,10 @@ namespace EmodiaQuest.Core
         }
         public ContentManager Content;
 
+        MediaLibrary sampleMediaLibrary;
+
+        Random rand;
+
         public struct FXSound
         {
             public int Index;
@@ -86,14 +90,23 @@ namespace EmodiaQuest.Core
 
         // Number of FX Sounds
         int FXNum;
+        // Number of Songs
+        int MusicNum;
         // FX 
         FXSound[] FXSounds;
+        // Songs
+        Song Kampf_1;
 
+        // All FX Sounds
         FXSound Hit_1, Plop_1;
+
+        // All songs
 
         public void LoadJukebox(ContentManager content)
         {
             this.Content = content;
+
+            // FX Loading
             FXNum = 100;
             FXSounds = new FXSound [FXNum];
             Hit_1 = new FXSound(0, "Hit_1", Content.Load<SoundEffect>("Sounds/fx/Schlag_1"), Player.Instance.standingDuration / 1.5f, Player.Instance.standingDuration / 3f, false, false);
@@ -101,10 +114,41 @@ namespace EmodiaQuest.Core
             FXSounds[0] = Hit_1;
             FXSounds[1] = Plop_1;
 
+            // Music Loading
+            Kampf_1 = Content.Load<Song>("Sounds/music/Kampf_1");
+
+            
+
+            sampleMediaLibrary = new MediaLibrary();
+            rand = new Random();
+
+            MediaPlayer.Stop(); // stop current audio playback 
+
+            // generate a random valid index into Albums
+            int i = rand.Next(0, sampleMediaLibrary.Albums.Count - 1);
+
+            // play the first track from the album
+            MediaPlayer.Play(sampleMediaLibrary.Albums[i].Songs[0]);
+            
+            Console.WriteLine();
         }
 
         public void UpdateJukebox(GameTime gameTime)
         {
+            MediaPlayer.Volume = Settings.Instance.Volume;
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                Console.WriteLine(MediaPlayer.Queue.ActiveSong.Name + " " + MediaPlayer.Queue.ActiveSong.Artist);
+                MediaPlayer.Stop(); // stop current audio playback 
+
+                // generate a random valid index into Albums
+                int i = rand.Next(0, sampleMediaLibrary.Albums.Count - 1);
+
+                // play the first track from the album
+                MediaPlayer.Play(sampleMediaLibrary.Albums[i].Songs[0]);
+            }
+            //Console.WriteLine(MediaPlayer.Queue.Count);
             switch (EmodiaQuest_Game.Gamestate_Game)
             {
                 case GameStates_Overall.MenuScreen:
