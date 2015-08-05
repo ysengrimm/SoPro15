@@ -15,8 +15,6 @@ namespace EmodiaQuest.Core
 {
     public class Jukebox
     {
-        // Implement nice methods to play adaptive sound, from everywhere of the game. Fade over and max of playing sounds at one time (Janos)
-
        private static Jukebox instance;
 
         private Jukebox() { }
@@ -101,6 +99,7 @@ namespace EmodiaQuest.Core
         FXSound Hit_1, Plop_1;
 
         // All songs
+        Song[] Songs;
 
         public void LoadJukebox(ContentManager content)
         {
@@ -117,19 +116,7 @@ namespace EmodiaQuest.Core
             // Music Loading
             Kampf_1 = Content.Load<Song>("Sounds/music/Kampf_1");
 
-            
-
-            sampleMediaLibrary = new MediaLibrary();
-            rand = new Random();
-
-            MediaPlayer.Stop(); // stop current audio playback 
-
-            // generate a random valid index into Albums
-            int i = rand.Next(0, sampleMediaLibrary.Albums.Count - 1);
-
-            // play the first track from the album
-            MediaPlayer.Play(sampleMediaLibrary.Albums[i].Songs[0]);
-            
+            MediaPlayer.Play(Kampf_1);
             Console.WriteLine();
         }
 
@@ -137,17 +124,6 @@ namespace EmodiaQuest.Core
         {
             MediaPlayer.Volume = Settings.Instance.Volume;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                Console.WriteLine(MediaPlayer.Queue.ActiveSong.Name + " " + MediaPlayer.Queue.ActiveSong.Artist);
-                MediaPlayer.Stop(); // stop current audio playback 
-
-                // generate a random valid index into Albums
-                int i = rand.Next(0, sampleMediaLibrary.Albums.Count - 1);
-
-                // play the first track from the album
-                MediaPlayer.Play(sampleMediaLibrary.Albums[i].Songs[0]);
-            }
             //Console.WriteLine(MediaPlayer.Queue.Count);
             switch (EmodiaQuest_Game.Gamestate_Game)
             {
