@@ -5,5 +5,5 @@ using System.Text;
 
 namespace EmodiaQuest.Core
 {
-    public enum EnemyState { Standing, Walking, Jumping, Swordfighting, Bowfighting, Running, Idle}
+    public enum EnemyState { Run, Idle, Fight}
 }

@@ -15,8 +15,6 @@ namespace EmodiaQuest.Core
 {
     public class Jukebox
     {
-        // Implement nice methods to play adaptive sound, from everywhere of the game. Fade over and max of playing sounds at one time (Janos)
-
        private static Jukebox instance;
 
         private Jukebox() { }
@@ -33,6 +31,10 @@ namespace EmodiaQuest.Core
             }
         }
         public ContentManager Content;
+
+        MediaLibrary sampleMediaLibrary;
+
+        Random rand;
 
         public struct FXSound
         {
@@ -86,14 +88,24 @@ namespace EmodiaQuest.Core
 
         // Number of FX Sounds
         int FXNum;
+        // Number of Songs
+        int MusicNum;
         // FX 
         FXSound[] FXSounds;
+        // Songs
+        Song Kampf_1;
 
+        // All FX Sounds
         FXSound Hit_1, Plop_1;
+
+        // All songs
+        Song[] Songs;
 
         public void LoadJukebox(ContentManager content)
         {
             this.Content = content;
+
+            // FX Loading
             FXNum = 100;
             FXSounds = new FXSound [FXNum];
             Hit_1 = new FXSound(0, "Hit_1", Content.Load<SoundEffect>("Sounds/fx/Schlag_1"), Player.Instance.standingDuration / 1.5f, Player.Instance.standingDuration / 3f, false, false);
@@ -101,10 +113,18 @@ namespace EmodiaQuest.Core
             FXSounds[0] = Hit_1;
             FXSounds[1] = Plop_1;
 
+            // Music Loading
+            Kampf_1 = Content.Load<Song>("Sounds/music/Kampf_1");
+
+            MediaPlayer.Play(Kampf_1);
+            Console.WriteLine();
         }
 
         public void UpdateJukebox(GameTime gameTime)
         {
+            MediaPlayer.Volume = Settings.Instance.Volume;
+
+            //Console.WriteLine(MediaPlayer.Queue.Count);
             switch (EmodiaQuest_Game.Gamestate_Game)
             {
                 case GameStates_Overall.MenuScreen:

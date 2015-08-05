@@ -71,7 +71,7 @@ namespace EmodiaQuest.Core
             // loading Safeworld
             SafeWorld.Instance.LoadContent(Content);
             // loading the dungeon
-            Dungeon = new Dungeon(0);       
+            Dungeon = new Dungeon(50);       
             Dungeon.LoadContent(Content);
 
             // setting the collision for the safeworld as default

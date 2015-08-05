@@ -43,23 +43,39 @@ namespace EmodiaQuest.Core.NPCs
 
         private CollisionHandler collHandler;
 
+        public ContentManager Content;
 
         /**
          * Animation and Model
         **/
         // The Model
-        private Model enemyModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM, runningM, idleM;
+        private Model enemyModel, idleM, runM, fightM;
         // Skinning Data
-        private SkinningData standingSD, walkingSD, jumpingSD, swordfightingSD, bowfightingSD, runningSD, idleSD;
+        private SkinningData idleSD, runSD, fightSD;
         // The animation Player
-        private AnimationPlayer standingAP, walkingAP, jumpingAP, swordfightingAP, bowfightingAP, runningAP, idleAP;
+        private AnimationPlayer idleAP, runAP, fightAP;
         // The animation Clips, which will be used by the model
-        private AnimationClip standingC, walkingC, jumpingC, swordfightingC, bowfightingC, runningC, idleC;
+        private AnimationClip idleC, runC, fightC;
         // The Bone Matrices for each animation
-        private Matrix[] blendingBones, standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones, runningBones, idleBones;
+        private Matrix[] blendingBones, idleBones, runBones, fightBones;
         // The playerState, which will be needed to update the right animation
-        public EnemyState CurrentEnemyState = EnemyState.Standing;
-        public EnemyState LastEnemyState = EnemyState.Standing;
+        public EnemyState CurrentEnemyState = EnemyState.Idle;
+        public EnemyState TempEnemyState = EnemyState.Idle;
+        public EnemyState LastEnemyState = EnemyState.Idle;
+
+        public Weapon activeWeapon = Weapon.Hammer;
+
+        // duration of the animations
+        private float idleDuration;
+        private float runDuration;
+        private float fightDuration;
+
+        private float stateTime;
+        private float fixedBlendDuration;
+
+        // variables for animation
+        public float activeBlendTime;
+        public bool isBlending;
 
 
         public Enemy(Vector2 position, EnvironmentController currentEnvironment)
@@ -74,6 +90,8 @@ namespace EmodiaQuest.Core.NPCs
         // Methods
         public void LoadContent(ContentManager content)
         {
+            this.Content = content;
+
             MovementSpeed = Settings.Instance.HumanEnemySpeed;
             MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
             AttackRange = 5;
@@ -95,12 +113,110 @@ namespace EmodiaQuest.Core.NPCs
 
             IsAlive = true;
 
-            enemyModel = content.Load<Model>("fbxContent/enemies/human/temp_enemy_v1");
+
+            // loading default mesh
+            enemyModel = content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+            // loading Animation Models
+            idleM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------------- The animation Meshes here
+            runM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+            fightM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+
+            // Loading Skinning Data
+            idleSD = idleM.Tag as SkinningData;
+            runSD = runM.Tag as SkinningData;
+            fightSD = fightM.Tag as SkinningData;
+
+            // Load an animation Player for each animation
+            idleAP = new AnimationPlayer(idleSD);
+            runAP = new AnimationPlayer(runSD);
+            fightAP = new AnimationPlayer(fightSD);
+
+            // loading the animation clips
+            idleC = idleSD.AnimationClips["idle"]; // <------------------------------------ The name of the animation in blender
+            runC = runSD.AnimationClips["idle"];
+            fightC = fightSD.AnimationClips["idle"];
+
+            // Safty Start Animations
+            idleAP.StartClip(idleC);
+            runAP.StartClip(runC);
+            fightAP.StartClip(fightC);
+
+            //assign the specific animationTimes
+            idleDuration = idleC.Duration.Milliseconds / 1f;
+            runDuration = runC.Duration.Milliseconds / 1f;
+            fightDuration = fightC.Duration.Milliseconds / 1f;
+
+
+            stateTime = 0;
+            // Duration of Blending Animations in milliseconds
+            fixedBlendDuration = 500;
         }
 
 
         public void Update(GameTime gameTime)
         {
+            //update only the animation which is required if the npcstate changed
+            //Update the active animation
+            switch (CurrentEnemyState)
+            {
+                case EnemyState.Idle:
+                    idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case EnemyState.Run:
+                    runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case EnemyState.Fight:
+                    fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+            }
+
+            // Secure, that the last NPCstate is always a other NPCstate, than the acutal
+            if (CurrentEnemyState != TempEnemyState)
+            {
+                LastEnemyState = TempEnemyState;
+                // When the playerState changes, we need to blend
+                isBlending = true;
+                activeBlendTime = fixedBlendDuration;
+            }
+
+
+            // if the Time for blending is over, set it on false;
+            if (activeBlendTime <= 0)
+            {
+                isBlending = false;
+                if (activeBlendTime < 0)
+                {
+                    activeBlendTime = 0;
+                }
+            }
+            else
+            {
+                // update the blendDuration
+                activeBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+
+            // Update the last animation (only 500 milliseconds after the last changing state required)
+            if (isBlending)
+            {
+                switch (LastEnemyState)
+                {
+                    case EnemyState.Idle:
+                        idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case EnemyState.Run:
+                        runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case EnemyState.Fight:
+                        fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                }
+            }
+
+
+            //Update Temp EnemyState
+            TempEnemyState = CurrentEnemyState;
+
             oldPosition = Position;
 
             attackTimer += AttackSpeed;
@@ -199,27 +315,133 @@ namespace EmodiaQuest.Core.NPCs
             currentEnvironment.enemyArray[(int) Math.Round(Position.X/10), (int) Math.Round(Position.Y/10)].Add(this);
         }
 
+        private double EuclideanDistance(Vector2 p1, Vector2 p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+        }
+
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             if (IsAlive)
             {
-                foreach (ModelMesh mesh in enemyModel.Meshes)
+                // Bone updates for each required animation   
+            switch (CurrentEnemyState)
+            {
+                case EnemyState.Idle:
+                    idleBones = idleAP.GetSkinTransforms();
+                    break;
+                case EnemyState.Run:
+                    runBones = runAP.GetSkinTransforms();
+                    break;
+                case EnemyState.Fight:
+                    fightBones = fightAP.GetSkinTransforms();
+                    break;
+            }
+
+            if (isBlending)
+            {
+                // Bone updates for each required animation for blending 
+                switch (LastEnemyState)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateRotationY(ViewAngle) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y))*world;
-                        effect.View = view;
-                        effect.Projection = projection;
-                    }
-                    mesh.Draw();
+                    case EnemyState.Idle:
+                        idleBones = idleAP.GetSkinTransforms();
+                        break;
+                    case EnemyState.Run:
+                        runBones = runAP.GetSkinTransforms();
+                        break;
+                    case EnemyState.Fight:
+                        fightBones = fightAP.GetSkinTransforms();
+                        break;
                 }
             }
-        }
 
-        private double EuclideanDistance(Vector2 p1, Vector2 p2)
-        {
-            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+            foreach (ModelMesh mesh in enemyModel.Meshes)
+            {
+
+                //Console.WriteLine(mesh.Name);
+                    // Only renders the Right assigned Weapon
+                if (mesh.Name == "Stock" && activeWeapon != Weapon.Stock)
+                {
+
+                }
+                else if (mesh.Name == "Hammer" && activeWeapon != Weapon.Hammer)
+                {
+
+                }
+                    // Only renders the Meshes with the right resolution
+                else if(mesh.Name == "NPC_body" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.High)
+                {
+
+                }
+                else if(mesh.Name == "NPC_body_lowPoly" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.Low)
+                {
+
+                }
+                    // renders everything that should be
+                else
+                {
+                    foreach (SkinnedEffect effect in mesh.Effects)
+                    {
+                        //Draw the Bones which are required
+                        if (isBlending)
+                        {
+                            float percentageOfBlending = activeBlendTime / fixedBlendDuration;
+                            switch (CurrentEnemyState)
+                            {
+                                case EnemyState.Idle:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                    {
+                                        blendingBones[i] = Matrix.Lerp(blendingBones[i], idleBones[i], 1 - percentageOfBlending);
+                                    }
+                                    effect.SetBoneTransforms(blendingBones);
+                                    break;
+                                case EnemyState.Run:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                    {
+                                        blendingBones[i] = Matrix.Lerp(blendingBones[i], runBones[i], 1 - percentageOfBlending);
+                                    }
+                                    effect.SetBoneTransforms(blendingBones);
+                                    break;
+                                case EnemyState.Fight:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                    {
+                                        blendingBones[i] = Matrix.Lerp(blendingBones[i], fightBones[i], 1 - percentageOfBlending);
+                                    }
+                                    effect.SetBoneTransforms(blendingBones);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (CurrentEnemyState)
+                            {
+                                case EnemyState.Idle:
+                                    effect.SetBoneTransforms(idleBones);
+                                    break;
+                                case EnemyState.Run:
+                                    effect.SetBoneTransforms(runBones);
+                                    break;
+                                case EnemyState.Fight:
+                                    effect.SetBoneTransforms(fightBones);
+                                    break;
+                            }
+                        }
+
+                        effect.EnableDefaultLighting();
+                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+                        effect.View = view;
+                        effect.Projection = projection;
+                        effect.SpecularColor = new Vector3(0.25f);
+                        effect.SpecularPower = 16;
+                        effect.PreferPerPixelLighting = true;
+                        // Textures
+
+                        // effect.tectures = ....  
+                    }
+                    mesh.Draw();
+                }              
+            }
+            }
         }
         
     }

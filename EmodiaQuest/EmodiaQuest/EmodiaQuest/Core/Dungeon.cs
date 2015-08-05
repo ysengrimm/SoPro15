@@ -25,6 +25,13 @@ namespace EmodiaQuest.Core
         public Skybox Skybox;
 
         public List<Enemy> EnemyList;
+
+        /// <summary>
+        /// placement collision radius
+        /// </summary>
+        public float CR;
+
+
         private int numEnemies;
         /// <summary>
         /// 
@@ -48,6 +55,7 @@ namespace EmodiaQuest.Core
         {
             this.Content = content;
 
+            CR = 5;
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
             string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
@@ -96,8 +104,20 @@ namespace EmodiaQuest.Core
                 int y = (int) y1 / Settings.Instance.GridSize;
                 if(Controller.CollisionColors[x, y] != Color.Black && Controller.enemyArray[x,y].Count < 1)
                 {
-                    Enemy enemy = new Enemy(new Vector2(x1, y1), Controller);
-                    EnemyList.Add(enemy);
+                    if (Controller.CollisionColors[(int)(x1 + CR) / Settings.Instance.GridSize, (int)(y1 + CR) / Settings.Instance.GridSize] != Color.Black && Controller.CollisionColors[(int)(x1 - CR) / Settings.Instance.GridSize, (int)(y1 - CR) / Settings.Instance.GridSize] != Color.Black)
+                    {
+                        if (Controller.CollisionColors[(int)(x1 - CR) / Settings.Instance.GridSize, (int)(y1 + CR) / Settings.Instance.GridSize] != Color.Black && Controller.CollisionColors[(int)(x1 + CR) / Settings.Instance.GridSize, (int)(y1 - CR) / Settings.Instance.GridSize] != Color.Black)
+                        {
+                            if (Controller.CollisionColors[(int)(x1 - CR) / Settings.Instance.GridSize, y] != Color.Black && Controller.CollisionColors[(int)(x1 + CR) / Settings.Instance.GridSize, y] != Color.Black)
+                            {
+                                if (Controller.CollisionColors[x, (int)(y1 - CR) / Settings.Instance.GridSize] != Color.Black && Controller.CollisionColors[x, (int)(y1 + CR) / Settings.Instance.GridSize] != Color.Black)
+                                {
+                                    Enemy enemy = new Enemy(new Vector2(x1, y1), Controller);
+                                    EnemyList.Add(enemy);
+                                }
+                            }
+                        }
+                    }
                 }
                 else
                 {

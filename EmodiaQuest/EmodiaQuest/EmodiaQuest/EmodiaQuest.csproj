@@ -169,7 +169,7 @@
     <Compile Include="Core\Storycontroller.cs" />
     <Compile Include="Core\Screens\VideoScreen.cs" />
     <Compile Include="Core\TeleporterObject.cs" />
-    <Compile Include="Core\WorldState.cs" />
+    <Compile Include="Rendering\WorldState.cs" />
     <Compile Include="Enums_Overall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Programm.cs" />
