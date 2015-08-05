@@ -98,7 +98,8 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addInventoryItem(69 + 4.7f * 4, 42 + 8.2f * 2, 4.5f, 8f);
             this.platform.addInventoryItem(69 + 4.7f * 5, 42 + 8.2f * 2, 4.5f, 8f);
 
-            this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD_small");
+            this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD", "HUD_small");
+            //this.platform.addPlainImage(100, 100, -100, -100 * 0.189f * 1.777f, "HUD", "HUD_small");
 
             platform.OnSliderValue += new GUI_Delegate_Slider(this.SliderEventValue);
         }

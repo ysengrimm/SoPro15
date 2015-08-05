@@ -66,6 +66,7 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D HUD_small;
         private Texture2D pixel_black;
         private Texture2D pixel_white;
+        private Texture2D pixel_red;
 
         // Slider Textures
         private Texture2D slider_background;
@@ -110,6 +111,7 @@ namespace EmodiaQuest.Core.GUI
             HUD_small = Content.Load<Texture2D>("Content_GUI/HUD_small");
             pixel_black = Content.Load<Texture2D>("Content_GUI/pixel_black");
             pixel_white = Content.Load<Texture2D>("Content_GUI/pixel_white");
+            pixel_red = Content.Load<Texture2D>("Content_GUI/pixel_red");
 
             // Slider Content
             slider_background = Content.Load<Texture2D>("Content_GUI/slider_background_new");
@@ -190,7 +192,7 @@ namespace EmodiaQuest.Core.GUI
 
             }
 
-            foreach(InventoryItem_GUI ii in invItems)
+            foreach (InventoryItem_GUI ii in invItems)
             {
 
             }
@@ -334,7 +336,10 @@ namespace EmodiaQuest.Core.GUI
                 spritebatch.Draw(itemSocket, new Rectangle(ii.XPos, ii.YPos, ii.Width, ii.Height), drawColor);
             }
             foreach (PlainImage_GUI pi in pimages)
-                spritebatch.Draw(pi.Image, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), drawColor);
+                if (pi.IsVisible)
+                {
+                    spritebatch.Draw(pi.Image, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), drawColor);
+                }
 
             foreach (PlainText_GUI pt in ptexts)
                 spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), OverallFontScale, SpriteEffects.None, 0.0f);
@@ -449,7 +454,7 @@ namespace EmodiaQuest.Core.GUI
 
         }
 
-        public void addPlainImage(float xPos, float yPos, float width, float height, string image)
+        public void addPlainImage(float xPos, float yPos, float width, float height, string name, string image)
         {
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
@@ -467,11 +472,14 @@ namespace EmodiaQuest.Core.GUI
                 case "pixel_black":
                     plTexture = pixel_black;
                     break;
+                case "pixel_red":
+                    plTexture = pixel_red;
+                    break;
                 default:
                     plTexture = pixel_black;
                     break;
             }
-            pimages.Add(new PlainImage_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, plTexture));
+            pimages.Add(new PlainImage_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, plTexture));
         }
 
         public void addSlider(float xPos, float yPos, float width, float height, int minValue, int maxValue, int startValue, string name)
@@ -609,6 +617,24 @@ namespace EmodiaQuest.Core.GUI
             }
         }
 
+        public void updatePlainImage(string imageName, float newX, float newY, float newWidth, float newHeight)
+        {
+            foreach (PlainImage_GUI pi in pimages.Where(n => n.Function == imageName))
+            {
+                pi.XPos = (int)(MainWindowSize.X * newX * 0.01);
+                pi.YPos = (int)(MainWindowSize.Y * newY * 0.01);
+                pi.Width = (int)(MainWindowSize.X * newWidth * 0.01);
+                pi.Height = (int)(MainWindowSize.Y * newHeight * 0.01);
+            }
+        }
+        public void updatePlainImage(string imageName, bool visibility)
+        {
+            foreach (PlainImage_GUI pi in pimages.Where(n => n.Function == imageName))
+            {
+                pi.IsVisible = visibility;
+            }
+        }
+
         // Updates the resolutions in every platform instance
         public static void updateAllResolutions(int x, int y)
         {
@@ -649,7 +675,7 @@ namespace EmodiaQuest.Core.GUI
                     bb.TextYPos = (int)(((MainWindowSize.Y * bb.YPosRelative * 0.01f)) + (MainWindowSize.Y * bb.HeightRelative * 0.01f / 2) - ((bb.TextScaleFactor - 0.15f) * spriteFontSize.Y / 2));
                 }
             }
-            foreach(InventoryItem_GUI ii in invItems)
+            foreach (InventoryItem_GUI ii in invItems)
             {
                 ii.XPos = (int)(MainWindowSize.X * ii.XPosRelative * 0.01);
                 ii.YPos = (int)(MainWindowSize.Y * ii.YPosRelative * 0.01);
@@ -695,7 +721,7 @@ namespace EmodiaQuest.Core.GUI
                 pi.Width = (int)(MainWindowSize.X * pi.WidthRelative * 0.01);
                 pi.Height = (int)(MainWindowSize.Y * pi.HeightRelative * 0.01);
             }
-            foreach(Slider_GUI sl in sliders)
+            foreach (Slider_GUI sl in sliders)
             {
                 sl.XPos = (int)(MainWindowSize.X * sl.XPosRelative * 0.01);
                 sl.YPos = (int)(MainWindowSize.Y * sl.YPosRelative * 0.01);
