@@ -43,12 +43,15 @@ namespace EmodiaQuest.Core
                 tempQuest.Owner = innerXml.DocumentElement.SelectSingleNode("/quest/owner").InnerText;
                 foreach (XmlNode innerNode in innerXml.DocumentElement.SelectSingleNode("/quest/conditions").ChildNodes)
                 {
-                    Console.WriteLine(innerNode.Name);
                     tempQuest.Conditions.Add(innerNode.Name, innerNode.InnerText);
                 }
                 foreach (XmlNode innerNode in innerXml.DocumentElement.SelectSingleNode("/quest/rewards").ChildNodes)
                 {
                     tempQuest.Rewards.Add(innerNode.Name, innerNode.InnerText);
+                }
+                foreach (XmlNode innerNode in innerXml.DocumentElement.SelectSingleNode("/quest/tasks").ChildNodes)
+                {
+                    tempQuest.Tasks.Add(innerNode.Name, innerNode.InnerText);
                 }
 
                 Quests.Add(tempQuest);
@@ -98,7 +101,7 @@ namespace EmodiaQuest.Core
                 }
             }
 
-            return level && solved && visit && kill && item && gold;
+            return true;
         }
 
     }

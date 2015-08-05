@@ -626,13 +626,6 @@ namespace EmodiaQuest.Core
                     }
 
                 }
-
-                Enemy closestEnemy = getClosestMonster(gameEnv.enemyArray[(int) Math.Round(Position.X / gridSize), (int) Math.Round(Position.X / gridSize)]);
-                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                {
-                    closestEnemy.Attack(Damage);
-                    attackTimer = 0;
-                }
             }
 
             // Get Keyboard input to change overall GameState
