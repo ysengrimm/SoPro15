@@ -54,6 +54,8 @@ namespace EmodiaQuest.Core
                 }
             }
         }
+
+        public int Level;
         public float Armor;
         public float Damage;
         public float PlayerSpeed;
@@ -151,6 +153,7 @@ namespace EmodiaQuest.Core
             Hp = 100; // Settings.Instance.MaxPlayerHealth ?
             Armor = 0;
             Damage = 50;
+            Level = 1;
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
@@ -622,6 +625,13 @@ namespace EmodiaQuest.Core
                         }
                     }
 
+                }
+
+                Enemy closestEnemy = getClosestMonster(gameEnv.enemyArray[(int) Math.Round(Position.X / gridSize), (int) Math.Round(Position.X / gridSize)]);
+                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                {
+                    closestEnemy.Attack(Damage);
+                    attackTimer = 0;
                 }
             }
 

@@ -1,0 +1,50 @@
+    <emodia_quest>
+        <quest>
+            <name>Test Quest</name>
+            <owner>Jack</owner>
+            <conditions>
+                <level>0</level>
+                <solved>FooBar</solved>
+                <visit>10</visit>
+                <kill>Oger</kill>
+                <item>Stein der Weisen</item>
+                <gold></gold>
+            </conditions>
+            <story>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </story>
+            <tasks>
+                <level>1</level>
+            </tasks>
+            <rewards>
+                <xp>42</xp>
+                <gold>1337</gold>
+                <item>Monter Slayer</item>
+            </rewards>
+        </quest>
+      
+        <quest>
+            <name>Other Quest</name>
+            <owner>Günter</owner>
+            <conditions>
+                <level>5</level>
+            </conditions>
+            <story>
+                Bla
+            </story>
+            <rewards>
+                <xp>1337</xp>
+            </rewards>
+        </quest>
+    </emodia_quest>

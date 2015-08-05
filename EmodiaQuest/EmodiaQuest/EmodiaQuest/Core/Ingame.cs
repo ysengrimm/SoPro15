@@ -62,10 +62,14 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void LoadIngame(ContentManager content, Vector2 screenSize)
         {
+            
             this.Content = content;
             // Loading skybox textures
             SkyBoxTex_Interstellar = Content.Load<Texture2D>("Texturen/Skybox/interstellar_large");
             SkyBoxTex_ViolentDays = Content.Load<Texture2D>("Texturen/Skybox/violentdays_large");
+
+            // Quests
+            QuestController.Instance.LoadContent(Content);
 
             ActiveWorld = WorldState.Safeworld;
             // loading Safeworld

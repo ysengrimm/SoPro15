@@ -105,6 +105,8 @@ namespace EmodiaQuest.Core
             NPCList.Add(Jack);
             NPCList.Add(Yorlgon);
             NPCList.Add(Konstantin);
+
+            QuestController.Instance.QuestUpdate(Jack);
             
         }
 
