@@ -56,7 +56,7 @@ namespace EmodiaQuest.Core
             this.Content = content;
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
             // Environment Controller dor the Safeworld
-            Controller = new EnvironmentController();
+            Controller = new EnvironmentController(WorldState.Safeworld);
             // load some Maps
             PlacementMap = Content.Load<Texture2D>("maps/safeWorld_PlacementMap");
             ItemMap = Content.Load<Texture2D>("maps/safeWorld_ItemMap");
@@ -89,7 +89,7 @@ namespace EmodiaQuest.Core
 
             //now after all collision objects are choosen generate and load collision map
             
-            Controller.GenerateCollisionMap(Content, WorldState.Safeworld);
+            Controller.GenerateCollisionMap(Content);
             
             // Create NPCList
             NPCList = new List<NPC>();
@@ -105,8 +105,6 @@ namespace EmodiaQuest.Core
             NPCList.Add(Jack);
             NPCList.Add(Yorlgon);
             NPCList.Add(Konstantin);
-
-            QuestController.Instance.QuestUpdate(Jack);
             
         }
 

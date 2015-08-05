@@ -27,6 +27,8 @@ namespace EmodiaQuest.Core
         public List<NPCs.Enemy>[,] enemyArray;
         public List<NPCs.NPC> NPCList;
 
+        public WorldState CurrentWorld;
+
         /// <summary>
         /// ONLY FOR DUNGEON
         /// Start point of Player
@@ -38,11 +40,13 @@ namespace EmodiaQuest.Core
         /// </summary>
         public List<TeleObject> TeleporterObjList;
 
-
         /// <summary>
         /// This list only contains objects you can collide with
         /// </summary>
         public List<Object> CollisionObjList;
+
+        public int MapWidth;
+        public int MapHeight;
 
         public struct Object
         {
@@ -84,8 +88,21 @@ namespace EmodiaQuest.Core
         //lets items jump :D
         float jump = 0;
         
-        public EnvironmentController() 
+        public EnvironmentController(WorldState currentWorld) 
         { 
+            CurrentWorld = currentWorld;
+
+            if (CurrentWorld == WorldState.Dungeon)
+            {
+                MapWidth = Settings.Instance.DungeonMapWidth;
+                MapHeight = Settings.Instance.DungeonMapHeight;
+            }
+            else if (CurrentWorld == WorldState.Safeworld)
+            {
+                MapWidth = Settings.Instance.SafeWorldMapWidth;
+                MapHeight = Settings.Instance.SafeWorldMapHeight;
+            }
+
             Ground = new List<GameObject>();
             Wall = new List<GameObject>();
             Items = new List<GameObject>();
@@ -98,19 +115,19 @@ namespace EmodiaQuest.Core
             
             NPCList = new List<NPCs.NPC>();
 
-            PlacementColors = new Color[Settings.Instance.MapWidth, Settings.Instance.MapHeight];
-            CollisionColors = new Color[Settings.Instance.MapWidth, Settings.Instance.MapHeight];
-            ItemColors = new Color[Settings.Instance.MapWidth, Settings.Instance.MapHeight];
+            PlacementColors = new Color[MapWidth, MapHeight];
+            CollisionColors = new Color[MapWidth, MapHeight];
+            ItemColors = new Color[MapWidth, MapHeight];
         }
         /// <summary>
         /// Initialises Array with Lists of Enemy
         /// </summary>
         public void CreateEnemyArray()
         {
-            enemyArray = new List<NPCs.Enemy>[Settings.Instance.MapWidth, Settings.Instance.MapHeight];
-            for (int i = 0; i < Settings.Instance.MapWidth; i++)
+            enemyArray = new List<NPCs.Enemy>[MapWidth, MapHeight];
+            for (int i = 0; i < MapWidth; i++)
             {
-                for (int j = 0; j < Settings.Instance.MapHeight; j++)
+                for (int j = 0; j < MapHeight; j++)
                 {
                     enemyArray[i, j] = new List<NPCs.Enemy>();
                 }
@@ -174,9 +191,9 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void InsertObj(List<GameObject> objList, Model model, Color color, int height)
         {
-            for (int i = 0; i < Settings.Instance.MapWidth; i++)
+            for (int i = 0; i < MapWidth; i++)
             {
-                for (int j = 0; j < Settings.Instance.MapHeight; j++)
+                for (int j = 0; j < MapHeight; j++)
                 {
                     if (PlacementColors[i, j].R == color.R && PlacementColors[i, j].G == color.G)
                     {
@@ -217,13 +234,13 @@ namespace EmodiaQuest.Core
         /// Method, wich generates a collision map from a placement map.
         /// Uses dimension and rotation of objects to generate black pixels on right positions
         /// </summary>
-        public void GenerateCollisionMap(ContentManager content, WorldState collisionWorld)
+        public void GenerateCollisionMap(ContentManager content)
         {
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
             string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
 
-            System.Drawing.Bitmap orgImage = new System.Drawing.Bitmap(Settings.Instance.MapWidth, Settings.Instance.MapHeight);
+            System.Drawing.Bitmap orgImage = new System.Drawing.Bitmap(MapWidth, MapHeight);
 
             // clears map
             for (int i = 0; i < orgImage.Width; i++)
@@ -337,7 +354,7 @@ namespace EmodiaQuest.Core
             gimage.DrawImage(orgImage, 0, 0);
             
             //save new image
-            orgImage.Save(contentPath + @"maps\" + collisionWorld.ToString() + "_CollisionMap.png", ImageFormat.Png);
+            orgImage.Save(contentPath + @"maps\" + CurrentWorld.ToString() + "_CollisionMap.png", ImageFormat.Png);
 
         }
 
