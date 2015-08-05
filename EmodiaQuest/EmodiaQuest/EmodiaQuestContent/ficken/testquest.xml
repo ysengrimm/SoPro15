@@ -43,6 +43,9 @@
             <story>
                 Bla
             </story>
+            <tasks>
+                <level>1</level>
+            </tasks>
             <rewards>
                 <xp>1337</xp>
             </rewards>
