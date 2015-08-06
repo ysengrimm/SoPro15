@@ -116,6 +116,9 @@
     <Compile Include="Core\GUI\Screens\Inventory_GUI.cs" />
     <Compile Include="Core\DungeonGeneration\LevelGenerator.cs" />
     <Compile Include="Core\NPCs\NPCProfession.cs" />
+    <Compile Include="Core\Quest.cs" />
+    <Compile Include="Core\QuestController.cs" />
+    <Compile Include="Core\SoundDisk.cs" />
     <Compile Include="Core\Weapon.cs" />
     <Compile Include="Core\GUI\ButtonEvent_GUI.cs" />
     <Compile Include="Core\GUI\Delegates_GUI.cs" />

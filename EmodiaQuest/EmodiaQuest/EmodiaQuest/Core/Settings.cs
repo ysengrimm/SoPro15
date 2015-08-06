@@ -131,7 +131,13 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Volume of the sound
         /// </summary>
-        public float Volume;
+        public float MainVolume;
+
+        public float FXVolume;
+
+        public float MusicVolume;
+
+        public float SpeakerVolume;
 
         /********************************
          *      Player Settings        *
@@ -171,10 +177,12 @@ namespace EmodiaQuest.Core
          *      Map Settings        *
          ********************************/
 
-        public int MapWidth = 50;
-        public int MapHeight = 50;
+        public int SafeWorldMapWidth = 50;
+        public int SafeWorldMapHeight = 50;
 
         //for dungeon generation
+        public int DungeonMapWidth;
+        public int DungeonMapHeight;
 
         public int MaxRooms = 50;
         public int MinRoomSize = 3;
@@ -195,7 +203,13 @@ namespace EmodiaQuest.Core
 
             ViewDistance = 900f;
 
-            Volume = 1.0f;
+            MainVolume = 1.0f;
+
+            FXVolume = 0.5f;
+
+            MusicVolume = 0.5f;
+
+            SpeakerVolume = 0.75f;
 
             PlayerSpeed = 0.25f;
 

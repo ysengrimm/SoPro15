@@ -31,9 +31,9 @@ namespace EmodiaQuest.Core.DungeonGeneration
             //at first gets path of debug directory and then replace the end to get path of content folder
             ContentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
 
-            Map = new System.Drawing.Bitmap(Settings.Instance.MapWidth, Settings.Instance.MapHeight);
-
             this.Controller = controller;
+
+            Map = new System.Drawing.Bitmap(Settings.Instance.DungeonMapWidth, Settings.Instance.DungeonMapHeight);
 
             PlaceRooms();
         }
@@ -43,9 +43,9 @@ namespace EmodiaQuest.Core.DungeonGeneration
         /// </summary>
         private void PlaceRooms() {
             // initialise Map with black
-            for (int i = 0; i < Settings.Instance.MapWidth; i++)
+            for (int i = 0; i < Settings.Instance.DungeonMapWidth; i++)
             {
-                for (int j = 0; j < Settings.Instance.MapHeight; j++)
+                for (int j = 0; j < Settings.Instance.DungeonMapHeight; j++)
                 {
                     Map.SetPixel(i, j, System.Drawing.Color.Black);
                     Controller.PlacementColors[i, j] = new Color(1, 0, 0);
@@ -65,8 +65,8 @@ namespace EmodiaQuest.Core.DungeonGeneration
             {
                 int w = Settings.Instance.MinRoomSize + rnd.Next(Settings.Instance.MaxRoomSize - Settings.Instance.MinRoomSize + 1);
                 int h = Settings.Instance.MinRoomSize + rnd.Next(Settings.Instance.MaxRoomSize - Settings.Instance.MinRoomSize + 1);
-                int x = rnd.Next(Settings.Instance.MapWidth - w - 1) + 1;
-                int y = rnd.Next(Settings.Instance.MapHeight - h - 1) + 1;
+                int x = rnd.Next(Settings.Instance.DungeonMapWidth - w - 1) + 1;
+                int y = rnd.Next(Settings.Instance.DungeonMapHeight - h - 1) + 1;
 			        
                 // create room with randomized values
 			    Room newRoom = new Room(x, y, w, h);
@@ -105,9 +105,9 @@ namespace EmodiaQuest.Core.DungeonGeneration
 		    }
 
             // setting start point of player somewhere in the middle
-            for (int i = 0; i < Settings.Instance.MapWidth; i++)
+            for (int i = 0; i < Settings.Instance.DungeonMapWidth; i++)
             {
-                for (int j = 0; j < Settings.Instance.MapHeight; j++)
+                for (int j = 0; j < Settings.Instance.DungeonMapHeight; j++)
                 {
                     if (Controller.PlacementColors[i, j] == new Color(100, 100, 0))
                     {
@@ -115,8 +115,8 @@ namespace EmodiaQuest.Core.DungeonGeneration
                         Controller.StartPoint = new Vector2(i * Settings.Instance.GridSize, j * Settings.Instance.GridSize);
 
                         //quit both loops
-                        i = Settings.Instance.MapWidth;
-                        j = Settings.Instance.MapHeight;
+                        i = Settings.Instance.DungeonMapWidth;
+                        j = Settings.Instance.DungeonMapHeight;
                     }
                 }
             }

@@ -31,15 +31,17 @@ namespace EmodiaQuest.Core
         /// </summary>
         public float CR;
 
-
         private int numEnemies;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="numEnemies"> The numbers of Enemies, which will be placed in this Dungeon</param>
-        public Dungeon(int numEnemies)
+        public Dungeon(int numEnemies, int mapWidth, int mapHeight)
         {
-            Controller = new EnvironmentController();
+            Settings.Instance.DungeonMapWidth = mapWidth;
+            Settings.Instance.DungeonMapHeight = mapHeight;
+
+            Controller = new EnvironmentController(WorldState.Dungeon);
             this.numEnemies = numEnemies;
         }
         private Random r;
@@ -91,7 +93,7 @@ namespace EmodiaQuest.Core
             //Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
             //now after all collision objects are choosen generate collision map
-            Controller.GenerateCollisionMap(Content, WorldState.Dungeon);
+            Controller.GenerateCollisionMap(Content);
 
             // temporary enemy testing
             EnemyList = new List<Enemy>();

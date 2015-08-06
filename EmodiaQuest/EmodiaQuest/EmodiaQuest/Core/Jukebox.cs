@@ -30,186 +30,77 @@ namespace EmodiaQuest.Core
                 return instance;
             }
         }
-        public ContentManager Content;
 
-        MediaLibrary sampleMediaLibrary;
+        ContentManager Content;
 
-        Random rand;
 
-        public struct FXSound
-        {
-            public int Index;
-            public String Name;
-            public SoundEffect SoundEffect;
-            public float Timer;
-            public float Delay;
-
-            private float activeTimer;
-            public float ActiveTimer
-            {
-                set { activeTimer = value; }
-                get { return activeTimer; }
-            }
-
-            private float activeDelay;
-            public float ActiveDelay
-            {
-                set { activeDelay = value; }
-                get { return activeDelay; }
-            }
-
-            private bool playing;
-            public bool Playing
-            {
-                set { playing = value; }
-                get { return playing; }
-            }
-
-            private bool forceToPlay;
-            public bool ForceToPlay
-            {
-                set { forceToPlay = value; }
-                get { return forceToPlay; }
-            }
-
-            public FXSound (int index, String name, SoundEffect soundEffect, float timer, float delay, bool playing, bool forceToPlay)
-            {
-                this.Index = index;
-                this.Name = name;
-                this.SoundEffect = soundEffect;
-                this.Delay = delay;
-                this.Timer = timer;
-                this.activeTimer = Timer;
-                this.activeDelay = delay;
-                this.playing = playing;
-                this.forceToPlay = forceToPlay;
-            }
-        }
-
-        // Number of FX Sounds
-        int FXNum;
-        // Number of Songs
-        int MusicNum;
-        // FX 
-        FXSound[] FXSounds;
         // Songs
-        Song Kampf_1;
+        SoundDisk Kampf_1;
 
         // All FX Sounds
-        FXSound Hit_1, Plop_1;
+        SoundDisk Hit_1, Plop_1;
 
-        // All songs
-        Song[] Songs;
 
         public void LoadJukebox(ContentManager content)
         {
             this.Content = content;
 
-            // FX Loading
-            FXNum = 100;
-            FXSounds = new FXSound [FXNum];
-            Hit_1 = new FXSound(0, "Hit_1", Content.Load<SoundEffect>("Sounds/fx/Schlag_1"), Player.Instance.standingDuration / 1.5f, Player.Instance.standingDuration / 3f, false, false);
-            Plop_1 = new FXSound(1, "Plop_1", Content.Load<SoundEffect>("Sounds/fx/Plop_1"), 200, 0, false, false);
-            FXSounds[0] = Hit_1;
-            FXSounds[1] = Plop_1;
-
-            // Music Loading
-            Kampf_1 = Content.Load<Song>("Sounds/music/Kampf_1");
-
-            MediaPlayer.Play(Kampf_1);
+            Kampf_1 = new SoundDisk("Kampf_1", SoundDisk.SoundType.Music, "Sounds/music/Kampf_1", new TimeSpan(0, 0, 0, 0, 0));
+            Kampf_1.LoadSoundDisk(Content);
             Console.WriteLine();
+
+            Hit_1 = new SoundDisk("Hit_1", SoundDisk.SoundType.FX, "Sounds/fx/Schlag_1", new TimeSpan(0, 0, 0, 0, 200));
+            Hit_1.LoadSoundDisk(Content);
+            Plop_1 = new SoundDisk("Plop_1", SoundDisk.SoundType.FX, "Sounds/fx/Plop_1", new TimeSpan(0, 0, 0, 0, 0));
+            Plop_1.LoadSoundDisk(Content);
+
+            Kampf_1.Play();
         }
 
         public void UpdateJukebox(GameTime gameTime)
         {
-            MediaPlayer.Volume = Settings.Instance.Volume;
+            Kampf_1.Update(gameTime);
 
-            //Console.WriteLine(MediaPlayer.Queue.Count);
+            if (Keyboard.GetState().IsKeyDown(Keys.P) || Player.Instance.GameIsInFocus == false)
+            {
+                Kampf_1.Pause();
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.R) || Player.Instance.GameIsInFocus == true || EmodiaQuest_Game.Gamestate_Game != GameStates_Overall.IngameScreen)
+            {
+                Kampf_1.Resume();
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
+                Kampf_1.Stop();
+            }
             switch (EmodiaQuest_Game.Gamestate_Game)
             {
                 case GameStates_Overall.MenuScreen:
                     // Button Pressed Sound
-                    for(int i = 0; i < FXSounds.Length; i++)
-                    {
-                        if(FXSounds[i].ForceToPlay)
-                        {
-                            playFX(i, gameTime);
-                        }
-                    }
+                    Plop_1.Update(gameTime);
                     break;
                 case GameStates_Overall.OptionsScreen:
                     // Button Pressed Sound
-                    for (int i = 0; i < FXSounds.Length; i++)
-                    {
-                        if (FXSounds[i].ForceToPlay)
-                        {
-                            playFX(i, gameTime);
-                        }
-                    }
+                    Plop_1.Update(gameTime);
                     break;
 
                 case GameStates_Overall.IngameScreen:
                     // Button Pressed Sound
-                    for (int i = 0; i < FXSounds.Length; i++)
-                    {
-                        if (FXSounds[i].ForceToPlay)
-                        {
-                            playFX(i, gameTime);
-                        }
-                    }
-
+                    Plop_1.Update(gameTime);
                     // PlayerSounds
-                    if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting || FXSounds[0].Playing)
+                    if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting)
                     {
-                        playFX(0, gameTime);
+                        Hit_1.Update(gameTime);
+                        Hit_1.Play();
                     }
                     break;
             }
 
         }
 
-
-        public void playFX(int index, GameTime gametime)
+        public void PlayAudioMouseFeedback()
         {
-            if (FXSounds[index].Playing == false)
-            {
-                //Console.WriteLine("Start");
-                FXSounds[index].ActiveDelay -= gametime.ElapsedGameTime.Milliseconds;
-                FXSounds[index].Playing = true;
-            }
-            else if (FXSounds[index].Playing == true && FXSounds[index].ActiveDelay > 0)
-            {
-                //Console.WriteLine("Fading");
-                FXSounds[index].ActiveDelay -= gametime.ElapsedGameTime.Milliseconds;
-            }
-            else if (FXSounds[index].Playing == true && FXSounds[index].ActiveDelay <= 0 && FXSounds[index].ActiveTimer == FXSounds[index].Timer)
-            {
-                //Console.WriteLine("PlayStart");
-                FXSounds[index].ActiveDelay = 0;
-                SoundEffectInstance tempInstance = FXSounds[index].SoundEffect.CreateInstance();
-                tempInstance.Volume = Settings.Instance.Volume;
-                tempInstance.Play();
-                FXSounds[index].ActiveTimer -= gametime.ElapsedGameTime.Milliseconds;
-            }
-            else if (FXSounds[index].Playing == true && FXSounds[index].ActiveDelay == 0 && FXSounds[index].ActiveTimer > 0)
-            {
-                //Console.WriteLine("Setting Timer back");
-                FXSounds[index].ActiveTimer -= gametime.ElapsedGameTime.Milliseconds;
-            }
-            else if (FXSounds[index].Playing == true && FXSounds[index].ActiveTimer <= 0)
-            {
-                //Console.WriteLine("Reset");
-                FXSounds[index].ActiveDelay = FXSounds[index].Delay;
-                FXSounds[index].ActiveTimer = FXSounds[index].Timer;
-                FXSounds[index].Playing = false;
-                FXSounds[index].ForceToPlay = false;
-            }
-
-        }
-
-        public void PlayAudioMouseFeedback(int i)
-        {
-            FXSounds[i].ForceToPlay = true;
+            Plop_1.Play();
         }
 
     }

@@ -54,6 +54,8 @@ namespace EmodiaQuest.Core
                 }
             }
         }
+
+        public int Level;
         public float Armor;
         public float Damage;
         public float PlayerSpeed;
@@ -123,6 +125,7 @@ namespace EmodiaQuest.Core
         public bool GameIsInFocus
         {
             set { gameIsInFocus= value; }
+            get { return gameIsInFocus; }
         }
 
         private EnvironmentController gameEnv;
@@ -151,6 +154,7 @@ namespace EmodiaQuest.Core
             Hp = 100; // Settings.Instance.MaxPlayerHealth ?
             Armor = 0;
             Damage = 50;
+            Level = 1;
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
