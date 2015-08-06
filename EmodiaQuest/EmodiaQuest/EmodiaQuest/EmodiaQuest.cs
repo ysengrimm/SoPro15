@@ -102,8 +102,17 @@ namespace EmodiaQuest
             KeyboardState kState = Keyboard.GetState();
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
 
-            // Update Sound
-            Jukebox.Instance.UpdateJukebox(gameTime);
+
+            if (!IsActive && Gamestate_Game != GameStates_Overall.StartScreen)
+            {
+                Gamestate_Game = GameStates_Overall.Pause;
+            }
+
+            if (IsActive && Gamestate_Game == GameStates_Overall.Pause)
+                Gamestate_Game = GameStates_Overall.MenuScreen;
+ 
+            //// Update Sound
+                Jukebox.Instance.UpdateJukebox(gameTime);
             switch (Gamestate_Game)
             {
                 case GameStates_Overall.StartScreen:
@@ -147,12 +156,16 @@ namespace EmodiaQuest
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
                     break;
+                case GameStates_Overall.Pause:
+                    //EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.update();
+                    break;
                 default:
                     break;
             }
 
             // if we change the window size outside the constructor (e.g. dynamic window size or fullscreen on/off) we need to call this 
             //graphics.ApplyChanges();
+            
 
             base.Update(gameTime);
         }
