@@ -125,6 +125,7 @@ namespace EmodiaQuest.Core
         public bool GameIsInFocus
         {
             set { gameIsInFocus= value; }
+            get { return gameIsInFocus; }
         }
 
         private EnvironmentController gameEnv;
