@@ -61,7 +61,7 @@ namespace EmodiaQuest.Core
         {
             Kampf_1.Update(gameTime);
 
-            if(Keyboard.GetState().IsKeyDown(Keys.P) || Player.Instance.GameIsInFocus == false)
+            if (Keyboard.GetState().IsKeyDown(Keys.P) || Player.Instance.GameIsInFocus == false)
             {
                 Kampf_1.Pause();
             }

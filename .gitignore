@@ -9,6 +9,9 @@ safeWorld_CollisionMap.png
 
 # Our project-specific files
 SkinnedModel.dll
+Dungeon_CollisionMap.png
+Dungeon_PlacementMapDebug_forreasons_.png
+
 
 # User-specific files
 *.suo
