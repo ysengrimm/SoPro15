@@ -131,7 +131,13 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Volume of the sound
         /// </summary>
-        public float Volume;
+        public float MainVolume;
+
+        public float FXVolume;
+
+        public float MusicVolume;
+
+        public float SpeakerVolume;
 
         /********************************
          *      Player Settings        *
@@ -197,7 +203,13 @@ namespace EmodiaQuest.Core
 
             ViewDistance = 900f;
 
-            Volume = 1.0f;
+            MainVolume = 1.0f;
+
+            FXVolume = 0.5f;
+
+            MusicVolume = 0.5f;
+
+            SpeakerVolume = 0.75f;
 
             PlayerSpeed = 0.25f;
 

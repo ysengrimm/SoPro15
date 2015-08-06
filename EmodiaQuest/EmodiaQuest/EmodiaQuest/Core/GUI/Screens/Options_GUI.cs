@@ -17,7 +17,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             switch (e.Function)
             {
                 case "volumeChange":
-                    EmodiaQuest.Core.Settings.Instance.Volume = (float)(e.SliderValue)/100;
+                    EmodiaQuest.Core.Settings.Instance.MainVolume = (float)(e.SliderValue)/100;
                     this.platform.updateLabel("volume", "Volume: " + e.SliderValue.ToString());
                     GraphicsCopy.ApplyChanges();
                     break;
