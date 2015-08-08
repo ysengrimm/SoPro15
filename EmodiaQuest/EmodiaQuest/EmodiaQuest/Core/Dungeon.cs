@@ -38,8 +38,8 @@ namespace EmodiaQuest.Core
         /// <param name="numEnemies"> The numbers of Enemies, which will be placed in this Dungeon</param>
         public Dungeon(int numEnemies, int mapWidth, int mapHeight)
         {
-            Settings.Instance.DungeonMapWidth = mapWidth;
-            Settings.Instance.DungeonMapHeight = mapHeight;
+            Settings.Instance.DungeonMapSize = mapWidth;
+            Settings.Instance.DungeonMapSize = mapHeight;
 
             Controller = new EnvironmentController(WorldState.Dungeon);
             this.numEnemies = numEnemies;
@@ -97,7 +97,7 @@ namespace EmodiaQuest.Core
             Controller.InsertObj(Controller.Buildings, house1.Model, house1.Color, 0);
             Controller.InsertObj(Controller.Teleporter, wallDoor.Model, wallDoor.Color, 0);
             // Insert items
-            //Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
+            Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
             //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content);
