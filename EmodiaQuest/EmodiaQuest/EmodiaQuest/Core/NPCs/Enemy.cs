@@ -36,6 +36,7 @@ namespace EmodiaQuest.Core.NPCs
         public float AttackThreshold;
         public float AttackSpeed;
 
+        public EnemyType EnemyTyp;
 
         private float gridSize = Settings.Instance.GridSize;
 
@@ -78,11 +79,11 @@ namespace EmodiaQuest.Core.NPCs
         public bool isBlending;
 
 
-        public Enemy(Vector2 position, EnvironmentController currentEnvironment)
+        public Enemy(Vector2 position, EnvironmentController currentEnvironment, EnemyType enemyTyp)
         {
             this.currentEnvironment = currentEnvironment;
-            Position = position;
-
+            this.Position = position;
+            this.EnemyTyp = enemyTyp;
             currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
         }
 
@@ -91,36 +92,52 @@ namespace EmodiaQuest.Core.NPCs
         public void LoadContent(ContentManager content)
         {
             this.Content = content;
+            // Normal variables for each different enemy Type
+            switch (EnemyTyp)
+            {
+                case EnemyType.NPCTest:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    AttackRange = 5;
+                    Damage = 5;
 
-            MovementSpeed = Settings.Instance.HumanEnemySpeed;
-            MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-            AttackRange = 5;
-            Damage = 5;
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
 
-            // movement
-            TrackingRadius = 30f;
-            MovementSpeed = 0.25f;
-            enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
-            ViewAngle = -enemyAi.TrackingAngle;
+                    attackTimer = 0;
+                    AttackThreshold = 20;
+                    AttackSpeed = 0.5f;
 
-            attackTimer = 0;
-            AttackThreshold = 20;
-            AttackSpeed = 0.5f;
+                    // collision
+                    CircleCollision = 1.5f;
+                    break;
+            }
 
-            // collision
-            CircleCollision = 1.5f;
             collHandler = CollisionHandler.Instance;
 
             IsAlive = true;
 
+            // Loading the different meshes for the enemies
+            switch (EnemyTyp)
+            {
+                case EnemyType.NPCTest:
+                    // loading default mesh
+                    enemyModel = content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------- Insert your Mesh here, need at least 2 keyframes
 
-            // loading default mesh
-            enemyModel = content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+                    fightM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+                    break;
 
-            // loading Animation Models
-            idleM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------------- The animation Meshes here
-            runM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
-            fightM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+                case EnemyType.Monster1:
+
+                    break;
+            }
+            
 
             // Loading Skinning Data
             idleSD = idleM.Tag as SkinningData;
@@ -132,10 +149,17 @@ namespace EmodiaQuest.Core.NPCs
             runAP = new AnimationPlayer(runSD);
             fightAP = new AnimationPlayer(fightSD);
 
-            // loading the animation clips
-            idleC = idleSD.AnimationClips["idle"]; // <------------------------------------ The name of the animation in blender
-            runC = runSD.AnimationClips["idle"];
-            fightC = fightSD.AnimationClips["idle"];
+
+            // loading different animations for the different enemies
+            switch (EnemyTyp)
+            {
+                case EnemyType.NPCTest:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["idle"];
+                    fightC = fightSD.AnimationClips["idle"];
+                    break;
+            }
 
             // Safty Start Animations
             idleAP.StartClip(idleC);
@@ -428,7 +452,7 @@ namespace EmodiaQuest.Core.NPCs
                         }
 
                         effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(ViewAngle + (float) (0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
                         effect.View = view;
                         effect.Projection = projection;
                         effect.SpecularColor = new Vector3(0.25f);

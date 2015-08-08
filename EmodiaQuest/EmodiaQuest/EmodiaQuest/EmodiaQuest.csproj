@@ -115,6 +115,7 @@
     <Compile Include="Core\GUI\InventoryItem_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Inventory_GUI.cs" />
     <Compile Include="Core\DungeonGeneration\LevelGenerator.cs" />
+    <Compile Include="Core\NPCs\EnemyType.cs" />
     <Compile Include="Core\NPCs\NPCProfession.cs" />
     <Compile Include="Core\Quest.cs" />
     <Compile Include="Core\QuestController.cs" />
