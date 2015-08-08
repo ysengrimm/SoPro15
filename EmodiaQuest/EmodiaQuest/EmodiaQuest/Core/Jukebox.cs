@@ -33,6 +33,10 @@ namespace EmodiaQuest.Core
 
         ContentManager Content;
 
+        public bool GameIsActive = true;
+
+        private Keys lastMusicKey = Keys.R;
+
 
         // Songs
         SoundDisk Kampf_1;
@@ -57,22 +61,32 @@ namespace EmodiaQuest.Core
             Kampf_1.Play();
         }
 
-        public void UpdateJukebox(GameTime gameTime)
+        public void UpdateJukebox(GameTime gameTime, bool isActive)
         {
+            updateMusicKeys();
+            GameIsActive = isActive;
             Kampf_1.Update(gameTime);
-
-            if (Keyboard.GetState().IsKeyDown(Keys.P) || Player.Instance.GameIsInFocus == false)
+            if (GameIsActive)
+            {
+                if (lastMusicKey == Keys.P)
+                {
+                    Kampf_1.Pause();
+                    //Console.WriteLine("Paused");
+                }
+                if (lastMusicKey == Keys.R)
+                {
+                    Kampf_1.Resume();
+                }
+                if (lastMusicKey == Keys.Q)
+                {
+                    Kampf_1.Stop();
+                }
+            }
+            else if (!GameIsActive)
             {
                 Kampf_1.Pause();
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.R) || Player.Instance.GameIsInFocus == true || EmodiaQuest_Game.Gamestate_Game != GameStates_Overall.IngameScreen)
-            {
-                Kampf_1.Resume();
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Q))
-            {
-                Kampf_1.Stop();
-            }
+
             switch (EmodiaQuest_Game.Gamestate_Game)
             {
                 case GameStates_Overall.MenuScreen:
@@ -101,6 +115,22 @@ namespace EmodiaQuest.Core
         public void PlayAudioMouseFeedback()
         {
             Plop_1.Play();
+        }
+
+        private void updateMusicKeys()
+        {
+            if(Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                lastMusicKey = Keys.P;
+            }
+            else if(Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                lastMusicKey = Keys.R;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
+                lastMusicKey = Keys.Q;
+            }
         }
 
     }

@@ -103,7 +103,7 @@ namespace EmodiaQuest
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
 
             // Update Sound
-            Jukebox.Instance.UpdateJukebox(gameTime);
+            Jukebox.Instance.UpdateJukebox(gameTime, IsActive);
             switch (Gamestate_Game)
             {
                 case GameStates_Overall.StartScreen:
