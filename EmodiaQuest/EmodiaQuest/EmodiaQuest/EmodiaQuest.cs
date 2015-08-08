@@ -102,6 +102,8 @@ namespace EmodiaQuest
             KeyboardState kState = Keyboard.GetState();
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
 
+            // Update Sound
+            Jukebox.Instance.UpdateJukebox(gameTime, IsActive);
 
             if (!IsActive && Gamestate_Game != GameStates_Overall.StartScreen)
             {
@@ -110,9 +112,7 @@ namespace EmodiaQuest
 
             if (IsActive && Gamestate_Game == GameStates_Overall.Pause)
                 Gamestate_Game = GameStates_Overall.MenuScreen;
- 
-            //// Update Sound
-                Jukebox.Instance.UpdateJukebox(gameTime);
+
             switch (Gamestate_Game)
             {
                 case GameStates_Overall.StartScreen:
