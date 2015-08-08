@@ -229,6 +229,8 @@ namespace EmodiaQuest.Core
                     break;
                 // updates the Sounddisk if it is from the type "music"
                 case SoundType.Music:
+                    //Console.WriteLine(ActiveTimer + ", " + soundInstance.State + ", " + Name + ", " + soundInstance.Volume);
+                    soundInstance.Volume = Settings.Instance.MainVolume * Settings.Instance.MusicVolume;
                     if (activeSoundState == SoundState.Paused)
                     {
                         soundInstance.Pause();
@@ -241,8 +243,8 @@ namespace EmodiaQuest.Core
                     else if ( activeSoundState == SoundState.Stopped)
                     {
                         soundInstance.Stop();
-                        ActiveTimer = Duration.Milliseconds;
-                        activeDelay = Delay.Milliseconds;
+                        ActiveTimer = (float) Duration.TotalMilliseconds;
+                        activeDelay = (float) Delay.TotalMilliseconds;
                         activeSoundState = SoundState.Idle;
                     }
                     else if (ForceToPlay && activeSoundState == SoundState.Idle)
@@ -265,11 +267,9 @@ namespace EmodiaQuest.Core
                     {
                         activeSoundState = SoundState.Playing;
                         ActiveDelay = 0;
-                        soundInstance = SoundEffect.CreateInstance();
                         soundInstance.Play();
                         soundInstance.Volume = Settings.Instance.MainVolume * Settings.Instance.MusicVolume;
                         ActiveTimer -= 1;
-                        //Console.WriteLine(ActiveTimer + ", " + soundInstance.State + ", " + Name + ", " + soundInstance.Volume);
                     }
                     else if (activeSoundState == SoundState.Playing && activeTimer > 0)
                     {
@@ -281,6 +281,7 @@ namespace EmodiaQuest.Core
                         ActiveTimer = Duration.Milliseconds;
                         activeDelay = Delay.Milliseconds;
                         activeSoundState = SoundState.Idle;
+                        soundInstance.Stop();
                     }
                     break;
             }

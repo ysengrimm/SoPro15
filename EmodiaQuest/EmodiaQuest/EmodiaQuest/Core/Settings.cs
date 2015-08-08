@@ -181,10 +181,9 @@ namespace EmodiaQuest.Core
         public int SafeWorldMapHeight = 50;
 
         //for dungeon generation
-        public int DungeonMapWidth;
-        public int DungeonMapHeight;
+        public int DungeonMapSize;      // allways quadratic
 
-        public int MaxRooms = 50;
+        public int MaxRooms = 100;
         public int MinRoomSize = 3;
         public int MaxRoomSize = 5;
 

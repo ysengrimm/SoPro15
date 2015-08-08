@@ -94,8 +94,8 @@ namespace EmodiaQuest.Core
 
             if (CurrentWorld == WorldState.Dungeon)
             {
-                MapWidth = Settings.Instance.DungeonMapWidth;
-                MapHeight = Settings.Instance.DungeonMapHeight;
+                MapWidth = Settings.Instance.DungeonMapSize;
+                MapHeight = Settings.Instance.DungeonMapSize;
             }
             else if (CurrentWorld == WorldState.Safeworld)
             {
@@ -218,9 +218,9 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void InsertItem(List<GameObject> itemList, Model model, Color color, int height)
         {
-            for (int i = 0; i < ItemMap.Width; i++)
+            for (int i = 0; i < MapWidth; i++)
             {
-                for (int j = 0; j < ItemMap.Height; j++)
+                for (int j = 0; j < MapHeight; j++)
                 {
                     if (ItemColors[i, j].R == color.R && ItemColors[i, j].G == color.G)
                     {
