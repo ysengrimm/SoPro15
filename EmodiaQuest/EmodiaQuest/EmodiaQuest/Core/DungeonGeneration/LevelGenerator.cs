@@ -26,6 +26,10 @@ namespace EmodiaQuest.Core.DungeonGeneration
         public System.Drawing.Bitmap Map;
         public EnvironmentController Controller;
 
+        public Color Wall = new Color(1, 0, 0);
+        public Color Floor = new Color(100, 100, 0);
+        public Color Nothing = new Color(0, 0, 0);  // for more drawing performance
+
         public LevelGenerator(EnvironmentController controller){
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
@@ -48,7 +52,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 for (int j = 0; j < Settings.Instance.DungeonMapHeight; j++)
                 {
                     Map.SetPixel(i, j, System.Drawing.Color.Black);
-                    Controller.PlacementColors[i, j] = new Color(1, 0, 0);
+                    Controller.PlacementColors[i, j] = Wall;
                 } 
             }
 
@@ -104,12 +108,12 @@ namespace EmodiaQuest.Core.DungeonGeneration
 		        if(!failed) rooms.Add(newRoom);
 		    }
 
-            // setting start point of player somewhere in the middle
+            // setting start point of player
             for (int i = 0; i < Settings.Instance.DungeonMapWidth; i++)
             {
                 for (int j = 0; j < Settings.Instance.DungeonMapHeight; j++)
                 {
-                    if (Controller.PlacementColors[i, j] == new Color(100, 100, 0))
+                    if (Controller.PlacementColors[i, j] == Floor)
                     {
                         Map.SetPixel(i, j, System.Drawing.Color.Red);
                         Controller.StartPoint = new Vector2(i * Settings.Instance.GridSize, j * Settings.Instance.GridSize);
@@ -120,6 +124,8 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     }
                 }
             }
+
+            DeleteWalls();
 
             //draw things in new image
             System.Drawing.Graphics gimage = System.Drawing.Graphics.FromImage(Map);
@@ -136,7 +142,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 for (int j = (int)room.Y; j < room.Y + room.Height; j++)
                 {
                     Map.SetPixel(i, j, System.Drawing.Color.White);
-                    Controller.PlacementColors[i, j] = new Color(100, 100, 0);
+                    Controller.PlacementColors[i, j] = Floor;
                 }
             }
         }
@@ -146,7 +152,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
             for (int i = (int)Math.Min(x1, x2); i < (int)Math.Max(x1, x2)+1; i++){
 			    // destory the tiles to "carve" out corridor
                 Map.SetPixel(i, y, System.Drawing.Color.White);
-                Controller.PlacementColors[i, y] = new Color(100, 100, 0);
+                Controller.PlacementColors[i, y] = Floor;
 		    }
 	    }
 
@@ -155,8 +161,48 @@ namespace EmodiaQuest.Core.DungeonGeneration
             for (int i = (int)Math.Min(y1, y2); i < (int)Math.Max(y1, y2) + 1; i++) {
 			    // destroy the tiles to "carve" out corridor
                 Map.SetPixel(x, i, System.Drawing.Color.White);
-                Controller.PlacementColors[x, i] = new Color(100, 100, 0);
+                Controller.PlacementColors[x, i] = Floor;
 		    }
 	    }
+
+        /// <summary>
+        /// Deletes all not reachable walls. 
+        /// Now not drawing all walls -> better performance
+        /// </summary>
+        private void DeleteWalls()
+        {
+            List<Point> walls = new List<Point>();
+
+            // searching for all walls wich have walls around them like the O
+            // XXX
+            // XOX
+            // XXX
+            // then add the O to the List
+            for (int i = 1; i < Math.Sqrt(Controller.PlacementColors.Length) - 1; i++)
+            {
+                for (int j = 1; j < Math.Sqrt(Controller.PlacementColors.Length) - 1; j++)
+                {
+                    if (Controller.PlacementColors[i, j] == Wall &&
+                        Controller.PlacementColors[i + 1, j] == Wall &&
+                        Controller.PlacementColors[i - 1, j] == Wall &&
+                        Controller.PlacementColors[i, j + 1] == Wall &&
+                        Controller.PlacementColors[i, j - 1] == Wall &&
+                        Controller.PlacementColors[i + 1, j + 1] == Wall &&
+                        Controller.PlacementColors[i - 1, j + 1] == Wall &&
+                        Controller.PlacementColors[i + 1, j - 1] == Wall &&
+                        Controller.PlacementColors[i - 1, j - 1] == Wall)
+                    {
+                        walls.Add(new Point(i, j));
+                    }
+                }
+            }
+
+            // set all pixels in the List to "nothing"
+            foreach (Point item in walls)
+            {
+                Controller.PlacementColors[item.X, item.Y] = Nothing;
+                Map.SetPixel(item.X, item.Y, System.Drawing.Color.White);
+            }
+        }
     }
 }

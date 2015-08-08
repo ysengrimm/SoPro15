@@ -82,6 +82,13 @@ namespace EmodiaQuest.Core
             // Items
             EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
 
+            // Nothing
+            // this is important for level generation 
+            // it allows to build black pixels in collision map for every point in map, wich has no model
+            // (it's for performance)
+            // Do not insert in the map !!!
+            EnvironmentController.Object nothing = new EnvironmentController.Object(null, new Color(0, 0, 0), Vector2.One); Controller.CollisionObjList.Add(nothing);
+
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall1.Model, wall1.Color, 0);
             Controller.InsertObj(Controller.Wall, wall2.Model, wall2.Color, 0);
