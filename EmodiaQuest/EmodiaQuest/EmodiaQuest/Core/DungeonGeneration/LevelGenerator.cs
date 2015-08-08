@@ -28,7 +28,10 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
         public Color Wall = new Color(1, 0, 0);
         public Color Floor = new Color(100, 100, 0);
+        public Color Item = new Color(255, 0, 0);
         public Color Nothing = new Color(0, 0, 0);  // for more drawing performance
+
+        Random rnd = new Random();
 
         public LevelGenerator(EnvironmentController controller){
             //gets >current< content path
@@ -37,19 +40,19 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
             this.Controller = controller;
 
-            Map = new System.Drawing.Bitmap(Settings.Instance.DungeonMapWidth, Settings.Instance.DungeonMapHeight);
+            Map = new System.Drawing.Bitmap(Settings.Instance.DungeonMapSize, Settings.Instance.DungeonMapSize);
 
-            PlaceRooms();
+            placeRooms();
         }
 
         /// <summary>
         /// Places rooms and floors randomly
         /// </summary>
-        private void PlaceRooms() {
+        private void placeRooms() {
             // initialise Map with black
-            for (int i = 0; i < Settings.Instance.DungeonMapWidth; i++)
+            for (int i = 0; i < Settings.Instance.DungeonMapSize; i++)
             {
-                for (int j = 0; j < Settings.Instance.DungeonMapHeight; j++)
+                for (int j = 0; j < Settings.Instance.DungeonMapSize; j++)
                 {
                     Map.SetPixel(i, j, System.Drawing.Color.Black);
                     Controller.PlacementColors[i, j] = Wall;
@@ -62,15 +65,13 @@ namespace EmodiaQuest.Core.DungeonGeneration
             // Center of room
             Point newCenter = new Point();
 
-            Random rnd = new Random();
-
 		    // randomize values for each room
             for (int i = 0; i < Settings.Instance.MaxRooms; i++)
             {
                 int w = Settings.Instance.MinRoomSize + rnd.Next(Settings.Instance.MaxRoomSize - Settings.Instance.MinRoomSize + 1);
                 int h = Settings.Instance.MinRoomSize + rnd.Next(Settings.Instance.MaxRoomSize - Settings.Instance.MinRoomSize + 1);
-                int x = rnd.Next(Settings.Instance.DungeonMapWidth - w - 1) + 1;
-                int y = rnd.Next(Settings.Instance.DungeonMapHeight - h - 1) + 1;
+                int x = rnd.Next(Settings.Instance.DungeonMapSize - w - 1) + 1;
+                int y = rnd.Next(Settings.Instance.DungeonMapSize - h - 1) + 1;
 			        
                 // create room with randomized values
 			    Room newRoom = new Room(x, y, w, h);
@@ -85,7 +86,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
 			    if (!failed) {
 			        // local function to carve out new room
-			        CreateRoom(newRoom);
+			        createRoom(newRoom);
 
 			        // store center for new room
 			        newCenter = newRoom.Center;
@@ -109,9 +110,9 @@ namespace EmodiaQuest.Core.DungeonGeneration
 		    }
 
             // setting start point of player
-            for (int i = 0; i < Settings.Instance.DungeonMapWidth; i++)
+            for (int i = 0; i < Settings.Instance.DungeonMapSize; i++)
             {
-                for (int j = 0; j < Settings.Instance.DungeonMapHeight; j++)
+                for (int j = 0; j < Settings.Instance.DungeonMapSize; j++)
                 {
                     if (Controller.PlacementColors[i, j] == Floor)
                     {
@@ -119,23 +120,39 @@ namespace EmodiaQuest.Core.DungeonGeneration
                         Controller.StartPoint = new Vector2(i * Settings.Instance.GridSize, j * Settings.Instance.GridSize);
 
                         //quit both loops
-                        i = Settings.Instance.DungeonMapWidth;
-                        j = Settings.Instance.DungeonMapHeight;
+                        i = Settings.Instance.DungeonMapSize;
+                        j = Settings.Instance.DungeonMapSize;
                     }
                 }
             }
 
             DeleteWalls();
 
+            // this method would place items in rooms and floors
+            // if choosen delete same method from "createRoom", wich places items only in rooms
+            //insertItems();
+
+            saveMap();
+	    }
+
+        /// <summary>
+        /// Saves the map
+        /// </summary>
+        private void saveMap()
+        {
             //draw things in new image
             System.Drawing.Graphics gimage = System.Drawing.Graphics.FromImage(Map);
             gimage.DrawImage(Map, 0, 0);
 
             //save new image
             Map.Save(ContentPath + @"maps\" + "Dungeon_PlacementMapDebug_forreasons_.png", ImageFormat.Png);
-	    }
+        }
 
-        public void CreateRoom(Room room)
+        /// <summary>
+        /// Draws a room in the map
+        /// </summary>
+        /// <param name="room"> Current room </param>
+        private void createRoom(Room room)
         {
             for (int i = (int)room.X; i < room.X + room.Width; i++)
             {
@@ -143,11 +160,24 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 {
                     Map.SetPixel(i, j, System.Drawing.Color.White);
                     Controller.PlacementColors[i, j] = Floor;
+
+                    // randomly setting items in a room
+                    // does not set an item in spawn room
+                    if (rnd.Next(10) == 0 && !room.containsColor(Map, System.Drawing.Color.Red))     // 10% chance for setting item
+                    {
+                        Controller.ItemColors[i, j] = Item;
+                        Map.SetPixel(i, j, System.Drawing.Color.Green);
+                    }
                 }
             }
         }
 
-        // create horizontal corridor to connect rooms
+        /// <summary>
+        /// create horizontal corridor to connect rooms
+        /// </summary>
+        /// <param name="x1"> Start point</param>
+        /// <param name="x2"> End point</param>
+        /// <param name="y"> Choosen y-axis</param>
         private void HCorridor(int x1, int x2, int y) {
             for (int i = (int)Math.Min(x1, x2); i < (int)Math.Max(x1, x2)+1; i++){
 			    // destory the tiles to "carve" out corridor
@@ -156,7 +186,12 @@ namespace EmodiaQuest.Core.DungeonGeneration
 		    }
 	    }
 
-	    // create vertical corridor to connect rooms
+	    /// <summary>
+        /// create vertical corridor to connect rooms
+	    /// </summary>
+        /// <param name="y1"> Start point</param>
+        /// <param name="y2"> End point</param>
+        /// <param name="x"> Choosen x-axis</param>
 	    private void VCorridor(int y1, int y2, int x) {
             for (int i = (int)Math.Min(y1, y2); i < (int)Math.Max(y1, y2) + 1; i++) {
 			    // destroy the tiles to "carve" out corridor
@@ -167,7 +202,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
         /// <summary>
         /// Deletes all not reachable walls. 
-        /// Now not drawing all walls -> better performance
+        /// Now not drawing all walls -> better performance (ca. 60% less models to draw for 100x100 map)
         /// </summary>
         private void DeleteWalls()
         {
@@ -202,6 +237,24 @@ namespace EmodiaQuest.Core.DungeonGeneration
             {
                 Controller.PlacementColors[item.X, item.Y] = Nothing;
                 Map.SetPixel(item.X, item.Y, System.Drawing.Color.White);
+            }
+        }
+
+        /// <summary>
+        /// Inserts randomly items in rooms and floors
+        /// </summary>
+        private void insertItems()
+        {
+            for (int i = 1; i < Math.Sqrt(Controller.PlacementColors.Length) - 1; i++)
+            {
+                for (int j = 1; j < Math.Sqrt(Controller.PlacementColors.Length) - 1; j++)
+                {
+                    if (Controller.PlacementColors[i, j] == Floor && rnd.Next(100) == 0)     // 1% chance for setting item
+                    {
+                        Controller.ItemColors[i, j] = Item;
+                        Map.SetPixel(i, j, System.Drawing.Color.Green);
+                    }
+                }
             }
         }
     }
