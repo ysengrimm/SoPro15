@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using SkinnedModel;
 
-namespace EmodiaQuest.Core.NPCs
+namespace EmodiaQuest.Core.NPCs 
 {
     public class Enemy
     {
