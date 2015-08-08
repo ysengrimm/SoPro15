@@ -114,6 +114,63 @@ namespace EmodiaQuest.Core.NPCs
                     // collision
                     CircleCollision = 1.5f;
                     break;
+                case EnemyType.Monster1:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    AttackRange = 5;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+                    AttackThreshold = 20;
+                    AttackSpeed = 0.5f;
+
+                    // collision
+                    CircleCollision = 1.5f;
+                    break;
+                case EnemyType.Monster2:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    AttackRange = 5;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+                    AttackThreshold = 20;
+                    AttackSpeed = 0.5f;
+
+                    // collision
+                    CircleCollision = 1.5f;
+                    break;
+                case EnemyType.Monster3:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    AttackRange = 5;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+                    AttackThreshold = 20;
+                    AttackSpeed = 0.5f;
+
+                    // collision
+                    CircleCollision = 1.5f;
+                    break;
             }
 
             collHandler = CollisionHandler.Instance;
@@ -134,7 +191,31 @@ namespace EmodiaQuest.Core.NPCs
                     break;
 
                 case EnemyType.Monster1:
+                    // loading default mesh
+                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster1/Monster1"); // <--------------- Insert your Mesh here, need at least 2 keyframes
 
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster1/Monster1idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster1/Monster1run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster1/Monster1fight");
+                    break;
+                case EnemyType.Monster2:
+                    // loading default mesh
+                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster2/Monster2"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster2/Monster2idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster2/Monster2run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster2/Monster2fight");
+                    break;
+                case EnemyType.Monster3:
+                    // loading default mesh
+                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster3/Monster3"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3fight");
                     break;
             }
             
@@ -158,6 +239,24 @@ namespace EmodiaQuest.Core.NPCs
                     idleC = idleSD.AnimationClips["idle"]; // <------------------------------------ The name of the animation in blender
                     runC = runSD.AnimationClips["idle"];
                     fightC = fightSD.AnimationClips["idle"];
+                    break;
+                case EnemyType.Monster1:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster2:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster3:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
                     break;
             }
 

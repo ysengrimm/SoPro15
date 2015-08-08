@@ -121,7 +121,8 @@ namespace EmodiaQuest.Core
                             {
                                 if (Controller.CollisionColors[x, (int)(y1 - CR) / Settings.Instance.GridSize] != Color.Black && Controller.CollisionColors[x, (int)(y1 + CR) / Settings.Instance.GridSize] != Color.Black)
                                 {
-                                    Enemy enemy = new Enemy(new Vector2(x1, y1), Controller, EnemyType.NPCTest);
+                                    //Enemy enemy = new Enemy(new Vector2(x1, y1), Controller, EnemyType.NPCTest);
+                                    Enemy enemy = new Enemy(new Vector2(x1, y1), Controller, EnemyType.Monster3);
                                     EnemyList.Add(enemy);
                                 }
                             }
@@ -147,7 +148,7 @@ namespace EmodiaQuest.Core
             //just for testing the enemy
             foreach (Enemy enemy in EnemyList)
             {
-                enemy.Update(gametime); ;
+                enemy.Update(gametime);
             }
 
             // Update for the Skybox
