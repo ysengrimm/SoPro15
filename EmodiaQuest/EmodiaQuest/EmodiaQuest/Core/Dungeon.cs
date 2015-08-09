@@ -24,27 +24,23 @@ namespace EmodiaQuest.Core
         public ContentManager Content;
         public Skybox Skybox;
 
-        public List<Enemy> EnemyList;
+        public LevelGenerator generator;
 
-        /// <summary>
-        /// placement collision radius
-        /// </summary>
-        public float CR;
-
-        private int numEnemies;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="numEnemies"> The numbers of Enemies, which will be placed in this Dungeon</param>
+        /// <param name="mapWidth"></param>
+        /// <param name="mapHeight"></param>
         public Dungeon(int numEnemies, int mapWidth, int mapHeight)
         {
             Settings.Instance.DungeonMapSize = mapWidth;
             Settings.Instance.DungeonMapSize = mapHeight;
 
             Controller = new EnvironmentController(WorldState.Dungeon);
-            this.numEnemies = numEnemies;
+
+            Settings.Instance.NumEnemies = numEnemies;
         }
-        private Random r;
 
         /// <summary>
         /// Method for initialising Models and so on in SafeWorld
@@ -57,18 +53,14 @@ namespace EmodiaQuest.Core
         {
             this.Content = content;
 
-            CR = 5;
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
             string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
             
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
-            
-            // generate new dungeon
-            LevelGenerator gen = new LevelGenerator(Controller);
 
-            //initialise enemy array
-            Controller.CreateEnemyArray();
+            // generate new dungeon
+            generator = new LevelGenerator(Controller);            
 
             // Walls
             EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall1);
@@ -102,50 +94,15 @@ namespace EmodiaQuest.Core
             //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content);
 
-            // temporary enemy testing
-            EnemyList = new List<Enemy>();
-            r = new Random();
-            for(int i = 0; i < numEnemies; i++)
-            {
-                float x1 = (float)r.NextDouble() * 500;
-                float y1 = (float)r.NextDouble() * 500;
-                int x = (int) x1 / Settings.Instance.GridSize;
-                int y = (int) y1 / Settings.Instance.GridSize;
-                if(Controller.CollisionColors[x, y] != Color.Black && Controller.enemyArray[x,y].Count < 1)
-                {
-                    if (Controller.CollisionColors[(int)(x1 + CR) / Settings.Instance.GridSize, (int)(y1 + CR) / Settings.Instance.GridSize] != Color.Black && Controller.CollisionColors[(int)(x1 - CR) / Settings.Instance.GridSize, (int)(y1 - CR) / Settings.Instance.GridSize] != Color.Black)
-                    {
-                        if (Controller.CollisionColors[(int)(x1 - CR) / Settings.Instance.GridSize, (int)(y1 + CR) / Settings.Instance.GridSize] != Color.Black && Controller.CollisionColors[(int)(x1 + CR) / Settings.Instance.GridSize, (int)(y1 - CR) / Settings.Instance.GridSize] != Color.Black)
-                        {
-                            if (Controller.CollisionColors[(int)(x1 - CR) / Settings.Instance.GridSize, y] != Color.Black && Controller.CollisionColors[(int)(x1 + CR) / Settings.Instance.GridSize, y] != Color.Black)
-                            {
-                                if (Controller.CollisionColors[x, (int)(y1 - CR) / Settings.Instance.GridSize] != Color.Black && Controller.CollisionColors[x, (int)(y1 + CR) / Settings.Instance.GridSize] != Color.Black)
-                                {
-                                    Enemy enemy = new Enemy(new Vector2(x1, y1), Controller);
-                                    EnemyList.Add(enemy);
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    //Console.WriteLine("a enemy would be placed an a rock! Try again to place the Enemy");
-                    i--;
-                }
-            }
-            foreach (Enemy enemy in EnemyList)
+            foreach (Enemy enemy in generator.EnemyList)
             {
                 enemy.LoadContent(Content);
-            }
-            //Console.WriteLine(EnemyList.Count);
+            }             
         }
-
         
         public void UpdateDungeon(GameTime gametime)
         {
-            //just for testing the enemy
-            foreach (Enemy enemy in EnemyList)
+            foreach (Enemy enemy in generator.EnemyList)
             {
                 enemy.Update(gametime); ;
             }
@@ -165,7 +122,7 @@ namespace EmodiaQuest.Core
         public override void DrawGameScreen(Matrix world, Matrix view, Matrix projection)
         {
             DrawEnvironment(world, view, projection);
-            foreach (Enemy enemy in EnemyList)
+            foreach (Enemy enemy in generator.EnemyList)
             {
                 enemy.Draw(world, view, projection);
             }          

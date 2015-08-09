@@ -47,22 +47,18 @@ namespace EmodiaQuest.Core.DungeonGeneration
         }
 
         /// <summary>
-        /// Shows if current room contains choosen color
+        /// Clears this room in current map
         /// </summary>
-        /// <param name="map"> Current Bitmap</param>
-        /// <param name="color"> Choosen color </param>
-        /// <returns></returns>
-        public bool containsColor(System.Drawing.Bitmap map, System.Drawing.Color color)
+        /// <param name="map"></param>
+        public void clear(System.Drawing.Bitmap map)
         {
-            for (int i = (int)this.X; i < this.X + this.Width; i++)
+            for (int i = (int)X; i < X + Width; i++)
             {
-                for (int j = (int)this.Y; j < this.Y + this.Height; j++)
+                for (int j = (int)Y; j < Y + Height; j++)
                 {
-                    if (map.GetPixel(i, j) == color) return true;
+                    map.SetPixel(i, j, System.Drawing.Color.White);
                 }
             }
-            return false;
         }
-
     }
 }
