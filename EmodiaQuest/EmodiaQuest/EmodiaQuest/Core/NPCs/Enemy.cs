@@ -19,6 +19,8 @@ namespace EmodiaQuest.Core.NPCs
         private EnvironmentController currentEnvironment;
         private Ai enemyAi;
 
+        private bool isAttacking;
+
         // Enemystats
         public Vector2 Position;
         public float ViewAngle;
@@ -85,6 +87,7 @@ namespace EmodiaQuest.Core.NPCs
             this.Position = position;
             this.EnemyTyp = enemyTyp;
             currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
+            this.isAttacking = false;
         }
 
 
@@ -98,7 +101,7 @@ namespace EmodiaQuest.Core.NPCs
                 case EnemyType.NPCTest:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
                     MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-                    AttackRange = 5;
+                    AttackRange = 7;
                     Damage = 5;
 
                     // movement
@@ -112,12 +115,12 @@ namespace EmodiaQuest.Core.NPCs
                     AttackSpeed = 0.5f;
 
                     // collision
-                    CircleCollision = 1.5f;
+                    CircleCollision = 1.0f;
                     break;
                 case EnemyType.Monster1:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
                     MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-                    AttackRange = 5;
+                    AttackRange = 7;
                     Damage = 5;
 
                     // movement
@@ -131,12 +134,12 @@ namespace EmodiaQuest.Core.NPCs
                     AttackSpeed = 0.5f;
 
                     // collision
-                    CircleCollision = 1.5f;
+                    CircleCollision = 1.0f;
                     break;
                 case EnemyType.Monster2:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
                     MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-                    AttackRange = 5;
+                    AttackRange = 7;
                     Damage = 5;
 
                     // movement
@@ -150,12 +153,12 @@ namespace EmodiaQuest.Core.NPCs
                     AttackSpeed = 0.5f;
 
                     // collision
-                    CircleCollision = 1.5f;
+                    CircleCollision = 1.0f;
                     break;
                 case EnemyType.Monster3:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
                     MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-                    AttackRange = 5;
+                    AttackRange = 7;
                     Damage = 5;
 
                     // movement
@@ -169,7 +172,7 @@ namespace EmodiaQuest.Core.NPCs
                     AttackSpeed = 0.5f;
 
                     // collision
-                    CircleCollision = 1.5f;
+                    CircleCollision = 1.0f;
                     break;
             }
 
@@ -279,62 +282,7 @@ namespace EmodiaQuest.Core.NPCs
 
         public void Update(GameTime gameTime)
         {
-            //update only the animation which is required if the npcstate changed
-            //Update the active animation
-            switch (CurrentEnemyState)
-            {
-                case EnemyState.Idle:
-                    idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                    break;
-                case EnemyState.Run:
-                    runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                    break;
-                case EnemyState.Fight:
-                    fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                    break;
-            }
-
-            // Secure, that the last NPCstate is always a other NPCstate, than the acutal
-            if (CurrentEnemyState != TempEnemyState)
-            {
-                LastEnemyState = TempEnemyState;
-                // When the playerState changes, we need to blend
-                isBlending = true;
-                activeBlendTime = fixedBlendDuration;
-            }
-
-
-            // if the Time for blending is over, set it on false;
-            if (activeBlendTime <= 0)
-            {
-                isBlending = false;
-                if (activeBlendTime < 0)
-                {
-                    activeBlendTime = 0;
-                }
-            }
-            else
-            {
-                // update the blendDuration
-                activeBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
-            }
-
-            // Update the last animation (only 500 milliseconds after the last changing state required)
-            if (isBlending)
-            {
-                switch (LastEnemyState)
-                {
-                    case EnemyState.Idle:
-                        idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                        break;
-                    case EnemyState.Run:
-                        runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                        break;
-                    case EnemyState.Fight:
-                        fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                        break;
-                }
-            }
+            
 
 
             //Update Temp EnemyState
@@ -398,16 +346,103 @@ namespace EmodiaQuest.Core.NPCs
             // interaction
             if (IsAlive)
             {
+                isAttacking = false;
                 for (int i = -1; i < 2; i++)
                 {
                     for (int j = -1; j < 2; j++)
                     {
+                        if(onSameGridElement(new Vector2(Position.X + i, Position.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                        {
+                            isAttacking = true;
+                        }
                         if (attackTimer >= AttackThreshold && onSameGridElement(new Vector2(Position.X + i, Position.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
                         {
                             Player.Instance.Attack(Damage);
                             attackTimer = 0;
                         }
                     }
+                }
+            }
+
+            // setting the right EnemyStates
+
+            if(oldPosition.X != Position.X || oldPosition.Y != Position.Y)
+            {
+                CurrentEnemyState = EnemyState.Run;
+                stateTime = runDuration;
+                fixedBlendDuration = 150;
+            }
+            else if (isAttacking == true)
+            {
+                CurrentEnemyState = EnemyState.Fight;
+                stateTime = fightDuration;
+                fixedBlendDuration = 250;
+            }
+            else
+            {
+                CurrentEnemyState = EnemyState.Idle;
+                stateTime = idleDuration;
+                fixedBlendDuration = 100;
+            }
+
+            //Console.WriteLine(CurrentEnemyState + ", " + LastEnemyState);
+
+
+            //update only the animation which is required if the npcstate changed
+            //Update the active animation
+
+            switch (CurrentEnemyState)
+            {
+                case EnemyState.Idle:
+                    idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case EnemyState.Run:
+                    runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case EnemyState.Fight:
+                    fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+            }
+
+            // Secure, that the last NPCstate is always a other NPCstate, than the acutal
+            if (CurrentEnemyState != TempEnemyState)
+            {
+                LastEnemyState = TempEnemyState;
+                // When the playerState changes, we need to blend
+                isBlending = true;
+                activeBlendTime = fixedBlendDuration;
+            }
+
+
+            // if the Time for blending is over, set it on false;
+            if (activeBlendTime <= 0)
+            {
+                isBlending = false;
+                if (activeBlendTime < 0)
+                {
+                    activeBlendTime = 0;
+                }
+            }
+            else
+            {
+                // update the blendDuration
+                activeBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+
+            // Update the last animation (only 500 milliseconds after the last changing state required)
+            if (isBlending)
+            {
+                switch (LastEnemyState)
+                {
+                    case EnemyState.Idle:
+                        idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case EnemyState.Run:
+                        runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case EnemyState.Fight:
+                        fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
                 }
             }
         }
@@ -467,13 +502,13 @@ namespace EmodiaQuest.Core.NPCs
                 switch (LastEnemyState)
                 {
                     case EnemyState.Idle:
-                        idleBones = idleAP.GetSkinTransforms();
+                        blendingBones = idleAP.GetSkinTransforms();
                         break;
                     case EnemyState.Run:
-                        runBones = runAP.GetSkinTransforms();
+                        blendingBones = runAP.GetSkinTransforms();
                         break;
                     case EnemyState.Fight:
-                        fightBones = fightAP.GetSkinTransforms();
+                        blendingBones = fightAP.GetSkinTransforms();
                         break;
                 }
             }
