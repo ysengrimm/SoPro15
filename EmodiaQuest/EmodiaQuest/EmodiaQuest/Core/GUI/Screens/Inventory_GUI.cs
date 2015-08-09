@@ -125,5 +125,14 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.draw(spritebatch);
         }
 
+        public void addCharItem(Items.Item item)
+        {
+            this.platform.CharItems.Add(item);
+            Console.WriteLine("New Item with ID: " + item.ID + " has been added.");
+
+            // Ein Aufruf sieht so aus: Man muss halt ein Item aus den Listen aus ItemTestclass nehmen.
+            // EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.addCharItem(Items.ItemTestClass.Instance.Armors.First());
+        }
+
     }
 }

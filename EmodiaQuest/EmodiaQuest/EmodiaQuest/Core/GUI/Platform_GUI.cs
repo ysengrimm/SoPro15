@@ -181,12 +181,13 @@ namespace EmodiaQuest.Core.GUI
 
                     if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name_button == bb.Function)
                     {
+                        Jukebox.Instance.PlayAudioMouseFeedback();
+                        //Console.WriteLine("Sound!");
+
                         //this.functionCalled = bb.onClick();
                         if (OnButtonValue != null)
                         {
                             OnButtonValue(this, new ButtonEvent_GUI(bb.Function));
-                            Jukebox.Instance.PlayAudioMouseFeedback();
-                            //Console.WriteLine("Sound!");
                         }
                     }
                 }
