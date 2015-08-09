@@ -33,58 +33,119 @@ namespace EmodiaQuest.Core
 
         ContentManager Content;
 
+        private int changeTimer;
+
         public bool GameIsActive = true;
 
         private Keys lastMusicKey = Keys.R;
 
+        private SoundDisk activeMusic;
+        private int activeMusicIndex;
+        private SoundDisk lastMusic;
+        private SoundDisk activeSpeach;
+
 
         // Songs
-        SoundDisk Kampf_1;
+        SoundDisk Kampf_1, Going2Easy;
 
-        // All FX Sounds
+        public List<SoundDisk> Music;
+
+        // FX Sounds
         SoundDisk Hit_1, Plop_1;
 
+        public List<SoundDisk> FXSounds;
+
+        // All Speach Sounds
+
+        public List<SoundDisk> Speaches;
 
         public void LoadJukebox(ContentManager content)
         {
+            changeTimer = 250;
+            activeMusicIndex = 0;
             this.Content = content;
+            Music = new List<SoundDisk>();
+            FXSounds = new List<SoundDisk>();
+            Speaches = new List<SoundDisk>();
 
+            // Load the music
             Kampf_1 = new SoundDisk("Kampf_1", SoundDisk.SoundType.Music, "Sounds/music/Kampf_1", new TimeSpan(0, 0, 0, 0, 0));
-            Kampf_1.LoadSoundDisk(Content);
-            Console.WriteLine();
+            Music.Add(Kampf_1);
+            Going2Easy = new SoundDisk("Going2Easy", SoundDisk.SoundType.Music, "Sounds/music/Going2easy", new TimeSpan(0, 0, 0, 0, 0));
+            Music.Add(Going2Easy);
 
+
+            // Load the FX
             Hit_1 = new SoundDisk("Hit_1", SoundDisk.SoundType.FX, "Sounds/fx/Schlag_1", new TimeSpan(0, 0, 0, 0, 200));
-            Hit_1.LoadSoundDisk(Content);
+            FXSounds.Add(Hit_1);
             Plop_1 = new SoundDisk("Plop_1", SoundDisk.SoundType.FX, "Sounds/fx/Plop_1", new TimeSpan(0, 0, 0, 0, 0));
-            Plop_1.LoadSoundDisk(Content);
+            FXSounds.Add(Plop_1);
 
-            Kampf_1.Play();
+            foreach(SoundDisk music in Music)
+            {
+                music.LoadSoundDisk(Content);
+            }
+            foreach (SoundDisk fxSound in FXSounds)
+            {
+                fxSound.LoadSoundDisk(Content);
+            }
+            foreach (SoundDisk speach in Speaches)
+            {
+                speach.LoadSoundDisk(Content);
+            }
+
+            activeMusic = Music.ElementAt(activeMusicIndex);
+            activeMusic.Play();
+            lastMusic = Music.ElementAt(activeMusicIndex);
+            lastMusic.Stop();
         }
 
         public void UpdateJukebox(GameTime gameTime, bool isActive)
         {
+            Console.WriteLine(IsMusicPlaying() + ", " + Music.Count + ", " + changeTimer + ", " + activeMusicIndex + ", " + lastMusicKey);
             updateMusicKeys();
             GameIsActive = isActive;
-            Kampf_1.Update(gameTime);
+
+            // music update
+            activeMusic.Update(gameTime);
+            lastMusic.Update(gameTime);
+
             if (GameIsActive)
             {
+                if (changeTimer < 250)
+                {
+                    changeTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                    lastMusicKey = Keys.R;
+                }
+                if (changeTimer <= 0)
+                {
+                    changeTimer = 250;
+                    lastMusicKey = Keys.R;
+                }
                 if (lastMusicKey == Keys.P)
                 {
-                    Kampf_1.Pause();
-                    //Console.WriteLine("Paused");
+                    activeMusic.Pause();
                 }
                 if (lastMusicKey == Keys.R)
                 {
-                    Kampf_1.Resume();
+                    activeMusic.Resume();
                 }
                 if (lastMusicKey == Keys.Q)
                 {
-                    Kampf_1.Stop();
+                    activeMusic.Stop();
+                }
+                if (lastMusicKey == Keys.Left && changeTimer == 250)
+                {
+                    Console.WriteLine("Change Music");
+                    activeMusicIndex += 1;
+                    ChangeMusic((activeMusicIndex) % Music.Count);
+                    lastMusicKey = Keys.R;
+                    changeTimer--;
                 }
             }
             else if (!GameIsActive)
             {
-                Kampf_1.Pause();
+                activeMusic.Pause();
             }
 
             switch (EmodiaQuest_Game.Gamestate_Game)
@@ -131,7 +192,54 @@ namespace EmodiaQuest.Core
             {
                 lastMusicKey = Keys.Q;
             }
+            if(Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                lastMusicKey = Keys.Left;
+            }
         }
 
+        /// <summary>
+        /// Returns the index of the Music in the Music list when its playing, else returns -1;
+        /// </summary>
+        /// <returns></returns>
+        public int IsMusicPlaying()
+        {
+            int temp = -1;
+            for ( int i = 0; i < Music.Count; i++)
+            {
+                if (Music.ElementAt(i).IsPlaying)
+                {
+                    temp = i;
+                }
+            }
+            return temp;
+        }
+
+        /// <summary>
+        /// Returns the index of the Speach in the Speach list when its playing, else returns -1;
+        /// </summary>
+        /// <returns></returns>
+        public int IsSpeachPlaying()
+        {
+            int temp = -1;
+            for (int i = 0; i < Speaches.Count; i++)
+            {
+                if (Speaches.ElementAt(i).IsPlaying)
+                {
+                    temp = i;
+                }
+            }
+            return temp;
+        }
+
+
+
+        public void ChangeMusic(int i)
+        {
+            lastMusic = activeMusic;
+            activeMusic.Stop();
+            activeMusic = Music.ElementAt(i);
+            activeMusic.Play();
+        }
     }
 }

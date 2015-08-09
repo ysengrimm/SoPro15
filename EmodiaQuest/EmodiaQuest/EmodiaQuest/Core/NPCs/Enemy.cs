@@ -278,7 +278,7 @@ namespace EmodiaQuest.Core.NPCs
             // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 500;
             AttackSpeed = fightDuration / 1000;
-            Console.WriteLine(EnemyTyp + " hat idleZeit:" + idleDuration + ". hat runDuration:" + runDuration + ", hat fightDuration:" + fightDuration);
+            //Console.WriteLine(EnemyTyp + " hat idleZeit:" + idleDuration + ". hat runDuration:" + runDuration + ", hat fightDuration:" + fightDuration);
         }
 
 
