@@ -269,14 +269,16 @@ namespace EmodiaQuest.Core.NPCs
             fightAP.StartClip(fightC);
 
             //assign the specific animationTimes
-            idleDuration = idleC.Duration.Milliseconds / 1f;
-            runDuration = runC.Duration.Milliseconds / 1f;
-            fightDuration = fightC.Duration.Milliseconds / 1f;
+            idleDuration = (float) idleC.Duration.TotalMilliseconds / 1f;
+            runDuration = (float) runC.Duration.TotalMilliseconds / 1f;
+            fightDuration = (float) fightC.Duration.TotalMilliseconds / 1f;
 
 
             stateTime = 0;
             // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 500;
+            AttackSpeed = fightDuration / 1000;
+            //Console.WriteLine(EnemyTyp + " hat idleZeit:" + idleDuration + ". hat runDuration:" + runDuration + ", hat fightDuration:" + fightDuration);
         }
 
 

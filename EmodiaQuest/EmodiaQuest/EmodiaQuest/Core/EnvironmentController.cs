@@ -118,6 +118,8 @@ namespace EmodiaQuest.Core
             PlacementColors = new Color[MapWidth, MapHeight];
             CollisionColors = new Color[MapWidth, MapHeight];
             ItemColors = new Color[MapWidth, MapHeight];
+
+            CreateEnemyArray();
         }
         /// <summary>
         /// Initialises Array with Lists of Enemy
@@ -356,6 +358,11 @@ namespace EmodiaQuest.Core
             //save new image
             orgImage.Save(contentPath + @"maps\" + CurrentWorld.ToString() + "_CollisionMap.png", ImageFormat.Png);
 
+        }
+
+        public double EuclideanDistance(Vector2 p1, Vector2 p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }
 
         public void DrawEnvironment(Matrix world, Matrix view, Matrix projection)

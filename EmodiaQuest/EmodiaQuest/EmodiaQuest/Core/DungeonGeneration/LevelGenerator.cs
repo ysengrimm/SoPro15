@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Drawing.Imaging;
 using EmodiaQuest.Core;
+using EmodiaQuest.Core.NPCs;
 
 namespace EmodiaQuest.Core.DungeonGeneration
 {
@@ -22,7 +23,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
     public class LevelGenerator
     {
-        public string ContentPath;
+        private string contentPath;
         public System.Drawing.Bitmap Map;
         public EnvironmentController Controller;
 
@@ -31,12 +32,25 @@ namespace EmodiaQuest.Core.DungeonGeneration
         public Color Item = new Color(255, 0, 0);
         public Color Nothing = new Color(0, 0, 0);  // for more drawing performance
 
+        // trigger for setting spawnroom
+        bool set = true;
+
+        // create list for room storage for easy access
+        List<Room> rooms = new List<Room>();
+
+        public List<Enemy> EnemyList = new List<Enemy>();
+
+        /// <summary>
+        /// This list contains all positions in the map wich are part of rooms (excpt. spawnroom) and do not contain an item
+        /// </summary>
+        private List<Point> enemyPoints = new List<Point>();
+
         Random rnd = new Random();
 
         public LevelGenerator(EnvironmentController controller){
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
-            ContentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
+            contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
 
             this.Controller = controller;
 
@@ -59,8 +73,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 } 
             }
 
-		    // create list for room storage for easy access
-		    List<Room> rooms = new List<Room>();
+
 
             // Center of room
             Point newCenter = new Point();
@@ -105,32 +118,25 @@ namespace EmodiaQuest.Core.DungeonGeneration
 					        HCorridor((int)prevCenter.X, (int)newCenter.X, (int)newCenter.Y);
 					    }
 				    }
+
+                    // selecting spawnpoint of player
+                    if (set)
+                    {
+                        Map.SetPixel((int)newRoom.X, (int)newRoom.Y, System.Drawing.Color.Red);
+                        Controller.StartPoint = new Vector2(newRoom.X * Settings.Instance.GridSize, newRoom.Y * Settings.Instance.GridSize);
+                        set = false;
+                    }
 			    }
 		        if(!failed) rooms.Add(newRoom);
 		    }
-
-            // setting start point of player
-            for (int i = 0; i < Settings.Instance.DungeonMapSize; i++)
-            {
-                for (int j = 0; j < Settings.Instance.DungeonMapSize; j++)
-                {
-                    if (Controller.PlacementColors[i, j] == Floor)
-                    {
-                        Map.SetPixel(i, j, System.Drawing.Color.Red);
-                        Controller.StartPoint = new Vector2(i * Settings.Instance.GridSize, j * Settings.Instance.GridSize);
-
-                        //quit both loops
-                        i = Settings.Instance.DungeonMapSize;
-                        j = Settings.Instance.DungeonMapSize;
-                    }
-                }
-            }
 
             DeleteWalls();
 
             // this method would place items in rooms and floors
             // if choosen delete same method from "createRoom", wich places items only in rooms
             //insertItems();
+
+            insertEnemies();
 
             saveMap();
 	    }
@@ -145,7 +151,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
             gimage.DrawImage(Map, 0, 0);
 
             //save new image
-            Map.Save(ContentPath + @"maps\" + "Dungeon_PlacementMapDebug_forreasons_.png", ImageFormat.Png);
+            Map.Save(contentPath + @"maps\" + "Dungeon_PlacementMapDebug_forreasons_.png", ImageFormat.Png);
         }
 
         /// <summary>
@@ -163,10 +169,15 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
                     // randomly setting items in a room
                     // does not set an item in spawn room
-                    if (rnd.Next(10) == 0 && !room.containsColor(Map, System.Drawing.Color.Red))     // 10% chance for setting item
+                    if (rnd.Next(10) == 0 && !set)     // 10% chance for setting item
                     {
                         Controller.ItemColors[i, j] = Item;
-                        Map.SetPixel(i, j, System.Drawing.Color.Green);
+                        Map.SetPixel(i, j, System.Drawing.Color.Gray);
+                    }
+                    else if(!set)
+                    {
+                        // items and enemies not on same field
+                        enemyPoints.Add(new Point(i, j));
                     }
                 }
             }
@@ -254,6 +265,51 @@ namespace EmodiaQuest.Core.DungeonGeneration
                         Controller.ItemColors[i, j] = Item;
                         Map.SetPixel(i, j, System.Drawing.Color.Green);
                     }
+                }
+            }
+        }
+
+        private void insertEnemies()
+        {
+            int count = Settings.Instance.NumEnemies;
+
+            while (count != 0)
+            {
+                Point point = enemyPoints[rnd.Next(enemyPoints.Count)];
+
+                float distX = (float)rnd.NextDouble() * 3;
+                float distY = (float)rnd.NextDouble() * 3;
+                if (rnd.Next(10) > 4) distX *= -1;
+                if (rnd.Next(10) > 4) distY *= -1;
+
+                if (Controller.enemyArray[point.X, point.Y].Count > 0)        //das feld ist nicht leer
+                {
+                    bool samePosition = false;
+                    foreach (Enemy enemy in Controller.enemyArray[point.X, point.Y])    //gehe die liste in diesem feld durch
+                    {
+                        if (Controller.EuclideanDistance(new Vector2(point.X + distX, point.Y + distY), enemy.Position) < 3) //wenn die random position nah an der eines enemys ist
+                        {
+                            samePosition = true;    // an die position kommt kein monster hin
+                            break;
+                        }
+                    }
+
+                    if (!samePosition)      // wenn man eine position im feld gefunden hat wo kein monster steht
+                    {
+                        Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, (EnemyType)rnd.Next(4));
+                        EnemyList.Add(enemy);
+                        count--;
+
+                        Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
+                    }
+                }
+                else
+                {
+                    Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, (EnemyType)rnd.Next(4));
+                    EnemyList.Add(enemy);
+                    count--;
+
+                    Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
                 }
             }
         }

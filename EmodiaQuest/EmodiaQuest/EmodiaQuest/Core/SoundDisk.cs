@@ -80,13 +80,28 @@ namespace EmodiaQuest.Core
             get { return activeDelay; }
         }
         /// <summary>
-        /// plays the sound
+        /// returns true, when the sound is playing
         /// </summary>
-        private bool playing;
-        public bool Playing
+        private bool isPlaying;
+        public bool IsPlaying
         {
-            set { playing = value; }
-            get { return playing; }
+            get { return isPlaying; }
+        }
+        /// <summary>
+        /// returns true, when the sound is paused
+        /// </summary>
+        private bool isPaused;
+        public bool IsPaused
+        {
+            get { return isPaused; }
+        }
+        /// <summary>
+        /// returns true, when the sound is delaying
+        /// </summary>
+        private bool isDelaying;
+        public bool IsDelaying
+        {
+            get { return isDelaying; }
         }
         /// <summary>
         /// initial method to tell the jukebox it has to be played in the next update of the Jukebox
@@ -127,6 +142,10 @@ namespace EmodiaQuest.Core
             {
                 soundInstance = SoundEffect.CreateInstance();
             }
+            else if (SoundTyp == SoundType.Speach)
+            {
+                soundInstance = SoundEffect.CreateInstance();
+            }
         }
         /// <summary>
         /// Plays the Sounddisk
@@ -148,6 +167,9 @@ namespace EmodiaQuest.Core
                 case SoundType.Music:
                     activeSoundState = SoundState.Stopped;
                     break;
+                case SoundType.Speach:
+                    activeSoundState = SoundState.Stopped;
+                    break;
             }
         }
         /// <summary>
@@ -161,6 +183,9 @@ namespace EmodiaQuest.Core
                     Console.WriteLine("The Sound: " + Name + " is FXSound and doesn´t feature Pause");
                     break;
                 case SoundType.Music:
+                    activeSoundState = SoundState.Paused;
+                    break;
+                case SoundType.Speach:
                     activeSoundState = SoundState.Paused;
                     break;
             }
@@ -178,6 +203,9 @@ namespace EmodiaQuest.Core
                 case SoundType.Music:
                     activeSoundState = SoundState.Resumed;
                     break;
+                case SoundType.Speach:
+                    activeSoundState = SoundState.Resumed;
+                    break;
             }
         }
         /// <summary>
@@ -186,6 +214,25 @@ namespace EmodiaQuest.Core
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            // update the getters
+            if (activeSoundState == SoundState.Playing || activeSoundState == SoundState.Resumed)
+            {
+                isPlaying = true;
+            }
+            else {isPlaying = false;}
+            if (activeSoundState == SoundState.Paused)
+            {
+                isPaused = true;
+            }
+            else { isPaused = false; }
+            if (activeSoundState == SoundState.Delaying)
+            {
+                isDelaying = true;
+            }
+            else { isDelaying = false;}
+
+
+
             switch (SoundTyp)
             {
                 // updates if the Sounddisk has FX (no pause or stop functionality)
@@ -245,6 +292,63 @@ namespace EmodiaQuest.Core
                         soundInstance.Stop();
                         ActiveTimer = (float) Duration.TotalMilliseconds;
                         activeDelay = (float) Delay.TotalMilliseconds;
+                        activeSoundState = SoundState.Idle;
+                    }
+                    else if (ForceToPlay && activeSoundState == SoundState.Idle)
+                    {
+                        if (activeDelay != 0)
+                        {
+                            activeSoundState = SoundState.Delaying;
+                        }
+                        else if (ActiveDelay == 0)
+                        {
+                            activeSoundState = SoundState.Playing;
+                        }
+                        ForceToPlay = false;
+                    }
+                    else if (activeSoundState == SoundState.Delaying && ActiveDelay > 0)
+                    {
+                        ActiveDelay -= gameTime.ElapsedGameTime.Milliseconds;
+                    }
+                    else if ((activeSoundState == SoundState.Delaying && ActiveDelay <= 0) || (activeSoundState == SoundState.Playing && ActiveTimer == Duration.TotalMilliseconds))
+                    {
+                        activeSoundState = SoundState.Playing;
+                        ActiveDelay = 0;
+                        soundInstance.Play();
+                        soundInstance.Volume = Settings.Instance.MainVolume * Settings.Instance.MusicVolume;
+                        ActiveTimer -= 1;
+                    }
+                    else if (activeSoundState == SoundState.Playing && activeTimer > 0)
+                    {
+                        ActiveTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                        soundInstance.Volume = Settings.Instance.MainVolume * Settings.Instance.MusicVolume;
+                    }
+                    else if (activeSoundState == SoundState.Playing && activeTimer <= 0)
+                    {
+                        ActiveTimer = Duration.Milliseconds;
+                        activeDelay = Delay.Milliseconds;
+                        activeSoundState = SoundState.Idle;
+                        soundInstance.Stop();
+                    }
+                    break;
+                // updates the Sounddisk if it is from the type "speach"
+                case SoundType.Speach:
+                    //Console.WriteLine(ActiveTimer + ", " + soundInstance.State + ", " + Name + ", " + soundInstance.Volume);
+                    soundInstance.Volume = Settings.Instance.MainVolume * Settings.Instance.MusicVolume;
+                    if (activeSoundState == SoundState.Paused)
+                    {
+                        soundInstance.Pause();
+                    }
+                    else if (activeSoundState == SoundState.Resumed)
+                    {
+                        soundInstance.Resume();
+                        activeSoundState = SoundState.Playing;
+                    }
+                    else if (activeSoundState == SoundState.Stopped)
+                    {
+                        soundInstance.Stop();
+                        ActiveTimer = (float)Duration.TotalMilliseconds;
+                        activeDelay = (float)Delay.TotalMilliseconds;
                         activeSoundState = SoundState.Idle;
                     }
                     else if (ForceToPlay && activeSoundState == SoundState.Idle)

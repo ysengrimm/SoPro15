@@ -184,10 +184,10 @@ namespace EmodiaQuest.Core
         public int DungeonMapSize;      // allways quadratic
 
         public int MaxRooms = 100;
-        public int MinRoomSize = 3;
-        public int MaxRoomSize = 5;
+        public int MinRoomSize = 5;
+        public int MaxRoomSize = 10;
 
-
+        public int NumEnemies;
 
         public void loadContent()
         {
@@ -227,7 +227,7 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Defines different qualities for Meshes, Hight 13.000 vertices, Low = 1500 vertices
         /// </summary>
-        public MeshQuality NPCMeshQuality = MeshQuality.High;
+        public MeshQuality NPCMeshQuality = MeshQuality.Low;
 
 
     }
