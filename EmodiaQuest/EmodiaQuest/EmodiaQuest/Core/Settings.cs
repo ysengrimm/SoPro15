@@ -227,7 +227,7 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Defines different qualities for Meshes, Hight 13.000 vertices, Low = 1500 vertices
         /// </summary>
-        public MeshQuality NPCMeshQuality = MeshQuality.High;
+        public MeshQuality NPCMeshQuality = MeshQuality.Low;
 
 
     }

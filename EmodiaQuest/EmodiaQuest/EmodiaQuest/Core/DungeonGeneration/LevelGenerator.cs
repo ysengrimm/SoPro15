@@ -296,7 +296,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
                     if (!samePosition)      // wenn man eine position im feld gefunden hat wo kein monster steht
                     {
-                        Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, EnemyType.Monster3);
+                        Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, (EnemyType)rnd.Next(4));
                         EnemyList.Add(enemy);
                         count--;
 
@@ -305,7 +305,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 }
                 else
                 {
-                    Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, EnemyType.Monster3);
+                    Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, (EnemyType)rnd.Next(4));
                     EnemyList.Add(enemy);
                     count--;
 
