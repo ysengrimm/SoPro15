@@ -102,6 +102,12 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.addPlainImage(100, 100, -100, -100 * 0.189f * 1.777f, "HUD", "HUD_small");
 
             platform.OnSliderValue += new GUI_Delegate_Slider(this.SliderEventValue);
+
+
+            // Items
+            // Hab grad nur First genommen, weil ich erst ein Item drin hab. Sonst natuerlich ElementAt
+            this.platform.CharItems.Add(Items.ItemTestClass.Instance.Quests.First());
+            this.platform.CharItems.Add(Items.ItemTestClass.Instance.Helmets.First());
         }
 
         public void update()

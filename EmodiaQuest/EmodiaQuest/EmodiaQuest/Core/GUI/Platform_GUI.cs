@@ -28,6 +28,9 @@ namespace EmodiaQuest.Core.GUI
         private List<Label_GUI> labels = new List<Label_GUI>();
         private List<InventoryItem_GUI> invItems = new List<InventoryItem_GUI>();
 
+        // Items
+        public List<Items.Item> CharItems = new List<Items.Item>();
+
         public static List<SpriteFonts_GUI> fonts = new List<SpriteFonts_GUI>();
 
         private MouseState mouseHandle;

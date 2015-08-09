@@ -59,6 +59,9 @@ namespace EmodiaQuest
             EmodiaQuest.Core.Settings.Instance.loadContent();
             EmodiaQuest.Core.Settings.Instance.GraphicsCopy = graphics;
 
+            // ItemList Init
+            EmodiaQuest.Core.Items.ItemTestClass.Instance.loadContent();
+
             // GUI init
             EmodiaQuest.Core.GUI.Controls_GUI.Instance.loadContent();
             EmodiaQuest.Core.GUI.Settings_GUI.Instance.loadContent(Content);
