@@ -230,6 +230,7 @@ namespace EmodiaQuest.Core
                 // updates the Sounddisk if it is from the type "music"
                 case SoundType.Music:
                     //Console.WriteLine(ActiveTimer + ", " + soundInstance.State + ", " + Name + ", " + soundInstance.Volume);
+                    soundInstance.Volume = Settings.Instance.MainVolume * Settings.Instance.MusicVolume;
                     if (activeSoundState == SoundState.Paused)
                     {
                         soundInstance.Pause();

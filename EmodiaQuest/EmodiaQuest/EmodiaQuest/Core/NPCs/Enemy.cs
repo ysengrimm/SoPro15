@@ -11,13 +11,15 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using SkinnedModel;
 
-namespace EmodiaQuest.Core.NPCs
+namespace EmodiaQuest.Core.NPCs 
 {
     public class Enemy
     {
         // Variables for Ai
         private EnvironmentController currentEnvironment;
         private Ai enemyAi;
+
+        private bool isAttacking;
 
         // Enemystats
         public Vector2 Position;
@@ -36,6 +38,7 @@ namespace EmodiaQuest.Core.NPCs
         public float AttackThreshold;
         public float AttackSpeed;
 
+        public EnemyType EnemyTyp;
 
         private float gridSize = Settings.Instance.GridSize;
 
@@ -78,12 +81,13 @@ namespace EmodiaQuest.Core.NPCs
         public bool isBlending;
 
 
-        public Enemy(Vector2 position, EnvironmentController currentEnvironment)
+        public Enemy(Vector2 position, EnvironmentController currentEnvironment, EnemyType enemyTyp)
         {
             this.currentEnvironment = currentEnvironment;
-            Position = position;
-
+            this.Position = position;
+            this.EnemyTyp = enemyTyp;
             currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
+            this.isAttacking = false;
         }
 
 
@@ -91,36 +95,133 @@ namespace EmodiaQuest.Core.NPCs
         public void LoadContent(ContentManager content)
         {
             this.Content = content;
+            // Normal variables for each different enemy Type
+            switch (EnemyTyp)
+            {
+                case EnemyType.NPCTest:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    AttackRange = 7;
+                    Damage = 5;
 
-            MovementSpeed = Settings.Instance.HumanEnemySpeed;
-            MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-            AttackRange = 5;
-            Damage = 5;
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
 
-            // movement
-            TrackingRadius = 30f;
-            MovementSpeed = 0.25f;
-            enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
-            ViewAngle = -enemyAi.TrackingAngle;
+                    attackTimer = 0;
+                    AttackThreshold = 20;
+                    AttackSpeed = 0.5f;
 
-            attackTimer = 0;
-            AttackThreshold = 20;
-            AttackSpeed = 0.5f;
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
+                case EnemyType.Monster1:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    AttackRange = 7;
+                    Damage = 5;
 
-            // collision
-            CircleCollision = 1.5f;
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+                    AttackThreshold = 20;
+                    AttackSpeed = 0.5f;
+
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
+                case EnemyType.Monster2:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    AttackRange = 7;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+                    AttackThreshold = 20;
+                    AttackSpeed = 0.5f;
+
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
+                case EnemyType.Monster3:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    AttackRange = 7;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+                    AttackThreshold = 20;
+                    AttackSpeed = 0.5f;
+
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
+            }
+
             collHandler = CollisionHandler.Instance;
 
             IsAlive = true;
 
+            // Loading the different meshes for the enemies
+            switch (EnemyTyp)
+            {
+                case EnemyType.NPCTest:
+                    // loading default mesh
+                    enemyModel = content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------- Insert your Mesh here, need at least 2 keyframes
 
-            // loading default mesh
-            enemyModel = content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+                    fightM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+                    break;
 
-            // loading Animation Models
-            idleM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------------- The animation Meshes here
-            runM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
-            fightM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+                case EnemyType.Monster1:
+                    // loading default mesh
+                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster1/Monster1"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster1/Monster1idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster1/Monster1run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster1/Monster1fight");
+                    break;
+                case EnemyType.Monster2:
+                    // loading default mesh
+                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster2/Monster2"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster2/Monster2idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster2/Monster2run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster2/Monster2fight");
+                    break;
+                case EnemyType.Monster3:
+                    // loading default mesh
+                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster3/Monster3"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3fight");
+                    break;
+            }
+            
 
             // Loading Skinning Data
             idleSD = idleM.Tag as SkinningData;
@@ -132,10 +233,35 @@ namespace EmodiaQuest.Core.NPCs
             runAP = new AnimationPlayer(runSD);
             fightAP = new AnimationPlayer(fightSD);
 
-            // loading the animation clips
-            idleC = idleSD.AnimationClips["idle"]; // <------------------------------------ The name of the animation in blender
-            runC = runSD.AnimationClips["idle"];
-            fightC = fightSD.AnimationClips["idle"];
+
+            // loading different animations for the different enemies
+            switch (EnemyTyp)
+            {
+                case EnemyType.NPCTest:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["idle"];
+                    fightC = fightSD.AnimationClips["idle"];
+                    break;
+                case EnemyType.Monster1:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster2:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster3:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+            }
 
             // Safty Start Animations
             idleAP.StartClip(idleC);
@@ -156,62 +282,7 @@ namespace EmodiaQuest.Core.NPCs
 
         public void Update(GameTime gameTime)
         {
-            //update only the animation which is required if the npcstate changed
-            //Update the active animation
-            switch (CurrentEnemyState)
-            {
-                case EnemyState.Idle:
-                    idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                    break;
-                case EnemyState.Run:
-                    runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                    break;
-                case EnemyState.Fight:
-                    fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                    break;
-            }
-
-            // Secure, that the last NPCstate is always a other NPCstate, than the acutal
-            if (CurrentEnemyState != TempEnemyState)
-            {
-                LastEnemyState = TempEnemyState;
-                // When the playerState changes, we need to blend
-                isBlending = true;
-                activeBlendTime = fixedBlendDuration;
-            }
-
-
-            // if the Time for blending is over, set it on false;
-            if (activeBlendTime <= 0)
-            {
-                isBlending = false;
-                if (activeBlendTime < 0)
-                {
-                    activeBlendTime = 0;
-                }
-            }
-            else
-            {
-                // update the blendDuration
-                activeBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
-            }
-
-            // Update the last animation (only 500 milliseconds after the last changing state required)
-            if (isBlending)
-            {
-                switch (LastEnemyState)
-                {
-                    case EnemyState.Idle:
-                        idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                        break;
-                    case EnemyState.Run:
-                        runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                        break;
-                    case EnemyState.Fight:
-                        fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                        break;
-                }
-            }
+            
 
 
             //Update Temp EnemyState
@@ -275,16 +346,103 @@ namespace EmodiaQuest.Core.NPCs
             // interaction
             if (IsAlive)
             {
+                isAttacking = false;
                 for (int i = -1; i < 2; i++)
                 {
                     for (int j = -1; j < 2; j++)
                     {
+                        if(onSameGridElement(new Vector2(Position.X + i, Position.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                        {
+                            isAttacking = true;
+                        }
                         if (attackTimer >= AttackThreshold && onSameGridElement(new Vector2(Position.X + i, Position.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
                         {
                             Player.Instance.Attack(Damage);
                             attackTimer = 0;
                         }
                     }
+                }
+            }
+
+            // setting the right EnemyStates
+
+            if(oldPosition.X != Position.X || oldPosition.Y != Position.Y)
+            {
+                CurrentEnemyState = EnemyState.Run;
+                stateTime = runDuration;
+                fixedBlendDuration = 150;
+            }
+            else if (isAttacking == true)
+            {
+                CurrentEnemyState = EnemyState.Fight;
+                stateTime = fightDuration;
+                fixedBlendDuration = 250;
+            }
+            else
+            {
+                CurrentEnemyState = EnemyState.Idle;
+                stateTime = idleDuration;
+                fixedBlendDuration = 100;
+            }
+
+            //Console.WriteLine(CurrentEnemyState + ", " + LastEnemyState);
+
+
+            //update only the animation which is required if the npcstate changed
+            //Update the active animation
+
+            switch (CurrentEnemyState)
+            {
+                case EnemyState.Idle:
+                    idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case EnemyState.Run:
+                    runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case EnemyState.Fight:
+                    fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+            }
+
+            // Secure, that the last NPCstate is always a other NPCstate, than the acutal
+            if (CurrentEnemyState != TempEnemyState)
+            {
+                LastEnemyState = TempEnemyState;
+                // When the playerState changes, we need to blend
+                isBlending = true;
+                activeBlendTime = fixedBlendDuration;
+            }
+
+
+            // if the Time for blending is over, set it on false;
+            if (activeBlendTime <= 0)
+            {
+                isBlending = false;
+                if (activeBlendTime < 0)
+                {
+                    activeBlendTime = 0;
+                }
+            }
+            else
+            {
+                // update the blendDuration
+                activeBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+
+            // Update the last animation (only 500 milliseconds after the last changing state required)
+            if (isBlending)
+            {
+                switch (LastEnemyState)
+                {
+                    case EnemyState.Idle:
+                        idleAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case EnemyState.Run:
+                        runAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case EnemyState.Fight:
+                        fightAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
                 }
             }
         }
@@ -344,13 +502,13 @@ namespace EmodiaQuest.Core.NPCs
                 switch (LastEnemyState)
                 {
                     case EnemyState.Idle:
-                        idleBones = idleAP.GetSkinTransforms();
+                        blendingBones = idleAP.GetSkinTransforms();
                         break;
                     case EnemyState.Run:
-                        runBones = runAP.GetSkinTransforms();
+                        blendingBones = runAP.GetSkinTransforms();
                         break;
                     case EnemyState.Fight:
-                        fightBones = fightAP.GetSkinTransforms();
+                        blendingBones = fightAP.GetSkinTransforms();
                         break;
                 }
             }
@@ -428,7 +586,7 @@ namespace EmodiaQuest.Core.NPCs
                         }
 
                         effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(ViewAngle + (float) (0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
                         effect.View = view;
                         effect.Projection = projection;
                         effect.SpecularColor = new Vector3(0.25f);

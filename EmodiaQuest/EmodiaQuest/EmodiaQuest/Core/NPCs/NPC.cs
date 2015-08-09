@@ -405,7 +405,7 @@ namespace EmodiaQuest.Core.NPCs
                         else if (mesh.Name == "Helm_1")
                         {
                             effect.Texture = defaultTrousersTex;
-                            EmodiaQuest_Game.graphics.GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None }; // This sets the Backfaceculling for everything to none
+                            //EmodiaQuest_Game.graphics.GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None }; // This sets the Backfaceculling for everything to none
                         }
                         else
                         {
