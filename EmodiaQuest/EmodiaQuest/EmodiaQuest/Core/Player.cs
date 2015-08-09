@@ -256,7 +256,7 @@ namespace EmodiaQuest.Core
             //Update interaction with NPCs
             for (int index = 0; index < SafeWorld.Instance.NPCList.Count; index++)
             {
-                if (EuclideanDistance(SafeWorld.Instance.NPCList.ElementAt(index).Position, this.Position) < 9f)
+                if (gameEnv.EuclideanDistance(SafeWorld.Instance.NPCList.ElementAt(index).Position, this.Position) < 9f)
                 {
                     Console.WriteLine("You can interact with: " + SafeWorld.Instance.NPCList.ElementAt(index).Name);
                 }
@@ -357,7 +357,7 @@ namespace EmodiaQuest.Core
                     for (var i = 0; i < collisionHandler.Controller.Items.Count; i++)
                     {
                         var temp = new Vector2(collisionHandler.Controller.Items.ElementAt(i).position.X, collisionHandler.Controller.Items.ElementAt(i).position.Z);
-                        if (EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
+                        if (gameEnv.EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
                         {
                             collisionHandler.Controller.Items.RemoveAt(i);
                             //Console.Out.WriteLine("+1 Point");
@@ -642,7 +642,7 @@ namespace EmodiaQuest.Core
             Enemy closestEnemy = null;
             foreach (var enemy in enemyList)
             {
-                float dist = (float) EuclideanDistance(Position, enemy.Position);
+                float dist = (float) gameEnv.EuclideanDistance(Position, enemy.Position);
                 if (dist < currentCosest)
                 {
                     currentCosest = dist;
@@ -816,11 +816,5 @@ namespace EmodiaQuest.Core
                 else mesh.Draw();
             }
         }
-
-        private double EuclideanDistance(Vector2 p1, Vector2 p2)
-        {
-            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
-        }
-
     }
 }

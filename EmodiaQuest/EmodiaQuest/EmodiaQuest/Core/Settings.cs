@@ -184,10 +184,10 @@ namespace EmodiaQuest.Core
         public int DungeonMapSize;      // allways quadratic
 
         public int MaxRooms = 100;
-        public int MinRoomSize = 3;
-        public int MaxRoomSize = 5;
+        public int MinRoomSize = 5;
+        public int MaxRoomSize = 10;
 
-
+        public int NumEnemies;
 
         public void loadContent()
         {
