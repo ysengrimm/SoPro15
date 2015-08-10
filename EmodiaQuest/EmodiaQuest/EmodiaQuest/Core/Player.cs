@@ -65,6 +65,8 @@ namespace EmodiaQuest.Core
         public float PlayerSpeed;
         public float RotationSpeed;
 
+        public int Gold;
+
         /**
          * Animation and Model
         **/
@@ -160,6 +162,7 @@ namespace EmodiaQuest.Core
             Armor = 0;
             Damage = 50;
             Level = 1;
+            Gold = 100;
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
@@ -260,11 +263,15 @@ namespace EmodiaQuest.Core
             }
 
             //Update interaction with NPCs
-            for (int index = 0; index < SafeWorld.Instance.NPCList.Count; index++)
+            foreach (NPC npc in SafeWorld.Instance.NPCList)
             {
-                if (gameEnv.EuclideanDistance(SafeWorld.Instance.NPCList.ElementAt(index).Position, this.Position) < 9f)
+                if (gameEnv.EuclideanDistance(npc.Position, Position) < 9f)
                 {
-                    Console.WriteLine("You can interact with: " + SafeWorld.Instance.NPCList.ElementAt(index).Name);
+                    //Console.WriteLine("You can interact with: " + npc.Name);
+                    if (Keyboard.GetState().IsKeyDown(Keys.E))
+                    {
+                        QuestController.Instance.QuestUpdate(npc);
+                    }
                 }
             }
 

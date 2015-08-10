@@ -8,7 +8,7 @@
                 <visit>10</visit>
                 <kill>Oger</kill>
                 <item>Stein der Weisen</item>
-                <gold></gold>
+                <gold>200</gold>
             </conditions>
             <story>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -36,9 +36,9 @@
       
         <quest>
             <name>Other Quest</name>
-            <owner>Günter</owner>
+            <owner>Jack</owner>
             <conditions>
-                <level>5</level>
+                <gold>100</gold>
             </conditions>
             <story>
                 Bla

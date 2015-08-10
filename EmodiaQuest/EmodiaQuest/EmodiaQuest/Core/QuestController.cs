@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using EmodiaQuest.Core.Items;
 using EmodiaQuest.Core.NPCs;
 using Microsoft.Xna.Framework.Content;
 
@@ -67,42 +69,137 @@ namespace EmodiaQuest.Core
         {
             if (ActiveQuests.Count > 0)
             {
-                var activeQuestsByOwner = from quest in Quests where quest.Owner == owner.Name.ToString() && ActiveQuests.Contains(quest) select quest;
+                var activeQuestsByOwner = from quest in Quests
+                    where quest.Owner == owner.Name.ToString() && ActiveQuests.Contains(quest)
+                    select quest;
                 foreach (Quest activeQuest in activeQuestsByOwner)
                 {
-                    checkForCompletion(activeQuest);
+                    bool level, solved, visit = false, kill = false, item, gold;
+                    List<bool> outCompare = new List<bool>();
+                    foreach (var key in activeQuest.Tasks.Keys)
+                    {
+                        switch (key)
+                        {
+                            case "level":
+                                String levelVal;
+                                activeQuest.Tasks.TryGetValue(key, out levelVal);
+                                level = Player.Instance.Level >= int.Parse(levelVal);
+                                outCompare.Add(level);
+                                break;
+                            case "solved":
+                                String solvedOut;
+                                activeQuest.Tasks.TryGetValue(key, out solvedOut);
+                                foreach (var sq in SolvedQuests)
+                                {
+                                    if (sq.Name == solvedOut)
+                                    {
+                                        solved = true;
+                                        outCompare.Add(solved);
+                                    }
+                                }
+                                break;
+                            case "visit":
+                                Console.WriteLine("Not yet implemented!");
+                                break;
+                            case "kill":
+                                Console.WriteLine("Not yet implemented!");
+                                break;
+                            case "item":
+                                String itemOut;
+                                activeQuest.Tasks.TryGetValue(key, out itemOut);
+                                foreach (var itemQ in ItemTestClass.Instance.Quests)
+                                {
+                                    if (itemQ.Name == itemOut)
+                                    {
+                                        item = true;
+                                        outCompare.Add(item);
+                                    }
+                                }
+                                break;
+                            case "gold":
+                                String goldOut;
+                                activeQuest.Tasks.TryGetValue(key, out goldOut);
+                                gold =  Player.Instance.Gold >= int.Parse(goldOut);
+                                outCompare.Add(gold);
+                                break;
+                        }
+                    }
+
+                    var questCompareResult = from res in outCompare where !res select res;
+                    if (!questCompareResult.Any())
+                    {
+                        ActiveQuests.Remove(activeQuest);
+                        SolvedQuests.Add(activeQuest);
+                        Console.WriteLine("Solved Quest: " + activeQuest.Name);
+                    }
+
                 }
             }
-            
-        }
-
-        private bool checkForCompletion(Quest q)
-        {
-            bool level = false, solved = false, visit = false, kill = false, item = false, gold = false;
-            foreach (var key in q.Tasks.Keys)
+            else
             {
-                switch (key)
+                var questsByOwner = from quest in Quests where quest.Owner == owner.Name.ToString() && !SolvedQuests.Contains(quest) select quest;
+                foreach (Quest quest in questsByOwner)
                 {
-                    case "level":
-                        String levelVal = "";
-                        q.Tasks.TryGetValue(key, out levelVal);
-                        level = int.Parse(levelVal) >= Player.Instance.Level;
-                        break;
-                    case "solved":
-                        break;
-                    case "visit":
-                        break;
-                    case "kill":
-                        break;
-                    case "item":
-                        break;
-                    case "gold":
-                        break;
+                    bool level, solved, visit = false, kill = false, item, gold;
+                    List<bool> outCompare = new List<bool>();
+                    foreach (var key in quest.Conditions.Keys)
+                    {
+                        switch (key)
+                        {
+                            case "level":
+                                String levelVal;
+                                quest.Conditions.TryGetValue(key, out levelVal);
+                                level = Player.Instance.Level >= int.Parse(levelVal);
+                                outCompare.Add(level);
+                                break;
+                            case "solved":
+                                String solvedOut;
+                                quest.Conditions.TryGetValue(key, out solvedOut);
+                                foreach (var sq in SolvedQuests)
+                                {
+                                    if (sq.Name == solvedOut)
+                                    {
+                                        solved = true;
+                                        outCompare.Add(solved);
+                                    }
+                                }
+                                break;
+                            case "visit":
+                                Console.WriteLine("Not yet implemented!");
+                                break;
+                            case "kill":
+                                Console.WriteLine("Not yet implemented!");
+                                break;
+                            case "item":
+                                String itemOut;
+                                quest.Conditions.TryGetValue(key, out itemOut);
+                                foreach (var itemQ in ItemTestClass.Instance.Quests)
+                                {
+                                    if (itemQ.Name == itemOut)
+                                    {
+                                        item = true;
+                                        outCompare.Add(item);
+                                    }
+                                }
+                                break;
+                            case "gold":
+                                String goldOut;
+                                quest.Conditions.TryGetValue(key, out goldOut);
+                                gold = Player.Instance.Gold >= int.Parse(goldOut);
+                                outCompare.Add(gold);
+                                break;
+                        }
+                    }
+
+                    List<bool> otherList = outCompare.Where(res => !res).ToList();
+                    if (!otherList.Any())
+                    {
+                        ActiveQuests.Add(quest);
+                        Console.WriteLine("Addded Quest: " + quest.Name);
+                    }
+
                 }
             }
-
-            return true;
         }
-
     }
 }
