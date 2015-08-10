@@ -36,7 +36,6 @@ namespace EmodiaQuest.Core.NPCs
 
         private float attackTimer;
         public float AttackThreshold;
-        public float AttackSpeed;
 
         public EnemyType EnemyTyp;
 
@@ -112,7 +111,6 @@ namespace EmodiaQuest.Core.NPCs
 
                     attackTimer = 0;
                     AttackThreshold = 20;
-                    AttackSpeed = 0.5f;
 
                     // collision
                     CircleCollision = 1.0f;
@@ -130,8 +128,6 @@ namespace EmodiaQuest.Core.NPCs
                     ViewAngle = -enemyAi.TrackingAngle;
 
                     attackTimer = 0;
-                    AttackThreshold = 20;
-                    AttackSpeed = 0.5f;
 
                     // collision
                     CircleCollision = 1.0f;
@@ -149,8 +145,6 @@ namespace EmodiaQuest.Core.NPCs
                     ViewAngle = -enemyAi.TrackingAngle;
 
                     attackTimer = 0;
-                    AttackThreshold = 20;
-                    AttackSpeed = 0.5f;
 
                     // collision
                     CircleCollision = 1.0f;
@@ -168,8 +162,6 @@ namespace EmodiaQuest.Core.NPCs
                     ViewAngle = -enemyAi.TrackingAngle;
 
                     attackTimer = 0;
-                    AttackThreshold = 20;
-                    AttackSpeed = 0.5f;
 
                     // collision
                     CircleCollision = 1.0f;
@@ -277,7 +269,8 @@ namespace EmodiaQuest.Core.NPCs
             stateTime = 0;
             // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 500;
-            AttackSpeed = fightDuration / 1000;
+            AttackThreshold = fightDuration;
+
             //Console.WriteLine(EnemyTyp + " hat idleZeit:" + idleDuration + ". hat runDuration:" + runDuration + ", hat fightDuration:" + fightDuration);
         }
 
@@ -292,7 +285,7 @@ namespace EmodiaQuest.Core.NPCs
 
             oldPosition = Position;
 
-            attackTimer += AttackSpeed;
+            attackTimer += gameTime.ElapsedGameTime.Milliseconds;
 
             enemyAi.UpdateAi(Position);
             Vector2 newPosition = Vector2.Add(enemyAi.TrackingDirection, Position);

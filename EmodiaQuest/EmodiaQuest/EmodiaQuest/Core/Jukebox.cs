@@ -76,7 +76,7 @@ namespace EmodiaQuest.Core
 
 
             // Load the FX
-            Hit_1 = new SoundDisk("Hit_1", SoundDisk.SoundType.FX, "Sounds/fx/Schlag_1", new TimeSpan(0, 0, 0, 0, 200));
+            Hit_1 = new SoundDisk("Hit_1", SoundDisk.SoundType.FX, "Sounds/fx/Schlag_1", new TimeSpan(0, 0, 0, 0, 150));
             FXSounds.Add(Hit_1);
             Plop_1 = new SoundDisk("Plop_1", SoundDisk.SoundType.FX, "Sounds/fx/Plop_1", new TimeSpan(0, 0, 0, 0, 0));
             FXSounds.Add(Plop_1);
@@ -102,7 +102,7 @@ namespace EmodiaQuest.Core
 
         public void UpdateJukebox(GameTime gameTime, bool isActive)
         {
-            Console.WriteLine(IsMusicPlaying() + ", " + Music.Count + ", " + changeTimer + ", " + activeMusicIndex + ", " + lastMusicKey);
+            //Console.WriteLine(IsMusicPlaying() + ", " + Music.Count + ", " + changeTimer + ", " + activeMusicIndex + ", " + lastMusicKey);
             updateMusicKeys();
             GameIsActive = isActive;
 
@@ -136,7 +136,7 @@ namespace EmodiaQuest.Core
                 }
                 if (lastMusicKey == Keys.Left && changeTimer == 250)
                 {
-                    Console.WriteLine("Change Music");
+                    //Console.WriteLine("Change Music");
                     activeMusicIndex += 1;
                     ChangeMusic((activeMusicIndex) % Music.Count);
                     lastMusicKey = Keys.R;
@@ -166,18 +166,26 @@ namespace EmodiaQuest.Core
                     if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting)
                     {
                         Hit_1.Update(gameTime);
-                        Hit_1.Play();
                     }
                     break;
             }
 
         }
 
+
         public void PlayAudioMouseFeedback()
         {
             Plop_1.Play();
         }
 
+        public void PlaySwordFightSound()
+        {
+            Hit_1.Play();
+        }
+
+        /// <summary>
+        /// updates the key input, up to now, all keys are used for changing the music, not speach or fx
+        /// </summary>
         private void updateMusicKeys()
         {
             if(Keyboard.GetState().IsKeyDown(Keys.P))

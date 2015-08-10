@@ -23,6 +23,10 @@ namespace EmodiaQuest.Core
         private float attackTimer;
         private float attackThreshold;
 
+        // For sound handling
+        private bool HitEnemyWithSword;
+        private bool HitAir;
+
         // For movement and camera update
         private Vector2 movement; // future position
         private Vector2 lastPos; //position from last step (fixes false kamera focus)
@@ -60,7 +64,6 @@ namespace EmodiaQuest.Core
         public float Damage;
         public float PlayerSpeed;
         public float RotationSpeed;
-        public float AttackSpeed;
 
         /**
          * Animation and Model
@@ -143,6 +146,8 @@ namespace EmodiaQuest.Core
 
         public void LoadContent()
         {
+            HitEnemyWithSword = false;
+            HitAir = false;
             // Initialize mouseState
             currentMouseState = Mouse.GetState();
 
@@ -160,9 +165,7 @@ namespace EmodiaQuest.Core
             ItemOffset = 0.0f;
             Angle = 0;
             CollisionRadius = 1.5f;
-            AttackSpeed = 0.3f;
             attackTimer = 0;
-            attackThreshold = 10;
 
             /**
             * Animation and Model
@@ -237,12 +240,15 @@ namespace EmodiaQuest.Core
             Console.WriteLine("WalkingKeyframes: " + walkingC.Keyframes.Count);
             */
             stateTime = 0;
+            attackThreshold = swordFightingDuration;
             // Duration of Blending Animations in milliseconds
-            fixedBlendDuration = 500;
+            fixedBlendDuration = 200;
         }
 
         public void Update(GameTime gameTime)
         {
+            HitEnemyWithSword = false;
+            HitAir = false;
             // update weapon
             if(Keyboard.GetState().IsKeyDown(Keys.D1))
             {
@@ -369,31 +375,35 @@ namespace EmodiaQuest.Core
             
             
             //update playerState
-            if ( currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 0)
+            if ( currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 500 && attackThreshold == swordFightingDuration)
             {
                 ActivePlayerState = PlayerState.Swordfighting;
                 stateTime = swordFightingDuration;
-                fixedBlendDuration = 150;
+                fixedBlendDuration = 100;
+                HitAir = true;
             }
             else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 0)
             {
                 ActivePlayerState = PlayerState.WalkJumping;
-                fixedBlendDuration = 250;
+                fixedBlendDuration = 200;
             }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 0)
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 200)
             {
                 ActivePlayerState = PlayerState.Walking;
-                fixedBlendDuration = 250;
+                stateTime = walkingDuration / 2;
+                fixedBlendDuration = 200;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 0)
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 200)
             {
                 ActivePlayerState = PlayerState.Jumping;
-                fixedBlendDuration = 250;
+                stateTime = jumpingDuration / 2;
+                fixedBlendDuration = 200;
             }
-            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 0)
+            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 200)
             {
                 ActivePlayerState = PlayerState.Standing;
-                fixedBlendDuration = 250;
+                stateTime = standingDuration / 2;
+                fixedBlendDuration = 200;
             }
 
 
@@ -484,9 +494,14 @@ namespace EmodiaQuest.Core
 
             // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
             // only == 2 in edges, else normal 3 in a row
+            if( ActivePlayerState == PlayerState.Swordfighting && !IsBlending)
+            {
+                position.X = lastPos.X;
+                position.Y = lastPos.Y;
+            }
             if(Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
-                attackTimer += AttackSpeed;
+                attackTimer += gameTime.ElapsedGameTime.Milliseconds;
                 // collision with enemies
                 Vector2 currentGridPos = new Vector2((float)Math.Round(position.X / gridSize), (float)Math.Round(position.Y / gridSize));
                 for (int i = -1; i < 2; i++)
@@ -507,75 +522,106 @@ namespace EmodiaQuest.Core
                         }
                     }
                 }
-
-                // interaction checks
-                if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
+                if (ActivePlayerState == PlayerState.Swordfighting)
                 {
-                    // top left 
-                    if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
+                    // interaction checks
+                    if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
                     {
-                        for (int i = 0; i < 2; i++)
+                        // top left 
+                        if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
                         {
-                            for (int j = 0; j < 2; j++)
+                            for (int i = 0; i < 2; i++)
                             {
-                                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                                if (currentBlockEnemyList.Count > 0)
+                                for (int j = 0; j < 2; j++)
                                 {
-                                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                                    if (currentBlockEnemyList.Count > 0)
                                     {
-                                        currentClosestEnemy.Attack(Damage);
-                                        attackTimer = 0;
+                                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                        if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                        {
+                                            currentClosestEnemy.Attack(Damage);
+                                            attackTimer = 0;
+                                            HitEnemyWithSword = true;
+                                            HitAir = false;
+                                        }
+                                    }
+                                }
+                            }
+                        } // top right
+                        else if ((int)frontDirection.X == 1 && (int)frontDirection.Y == -1)
+                        {
+                            for (int i = -1; i < 1; i++)
+                            {
+                                for (int j = 0; j < 2; j++)
+                                {
+                                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                                    if (currentBlockEnemyList.Count > 0)
+                                    {
+                                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                        if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                        {
+                                            currentClosestEnemy.Attack(Damage);
+                                            attackTimer = 0;
+                                            HitEnemyWithSword = true;
+                                            HitAir = false;
+                                        }
+                                    }
+                                }
+                            }
+                        } // bot left
+                        else if ((int)frontDirection.X == -1 && (int)frontDirection.Y == 1)
+                        {
+                            for (int i = 0; i < 2; i++)
+                            {
+                                for (int j = -1; j < 1; j++)
+                                {
+                                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                                    if (currentBlockEnemyList.Count > 0)
+                                    {
+                                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                        if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                        {
+                                            currentClosestEnemy.Attack(Damage);
+                                            attackTimer = 0;
+                                            HitEnemyWithSword = true;
+                                            HitAir = false;
+                                        }
+                                    }
+                                }
+                            }
+                        } // bot right (X = 1, Y = 1)
+                        else
+                        {
+                            for (int i = -1; i < 1; i++)
+                            {
+                                for (int j = -1; j < 1; j++)
+                                {
+                                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                                    if (currentBlockEnemyList.Count > 0)
+                                    {
+                                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                        if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                        {
+                                            currentClosestEnemy.Attack(Damage);
+                                            attackTimer = 0;
+                                            HitEnemyWithSword = true;
+                                            HitAir = false;
+                                        }
                                     }
                                 }
                             }
                         }
-                    } // top right
-                    else if ((int)frontDirection.X == 1 && (int)frontDirection.Y == -1)
-                    {
-                        for (int i = -1; i < 1; i++)
-                        {
-                            for (int j = 0; j < 2; j++)
-                            {
-                                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                                if (currentBlockEnemyList.Count > 0)
-                                {
-                                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                    {
-                                        currentClosestEnemy.Attack(Damage);
-                                        attackTimer = 0;
-                                    }
-                                }
-                            }
-                        }
-                    } // bot left
-                    else if ((int)frontDirection.X == -1 && (int)frontDirection.Y == 1)
-                    {
-                        for (int i = 0; i < 2; i++)
-                        {
-                            for (int j = -1; j < 1; j++)
-                            {
-                                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                                if (currentBlockEnemyList.Count > 0)
-                                {
-                                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if ( attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                    {
-                                        currentClosestEnemy.Attack(Damage);
-                                        attackTimer = 0;
-                                    }
-                                }
-                            }
-                        }
-                    } // bot right (X = 1, Y = 1)
+
+                    }
                     else
                     {
-                        for (int i = -1; i < 1; i++)
+                        // left or right
+                        if ((int)Math.Abs(frontDirection.X) == 1 && (int)frontDirection.Y == 0)
                         {
-                            for (int j = -1; j < 1; j++)
+                            for (int j = -1; j < 2; j++)
                             {
-                                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y + j];
                                 if (currentBlockEnemyList.Count > 0)
                                 {
                                     Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
@@ -583,50 +629,45 @@ namespace EmodiaQuest.Core
                                     {
                                         currentClosestEnemy.Attack(Damage);
                                         attackTimer = 0;
+                                        HitEnemyWithSword = true;
+                                        HitAir = false;
                                     }
                                 }
                             }
                         }
-                    }
-
-                }
-                else
-                {
-                    // left or right
-                    if ((int)Math.Abs(frontDirection.X) == 1 && (int)frontDirection.Y == 0)
-                    {
-                        for (int j = -1; j < 2; j++)
+                        else // top or bottom
                         {
-                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y + j];
-                            if (currentBlockEnemyList.Count > 0)
+                            for (int j = -1; j < 2; j++)
                             {
-                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
+                                if (currentBlockEnemyList.Count > 0)
                                 {
-                                    currentClosestEnemy.Attack(Damage);
-                                    attackTimer = 0;
+                                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                                    {
+                                        currentClosestEnemy.Attack(Damage);
+                                        attackTimer = 0;
+                                        HitEnemyWithSword = true;
+                                        HitAir = false;
+                                    }
                                 }
                             }
                         }
-                    }
-                    else // top or bottom
-                    {
-                        for (int j = -1; j < 2; j++)
-                        {
-                            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
-                            if (currentBlockEnemyList.Count > 0)
-                            {
-                                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                {
-                                    currentClosestEnemy.Attack(Damage);
-                                    attackTimer = 0;
-                                }
-                            }
-                        }
-                    }
 
+                    }
                 }
+                }
+                
+
+            // Call Sounds
+
+            if(HitEnemyWithSword)
+            {
+                Jukebox.Instance.PlaySwordFightSound();
+            }
+            if(!HitEnemyWithSword && HitAir)
+            {
+                Jukebox.Instance.PlayAudioMouseFeedback();
             }
 
             // Get Keyboard input to change overall GameState
