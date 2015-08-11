@@ -340,6 +340,61 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\healthbars\h0\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h1\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h10\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h2\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h3\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h4\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h5\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h6\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h7\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h8\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h9\healthbar.fbx">
+      <Name>healthbar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -518,6 +573,61 @@
     </Compile>
     <Compile Include="fbxContent\items\icon_weapon.png">
       <Name>icon_weapon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h0\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h1\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h2\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h3\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h4\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h5\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h6\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h7\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h8\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h9\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\healthbars\h10\Texture1.png">
+      <Name>Texture1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

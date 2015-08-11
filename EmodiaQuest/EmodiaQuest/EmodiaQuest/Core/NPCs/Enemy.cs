@@ -26,7 +26,8 @@ namespace EmodiaQuest.Core.NPCs
         public float ViewAngle;
 
         private Vector2 oldPosition;
-        public float MaxEnemyHealth;
+        public float MaxEnemyHealth = 0;
+        public float CurrentHealth;
         public float Armor;
         public float MovementSpeed;
         public float TrackingRadius;
@@ -36,6 +37,10 @@ namespace EmodiaQuest.Core.NPCs
 
         private float attackTimer;
         public float AttackThreshold;
+
+        // healthbar
+        public int HpForHealthbar = 10;
+        //public string healthbar = "h10";
 
         public EnemyType EnemyTyp;
 
@@ -78,6 +83,19 @@ namespace EmodiaQuest.Core.NPCs
         // variables for animation
         public float activeBlendTime;
         public bool isBlending;
+
+        // Healthbar Content
+        private Model health0;
+        private Model health1;
+        private Model health2;
+        private Model health3;
+        private Model health4;
+        private Model health5;
+        private Model health6;
+        private Model health7;
+        private Model health8;
+        private Model health9;
+        private Model health10;
 
 
         public Enemy(Vector2 position, EnvironmentController currentEnvironment, EnemyType enemyTyp)
@@ -151,7 +169,7 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster3:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 3;
                     AttackRange = 7;
                     Damage = 5;
 
@@ -167,6 +185,9 @@ namespace EmodiaQuest.Core.NPCs
                     CircleCollision = 1.0f;
                     break;
             }
+
+            // Setting the health to the MaxHealth at startup
+            CurrentHealth = MaxEnemyHealth;
 
             collHandler = CollisionHandler.Instance;
 
@@ -272,6 +293,21 @@ namespace EmodiaQuest.Core.NPCs
             AttackThreshold = fightDuration;
 
             //Console.WriteLine(EnemyTyp + " hat idleZeit:" + idleDuration + ". hat runDuration:" + runDuration + ", hat fightDuration:" + fightDuration);
+
+
+            // Healthbar Content
+            health0 = Content.Load<Model>("fbxContent/healthbars/h0/healthbar");
+            health1 = Content.Load<Model>("fbxContent/healthbars/h1/healthbar");
+            health2 = Content.Load<Model>("fbxContent/healthbars/h2/healthbar");
+            health3 = Content.Load<Model>("fbxContent/healthbars/h3/healthbar");
+            health4 = Content.Load<Model>("fbxContent/healthbars/h4/healthbar");
+            health5 = Content.Load<Model>("fbxContent/healthbars/h5/healthbar");
+            health6 = Content.Load<Model>("fbxContent/healthbars/h6/healthbar");
+            health7 = Content.Load<Model>("fbxContent/healthbars/h7/healthbar");
+            health8 = Content.Load<Model>("fbxContent/healthbars/h8/healthbar");
+            health9 = Content.Load<Model>("fbxContent/healthbars/h9/healthbar");
+            health10 = Content.Load<Model>("fbxContent/healthbars/h10/healthbar");
+
         }
 
 
@@ -452,9 +488,18 @@ namespace EmodiaQuest.Core.NPCs
 
         public void Attack(float damage)
         {
-            MaxEnemyHealth -= damage;
+            CurrentHealth -= damage;
 
-            if (!(MaxEnemyHealth <= 0)) return;
+            // Factor to get the scale to 100
+            float hpFactor = 100 / MaxEnemyHealth;
+            // Puts the health in a value between 0 and 10
+            HpForHealthbar = (int)(CurrentHealth * hpFactor + 10) / 10;
+            // Sets the healthbar to h0 to h10
+            //healthbar = "h"+hpForHealthbar.ToString();
+            //Console.WriteLine(healthbar);
+            
+
+            if (!(CurrentHealth <= 0)) return;
             if (currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Remove(this))
             {
                 IsAlive = false;
@@ -506,6 +551,64 @@ namespace EmodiaQuest.Core.NPCs
                         blendingBones = fightAP.GetSkinTransforms();
                         break;
                 }
+            }
+
+            Model HPModel;
+            switch (HpForHealthbar)
+            {
+                case 0:
+                    HPModel = health0;
+                    break;
+                case 1:
+                    HPModel = health1;
+                    break;
+                case 2:
+                    HPModel = health2;
+                    break;
+                case 3:
+                    HPModel = health3;
+                    break;
+                case 4:
+                    HPModel = health4;
+                    break;
+                case 5:
+                    HPModel = health5;
+                    break;
+                case 6:
+                    HPModel = health6;
+                    break;
+                case 7:
+                    HPModel = health7;
+                    break;
+                case 8:
+                    HPModel = health8;
+                    break;
+                case 9:
+                    HPModel = health9;
+                    break;
+                case 10:
+                    HPModel = health10;
+                    break;
+                default:
+                    HPModel = health10;
+                    break;
+            }
+
+
+            foreach (ModelMesh mesh in HPModel.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.EnableDefaultLighting();
+                    effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(ViewAngle + (float)(0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 3, Position.Y)) * world;
+                    effect.View = view;
+                    effect.Projection = projection;
+                    effect.SpecularColor = new Vector3(0.25f);
+                    effect.SpecularPower = 16;
+                    effect.PreferPerPixelLighting = true;
+                }
+
+                mesh.Draw();
             }
 
             foreach (ModelMesh mesh in enemyModel.Meshes)
