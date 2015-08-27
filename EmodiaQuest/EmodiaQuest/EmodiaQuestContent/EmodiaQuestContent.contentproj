@@ -587,6 +587,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\healthbars\h10\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="fbxContent\healthbars\h2\Texture1.png">
       <Name>Texture1</Name>
       <Importer>TextureImporter</Importer>
@@ -623,11 +628,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="fbxContent\healthbars\h9\Texture1.png">
-      <Name>Texture1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="fbxContent\healthbars\h10\Texture1.png">
       <Name>Texture1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
