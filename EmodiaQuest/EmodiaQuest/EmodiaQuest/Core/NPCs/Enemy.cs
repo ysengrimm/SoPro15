@@ -97,6 +97,13 @@ namespace EmodiaQuest.Core.NPCs
         private Model health9;
         private Model health10;
 
+        private bool isHit = false;
+        private bool breathingOn = false;
+        private bool overlayBool = false;
+        private Vector4 ambientColor = new Vector4(1, 0, 0, 1);
+        private float ambientIntensity = 0.0f;
+        private float distanceToPlayer = 0.0f;
+
 
         public Enemy(Vector2 position, EnvironmentController currentEnvironment, EnemyType enemyTyp)
         {
@@ -112,6 +119,7 @@ namespace EmodiaQuest.Core.NPCs
         public void LoadContent(ContentManager content)
         {
             this.Content = content;
+
             // Normal variables for each different enemy Type
             switch (EnemyTyp)
             {
@@ -308,6 +316,25 @@ namespace EmodiaQuest.Core.NPCs
             health9 = Content.Load<Model>("fbxContent/healthbars/h9/healthbar");
             health10 = Content.Load<Model>("fbxContent/healthbars/h10/healthbar");
 
+            Effect customEffect = Content.Load<Effect>("shaders/CustomSkinnedEffect");
+
+            // Apply it to the model
+            foreach (ModelMesh mesh in enemyModel.Meshes)
+            {
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+                    SkinnedEffect skinnedEffect = part.Effect as SkinnedEffect;
+                    if (skinnedEffect != null)
+                    {
+                        // Create new custom skinned effect from our base effect
+                        CustomSkinnedEffect custom = new CustomSkinnedEffect(customEffect);
+                        custom.CopyFromSkinnedEffect(skinnedEffect);
+
+                        part.Effect = custom;
+                    }
+                }
+            }
+
         }
 
 
@@ -393,7 +420,20 @@ namespace EmodiaQuest.Core.NPCs
                         }
                     }
                 }
+                // The breathing, which means if the creature is hit, it turns red for a short while
+                if (isHit)
+                {
+                    isHit = false;
+                    breathingOn = true;
+                    overlayBool = true;
+                }
+                if (breathingOn)
+                    breathing();
             }
+
+            // Computing the distance to the player
+            distanceToPlayer = (float)EuclideanDistance(this.Position, Player.Instance.Position);
+
 
             // setting the right EnemyStates
 
@@ -497,6 +537,7 @@ namespace EmodiaQuest.Core.NPCs
             // Sets the healthbar to h0 to h10
             //healthbar = "h"+hpForHealthbar.ToString();
             //Console.WriteLine(healthbar);
+            isHit = true;
             
 
             if (!(CurrentHealth <= 0)) return;
@@ -516,6 +557,22 @@ namespace EmodiaQuest.Core.NPCs
         private double EuclideanDistance(Vector2 p1, Vector2 p2)
         {
             return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+        }
+
+        public void breathing()
+        {
+            if (this.overlayBool)
+                this.ambientIntensity += 0.04f;
+            else
+                this.ambientIntensity -= 0.04f;
+            if (this.ambientIntensity > 0.98)
+                this.overlayBool = false;
+            if (this.ambientIntensity < 0.05f && !this.overlayBool)
+            {
+                this.ambientIntensity = 0.0f;
+                breathingOn = false;
+                //Console.WriteLine(distanceToPlayer);
+            }
         }
 
         public void Draw(Matrix world, Matrix view, Matrix projection)
@@ -594,7 +651,7 @@ namespace EmodiaQuest.Core.NPCs
                     break;
             }
 
-
+            // Drawing the healthbar
             foreach (ModelMesh mesh in HPModel.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -607,8 +664,8 @@ namespace EmodiaQuest.Core.NPCs
                     effect.SpecularPower = 16;
                     effect.PreferPerPixelLighting = true;
                 }
-
-                mesh.Draw();
+                if (distanceToPlayer < 20)
+                    mesh.Draw();
             }
 
             foreach (ModelMesh mesh in enemyModel.Meshes)
@@ -636,7 +693,8 @@ namespace EmodiaQuest.Core.NPCs
                     // renders everything that should be
                 else
                 {
-                    foreach (SkinnedEffect effect in mesh.Effects)
+                    //foreach (SkinnedEffect effect in mesh.Effects)
+                    foreach (CustomSkinnedEffect effect in mesh.Effects)
                     {
                         //Draw the Bones which are required
                         if (isBlending)
@@ -683,17 +741,23 @@ namespace EmodiaQuest.Core.NPCs
                             }
                         }
 
+
                         effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(ViewAngle + (float) (0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(ViewAngle + (float)(0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
                         effect.View = view;
                         effect.Projection = projection;
                         effect.SpecularColor = new Vector3(0.25f);
                         effect.SpecularPower = 16;
                         effect.PreferPerPixelLighting = true;
+                        effect.Parameters["AmbientIntensity"].SetValue(ambientIntensity);
+                        effect.Parameters["DistanceToPlayer"].SetValue(distanceToPlayer);
+
+
                         // Textures
 
                         // effect.tectures = ....  
                     }
+                    
                     mesh.Draw();
                 }              
             }

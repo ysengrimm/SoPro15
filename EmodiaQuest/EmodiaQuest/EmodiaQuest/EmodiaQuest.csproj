@@ -118,6 +118,7 @@
     <Compile Include="Core\Items\Enums_Item.cs" />
     <Compile Include="Core\Items\Item.cs" />
     <Compile Include="Core\Items\ItemTestClass.cs" />
+    <Compile Include="Core\NPCs\CustomSkinnedEffect.cs" />
     <Compile Include="Core\NPCs\EnemyType.cs" />
     <Compile Include="Core\NPCs\NPCProfession.cs" />
     <Compile Include="Core\Quest.cs" />

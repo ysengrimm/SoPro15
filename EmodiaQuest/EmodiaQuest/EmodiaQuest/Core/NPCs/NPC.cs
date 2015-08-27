@@ -302,7 +302,8 @@ namespace EmodiaQuest.Core.NPCs
                     // renders everything that should be
                 else
                 {
-                    foreach (SkinnedEffect effect in mesh.Effects)
+                    //foreach (SkinnedEffect effect in mesh.Effects)
+                    foreach (CustomSkinnedEffect effect in mesh.Effects)
                     {
                         //Draw the Bones which are required
                         if (isBlending)
