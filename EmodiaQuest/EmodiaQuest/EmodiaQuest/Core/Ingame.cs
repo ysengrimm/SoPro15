@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using EmodiaQuest.Core;
 using EmodiaQuest.Rendering;
+using EmodiaQuest.Core.NPCs;
 
 namespace EmodiaQuest.Core
 {
@@ -75,7 +76,7 @@ namespace EmodiaQuest.Core
             // loading Safeworld
             SafeWorld.Instance.LoadContent(Content);
             // loading the dungeon
-            Dungeon = new Dungeon(100, 100, 100);       
+            Dungeon = new Dungeon(100, 100, 100, new EnemyType[]{EnemyType.Monster1, EnemyType.Monster2, EnemyType.Monster3, EnemyType.NPCTest});       
             Dungeon.LoadContent(Content);
 
             // setting the collision for the safeworld as default

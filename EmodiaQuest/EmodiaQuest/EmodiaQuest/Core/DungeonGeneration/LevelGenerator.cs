@@ -44,15 +44,19 @@ namespace EmodiaQuest.Core.DungeonGeneration
         /// This list contains all positions in the map wich are part of rooms (excpt. spawnroom) and do not contain an item
         /// </summary>
         private List<Point> enemyPoints = new List<Point>();
+        
+        private EnemyType[] enemies;
 
         Random rnd = new Random();
 
-        public LevelGenerator(EnvironmentController controller){
+        public LevelGenerator(EnvironmentController controller, EnemyType[] enemies)
+        {
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
             contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
 
             this.Controller = controller;
+            this.enemies = enemies;
 
             Map = new System.Drawing.Bitmap(Settings.Instance.DungeonMapSize, Settings.Instance.DungeonMapSize);
 
@@ -296,7 +300,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
                     if (!samePosition)      // wenn man eine position im feld gefunden hat wo kein monster steht
                     {
-                        Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, (EnemyType)rnd.Next(4));
+                        Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, enemies[rnd.Next(enemies.Length)]);
                         EnemyList.Add(enemy);
                         count--;
 
@@ -305,7 +309,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 }
                 else
                 {
-                    Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, (EnemyType)rnd.Next(4));
+                    Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, enemies[rnd.Next(enemies.Length)]);
                     EnemyList.Add(enemy);
                     count--;
 
