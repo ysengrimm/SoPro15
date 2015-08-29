@@ -75,6 +75,13 @@ namespace EmodiaQuest.Core.NPCs
 
         private CollisionHandler collHandler;
 
+        // Questionmark Content
+        private Model question;
+        private float qRotAngle = 0.0f;
+
+        private float distanceToPlayer = 0.0f;
+
+
         // Constructor
         public NPC(Vector2 position, EnvironmentController currentEnvironment, NPCName name, NPCProfession profession)
         {
@@ -145,6 +152,14 @@ namespace EmodiaQuest.Core.NPCs
             // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 500;
 
+            // Questionmark Content
+            question = contentMngr.Load<Model>("fbxContent/miscellaneous/question");
+
+        }
+
+        private double EuclideanDistance(Vector2 p1, Vector2 p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }
 
 
@@ -182,6 +197,11 @@ namespace EmodiaQuest.Core.NPCs
                 isBlending = true;
                 activeBlendTime = fixedBlendDuration;
             }
+
+            // Computing the distance to the player and the rotation of the questionmark
+            distanceToPlayer = (float)EuclideanDistance(this.Position, Player.Instance.Position);
+            qRotAngle += 0.1f;
+
 
 
             // if the Time for blending is over, set it on false;
@@ -274,6 +294,27 @@ namespace EmodiaQuest.Core.NPCs
                     case NPCState.Talking:
                         blendingBones = walkingAP.GetSkinTransforms();
                         break;
+                }
+            }
+
+  
+            // Drawing the questionmark
+            if (distanceToPlayer < 20)
+            {
+                foreach (ModelMesh mesh in question.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.World = Matrix.CreateRotationZ(qRotAngle) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 5, Position.Y)) * world;
+                        effect.View = view;
+                        effect.Projection = projection;
+                        effect.EmissiveColor = new Vector3(0.2f, 0.2f, 0.2f);
+                        effect.SpecularColor = new Vector3(0.25f);
+                        effect.SpecularPower = 16;
+                        effect.PreferPerPixelLighting = true;
+                    }
+                    mesh.Draw();
                 }
             }
 
