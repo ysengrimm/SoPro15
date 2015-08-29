@@ -200,7 +200,7 @@ namespace EmodiaQuest.Core.NPCs
 
             // Computing the distance to the player and the rotation of the questionmark
             distanceToPlayer = (float)EuclideanDistance(this.Position, Player.Instance.Position);
-            qRotAngle += 0.1f;
+            qRotAngle += 0.05f;
 
 
 
@@ -343,8 +343,8 @@ namespace EmodiaQuest.Core.NPCs
                     // renders everything that should be
                 else
                 {
-                    //foreach (SkinnedEffect effect in mesh.Effects)
-                    foreach (CustomSkinnedEffect effect in mesh.Effects)
+                    foreach (SkinnedEffect effect in mesh.Effects)
+                    //foreach (CustomSkinnedEffect effect in mesh.Effects)
                     {
                         //Draw the Bones which are required
                         if (isBlending)

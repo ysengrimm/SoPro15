@@ -123,24 +123,6 @@ namespace EmodiaQuest.Core.NPCs
             // Normal variables for each different enemy Type
             switch (EnemyTyp)
             {
-                case EnemyType.NPCTest:
-                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
-                    AttackRange = 7;
-                    Damage = 5;
-
-                    // movement
-                    TrackingRadius = 50f;
-                    MovementSpeed = 0.25f;
-                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
-                    ViewAngle = -enemyAi.TrackingAngle;
-
-                    attackTimer = 0;
-                    AttackThreshold = 20;
-
-                    // collision
-                    CircleCollision = 1.0f;
-                    break;
                 case EnemyType.Monster1:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
                     MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
@@ -204,19 +186,9 @@ namespace EmodiaQuest.Core.NPCs
             // Loading the different meshes for the enemies
             switch (EnemyTyp)
             {
-                case EnemyType.NPCTest:
-                    // loading default mesh
-                    enemyModel = content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------- Insert your Mesh here, need at least 2 keyframes
-
-                    // loading Animation Models
-                    idleM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle"); // <--------------------- The animation Meshes here
-                    runM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
-                    fightM = Content.Load<Model>("fbxContent/NPC/NPC_male_idle");
-                    break;
-
                 case EnemyType.Monster1:
                     // loading default mesh
-                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster1/Monster1"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+                    enemyModel = Content.Load<Model>("fbxContent/enemies/Monster1/Monster1"); // <--------------- Insert your Mesh here, need at least 2 keyframes
 
                     // loading Animation Models
                     idleM = Content.Load<Model>("fbxContent/enemies/Monster1/Monster1idle"); // <--------------------- The animation Meshes here
@@ -225,7 +197,7 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster2:
                     // loading default mesh
-                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster2/Monster2"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+                    enemyModel = Content.Load<Model>("fbxContent/enemies/Monster2/Monster2"); // <--------------- Insert your Mesh here, need at least 2 keyframes
 
                     // loading Animation Models
                     idleM = Content.Load<Model>("fbxContent/enemies/Monster2/Monster2idle"); // <--------------------- The animation Meshes here
@@ -234,7 +206,7 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster3:
                     // loading default mesh
-                    enemyModel = content.Load<Model>("fbxContent/enemies/Monster3/Monster3"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+                    enemyModel = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3"); // <--------------- Insert your Mesh here, need at least 2 keyframes
 
                     // loading Animation Models
                     idleM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3idle"); // <--------------------- The animation Meshes here
@@ -258,12 +230,6 @@ namespace EmodiaQuest.Core.NPCs
             // loading different animations for the different enemies
             switch (EnemyTyp)
             {
-                case EnemyType.NPCTest:
-                    // loading the animation clips
-                    idleC = idleSD.AnimationClips["idle"]; // <------------------------------------ The name of the animation in blender
-                    runC = runSD.AnimationClips["idle"];
-                    fightC = fightSD.AnimationClips["idle"];
-                    break;
                 case EnemyType.Monster1:
                     // loading the animation clips
                     idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
@@ -676,94 +642,75 @@ namespace EmodiaQuest.Core.NPCs
 
                     //Console.WriteLine(mesh.Name);
                     // Only renders the Right assigned Weapon
-                    if (mesh.Name == "Stock" && activeWeapon != Weapon.Stock)
-                    {
 
-                    }
-                    else if (mesh.Name == "Hammer" && activeWeapon != Weapon.Hammer)
+                    //foreach (SkinnedEffect effect in mesh.Effects)
+                    foreach (CustomSkinnedEffect effect in mesh.Effects)
                     {
-
-                    }
-                    // Only renders the Meshes with the right resolution
-                    else if (mesh.Name == "NPC_body" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.High)
-                    {
-
-                    }
-                    else if (mesh.Name == "NPC_body_lowPoly" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.Low)
-                    {
-
-                    }
-                    // renders everything that should be
-                    else
-                    {
-                        //foreach (SkinnedEffect effect in mesh.Effects)
-                        foreach (CustomSkinnedEffect effect in mesh.Effects)
+                        //Draw the Bones which are required
+                        if (isBlending)
                         {
-                            //Draw the Bones which are required
-                            if (isBlending)
+                            float percentageOfBlending = activeBlendTime / fixedBlendDuration;
+                            switch (CurrentEnemyState)
                             {
-                                float percentageOfBlending = activeBlendTime / fixedBlendDuration;
-                                switch (CurrentEnemyState)
-                                {
-                                    case EnemyState.Idle:
-                                        for (int i = 0; i < blendingBones.Length; i++)
-                                        {
-                                            blendingBones[i] = Matrix.Lerp(blendingBones[i], idleBones[i], 1 - percentageOfBlending);
-                                        }
-                                        effect.SetBoneTransforms(blendingBones);
-                                        break;
-                                    case EnemyState.Run:
-                                        for (int i = 0; i < blendingBones.Length; i++)
-                                        {
-                                            blendingBones[i] = Matrix.Lerp(blendingBones[i], runBones[i], 1 - percentageOfBlending);
-                                        }
-                                        effect.SetBoneTransforms(blendingBones);
-                                        break;
-                                    case EnemyState.Fight:
-                                        for (int i = 0; i < blendingBones.Length; i++)
-                                        {
-                                            blendingBones[i] = Matrix.Lerp(blendingBones[i], fightBones[i], 1 - percentageOfBlending);
-                                        }
-                                        effect.SetBoneTransforms(blendingBones);
-                                        break;
-                                }
+                                case EnemyState.Idle:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                    {
+                                        blendingBones[i] = Matrix.Lerp(blendingBones[i], idleBones[i], 1 - percentageOfBlending);
+                                    }
+                                    effect.SetBoneTransforms(blendingBones);
+                                    break;
+                                case EnemyState.Run:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                    {
+                                        blendingBones[i] = Matrix.Lerp(blendingBones[i], runBones[i], 1 - percentageOfBlending);
+                                    }
+                                    effect.SetBoneTransforms(blendingBones);
+                                    break;
+                                case EnemyState.Fight:
+                                    for (int i = 0; i < blendingBones.Length; i++)
+                                    {
+                                        blendingBones[i] = Matrix.Lerp(blendingBones[i], fightBones[i], 1 - percentageOfBlending);
+                                    }
+                                    effect.SetBoneTransforms(blendingBones);
+                                    break;
                             }
-                            else
+                        }
+                        else
+                        {
+                            switch (CurrentEnemyState)
                             {
-                                switch (CurrentEnemyState)
-                                {
-                                    case EnemyState.Idle:
-                                        effect.SetBoneTransforms(idleBones);
-                                        break;
-                                    case EnemyState.Run:
-                                        effect.SetBoneTransforms(runBones);
-                                        break;
-                                    case EnemyState.Fight:
-                                        effect.SetBoneTransforms(fightBones);
-                                        break;
-                                }
+                                case EnemyState.Idle:
+                                    effect.SetBoneTransforms(idleBones);
+                                    break;
+                                case EnemyState.Run:
+                                    effect.SetBoneTransforms(runBones);
+                                    break;
+                                case EnemyState.Fight:
+                                    effect.SetBoneTransforms(fightBones);
+                                    break;
                             }
-
-
-                            effect.EnableDefaultLighting();
-                            effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(ViewAngle + (float)(0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
-                            effect.View = view;
-                            effect.Projection = projection;
-                            effect.SpecularColor = new Vector3(0.25f);
-                            effect.SpecularPower = 16;
-                            effect.PreferPerPixelLighting = true;
-                            effect.Parameters["AmbientIntensity"].SetValue(ambientIntensity);
-                            effect.Parameters["DistanceToPlayer"].SetValue(distanceToPlayer);
-
-
-                            // Textures
-
-                            // effect.tectures = ....  
                         }
 
-                        mesh.Draw();
+
+                        effect.EnableDefaultLighting();
+                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(ViewAngle + (float)(0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+                        effect.View = view;
+                        effect.Projection = projection;
+                        effect.SpecularColor = new Vector3(0.25f);
+                        effect.SpecularPower = 16;
+                        effect.PreferPerPixelLighting = true;
+                        effect.Parameters["AmbientIntensity"].SetValue(ambientIntensity);
+                        effect.Parameters["DistanceToPlayer"].SetValue(distanceToPlayer);
+
+
+                        // Textures
+
+                        // effect.tectures = ....  
                     }
+
+                    mesh.Draw();
                 }
+
             }
         }
 
