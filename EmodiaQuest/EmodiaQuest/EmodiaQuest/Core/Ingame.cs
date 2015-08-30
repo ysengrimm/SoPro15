@@ -77,7 +77,7 @@ namespace EmodiaQuest.Core
             SafeWorld.Instance.LoadContent(Content);
             // loading the dungeon
             //Dungeon = new Dungeon(100, 100, 100, new EnemyType[]{EnemyType.Monster1, EnemyType.Monster2, EnemyType.Monster3});       
-            Dungeon = new Dungeon(100, 100, 100, new EnemyType[] { EnemyType.Monster2 });       
+            Dungeon = new Dungeon(100, 100, 100, new EnemyType[] { EnemyType.Monster8 });       
             Dungeon.LoadContent(Content);
 
             // setting the collision for the safeworld as default

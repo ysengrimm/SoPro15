@@ -125,7 +125,7 @@ namespace EmodiaQuest.Core.NPCs
             {
                 case EnemyType.Monster1:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth*1.5f;
                     AttackRange = 7;
                     Damage = 5;
 
@@ -174,7 +174,93 @@ namespace EmodiaQuest.Core.NPCs
                     // collision
                     CircleCollision = 1.0f;
                     break;
+                case EnemyType.Monster4:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 1.5f;
+                    AttackRange = 7;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
+                case EnemyType.Monster5:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2.5f;
+                    AttackRange = 7;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
+                case EnemyType.Monster6:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2;
+                    AttackRange = 7;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
+                case EnemyType.Monster7:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2;
+                    AttackRange = 7;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
+                case EnemyType.Monster8:
+                    MovementSpeed = Settings.Instance.HumanEnemySpeed;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 3.5f;
+                    AttackRange = 7;
+                    Damage = 5;
+
+                    // movement
+                    TrackingRadius = 50f;
+                    MovementSpeed = 0.25f;
+                    enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
+                    ViewAngle = -enemyAi.TrackingAngle;
+
+                    attackTimer = 0;
+
+                    // collision
+                    CircleCollision = 1.0f;
+                    break;
             }
+
 
             // Setting the health to the MaxHealth at startup
             CurrentHealth = MaxEnemyHealth;
@@ -213,6 +299,51 @@ namespace EmodiaQuest.Core.NPCs
                     runM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3run");
                     fightM = Content.Load<Model>("fbxContent/enemies/Monster3/Monster3fight");
                     break;
+                case EnemyType.Monster4:
+                    // loading default mesh
+                    enemyModel = Content.Load<Model>("fbxContent/enemies/Monster4/Monster4"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster4/Monster4idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster4/Monster4run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster4/Monster4fight");
+                    break;
+                case EnemyType.Monster5:
+                    // loading default mesh
+                    enemyModel = Content.Load<Model>("fbxContent/enemies/Monster5/Monster5"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster5/Monster5idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster5/Monster5run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster5/Monster5fight");
+                    break;
+                case EnemyType.Monster6:
+                    // loading default mesh
+                    enemyModel = Content.Load<Model>("fbxContent/enemies/Monster6/Monster6"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster6/Monster6idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster6/Monster6run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster6/Monster6fight");
+                    break;
+                case EnemyType.Monster7:
+                    // loading default mesh
+                    enemyModel = Content.Load<Model>("fbxContent/enemies/Monster7/Monster7"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster7/Monster7idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster7/Monster7run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster7/Monster7fight");
+                    break;
+                case EnemyType.Monster8:
+                    // loading default mesh
+                    enemyModel = Content.Load<Model>("fbxContent/enemies/Monster8/Monster8"); // <--------------- Insert your Mesh here, need at least 2 keyframes
+
+                    // loading Animation Models
+                    idleM = Content.Load<Model>("fbxContent/enemies/Monster8/Monster8idle"); // <--------------------- The animation Meshes here
+                    runM = Content.Load<Model>("fbxContent/enemies/Monster8/Monster8run");
+                    fightM = Content.Load<Model>("fbxContent/enemies/Monster8/Monster8fight");
+                    break;
             }
 
 
@@ -243,6 +374,36 @@ namespace EmodiaQuest.Core.NPCs
                     fightC = fightSD.AnimationClips["Fight"];
                     break;
                 case EnemyType.Monster3:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster4:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster5:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster6:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster7:
+                    // loading the animation clips
+                    idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
+                    runC = runSD.AnimationClips["Run"];
+                    fightC = fightSD.AnimationClips["Fight"];
+                    break;
+                case EnemyType.Monster8:
                     // loading the animation clips
                     idleC = idleSD.AnimationClips["Idle"]; // <------------------------------------ The name of the animation in blender
                     runC = runSD.AnimationClips["Run"];

@@ -401,6 +401,106 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\enemies\Monster4\Monster4.fbx">
+      <Name>Monster4</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster4\Monster4fight.fbx">
+      <Name>Monster4fight</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster4\Monster4idle.fbx">
+      <Name>Monster4idle</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster4\Monster4run.fbx">
+      <Name>Monster4run</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster5\Monster5.fbx">
+      <Name>Monster5</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster5\Monster5fight.fbx">
+      <Name>Monster5fight</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster5\Monster5idle.fbx">
+      <Name>Monster5idle</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster5\Monster5run.fbx">
+      <Name>Monster5run</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster6\Monster6.fbx">
+      <Name>Monster6</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster6\Monster6fight.fbx">
+      <Name>Monster6fight</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster6\Monster6idle.fbx">
+      <Name>Monster6idle</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster6\Monster6run.fbx">
+      <Name>Monster6run</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster7\Monster7.fbx">
+      <Name>Monster7</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster7\Monster7fight.fbx">
+      <Name>Monster7fight</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster7\Monster7idle.fbx">
+      <Name>Monster7idle</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster7\Monster7run.fbx">
+      <Name>Monster7run</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster8\Monster8.fbx">
+      <Name>Monster8</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster8\Monster8fight.fbx">
+      <Name>Monster8fight</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster8\Monster8idle.fbx">
+      <Name>Monster8idle</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster8\Monster8run.fbx">
+      <Name>Monster8run</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -633,6 +733,31 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="fbxContent\healthbars\h9\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster4\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster5\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster6\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster7\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\enemies\Monster8\Texture1.png">
       <Name>Texture1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
