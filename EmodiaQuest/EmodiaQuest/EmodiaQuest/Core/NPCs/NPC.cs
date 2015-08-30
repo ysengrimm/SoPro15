@@ -201,6 +201,10 @@ namespace EmodiaQuest.Core.NPCs
             // Computing the distance to the player and the rotation of the questionmark
             distanceToPlayer = (float)EuclideanDistance(this.Position, Player.Instance.Position);
             qRotAngle += 0.05f;
+            if (qRotAngle > Math.PI * 2)
+                qRotAngle -= (float)Math.PI * 2;
+            if (qRotAngle < Math.PI * 2)
+                qRotAngle += (float)Math.PI * 2;
 
 
 
@@ -299,7 +303,7 @@ namespace EmodiaQuest.Core.NPCs
 
   
             // Drawing the questionmark
-            if (distanceToPlayer < 20)
+            if (distanceToPlayer < 9)
             {
                 foreach (ModelMesh mesh in question.Meshes)
                 {

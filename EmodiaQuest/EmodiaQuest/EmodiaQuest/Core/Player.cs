@@ -129,7 +129,7 @@ namespace EmodiaQuest.Core
         private bool gameIsInFocus;
         public bool GameIsInFocus
         {
-            set { gameIsInFocus= value; }
+            set { gameIsInFocus = value; }
             get { return gameIsInFocus; }
         }
 
@@ -219,12 +219,12 @@ namespace EmodiaQuest.Core
             walkingC = walkingSD.AnimationClips["Run"];
             jumpingC = jumpingSD.AnimationClips["Jump"];
             */
-            
+
             standingC = standingSD.AnimationClips["idle_stand"];
             walkingC = walkingSD.AnimationClips["walk"];
             jumpingC = jumpingSD.AnimationClips["swordFighting"];
             swordfightingC = swordfightingSD.AnimationClips["swordFighting"];
-            
+
             //Safty Start Animations
             standingAP.StartClip(standingC);
             walkingAP.StartClip(walkingC);
@@ -232,10 +232,10 @@ namespace EmodiaQuest.Core
             swordfightingAP.StartClip(swordfightingC);
 
             //assign the specific animationTimes
-            standingDuration = standingC.Duration.Milliseconds/1f;
-            walkingDuration = walkingC.Duration.Milliseconds/1f;
-            jumpingDuration = jumpingC.Duration.Milliseconds/1f;
-            swordFightingDuration = swordfightingC.Duration.Milliseconds/1f;
+            standingDuration = standingC.Duration.Milliseconds / 1f;
+            walkingDuration = walkingC.Duration.Milliseconds / 1f;
+            jumpingDuration = jumpingC.Duration.Milliseconds / 1f;
+            swordFightingDuration = swordfightingC.Duration.Milliseconds / 1f;
             /*
             Console.WriteLine("StandingDuration: " + standingC.Duration.TotalMilliseconds);
             Console.WriteLine("StandingKeyframes: " + standingC.Keyframes.Count);
@@ -248,16 +248,31 @@ namespace EmodiaQuest.Core
             fixedBlendDuration = 200;
         }
 
+        //mystuff
+        private double DegreeToRadian(double angle)
+        {
+            return Math.Abs(Angle) / Math.PI * 180;
+        }
+
+        private double Kosinussatz (Vector2 npcPos, Vector2 viewPos)
+        {
+            double a = Math.Sqrt(Math.Pow(Position.X - viewPos.X, 2) + Math.Pow(Position.Y - viewPos.Y, 2));
+            double b = Math.Sqrt(Math.Pow(viewPos.X - npcPos.X, 2) + Math.Pow(viewPos.Y - npcPos.Y, 2));
+            double c = Math.Sqrt(Math.Pow(Position.X - npcPos.X, 2) + Math.Pow(Position.Y - npcPos.Y, 2));
+            double e = (Math.Pow(a, 2) + Math.Pow(c, 2) - Math.Pow(b, 2))/(2*a*c);
+            return Math.Acos(e); ;
+        }
+
         public void Update(GameTime gameTime)
         {
             HitEnemyWithSword = false;
             HitAir = false;
             // update weapon
-            if(Keyboard.GetState().IsKeyDown(Keys.D1))
+            if (Keyboard.GetState().IsKeyDown(Keys.D1))
             {
                 ActiveWeapon = Weapon.Stock;
             }
-            if(Keyboard.GetState().IsKeyDown(Keys.D2))
+            if (Keyboard.GetState().IsKeyDown(Keys.D2))
             {
                 ActiveWeapon = Weapon.Hammer;
             }
@@ -267,7 +282,21 @@ namespace EmodiaQuest.Core
             {
                 if (gameEnv.EuclideanDistance(npc.Position, Position) < 9f)
                 {
-                    //Console.WriteLine("You can interact with: " + npc.Name);
+                    Console.WriteLine("You can interact with: " + npc.Name);
+
+                    //mystuff   
+                    //double a = Kosinussatz(npc.Position, v);
+                    //Console.WriteLine(DegreeToRadian(a) - DegreeToRadian(Angle));
+
+                    //Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
+                    //view.Normalize();
+
+                    //Vector2 circlePos = Position + view*3;
+                    //if (gameEnv.EuclideanDistance(circlePos, npc.Position) < 1f)
+                    //    Console.WriteLine("Kreis");
+                    //else
+                    //    Console.WriteLine("Keinkreis");
+
                     if (Keyboard.GetState().IsKeyDown(Keys.E))
                     {
                         QuestController.Instance.QuestUpdate(npc);
@@ -283,8 +312,12 @@ namespace EmodiaQuest.Core
             {
                 //scale position to 0.0 to 1.0 then center the +/- change
                 Angle += (float)-(((currentMouseState.X / windowSize.X) - 0.5) * RotationSpeed);
+                if (Angle > Math.PI * 2)
+                    Angle -= (float)Math.PI * 2;
+                if (Angle < -Math.PI * 2)
+                    Angle += (float)Math.PI * 2;
                 // reset mouse position to window center
-                Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));    
+                Mouse.SetPosition((int)(windowSize.X / 2), (int)(windowSize.Y / 2));
             }
 
             lastPos = Position;
@@ -292,8 +325,8 @@ namespace EmodiaQuest.Core
 
             // running ;)
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
-            {         
-                if(PlayerSpeed < 0.6)
+            {
+                if (PlayerSpeed < 0.6)
                 {
                     PlayerSpeed += 0.025f;
                 }
@@ -302,7 +335,7 @@ namespace EmodiaQuest.Core
             {
                 PlayerSpeed = Settings.Instance.PlayerSpeed;
             }
-            
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 movement.Y += PlayerSpeed * (float)Math.Cos(Angle);
@@ -347,7 +380,7 @@ namespace EmodiaQuest.Core
             // Collsiion with Teleporters
             if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.CollisionColors, 0))
             {
-                
+
                 if (activeWorld == WorldState.Safeworld)
                 {
                     Console.WriteLine("You get teleported to a Dungeon!");
@@ -361,9 +394,9 @@ namespace EmodiaQuest.Core
                     activeWorld = WorldState.Safeworld;
                 }
             }
-            
+
             //Collision with Items
-            if(collisionHandler.Controller.ItemColors != null) // because in a Dungeon we might not have an Itemmap
+            if (collisionHandler.Controller.ItemColors != null) // because in a Dungeon we might not have an Itemmap
             {
                 if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
                 {
@@ -379,10 +412,10 @@ namespace EmodiaQuest.Core
 
                 }
             }
-            
-            
+
+
             //update playerState
-            if ( currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 500 && attackThreshold == swordFightingDuration)
+            if (currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 500 && attackThreshold == swordFightingDuration)
             {
                 ActivePlayerState = PlayerState.Swordfighting;
                 stateTime = swordFightingDuration;
@@ -414,7 +447,7 @@ namespace EmodiaQuest.Core
             }
 
 
-            if(stateTime >0)
+            if (stateTime > 0)
             {
                 stateTime -= gameTime.ElapsedGameTime.Milliseconds;
             }
@@ -422,7 +455,7 @@ namespace EmodiaQuest.Core
 
             //update only the animation which is required if the changed Playerstate
             //Update the active animation
-            switch(ActivePlayerState)
+            switch (ActivePlayerState)
             {
                 case PlayerState.Standing:
                     standingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
@@ -443,7 +476,7 @@ namespace EmodiaQuest.Core
             }
 
             // Secure, that the last Playerstate is always a other Playerstate, than the acutal
-            if(ActivePlayerState != TempPlayerState)
+            if (ActivePlayerState != TempPlayerState)
             {
                 LastPlayerState = TempPlayerState;
                 // When the playerState changes, we need to blend
@@ -453,10 +486,10 @@ namespace EmodiaQuest.Core
 
 
             // if the Time for blending is over, set it on false;
-            if(ActiveBlendTime <= 0)
+            if (ActiveBlendTime <= 0)
             {
                 IsBlending = false;
-                if(ActiveBlendTime < 0)
+                if (ActiveBlendTime < 0)
                 {
                     ActiveBlendTime = 0;
                 }
@@ -496,27 +529,42 @@ namespace EmodiaQuest.Core
             TempPlayerState = ActivePlayerState;
 
             // interaction
-            Vector2 frontDirection = new Vector2((float) Math.Round(Math.Sin(Angle)), (float) Math.Round(Math.Cos(Angle)));
+            Vector2 frontDirection = new Vector2((float)Math.Round(Math.Sin(Angle)), (float)Math.Round(Math.Cos(Angle)));
             Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridSize) + frontDirection.Y));
+
+            //mystuff
+            //Console.WriteLine(DegreeToRadian(Angle));
 
             // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
             // only == 2 in edges, else normal 3 in a row
-            if( ActivePlayerState == PlayerState.Swordfighting && !IsBlending)
+            if (ActivePlayerState == PlayerState.Swordfighting && !IsBlending)
             {
                 position.X = lastPos.X;
                 position.Y = lastPos.Y;
             }
-            if(Ingame.Instance.ActiveWorld == WorldState.Dungeon)
+            if (Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
                 attackTimer += gameTime.ElapsedGameTime.Milliseconds;
                 // collision with enemies
                 Vector2 currentGridPos = new Vector2((float)Math.Round(position.X / gridSize), (float)Math.Round(position.Y / gridSize));
+
+                //mystuff
+                List<Enemy> currentBlockEnemyListtest = new List<Enemy>();
+
                 for (int i = -1; i < 2; i++)
                 {
                     for (int j = -1; j < 2; j++)
                     {
                         List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)currentGridPos.X + i, (int)currentGridPos.Y + j];
+
+                        //mystuff
+                        foreach (var item in currentBlockEnemyList)
+                        {
+                            currentBlockEnemyListtest.Add(item);
+                        }
+
                         if (currentBlockEnemyList.Count <= 0) continue;
+
                         foreach (var enemy in currentBlockEnemyList)
                         {
                             var dx = (Position.X - enemy.Position.X) * (Position.X - enemy.Position.X);
@@ -529,156 +577,191 @@ namespace EmodiaQuest.Core
                         }
                     }
                 }
+                //Vector2 p = new Vector2(2, 2);
+                //p.Normalize();
+                //Console.WriteLine(p);
+                //mystuff
+                //Console.WriteLine(currentBlockEnemyListtest.Count);
+                //Console.WriteLine(Math.Sin(Angle) + ", " + Math.Cos(Angle));
+
+                //Console.WriteLine((float)Math.Asin(Math.Sin(Angle)) / Math.PI * 180 + 90 + (float)Math.Acos(Math.Cos(Angle)) / Math.PI * 180 + 90);
+                
                 if (ActivePlayerState == PlayerState.Swordfighting)
                 {
+                    //mystuff
+                    bool at = false;
+                    foreach (var nmy in currentBlockEnemyListtest)
+                    {
+                        Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
+                        view.Normalize();
+
+                        Vector2 circlePos = Position + view * 3.5f;
+                        if (gameEnv.EuclideanDistance(circlePos, nmy.Position) < 1.2f)
+                        {
+                            if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                            { 
+                            nmy.Attack(Damage);
+                            //attackTimer = 0;
+                            at = true;
+                            HitEnemyWithSword = true;
+                            HitAir = false;
+                            }
+                        }
+                        //else
+                        //    Console.WriteLine("Keinkreis");
+                    }
+                    if (at)
+                        attackTimer = 0;
+
                     // interaction checks
-                    if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
-                    {
-                        // top left 
-                        if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
-                        {
-                            for (int i = 0; i < 2; i++)
-                            {
-                                for (int j = 0; j < 2; j++)
-                                {
-                                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                                    if (currentBlockEnemyList.Count > 0)
-                                    {
-                                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                        if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                        {
-                                            currentClosestEnemy.Attack(Damage);
-                                            attackTimer = 0;
-                                            HitEnemyWithSword = true;
-                                            HitAir = false;
-                                        }
-                                    }
-                                }
-                            }
-                        } // top right
-                        else if ((int)frontDirection.X == 1 && (int)frontDirection.Y == -1)
-                        {
-                            for (int i = -1; i < 1; i++)
-                            {
-                                for (int j = 0; j < 2; j++)
-                                {
-                                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                                    if (currentBlockEnemyList.Count > 0)
-                                    {
-                                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                        if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                        {
-                                            currentClosestEnemy.Attack(Damage);
-                                            attackTimer = 0;
-                                            HitEnemyWithSword = true;
-                                            HitAir = false;
-                                        }
-                                    }
-                                }
-                            }
-                        } // bot left
-                        else if ((int)frontDirection.X == -1 && (int)frontDirection.Y == 1)
-                        {
-                            for (int i = 0; i < 2; i++)
-                            {
-                                for (int j = -1; j < 1; j++)
-                                {
-                                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                                    if (currentBlockEnemyList.Count > 0)
-                                    {
-                                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                        if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                        {
-                                            currentClosestEnemy.Attack(Damage);
-                                            attackTimer = 0;
-                                            HitEnemyWithSword = true;
-                                            HitAir = false;
-                                        }
-                                    }
-                                }
-                            }
-                        } // bot right (X = 1, Y = 1)
-                        else
-                        {
-                            for (int i = -1; i < 1; i++)
-                            {
-                                for (int j = -1; j < 1; j++)
-                                {
-                                    List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                                    if (currentBlockEnemyList.Count > 0)
-                                    {
-                                        Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                        if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                        {
-                                            currentClosestEnemy.Attack(Damage);
-                                            attackTimer = 0;
-                                            HitEnemyWithSword = true;
-                                            HitAir = false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    //if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
+                    //{
+                    //    // top left 
+                    //    if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
+                    //    {
+                    //        for (int i = 0; i < 2; i++)
+                    //        {
+                    //            for (int j = 0; j < 2; j++)
+                    //            {
+                    //                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                    //                if (currentBlockEnemyList.Count > 0)
+                    //                {
+                    //                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                    //                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                    //                    {
+                    //                        currentClosestEnemy.Attack(Damage);
+                    //                        attackTimer = 0;
+                    //                        HitEnemyWithSword = true;
+                    //                        HitAir = false;
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    } // top right
+                    //    else if ((int)frontDirection.X == 1 && (int)frontDirection.Y == -1)
+                    //    {
+                    //        for (int i = -1; i < 1; i++)
+                    //        {
+                    //            for (int j = 0; j < 2; j++)
+                    //            {
+                    //                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                    //                if (currentBlockEnemyList.Count > 0)
+                    //                {
+                    //                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                    //                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                    //                    {
+                    //                        currentClosestEnemy.Attack(Damage);
+                    //                        attackTimer = 0;
+                    //                        HitEnemyWithSword = true;
+                    //                        HitAir = false;
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    } // bot left
+                    //    else if ((int)frontDirection.X == -1 && (int)frontDirection.Y == 1)
+                    //    {
+                    //        for (int i = 0; i < 2; i++)
+                    //        {
+                    //            for (int j = -1; j < 1; j++)
+                    //            {
+                    //                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                    //                if (currentBlockEnemyList.Count > 0)
+                    //                {
+                    //                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                    //                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                    //                    {
+                    //                        currentClosestEnemy.Attack(Damage);
+                    //                        attackTimer = 0;
+                    //                        HitEnemyWithSword = true;
+                    //                        HitAir = false;
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    } // bot right (X = 1, Y = 1)
+                    //    else
+                    //    {
+                    //        for (int i = -1; i < 1; i++)
+                    //        {
+                    //            for (int j = -1; j < 1; j++)
+                    //            {
+                    //                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
+                    //                if (currentBlockEnemyList.Count > 0)
+                    //                {
+                    //                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                    //                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                    //                    {
+                    //                        currentClosestEnemy.Attack(Damage);
+                    //                        attackTimer = 0;
+                    //                        HitEnemyWithSword = true;
+                    //                        HitAir = false;
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    }
 
-                    }
-                    else
-                    {
-                        // left or right
-                        if ((int)Math.Abs(frontDirection.X) == 1 && (int)frontDirection.Y == 0)
-                        {
-                            for (int j = -1; j < 2; j++)
-                            {
-                                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y + j];
-                                if (currentBlockEnemyList.Count > 0)
-                                {
-                                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                    {
-                                        currentClosestEnemy.Attack(Damage);
-                                        attackTimer = 0;
-                                        HitEnemyWithSword = true;
-                                        HitAir = false;
-                                    }
-                                }
-                            }
-                        }
-                        else // top or bottom
-                        {
-                            for (int j = -1; j < 2; j++)
-                            {
-                                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
-                                if (currentBlockEnemyList.Count > 0)
-                                {
-                                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                                    {
-                                        currentClosestEnemy.Attack(Damage);
-                                        attackTimer = 0;
-                                        HitEnemyWithSword = true;
-                                        HitAir = false;
-                                    }
-                                }
-                            }
-                        }
+                    //}
+                    //else
+                    //{
+                    //    // left or right
+                    //    if ((int)Math.Abs(frontDirection.X) == 1 && (int)frontDirection.Y == 0)
+                    //    {
+                    //        for (int j = -1; j < 2; j++)
+                    //        {
+                    //            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y + j];
+                    //            if (currentBlockEnemyList.Count > 0)
+                    //            {
+                    //                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                    //                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                    //                {
+                    //                    currentClosestEnemy.Attack(Damage);
+                    //                    attackTimer = 0;
+                    //                    HitEnemyWithSword = true;
+                    //                    HitAir = false;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //    else // top or bottom
+                    //    {
+                    //        for (int j = -1; j < 2; j++)
+                    //        {
+                    //            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
+                    //            if (currentBlockEnemyList.Count > 0)
+                    //            {
+                    //                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
+                    //                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                    //                {
+                    //                    currentClosestEnemy.Attack(Damage);
+                    //                    attackTimer = 0;
+                    //                    HitEnemyWithSword = true;
+                    //                    HitAir = false;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
 
-                    }
+                    //}
                 }
-                }
-                
+                currentBlockEnemyListtest.Clear();
+            }
+
 
             // Call Sounds
 
-            if(HitEnemyWithSword)
+            if (HitEnemyWithSword)
             {
                 Jukebox.Instance.PlaySwordFightSound();
             }
-            if(!HitEnemyWithSword && HitAir)
+            if (!HitEnemyWithSword && HitAir)
             {
                 Jukebox.Instance.PlayAudioMouseFeedback();
             }
 
             // Get Keyboard input to change overall GameState
-            if(EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.I))
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.I))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.InventoryScreen;
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.O))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
@@ -688,9 +771,10 @@ namespace EmodiaQuest.Core
         {
             float currentCosest = float.MaxValue;
             Enemy closestEnemy = null;
+
             foreach (var enemy in enemyList)
             {
-                float dist = (float) gameEnv.EuclideanDistance(Position, enemy.Position);
+                float dist = (float)gameEnv.EuclideanDistance(Position, enemy.Position);
                 if (dist < currentCosest)
                 {
                     currentCosest = dist;
@@ -761,7 +845,7 @@ namespace EmodiaQuest.Core
                 {
                     //Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
-                    
+
                     if (IsBlending)
                     {
                         float percentageOfBlending = ActiveBlendTime / fixedBlendDuration;
@@ -770,35 +854,35 @@ namespace EmodiaQuest.Core
                             case PlayerState.Standing:
                                 for (int i = 0; i < blendingBones.Length; i++)
                                 {
-                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], standingBones[i], 1-percentageOfBlending);
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], standingBones[i], 1 - percentageOfBlending);
                                 }
-                                effect.SetBoneTransforms(blendingBones);                             
+                                effect.SetBoneTransforms(blendingBones);
                                 break;
                             case PlayerState.Walking:
                                 for (int i = 0; i < blendingBones.Length; i++)
                                 {
-                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1-percentageOfBlending);
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1 - percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
                             case PlayerState.Swordfighting:
                                 for (int i = 0; i < blendingBones.Length; i++)
                                 {
-                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], swordfightingBones[i], 1-percentageOfBlending);
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], swordfightingBones[i], 1 - percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
                             case PlayerState.Jumping:
                                 for (int i = 0; i < blendingBones.Length; i++)
                                 {
-                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], jumpingBones[i], 1-percentageOfBlending);
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], jumpingBones[i], 1 - percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
                             case PlayerState.WalkJumping:
                                 for (int i = 0; i < blendingBones.Length; i++)
                                 {
-                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1-percentageOfBlending);
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1 - percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
@@ -825,31 +909,31 @@ namespace EmodiaQuest.Core
                                 break;
                         }
                     }
-                    
 
-                   effect.EnableDefaultLighting();
-                   effect.World = Matrix.CreateRotationX((float)(-0.5*Math.PI)) * Matrix.CreateRotationY(Angle)  * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
-                   //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
-                   effect.View = view;
-                   effect.Projection = projection;
 
-                   effect.SpecularColor = new Vector3(0.25f);
-                   effect.SpecularPower = 16;
-                   effect.PreferPerPixelLighting = true;
+                    effect.EnableDefaultLighting();
+                    effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                    //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
+                    effect.View = view;
+                    effect.Projection = projection;
+
+                    effect.SpecularColor = new Vector3(0.25f);
+                    effect.SpecularPower = 16;
+                    effect.PreferPerPixelLighting = true;
 
                     // Textures
-                   if (mesh.Name == "MainChar_body")
-                   {
-                       effect.Texture = defaultBodyTex;
-                   }
-                   else if(mesh.Name == "MainChar_hair")
-                   {
-                       effect.Texture = defaultHairTex;
-                   }
-                   else
-                   {
-                       effect.Texture = defaultBodyTex;
-                   }
+                    if (mesh.Name == "MainChar_body")
+                    {
+                        effect.Texture = defaultBodyTex;
+                    }
+                    else if (mesh.Name == "MainChar_hair")
+                    {
+                        effect.Texture = defaultHairTex;
+                    }
+                    else
+                    {
+                        effect.Texture = defaultBodyTex;
+                    }
 
                 }
                 //Console.WriteLine(mesh.Name);
