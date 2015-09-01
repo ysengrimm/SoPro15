@@ -137,6 +137,7 @@ namespace EmodiaQuest.Core
         private EnvironmentController gameEnv;
         public EnvironmentController GameEnv
         {
+            get { return gameEnv; }
             set { gameEnv = value; }
         }
 
