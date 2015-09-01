@@ -99,6 +99,7 @@ namespace EmodiaQuest.Core
         // public for Netstat
         public float ActiveBlendTime;
         public bool IsBlending;
+        public Bullet Bullet;
 
         // Properties
         private Vector2 windowSize;
@@ -246,6 +247,9 @@ namespace EmodiaQuest.Core
             attackThreshold = swordFightingDuration;
             // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 200;
+
+            // Load Bullet
+            Bullet = new Bullet(contentMngr.Load<Model>("fbxContent/items/Point"));
         }
 
         //mystuff
@@ -367,6 +371,14 @@ namespace EmodiaQuest.Core
                 position.X = movement.X;
             }
 
+            // Shooting bullet
+            if (currentMouseState.RightButton == ButtonState.Pressed && !Bullet.isActive)
+            {
+                Bullet.ShootBullet(new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle)));
+            }
+            if (Bullet.isActive) Bullet.Update(gameTime, collisionHandler);
+            else Bullet.bulletPosition = Position;
+
             // Running towards teleporters
             if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
@@ -412,7 +424,6 @@ namespace EmodiaQuest.Core
 
                 }
             }
-
 
             //update playerState
             if (currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 500 && attackThreshold == swordFightingDuration)
@@ -947,6 +958,8 @@ namespace EmodiaQuest.Core
                 }
                 else mesh.Draw();
             }
+
+            if (Bullet.isActive) Bullet.Draw(world, view, projection);
         }
     }
 }

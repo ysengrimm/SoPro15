@@ -140,7 +140,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
             // if choosen delete same method from "createRoom", wich places items only in rooms
             //insertItems();
 
-            insertEnemies();
+            if(enemies.Length != 0 && Settings.Instance.NumEnemies != 0) insertEnemies();
 
             saveMap();
 	    }
