@@ -23,6 +23,10 @@ namespace EmodiaQuest.Core
         private float attackTimer;
         private float attackThreshold;
 
+        // time for shooting
+        private float shootingTimer = 0;
+        private float shootingThreshold;
+
         // For sound handling
         private bool HitEnemyWithSword;
         private bool HitAir;
@@ -74,6 +78,9 @@ namespace EmodiaQuest.Core
         private Texture2D defaultBodyTex;
         private Texture2D defaultHairTex;
 
+        // bulletModel
+        private Model bulletModel;
+
         // The Model
         private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
         // Skinning Data
@@ -99,7 +106,7 @@ namespace EmodiaQuest.Core
         // public for Netstat
         public float ActiveBlendTime;
         public bool IsBlending;
-        public Bullet Bullet;
+        public List<Bullet> BulletList = new List<Bullet>();
 
         // Properties
         private Vector2 windowSize;
@@ -246,11 +253,12 @@ namespace EmodiaQuest.Core
             */
             stateTime = 0;
             attackThreshold = swordFightingDuration;
+            shootingThreshold = swordFightingDuration;
             // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 200;
 
             // Load Bullet
-            Bullet = new Bullet(contentMngr.Load<Model>("fbxContent/items/Point"));
+            bulletModel = contentMngr.Load<Model>("fbxContent/items/Point");
         }
 
         //mystuff
@@ -372,14 +380,23 @@ namespace EmodiaQuest.Core
                 position.X = movement.X;
             }
 
+            Console.WriteLine(shootingTimer);
             // Shooting bullet
-            if (currentMouseState.RightButton == ButtonState.Pressed && !Bullet.isActive)
+            if (activeWorld == WorldState.Dungeon)
             {
-                Bullet.ShootBullet(new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle)));
+                if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
+                {
+                    BulletList.Add(new Bullet(bulletModel, new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle)), Position));
+                    shootingTimer = 0;
+                }
+                for (int i = 0; i < BulletList.Count; i++)
+                {
+                    if (BulletList[i].isActive)
+                        BulletList[i].Update(gameTime, collisionHandler);
+                    else BulletList.RemoveAt(i);
+                }
             }
-            if (Bullet.isActive) Bullet.Update(gameTime, collisionHandler);
-            else Bullet.bulletPosition = Position;
-
+            
             // Running towards teleporters
             if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
@@ -557,6 +574,7 @@ namespace EmodiaQuest.Core
             if (Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
                 attackTimer += gameTime.ElapsedGameTime.Milliseconds;
+                shootingTimer += gameTime.ElapsedGameTime.Milliseconds;
                 // collision with enemies
                 Vector2 currentGridPos = new Vector2((float)Math.Round(position.X / gridSize), (float)Math.Round(position.Y / gridSize));
 
@@ -960,7 +978,11 @@ namespace EmodiaQuest.Core
                 else mesh.Draw();
             }
 
-            if (Bullet.isActive) Bullet.Draw(world, view, projection);
+
+            for (int i = 0; i < BulletList.Count; i++)
+            {
+                BulletList[i].Draw(world, view, projection);
+            }
         }
     }
 }

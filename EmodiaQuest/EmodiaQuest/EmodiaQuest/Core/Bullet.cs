@@ -18,24 +18,18 @@ namespace EmodiaQuest.Core
         private Model bulletModel;
         public Vector2 bulletPosition;
         public Vector2 bulletMovement;
-        public bool isActive;
         private float moveSpeed = 10f;
         private Vector2 playerPosition;
         private float range = 20;
         private float gridSize = Settings.Instance.GridSize;
         private float Damage = 50;
+        public bool isActive = true;
 
-        public Bullet(Model bulletModel)
+        public Bullet(Model bulletModel, Vector2 bulletMovement, Vector2 playerPosition)
         {
-            this.bulletPosition = Player.Instance.Position;
+            this.bulletPosition = playerPosition;
+            this.playerPosition = playerPosition;
             this.bulletModel = bulletModel;
-            isActive = false;
-        }
-
-        public void ShootBullet(Vector2 bulletMovement)
-        {
-            playerPosition = Player.Instance.Position;
-            isActive = true;
             this.bulletMovement = bulletMovement;
             bulletMovement.Normalize();
         }
@@ -78,27 +72,26 @@ namespace EmodiaQuest.Core
                         }
 
                         Console.WriteLine(currentBlockEnemyListtest.Count);
-
-                        foreach (var nmy in currentBlockEnemyListtest)
-                        {
-                            Vector2 circlePos = bulletPosition + bulletMovement;
-                            if (EuclideanDistance(circlePos, nmy.Position) < 5f)
-                            {  
-                                nmy.Attack(Damage);
-                                Kill();
-                            }
-                        }
-
-                        currentBlockEnemyListtest.Clear();
                     }
                 }
+
+                foreach (var nmy in currentBlockEnemyListtest)
+                {
+                    Vector2 circlePos = bulletPosition + bulletMovement;
+                    if (EuclideanDistance(circlePos, nmy.Position) < 5f)
+                    {
+                        nmy.Attack(Damage);
+                        Kill();
+                    }
+                }
+
+                currentBlockEnemyListtest.Clear();
             }
         }
 
         public void Kill()
         {
             isActive = false;
-            bulletPosition = Player.Instance.Position;
         }
 
         public double EuclideanDistance(Vector2 p1, Vector2 p2)
