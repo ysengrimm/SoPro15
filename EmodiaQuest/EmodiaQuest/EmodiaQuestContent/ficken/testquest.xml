@@ -1,6 +1,7 @@
     <emodia_quest>
         <quest>
             <name>Test Quest</name>
+            <difficulty>0</difficulty>
             <owner>Jack</owner>
             <conditions>
                 <level>0</level>
@@ -23,6 +24,9 @@
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </story>
+            <description>
+                Do thing XY!
+            </description>
             <tasks>
                 <level>1</level>
             </tasks>
@@ -35,6 +39,7 @@
       
         <quest>
             <name>A New Journey</name>
+            <difficulty>0</difficulty>
             <owner>Jack</owner>
             <conditions>
                 <level>0</level>
@@ -52,6 +57,9 @@
 				Jack:
 					Ciao.
             </story>
+            <description>
+                Do thing XY!
+            </description>
             <tasks>
                 <visit>Yorlgon.Position</visit>
                 <kill>Oger,2</kill>
@@ -63,6 +71,7 @@
 		
 		<quest>
             <name>Drunken Nights</name>
+            <difficulty>0</difficulty>
             <owner>Yorlgon</owner>
             <conditions>
 				<solved>A New Journey</solved>
@@ -94,6 +103,9 @@
 				Yorlgon:
 					Ja kannst das Teil habn. Is eh nur Schrott.
             </story>
+            <description>
+                Do thing XY!
+            </description>
             <tasks>
                 <visit>Jack.Position</visit>
             </tasks>
@@ -104,6 +116,7 @@
 		
 		<quest>
             <name>Drunken Nights. Part 2</name>
+            <difficulty>0</difficulty>
             <owner>Jack</owner>
             <conditions>
 				<solved>Drunken Nights</solved>
@@ -118,6 +131,9 @@
 				Jack:
 					Hier hast du sie.
             </story>
+            <description>
+                Do thing XY!
+            </description>
             <tasks>
             </tasks>
             <rewards>
@@ -127,6 +143,7 @@
 		
 		<quest>
             <name>Drunken Nights. Part 3</name>
+            <difficulty>0</difficulty>
             <owner>Jack</owner>
             <conditions>
 				<solved>Drunken Nights. Part 2</solved>
@@ -139,6 +156,9 @@
 				Jack:
 					Mach das.
             </story>
+            <description>
+                Do thing XY!
+            </description>
             <tasks>
 				<visit>Yorlgon.Position</visit>
             </tasks>
@@ -151,6 +171,7 @@
 		
 		<quest>
             <name>Kill Them All!</name>
+            <difficulty>0</difficulty>
             <owner>Jack</owner>
             <conditions>
                 <level>1337</level>
@@ -163,6 +184,9 @@
 					da jeder weiss, dass er ein Scharlatan ist. 
 					Ich geb dir die Haelfte von dem was er mir dafuer zahlt.
             </story>
+            <description>
+                Do thing XY!
+            </description>
             <tasks>
                 <kill>Monster 2, 10</kill>
             </tasks>

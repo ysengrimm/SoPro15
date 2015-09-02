@@ -35,6 +35,9 @@ namespace EmodiaQuest.Core
         private bool HitEnemyWithSword;
         private bool HitAir;
 
+        // Effects
+        public Effect copiedEffect;
+
         // For movement and camera update
         private Vector2 movement; // future position
         private Vector2 lastPos; //position from last step (fixes false kamera focus)
@@ -161,6 +164,9 @@ namespace EmodiaQuest.Core
 
         public void LoadContent()
         {
+            // Effects
+            copiedEffect = contentMngr.Load<Effect>("shaders/simples/Copied");
+
             HitEnemyWithSword = false;
             HitAir = false;
             // Initialize mouseState

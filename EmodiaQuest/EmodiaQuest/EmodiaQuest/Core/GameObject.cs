@@ -18,6 +18,11 @@ namespace EmodiaQuest.Core
         public Vector3 position;
         public int rotation;
         public Model model;
+
+        // Effect
+        Effect copiedEffect;
+
+        private float distanceToPlayer = 0.0f;
         
         /*
         private Vector3 ambi = new Vector3(0.05333332f, 0.09882354f, 0.1819608f) * 3;
@@ -42,6 +47,17 @@ namespace EmodiaQuest.Core
             if (rotation == 0 || rotation == 1 || rotation == 2 || rotation == 3)
                 this.rotation = rotation;
         }
+
+        public void loadContent(ContentManager Content)
+        {
+
+        }
+
+        public void update(GameTime gametime)
+        {
+
+        }
+
         /*
   
         public void drawGameobject(Matrix world, Matrix view, Matrix projection)
@@ -93,41 +109,79 @@ namespace EmodiaQuest.Core
             }
             else
             {
-                float distanceToPlayer = (float)EuclideanDistance(new Vector2(this.position.X, this.position.Z), Player.Instance.Position);
-                foreach (ModelMesh mesh in model.Meshes)
+                copiedEffect = Player.Instance.copiedEffect;
+                distanceToPlayer = (float)EuclideanDistance(new Vector2(this.position.X, this.position.Z), Player.Instance.Position);
+                if (distanceToPlayer > 60)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
+                    
+                    foreach (ModelMesh mesh in model.Meshes)
                     {
-                        effect.EnableDefaultLighting();
-                        effect.World = world *  Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
-                        effect.View = view;
-                        effect.Projection = projection;
-                        if (distanceToPlayer > 100)
+                        foreach (BasicEffect effect in mesh.Effects)
                         {
+                            effect.EnableDefaultLighting();
+                            effect.World = world * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
+                            effect.View = view;
+                            effect.Projection = projection;
+
                             effect.AmbientLightColor = new Vector3(0, 0, 0);
                             effect.DiffuseColor = new Vector3(0, 0, 0);
                             effect.SpecularColor = new Vector3(0, 0, 0);
                             effect.EmissiveColor = new Vector3(0, 0, 0);
+                            //else
+                            //{
+                            //    effect.FogColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            //    effect.FogEnabled = true;
+                            //    effect.FogStart = 8f;
+                            //    effect.FogEnd = 75f;
+                            //    effect.PreferPerPixelLighting = true;
+
+                            //    effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
+                            //    effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
+
+
+                            //    //effect.SpecularColor = spec * (2.0f - distanceToPlayer * 0.05f);
+                            //    //effect.EmissiveColor = emis * (1.0f - distanceToPlayer * 0.005f);
+
+
+
+                            //}
+
                         }
-                        else
+                        mesh.Draw();
+                    }
+                }
+                else
+                {
+                    foreach (ModelMesh mesh in model.Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
                         {
+                            effect.EnableDefaultLighting();
+                            effect.World = world * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
+                            effect.View = view;
+                            effect.Projection = projection;
+
+
                             effect.FogColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.FogEnabled = true;
                             effect.FogStart = 8f;
                             effect.FogEnd = 75f;
                             effect.PreferPerPixelLighting = true;
-                            
+
                             effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
                             effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
+
+
                             //effect.SpecularColor = spec * (2.0f - distanceToPlayer * 0.05f);
                             //effect.EmissiveColor = emis * (1.0f - distanceToPlayer * 0.005f);
-                            
-                             
-                            
-                        }
 
+
+
+                            //}
+
+                        }
+                        mesh.Draw();
                     }
-                    mesh.Draw();
                 }
             }
 
