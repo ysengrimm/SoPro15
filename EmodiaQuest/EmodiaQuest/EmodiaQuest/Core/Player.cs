@@ -388,10 +388,10 @@ namespace EmodiaQuest.Core
             // Shooting bullet
             if (activeWorld == WorldState.Dungeon)
             {
-                //if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
-                if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed)
+                //if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed)
                 {
                     BulletList.Add(new Bullet(bulletModel, new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle)), Position));
+                    if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
                     shootingTimer = 0;
                 }
                 for (int i = 0; i < BulletList.Count; i++)
