@@ -26,7 +26,7 @@ namespace EmodiaQuest.Core
 
         // shooting type
         public enum Shootingtype { Normal, Blast, Lightning };
-        private Shootingtype shootingtype = Shootingtype.Lightning;
+        private Shootingtype shootingtype = Shootingtype.Normal;
         // time for shooting
         private float shootingTimer = 0;
         private float shootingThreshold;
@@ -389,9 +389,9 @@ namespace EmodiaQuest.Core
             if (activeWorld == WorldState.Dungeon)
             {
                 //if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed)
+                if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
                 {
-                    BulletList.Add(new Bullet(bulletModel, new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle)), Position));
-                    if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
+                    BulletList.Add(new Bullet(bulletModel, new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle)), Position));                   
                     shootingTimer = 0;
                 }
                 for (int i = 0; i < BulletList.Count; i++)
