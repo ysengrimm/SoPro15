@@ -202,7 +202,7 @@ namespace EmodiaQuest.Core
 
             ViewDistance = 900f;
 
-            MainVolume = 1.0f;
+            MainVolume = 0.0f;
 
             FXVolume = 0.5f;
 
