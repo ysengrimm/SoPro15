@@ -69,17 +69,12 @@ namespace EmodiaQuest.Core
 
             // Walls
             EnvironmentController.Object wall = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/NormalWall_10x10"), new Color(101, 101, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall);
-                //EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall1);
-                //EnvironmentController.Object wall2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall2"), new Color(2, 0, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall2);
-            // Buildings
-            EnvironmentController.Object house1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/haus1_dim30x10"), new Color(100, 0, 0), new Vector2(1, 3)); Controller.CollisionObjList.Add(house1);
-            EnvironmentController.TeleObject wallDoor = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/mauerTor30x10"), new Color(3, 0, 0), new Vector2(1, 3), new Vector2(0, 0)); Controller.TeleporterObjList.Add(wallDoor);
             // Grounds
             EnvironmentController.Object ground = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Ground_10x10/Ground_10x10"), new Color(101, 102, 0), new Vector2(1, 1));
-                //EnvironmentController.Object brownWay = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"), new Color(100, 100, 0), new Vector2(1, 1));
-                //EnvironmentController.Object grasGround = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"), new Color(0, 100, 0), new Vector2(1, 1));
             // Items
             EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
+            // Teleporter
+            EnvironmentController.TeleObject teleporter = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/Teleporter_10x10/Teleporter_10x10"), new Color(101, 103, 0), new Vector2(1, 1), new Vector2(0, 0)); Controller.TeleporterObjList.Add(teleporter);
 
             // Nothing
             // this is important for level generation 
@@ -91,8 +86,7 @@ namespace EmodiaQuest.Core
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall.Model, wall.Color, 0);
             Controller.InsertObj(Controller.Ground, ground.Model,ground.Color, 0);
-            Controller.InsertObj(Controller.Buildings, house1.Model, house1.Color, 0);
-            Controller.InsertObj(Controller.Teleporter, wallDoor.Model, wallDoor.Color, 0);
+            Controller.InsertObj(Controller.Teleporter, teleporter.Model, teleporter.Color, 0);
             // Insert items
             Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
 
