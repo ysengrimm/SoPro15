@@ -115,6 +115,7 @@
     <Compile Include="Core\GUI\InventoryItem_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Inventory_GUI.cs" />
     <Compile Include="Core\DungeonGeneration\LevelGenerator.cs" />
+    <Compile Include="Core\GUI\Screens\NPCTalk_GUI.cs" />
     <Compile Include="Core\Items\Enums_Item.cs" />
     <Compile Include="Core\Items\Item.cs" />
     <Compile Include="Core\Items\ItemTestClass.cs" />

@@ -54,7 +54,7 @@ namespace EmodiaQuest
 
             // This is how it should look:
             // Notice how it can be called without an instance!
-            
+
             // Settings init
             EmodiaQuest.Core.Settings.Instance.loadContent();
             EmodiaQuest.Core.Settings.Instance.GraphicsCopy = graphics;
@@ -72,6 +72,7 @@ namespace EmodiaQuest
             EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.GraphicsCopy = graphics;
             EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.loadContent(Content);
+            EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.loadContent(Content);
 
             EmodiaQuest.Core.NetGraph.Instance.LoadContent(Content);
 
@@ -129,7 +130,7 @@ namespace EmodiaQuest
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
-                    break;                    
+                    break;
                 case GameStates_Overall.IngameScreen:
 
                     // Allows the game to exit
@@ -138,10 +139,10 @@ namespace EmodiaQuest
                     //Close Game with Escape
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
-                   
+
                     // check if game is in focus
                     Player.Instance.GameIsInFocus = IsActive;
-                   
+
                     Ingame.Instance.UpdateIngame(gameTime);
 
                     // HUD/NetStat
@@ -159,16 +160,22 @@ namespace EmodiaQuest
                     if (kState.IsKeyDown(Keys.Escape))
                         this.Exit();
                     break;
+                case GameStates_Overall.NPCScreen:
+                    EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.update();
+                    if (kState.IsKeyDown(Keys.Escape))
+                        this.Exit();
+                    break;
                 case GameStates_Overall.Pause:
                     //EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.update();
                     break;
                 default:
+                    Console.WriteLine("Wrong Gamestate chosen.");
                     break;
             }
 
             // if we change the window size outside the constructor (e.g. dynamic window size or fullscreen on/off) we need to call this 
             //graphics.ApplyChanges();
-            
+
 
             base.Update(gameTime);
         }
@@ -188,18 +195,18 @@ namespace EmodiaQuest
                     EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.draw(spriteBatch);
                     break;
                 case GameStates_Overall.MenuScreen:
-                    
+
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.draw(spriteBatch);
-                    
+
                     break;
                 case GameStates_Overall.IngameScreen:
                     this.IsMouseVisible = false;
                     GraphicsDevice.DepthStencilState = new DepthStencilState { DepthBufferEnable = true };
-                    Ingame.Instance.DrawIngame(spriteBatch);                  
+                    Ingame.Instance.DrawIngame(spriteBatch);
                     break;
                 case GameStates_Overall.OptionsScreen:
-                    
+
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.draw(spriteBatch);
                     break;
@@ -208,7 +215,13 @@ namespace EmodiaQuest
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.draw(spriteBatch);
                     break;
+                case GameStates_Overall.NPCScreen:
+
+                    this.IsMouseVisible = true;
+                    EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.draw(spriteBatch);
+                    break;
                 default:
+                    Console.WriteLine("Wrong Gamestate chosen.");
                     break;
             }
 

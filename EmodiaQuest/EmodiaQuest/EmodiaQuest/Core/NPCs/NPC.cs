@@ -303,7 +303,7 @@ namespace EmodiaQuest.Core.NPCs
 
   
             // Drawing the questionmark
-            if (distanceToPlayer < 9)
+            if (distanceToPlayer < 5)
             {
                 foreach (ModelMesh mesh in question.Meshes)
                 {

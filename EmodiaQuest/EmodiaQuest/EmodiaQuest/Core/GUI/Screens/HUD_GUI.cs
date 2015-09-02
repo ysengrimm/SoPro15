@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace EmodiaQuest.Core.GUI.Screens
 {
-    class HUD_GUI
+    public class HUD_GUI
     {
         //EventHandler
         void ChangeValueEventValue(object source, ChangeValueEvent e)
