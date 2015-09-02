@@ -93,7 +93,7 @@ namespace EmodiaQuest.Core
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         //effect.EnableDefaultLighting();
-                        effect.World = world * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
+                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * world * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
                         effect.View = view;
                         effect.Projection = projection;
                         if (distanceToPlayer > 100)
@@ -105,10 +105,17 @@ namespace EmodiaQuest.Core
                         }
                         else
                         {
-                            effect.AmbientLightColor = ambi * (1.0f - distanceToPlayer * 0.01f);
-                            effect.DiffuseColor = diff * (1.0f - distanceToPlayer * 0.01f);
-                            effect.SpecularColor = spec * (1.0f - distanceToPlayer * 0.01f);
+                            effect.FogColor = new Vector3(0.2f, 0.2f, 0.2f);
+                            effect.FogEnabled = true;
+                            effect.FogStart = 8f;
+                            effect.FogEnd = 75f;
+                            effect.PreferPerPixelLighting = true;
+                            effect.AmbientLightColor = ambi * (5.0f - distanceToPlayer * 0.08f);
+                            effect.DiffuseColor = diff * (5.0f - distanceToPlayer * 0.08f);
+                            effect.SpecularColor = spec * (4.0f - distanceToPlayer * 0.15f);
                             //effect.EmissiveColor = emis * (1.0f - distanceToPlayer * 0.005f);
+                             
+                            
                         }
 
                     }

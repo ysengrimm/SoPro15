@@ -27,8 +27,8 @@ namespace EmodiaQuest.Core.DungeonGeneration
         public System.Drawing.Bitmap Map;
         public EnvironmentController Controller;
 
-        public Color Wall = new Color(1, 0, 0);
-        public Color Floor = new Color(100, 100, 0);
+        public Color Wall = new Color(101, 101, 0);
+        public Color Floor = new Color(101, 102, 0);
         public Color Item = new Color(255, 0, 0);
         public Color Nothing = new Color(0, 0, 0);  // for more drawing performance
 

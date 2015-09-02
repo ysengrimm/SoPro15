@@ -1,1 +1,9 @@
+Diese Datei ist dafür da, Modelle Farben zuzuordnen
 
+
+Dungeon Objects ( Color Bereich RGB (101-200, 101-200, B))
+==========================================================
+
+Color (101, 101, B) == Standart wall
+Color (101, 102, B) == Standart Boden
+Color (101, 103, B) == Teleporter

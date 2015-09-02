@@ -501,6 +501,21 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\gameobjects\Teleporter_10x10\Teleporter_10x10.fbx">
+      <Name>Teleporter_10x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\NormalWall_10x10.fbx">
+      <Name>NormalWall_10x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Ground_10x10\Ground_10x10.fbx">
+      <Name>Ground_10x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -759,6 +774,31 @@
     </Compile>
     <Compile Include="fbxContent\enemies\Monster8\Texture1.png">
       <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Teleporter_10x10\Teleporter_10x10_Tex.png">
+      <Name>Teleporter_10x10_Tex</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\NormalWallTex_10x10.png">
+      <Name>NormalWallTex_10x10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\NormalWallTex_Cobble_10x10.png">
+      <Name>NormalWallTex_Cobble_10x10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Ground_10x10\CobbleStreet_Tex_10x10_tiled.png">
+      <Name>CobbleStreet_Tex_10x10_tiled</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Ground_10x10\Gras1_Tex_10x10_tiled.png">
+      <Name>Gras1_Tex_10x10_tiled</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
