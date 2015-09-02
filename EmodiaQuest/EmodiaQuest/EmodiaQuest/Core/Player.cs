@@ -19,10 +19,14 @@ namespace EmodiaQuest.Core
     {
         private static Player _instance;
 
-        // FASTFIX
+
+        // time for attacking
         private float attackTimer;
         private float attackThreshold;
 
+        // shooting type
+        public enum Shootingtype { Normal, Blast, Lightning };
+        private Shootingtype shootingtype = Shootingtype.Lightning;
         // time for shooting
         private float shootingTimer = 0;
         private float shootingThreshold;
@@ -380,11 +384,12 @@ namespace EmodiaQuest.Core
                 position.X = movement.X;
             }
 
-            Console.WriteLine(shootingTimer);
+            //Console.WriteLine(shootingTimer);
             // Shooting bullet
             if (activeWorld == WorldState.Dungeon)
             {
-                if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
+                //if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
+                if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed)
                 {
                     BulletList.Add(new Bullet(bulletModel, new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle)), Position));
                     shootingTimer = 0;
@@ -392,7 +397,7 @@ namespace EmodiaQuest.Core
                 for (int i = 0; i < BulletList.Count; i++)
                 {
                     if (BulletList[i].isActive)
-                        BulletList[i].Update(gameTime, collisionHandler);
+                        BulletList[i].Update(gameTime, collisionHandler, shootingtype);
                     else BulletList.RemoveAt(i);
                 }
             }
