@@ -488,7 +488,7 @@ namespace EmodiaQuest.Core.NPCs
                 // object collision
                 if (IsAlive && Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.CollisionColors, 2.0f))
                 {
-                    if (currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5 && !onSameGridElement(newPosition, Player.Instance.Position))
+                    if (currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5)
                     {
                         Position.Y = newPosition.Y;
                         Position.X = newPosition.X;
@@ -536,20 +536,15 @@ namespace EmodiaQuest.Core.NPCs
                 if (IsAlive)
                 {
                     isAttacking = false;
-                    for (int i = -1; i < 2; i++)
+                    
+                    if (EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
                     {
-                        for (int j = -1; j < 2; j++)
-                        {
-                            if (onSameGridElement(new Vector2(Position.X + i, Position.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
-                            {
-                                isAttacking = true;
-                            }
-                            if (attackTimer >= AttackThreshold && onSameGridElement(new Vector2(Position.X + i, Position.Y + j), Player.Instance.Position) && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
-                            {
-                                Player.Instance.Attack(Damage);
-                                attackTimer = 0;
-                            }
-                        }
+                        isAttacking = true;
+                    }
+                    if (attackTimer >= AttackThreshold && EuclideanDistance(Position, Player.Instance.Position) <= AttackRange)
+                    {
+                        Player.Instance.Attack(Damage);
+                        attackTimer = 0;
                     }
                     // The breathing, which means if the creature is hit, it turns red for a short while
                     if (isHit)
