@@ -18,10 +18,16 @@ namespace EmodiaQuest.Core
         public Vector3 position;
         public int rotation;
         public Model model;
+        
+        /*
         private Vector3 ambi = new Vector3(0.05333332f, 0.09882354f, 0.1819608f) * 3;
         private Vector3 diff = new Vector3(0.1178511f, 0.05631156f, 0.03418359f) * 2;
         private Vector3 spec = new Vector3(0.25f, 0.25f, 0.25f);
         private Vector3 emis = new Vector3(0.0f, 0.0f, 0.0f);
+        */
+
+        private Vector3 ambi = new Vector3(0.05333332f, 0.05882354f, 0.0519608f) * 3;
+        private Vector3 diff = new Vector3(0.0578511f, 0.05631156f, 0.03418359f) * 2;
 
         /// <summary>
         /// Creates a new map from a pixelmap
@@ -92,8 +98,8 @@ namespace EmodiaQuest.Core
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        //effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * world * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
+                        effect.EnableDefaultLighting();
+                        effect.World = world *  Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
                         effect.View = view;
                         effect.Projection = projection;
                         if (distanceToPlayer > 100)
@@ -105,15 +111,17 @@ namespace EmodiaQuest.Core
                         }
                         else
                         {
-                            effect.FogColor = new Vector3(0.2f, 0.2f, 0.2f);
+                            effect.FogColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.FogEnabled = true;
                             effect.FogStart = 8f;
                             effect.FogEnd = 75f;
                             effect.PreferPerPixelLighting = true;
-                            effect.AmbientLightColor = ambi * (5.0f - distanceToPlayer * 0.08f);
-                            effect.DiffuseColor = diff * (5.0f - distanceToPlayer * 0.08f);
-                            effect.SpecularColor = spec * (4.0f - distanceToPlayer * 0.15f);
+                            
+                            effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
+                            effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
+                            //effect.SpecularColor = spec * (2.0f - distanceToPlayer * 0.05f);
                             //effect.EmissiveColor = emis * (1.0f - distanceToPlayer * 0.005f);
+                            
                              
                             
                         }

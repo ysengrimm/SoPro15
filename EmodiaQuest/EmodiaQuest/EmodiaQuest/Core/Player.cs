@@ -295,31 +295,35 @@ namespace EmodiaQuest.Core
             }
 
             //Update interaction with NPCs
-            foreach (NPC npc in SafeWorld.Instance.NPCList)
+            if(activeWorld == WorldState.Safeworld)
             {
-                if (gameEnv.EuclideanDistance(npc.Position, Position) < 9f)
+                foreach (NPC npc in SafeWorld.Instance.NPCList)
                 {
-                    Console.WriteLine("You can interact with: " + npc.Name);
-
-                    //mystuff   
-                    //double a = Kosinussatz(npc.Position, v);
-                    //Console.WriteLine(DegreeToRadian(a) - DegreeToRadian(Angle));
-
-                    //Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
-                    //view.Normalize();
-
-                    //Vector2 circlePos = Position + view*3;
-                    //if (gameEnv.EuclideanDistance(circlePos, npc.Position) < 1f)
-                    //    Console.WriteLine("Kreis");
-                    //else
-                    //    Console.WriteLine("Keinkreis");
-
-                    if (Keyboard.GetState().IsKeyDown(Keys.E))
+                    if (gameEnv.EuclideanDistance(npc.Position, Position) < 9f)
                     {
-                        QuestController.Instance.QuestUpdate(npc);
+                        Console.WriteLine("You can interact with: " + npc.Name);
+
+                        //mystuff   
+                        //double a = Kosinussatz(npc.Position, v);
+                        //Console.WriteLine(DegreeToRadian(a) - DegreeToRadian(Angle));
+
+                        //Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
+                        //view.Normalize();
+
+                        //Vector2 circlePos = Position + view*3;
+                        //if (gameEnv.EuclideanDistance(circlePos, npc.Position) < 1f)
+                        //    Console.WriteLine("Kreis");
+                        //else
+                        //    Console.WriteLine("Keinkreis");
+
+                        if (Keyboard.GetState().IsKeyDown(Keys.E))
+                        {
+                            QuestController.Instance.QuestUpdate(npc);
+                        }
                     }
                 }
             }
+
 
             lastMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
