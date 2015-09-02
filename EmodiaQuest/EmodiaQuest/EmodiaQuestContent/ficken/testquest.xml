@@ -35,19 +35,139 @@
         </quest>
       
         <quest>
-            <name>Other Quest</name>
+            <name>A New Journey</name>
             <owner>Jack</owner>
             <conditions>
-                <gold>100</gold>
             </conditions>
             <story>
-                Bla
+				Jack:
+					Guten Morgen Mics. 
+					Ich habe gehoert, dass Yorlgon nach dir gesucht hat.
+					Waerest du so freundlich ihm einen Besuch abzustatten und ihm auch noch von mir zu sagen,
+					dass er letzten Abend seine Geldbörse hier verloren hat. Er kann die sich gerne bei mir abholen.
+				
+				Mics:
+					Klar mach ich. Man sieht sich.
+				
+				Jack:
+					Ciao.
             </story>
             <tasks>
-                <level>1</level>
+                <visit>Yorlgon.Position</visit>
             </tasks>
             <rewards>
-                <xp>1337</xp>
+                <xp>100</xp>
             </rewards>
         </quest>
+		
+		<quest>
+            <name>Drunken Nights</name>
+            <owner>Yorlgon</owner>
+            <conditions>
+				<solved>A New Journey</solved>
+            </conditions>
+            <story>	
+				Mics:
+					Guten Morgen Yorlgon. Jack meinte, dass du nach mir gesucht haettest. Deswegen dachte ich, dass ein Spaziergang
+					zu dir am ...
+					
+				Yorlgon:
+					UND WIE ICH NACH DIR GESUCHT HAB. Du ********* hast mir meinen Portmonee gestohlen !!!
+					
+				Mics:
+					Jetzt mach mal einen ruhigen. Waerst du letzte nach nicht so stockbesoffen gewesen, wuesstest du, dass
+					du deine Boerse bei Jack liegen gelassen hast. Schau dich nur an, du kannst kaum gerade auf den Beinen stehen!
+					Und dabei bist du der beste Schmied weit und breit. Wie sollen wir denn ohne dich ueberleben wenn du die ganze Zeit 
+					nur am Saufen bist? 
+					
+				Yorlgon:
+					Oh ... ehm ... hm.
+					Ja kann sein, dass ich letzte Nacht tatsaechlich ein bisschen zuviel intus hatte. Wer trinkt denn nicht gerne bei unserem Leben hier, hm?
+					Schopn gut tut mir leid, ich werde mich bessern.
+					Koenntest du mir die Boerse vielleicht wieder zurueck bringen? Ich geb dir 100 Gold dafuer ok? Als Finderlohn sozusagen.
+					
+				Mics:
+					Ja kann ich machen. Hm ... aber nur wenn du noch diesen alten Helm da dazu legst. Ich habe bei meinem letzten Kampf 
+					fast alles verloren und naja, viel Geld hab ich zur Zeit auch nicht.
+					
+				Yorlgon:
+					Ja kannst das Teil habn. Is eh nur Schrott.
+            </story>
+            <tasks>
+                <visit>Jack.Position</visit>
+            </tasks>
+            <rewards>
+                <xp>100</xp>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Drunken Nights. Part 2</name>
+            <owner>Jack</owner>
+            <conditions>
+				<solved>Drunken Nights</solved>
+            </conditions>
+            <story>
+				Jack:
+					Na wie geht es dem alten Yorlgon?
+				
+				Mics:
+					Immer noch am ausnhüchtern. Ich soll ihm seine Boerse wieder zurück bringen, kannst du mir die mal reichen?
+				
+				Jack:
+					Hier hast du sie.
+            </story>
+            <tasks>
+            </tasks>
+            <rewards>
+				<item>Yorlgons Boerse</item>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Drunken Nights. Part 3</name>
+            <owner>Jack</owner>
+            <conditions>
+				<solved>Drunken Nights. Part 2</solved>
+				<item>Yorlgons Boerse</item>
+            </conditions>
+            <story>
+				Mics:
+					Na dann bringe ich sie ihm mal zurück.
+				
+				Jack:
+					Mach das.
+            </story>
+            <tasks>
+				<visit>Yorlgon.Position</visit>
+            </tasks>
+            <rewards>
+				<xp>100</xp>
+				<gold>100</gold>
+				<item>Alter Helm</item>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Kill Them All!</name>
+            <owner>Jack</owner>
+            <conditions>
+            </conditions>
+            <story>
+				Jack:
+					Geh unn bringe mir 10 Koepfe von dem Wuermern aus dem Labyrinth.
+					Einer meiner Kunden hier, der sich selbst als Heiler bezeichnet, meinte er würde die Koepfe
+					fuer seine Experimente benoetigen. Naja mir solls nur recht sein, er selbst hat sowieso keine Kunden
+					da jeder weiss, dass er ein Scharlatan ist. 
+					Ich geb dir die Haelfte von dem was er mir dafuer zahlt.
+            </story>
+            <tasks>
+                <kill>Monster 2, 10</kill>
+            </tasks>
+            <rewards>
+                <xp>200</xp>
+                <gold>150</gold>
+            </rewards>
+        </quest>
+		
     </emodia_quest>
