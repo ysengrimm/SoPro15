@@ -42,7 +42,7 @@ namespace EmodiaQuest.Core.NPCs
         public int HpForHealthbar = 10;
         //public string healthbar = "h10";
 
-        public EnemyType EnemyTyp;
+        public EnemyType EnemyType;
 
         private float gridSize = Settings.Instance.GridSize;
 
@@ -105,11 +105,11 @@ namespace EmodiaQuest.Core.NPCs
         private float distanceToPlayer = 0.0f;
 
 
-        public Enemy(Vector2 position, EnvironmentController currentEnvironment, EnemyType enemyTyp)
+        public Enemy(Vector2 position, EnvironmentController currentEnvironment, EnemyType enemyType)
         {
             this.currentEnvironment = currentEnvironment;
             this.Position = position;
-            this.EnemyTyp = enemyTyp;
+            this.EnemyType = enemyType;
             currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
             this.isAttacking = false;
         }
@@ -121,7 +121,7 @@ namespace EmodiaQuest.Core.NPCs
             this.Content = content;
 
             // Normal variables for each different enemy Type
-            switch (EnemyTyp)
+            switch (EnemyType)
             {
                 case EnemyType.Monster1:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
@@ -270,7 +270,7 @@ namespace EmodiaQuest.Core.NPCs
             IsAlive = true;
 
             // Loading the different meshes for the enemies
-            switch (EnemyTyp)
+            switch (EnemyType)
             {
                 case EnemyType.Monster1:
                     // loading default mesh
@@ -359,7 +359,7 @@ namespace EmodiaQuest.Core.NPCs
 
 
             // loading different animations for the different enemies
-            switch (EnemyTyp)
+            switch (EnemyType)
             {
                 case EnemyType.Monster1:
                     // loading the animation clips
@@ -427,7 +427,7 @@ namespace EmodiaQuest.Core.NPCs
             fixedBlendDuration = 500;
             AttackThreshold = fightDuration;
 
-            //Console.WriteLine(EnemyTyp + " hat idleZeit:" + idleDuration + ". hat runDuration:" + runDuration + ", hat fightDuration:" + fightDuration);
+            //Console.WriteLine(EnemyType + " hat idleZeit:" + idleDuration + ". hat runDuration:" + runDuration + ", hat fightDuration:" + fightDuration);
 
 
             // Healthbar Content
@@ -676,6 +676,18 @@ namespace EmodiaQuest.Core.NPCs
             if (currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Remove(this))
             {
                 IsAlive = false;
+
+                // Add killed monsters
+                String killOut = "";
+                foreach (Quest activeQuest in QuestController.Instance.ActiveQuests)
+                {
+                    activeQuest.Tasks.TryGetValue("kill", out killOut);    
+                }
+                string[] enemyAndCount = killOut.Split(',');
+                if (EnemyType.ToString() == enemyAndCount[0])
+                {
+                    QuestController.Instance.KilledEnemies[enemyAndCount[0]] += 1;
+                }
             }
             Console.WriteLine("Enemy at " + Position + " died");
         }

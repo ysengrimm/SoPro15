@@ -30,6 +30,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
         public Color Wall = new Color(101, 101, 0);
         public Color Floor = new Color(101, 102, 0);
         public Color Item = new Color(255, 0, 0);
+        public Color Teleporter = new Color(101, 103, 0);
         public Color Nothing = new Color(0, 0, 0);  // for more drawing performance
 
         // trigger for setting spawnroom
@@ -182,6 +183,13 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     {
                         // items and enemies not on same field
                         enemyPoints.Add(new Point(i, j));
+                    }
+
+                    // placing teleporter
+                    if (set)
+                    {
+                        Map.SetPixel((int)room.X2-2, (int)room.Y2-2, System.Drawing.Color.Violet);
+                        Controller.PlacementColors[(int)room.X2 - 2, (int)room.Y2 - 2] = Teleporter;
                     }
                 }
             }

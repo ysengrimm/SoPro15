@@ -75,10 +75,6 @@ namespace EmodiaQuest.Core
             ActiveWorld = WorldState.Safeworld;
             // loading Safeworld
             SafeWorld.Instance.LoadContent(Content);
-            // loading the dungeon
-            //Dungeon = new Dungeon(100, 100, 100, new EnemyType[]{EnemyType.Monster1, EnemyType.Monster2, EnemyType.Monster3});       
-            Dungeon = new Dungeon(100, 100, 100, new EnemyType[] { EnemyType.Monster8 });       
-            Dungeon.LoadContent(Content);
 
             // setting the collision for the safeworld as default
             CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
@@ -148,10 +144,10 @@ namespace EmodiaQuest.Core
 
         public void ChangeToDungeon()
         {
+            createNewDungeon();     // everytime the player enters the dungeon it generates a new one
             ActiveWorld = WorldState.Dungeon;
             Player.Instance.GameEnv = this.Dungeon.Controller;
             Player.Instance.Position = this.Dungeon.Controller.StartPoint;
-            Console.Out.WriteLine(this.Dungeon.Controller.StartPoint);
             CollisionHandler.Instance.SetEnvironmentController(Dungeon.Controller);
 
         }
@@ -159,11 +155,19 @@ namespace EmodiaQuest.Core
         public void ChangeToSafeworld()
         {
             ActiveWorld = WorldState.Safeworld;
-            Player.Instance.GameEnv = SafeWorld.Instance.EnviromentController;
-            Player.Instance.Position = new Vector2(270, 330);
+            Player.Instance.GameEnv = SafeWorld.Instance.Controller;
+            Player.Instance.Position = new Vector2(170, 330);
             CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
 
         }
 
+        /// <summary>
+        /// Generating and loading new dungeon
+        /// </summary>
+        public void createNewDungeon()
+        {     
+            Dungeon = new Dungeon(100, 100, 100, new EnemyType[] { EnemyType.Monster8 });
+            Dungeon.LoadContent(Content);
+        }
     }
 }
