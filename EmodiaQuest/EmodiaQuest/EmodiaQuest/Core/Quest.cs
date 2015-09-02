@@ -7,6 +7,8 @@ namespace EmodiaQuest.Core
     {
         public String Name;
         public String Story;
+        public String Description;
+        public int Difficulty;
         public String Owner;
         public Dictionary<String,String> Conditions = new Dictionary<string, string>();
         public Dictionary<String, String> Rewards = new Dictionary<string, string>();

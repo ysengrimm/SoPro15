@@ -45,6 +45,8 @@ namespace EmodiaQuest.Core
                 tempQuest.Name = innerXml.DocumentElement.SelectSingleNode("/quest/name").InnerText;
                 tempQuest.Story = innerXml.DocumentElement.SelectSingleNode("/quest/story").InnerText;
                 tempQuest.Owner = innerXml.DocumentElement.SelectSingleNode("/quest/owner").InnerText;
+                tempQuest.Description = innerXml.DocumentElement.SelectSingleNode("/quest/description").InnerText;
+                tempQuest.Difficulty = int.Parse(innerXml.DocumentElement.SelectSingleNode("/quest/difficulty").InnerText);
                 foreach (XmlNode innerNode in innerXml.DocumentElement.SelectSingleNode("/quest/conditions").ChildNodes)
                 {
                     tempQuest.Conditions.Add(innerNode.Name, innerNode.InnerText);
