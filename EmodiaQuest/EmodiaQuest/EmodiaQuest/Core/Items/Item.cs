@@ -7,16 +7,18 @@ namespace EmodiaQuest.Core.Items
 {
     public class Item
     {
+        public int Lvl = 0;
         public string Name;
         public ItemClass Class;
         public int ID;
-        public int RequiredStrength;
-        public int Armor;
-        public int MinDamage;
-        public int MaxDamage;
-        public int StrengthPlus;
-        public int TenacityPlus;
-        public int HitPointsPlus;
+        public int RequiredStrength = 0;
+        public int Armor = 0;
+        public int MinDamage = 0;
+        public int MaxDamage = 0;
+        public int StrengthPlus = 0;
+        public int SkillPlus = 0;
+        public int Intelligence = 0;
+        public int HitPointsPlus = 0;
 
         // ID-Counter to separate items
         private static int questCount = 10000;
@@ -37,17 +39,18 @@ namespace EmodiaQuest.Core.Items
         }
 
         // Useable-Items
-        public Item(ItemClass itemClass, int hitpoints)
+        public Item(int Lvl, ItemClass itemClass, int hitpoints)
         {
             useableCount++;
 
             this.ID = useableCount;
+            this.Lvl = Lvl;
             this.Class = itemClass;
             this.HitPointsPlus = hitpoints;
         }
 
         // Armor-Items ( Helmet, Armor, Boots )
-        public Item(ItemClass itemClass, int requiredStrength, int armor, int strengthPlus, int tenacityPlus)
+        public Item(int Lvl, ItemClass itemClass, int requiredStrength, int armor, int strengthPlus, int skillPlus)
         {
             switch (itemClass)
             {
@@ -67,27 +70,28 @@ namespace EmodiaQuest.Core.Items
                     Console.WriteLine("Wrong ItemClass chosen.");
                     break;
             }
-
+            this.Lvl = Lvl;
             this.Class = itemClass;
             this.RequiredStrength = requiredStrength;
             this.Armor = armor;
             this.StrengthPlus = strengthPlus;
-            this.TenacityPlus = tenacityPlus;
+            this.SkillPlus = skillPlus;
 
         }
 
         // Weapon-Items ( Helmet, Armor, Boots )
-        public Item(ItemClass itemClass, int requiredStrength, int minDamage, int maxDamage, int strengthPlus, int tenacityPlus)
+        public Item(int Lvl, ItemClass itemClass, int requiredStrength, int minDamage, int maxDamage, int strengthPlus, int skillPlus)
         {
             weaponCount++;
 
             this.ID = weaponCount;
+            this.Lvl = Lvl;
             this.Class = itemClass;
             this.RequiredStrength = requiredStrength;
             this.MinDamage = minDamage;
             this.MaxDamage = maxDamage;
             this.StrengthPlus = strengthPlus;
-            this.TenacityPlus = tenacityPlus;
+            this.SkillPlus = skillPlus;
         }
 
     }
