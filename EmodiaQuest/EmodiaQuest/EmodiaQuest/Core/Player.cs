@@ -299,7 +299,7 @@ namespace EmodiaQuest.Core
             {
                 foreach (NPC npc in SafeWorld.Instance.NPCList)
                 {
-                    if (gameEnv.EuclideanDistance(npc.Position, Position) < 9f)
+                    if (gameEnv.EuclideanDistance(npc.Position, Position) < 5f)
                     {
                         Console.WriteLine("You can interact with: " + npc.Name);
 
@@ -319,6 +319,12 @@ namespace EmodiaQuest.Core
                         if (Keyboard.GetState().IsKeyDown(Keys.E))
                         {
                             QuestController.Instance.QuestUpdate(npc);
+                        }
+                        if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Z))
+                        {
+                            EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName = npc.Name.ToString();
+                            Console.WriteLine(EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName);//wtf ist npcname
+                            EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.NPCScreen;
                         }
                     }
                 }
