@@ -23,9 +23,9 @@ namespace EmodiaQuest.Core
 
         public string XMLName { get; set; }
 
-        public List<Quest> Quests = new List<Quest>(); 
-        public List<Quest> ActiveQuests = new List<Quest>(); 
-        public List<Quest> SolvedQuests = new List<Quest>(); 
+        public List<Quest> Quests = new List<Quest>();
+        public List<Quest> ActiveQuests = new List<Quest>();
+        public List<Quest> SolvedQuests = new List<Quest>();
 
         public void LoadContent(ContentManager contentMngr)
         {
@@ -191,8 +191,10 @@ namespace EmodiaQuest.Core
                         }
                     }
 
+                    
                     List<bool> otherList = outCompare.Where(res => !res).ToList();
-                    if (!otherList.Any())
+
+                    if (outCompare.Any() && !otherList.Any())
                     {
                         ActiveQuests.Add(quest);
                         Console.WriteLine("Addded Quest: " + quest.Name);

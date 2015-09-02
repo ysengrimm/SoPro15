@@ -301,8 +301,6 @@ namespace EmodiaQuest.Core
                 {
                     if (gameEnv.EuclideanDistance(npc.Position, Position) < 5f)
                     {
-                        Console.WriteLine("You can interact with: " + npc.Name);
-
                         //mystuff   
                         //double a = Kosinussatz(npc.Position, v);
                         //Console.WriteLine(DegreeToRadian(a) - DegreeToRadian(Angle));
