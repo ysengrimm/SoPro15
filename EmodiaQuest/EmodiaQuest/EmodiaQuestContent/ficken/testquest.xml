@@ -5,8 +5,7 @@
             <conditions>
                 <level>0</level>
                 <solved>FooBar</solved>
-                <visit>10</visit>
-                <kill>Oger</kill>
+                <kill>Oger,10</kill>
                 <item>Stein der Weisen</item>
                 <gold>200</gold>
             </conditions>
@@ -38,6 +37,7 @@
             <name>A New Journey</name>
             <owner>Jack</owner>
             <conditions>
+                <level>0</level>
             </conditions>
             <story>
 				Jack:
@@ -54,6 +54,7 @@
             </story>
             <tasks>
                 <visit>Yorlgon.Position</visit>
+                <kill>Oger,2</kill>
             </tasks>
             <rewards>
                 <xp>100</xp>
@@ -152,6 +153,7 @@
             <name>Kill Them All!</name>
             <owner>Jack</owner>
             <conditions>
+                <level>1337</level>
             </conditions>
             <story>
 				Jack:

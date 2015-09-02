@@ -301,8 +301,6 @@ namespace EmodiaQuest.Core
                 {
                     if (gameEnv.EuclideanDistance(npc.Position, Position) < 5f)
                     {
-                        Console.WriteLine("You can interact with: " + npc.Name);
-
                         //mystuff   
                         //double a = Kosinussatz(npc.Position, v);
                         //Console.WriteLine(DegreeToRadian(a) - DegreeToRadian(Angle));
@@ -645,150 +643,16 @@ namespace EmodiaQuest.Core
                         {
                             if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                             { 
-                            nmy.Attack(Damage);
-                            //attackTimer = 0;
-                            at = true;
-                            HitEnemyWithSword = true;
-                            HitAir = false;
+                                nmy.Attack(Damage);
+                                //attackTimer = 0;
+                                at = true;
+                                HitEnemyWithSword = true;
+                                HitAir = false;
                             }
                         }
-                        //else
-                        //    Console.WriteLine("Keinkreis");
                     }
                     if (at)
                         attackTimer = 0;
-
-                    // interaction checks
-                    //if (Math.Abs(frontDirection.X) + Math.Abs(frontDirection.Y) >= 2)
-                    //{
-                    //    // top left 
-                    //    if ((int)frontDirection.X == -1 && (int)frontDirection.Y == -1)
-                    //    {
-                    //        for (int i = 0; i < 2; i++)
-                    //        {
-                    //            for (int j = 0; j < 2; j++)
-                    //            {
-                    //                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                    //                if (currentBlockEnemyList.Count > 0)
-                    //                {
-                    //                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                    //                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                    //                    {
-                    //                        currentClosestEnemy.Attack(Damage);
-                    //                        attackTimer = 0;
-                    //                        HitEnemyWithSword = true;
-                    //                        HitAir = false;
-                    //                    }
-                    //                }
-                    //            }
-                    //        }
-                    //    } // top right
-                    //    else if ((int)frontDirection.X == 1 && (int)frontDirection.Y == -1)
-                    //    {
-                    //        for (int i = -1; i < 1; i++)
-                    //        {
-                    //            for (int j = 0; j < 2; j++)
-                    //            {
-                    //                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                    //                if (currentBlockEnemyList.Count > 0)
-                    //                {
-                    //                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                    //                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                    //                    {
-                    //                        currentClosestEnemy.Attack(Damage);
-                    //                        attackTimer = 0;
-                    //                        HitEnemyWithSword = true;
-                    //                        HitAir = false;
-                    //                    }
-                    //                }
-                    //            }
-                    //        }
-                    //    } // bot left
-                    //    else if ((int)frontDirection.X == -1 && (int)frontDirection.Y == 1)
-                    //    {
-                    //        for (int i = 0; i < 2; i++)
-                    //        {
-                    //            for (int j = -1; j < 1; j++)
-                    //            {
-                    //                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                    //                if (currentBlockEnemyList.Count > 0)
-                    //                {
-                    //                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                    //                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                    //                    {
-                    //                        currentClosestEnemy.Attack(Damage);
-                    //                        attackTimer = 0;
-                    //                        HitEnemyWithSword = true;
-                    //                        HitAir = false;
-                    //                    }
-                    //                }
-                    //            }
-                    //        }
-                    //    } // bot right (X = 1, Y = 1)
-                    //    else
-                    //    {
-                    //        for (int i = -1; i < 1; i++)
-                    //        {
-                    //            for (int j = -1; j < 1; j++)
-                    //            {
-                    //                List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + i, (int)gridPosInView.Y + j];
-                    //                if (currentBlockEnemyList.Count > 0)
-                    //                {
-                    //                    Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                    //                    if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                    //                    {
-                    //                        currentClosestEnemy.Attack(Damage);
-                    //                        attackTimer = 0;
-                    //                        HitEnemyWithSword = true;
-                    //                        HitAir = false;
-                    //                    }
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-
-                    //}
-                    //else
-                    //{
-                    //    // left or right
-                    //    if ((int)Math.Abs(frontDirection.X) == 1 && (int)frontDirection.Y == 0)
-                    //    {
-                    //        for (int j = -1; j < 2; j++)
-                    //        {
-                    //            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X, (int)gridPosInView.Y + j];
-                    //            if (currentBlockEnemyList.Count > 0)
-                    //            {
-                    //                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                    //                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                    //                {
-                    //                    currentClosestEnemy.Attack(Damage);
-                    //                    attackTimer = 0;
-                    //                    HitEnemyWithSword = true;
-                    //                    HitAir = false;
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //    else // top or bottom
-                    //    {
-                    //        for (int j = -1; j < 2; j++)
-                    //        {
-                    //            List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)gridPosInView.X + j, (int)gridPosInView.Y];
-                    //            if (currentBlockEnemyList.Count > 0)
-                    //            {
-                    //                Enemy currentClosestEnemy = getClosestMonster(currentBlockEnemyList);
-                    //                if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                    //                {
-                    //                    currentClosestEnemy.Attack(Damage);
-                    //                    attackTimer = 0;
-                    //                    HitEnemyWithSword = true;
-                    //                    HitAir = false;
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-
-                    //}
                 }
                 currentBlockEnemyListtest.Clear();
             }

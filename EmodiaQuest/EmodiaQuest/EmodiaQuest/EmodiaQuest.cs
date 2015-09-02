@@ -220,6 +220,9 @@ namespace EmodiaQuest
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.draw(spriteBatch);
                     break;
+                case GameStates_Overall.Pause:
+                    //EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.update();
+                    break;
                 default:
                     Console.WriteLine("Wrong Gamestate chosen.");
                     break;
