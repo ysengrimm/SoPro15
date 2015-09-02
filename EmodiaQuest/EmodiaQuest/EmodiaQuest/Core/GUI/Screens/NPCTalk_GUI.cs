@@ -33,14 +33,15 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             switch (e.ButtonFunction)
             {
-                case "label1":
+                case "quest1":
                     this.platform.updateLabel("label1", "Angenommen");
                     break;
-                case "label2":
+                case "quest2":
                     this.platform.updateLabel("label2", "Angenommen");
                     //EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
                     break;
                 default:
+                    //Console.WriteLine(e.ButtonFunction);
                     Console.WriteLine("Function name does not exist");
                     break;
             }
@@ -74,6 +75,11 @@ namespace EmodiaQuest.Core.GUI.Screens
             // buttons
             this.platform.addButton(10, 25, 20, 8, "quest1", "Quest 1");
             this.platform.addButton(10, 35, 20, 8, "quest2", "Quest 2");
+
+
+
+            //var questsByOwner = from quest in Quests where quest.Owner == "$OwnerNameHere" select quest;
+            //QuestController.Instance.Quests
 
 
 

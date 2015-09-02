@@ -396,7 +396,7 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\miscellaneous\question.fbx">
+    <Compile Include="fbxContent\miscellaneous\question\question.fbx">
       <Name>question</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
@@ -513,6 +513,11 @@
     </Compile>
     <Compile Include="fbxContent\gameobjects\Ground_10x10\Ground_10x10.fbx">
       <Name>Ground_10x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\miscellaneous\shadow\shadow.fbx">
+      <Name>shadow</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
@@ -802,6 +807,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\miscellaneous\shadow\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="ficken\testquest.xml">
       <Name>testquest</Name>
       <Importer>XmlImporter</Importer>
@@ -815,6 +825,11 @@
     </Compile>
     <Compile Include="shaders\CustomSkinnedEffect.fx">
       <Name>CustomSkinnedEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="shaders\simples\Copied.fx">
+      <Name>Copied</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>

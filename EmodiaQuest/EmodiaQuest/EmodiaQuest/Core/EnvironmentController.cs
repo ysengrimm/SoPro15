@@ -365,6 +365,38 @@ namespace EmodiaQuest.Core
             return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }
 
+        //public void LoadEnvironment(Conten)
+
+        public void UpdateEnvironment(GameTime gametime)
+        {
+            jump += 0.11f;
+
+            foreach (GameObject obj in Ground)
+            {
+                obj.update(gametime);
+            }
+            foreach (GameObject obj in Wall)
+            {
+                obj.update(gametime);
+            }
+            foreach (GameObject obj in Items)
+            {
+                obj.update(gametime);
+            }
+            foreach (GameObject obj in Accessoires)
+            {
+                obj.update(gametime);
+            }
+            foreach (GameObject obj in Buildings)
+            {
+                obj.update(gametime);
+            }
+            foreach (GameObject obj in Teleporter)
+            {
+                obj.update(gametime);
+            }
+        }
+
         public void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
             jump += 0.11f;

@@ -153,7 +153,7 @@ namespace EmodiaQuest.Core.NPCs
             fixedBlendDuration = 500;
 
             // Questionmark Content
-            question = contentMngr.Load<Model>("fbxContent/miscellaneous/question");
+            question = contentMngr.Load<Model>("fbxContent/miscellaneous/question/question");
 
         }
 
