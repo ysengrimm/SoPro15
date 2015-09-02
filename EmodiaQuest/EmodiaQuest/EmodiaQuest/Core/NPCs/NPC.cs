@@ -68,7 +68,7 @@ namespace EmodiaQuest.Core.NPCs
         public float Armor;
         public float MovementSpeed;
         public float TrackingRadius;
-        public enum NPCName { Jack, Yorlgon, Konstantin, Namensloser}
+        public enum NPCName { Jack, Yorlgon, Konstantin, Namensloser }
 
         public NPCName Name = NPCName.Namensloser;
         public NPCProfession Profession = NPCProfession.Arbeitslos;
@@ -78,6 +78,16 @@ namespace EmodiaQuest.Core.NPCs
         // Questionmark Content
         private Model question;
         private float qRotAngle = 0.0f;
+
+        // Shadow Content
+        private Model shadow;
+        Texture2D shadowTexture;
+
+        private Model shadow2;
+        Texture2D shadowTexture2;
+
+        // Effects
+        private Effect copiedEffect;
 
         private float distanceToPlayer = 0.0f;
 
@@ -154,6 +164,17 @@ namespace EmodiaQuest.Core.NPCs
 
             // Questionmark Content
             question = contentMngr.Load<Model>("fbxContent/miscellaneous/question/question");
+
+            // Shadow Content
+            shadow = contentMngr.Load<Model>("fbxContent/miscellaneous/shadow/shadow");
+            shadowTexture = contentMngr.Load<Texture2D>("fbxContent/miscellaneous/shadow/Texture1");
+
+            shadow2 = contentMngr.Load<Model>("fbxContent/miscellaneous/shadow2/shadow2");
+            shadowTexture2 = contentMngr.Load<Texture2D>("fbxContent/miscellaneous/shadow2/Texture1");
+
+            // Effects Content
+            copiedEffect = contentMngr.Load<Effect>("shaders/simples/Copied");
+            copiedEffect.Parameters["ModelTexture"].SetValue(shadowTexture);
 
         }
 
@@ -301,7 +322,7 @@ namespace EmodiaQuest.Core.NPCs
                 }
             }
 
-  
+
             // Drawing the questionmark
             if (distanceToPlayer < 5)
             {
@@ -322,11 +343,59 @@ namespace EmodiaQuest.Core.NPCs
                 }
             }
 
+            // Drawing the shadow
+
+            //foreach (ModelMesh mesh in shadow2.Meshes)
+            //{
+            //    foreach (ModelMeshPart part in mesh.MeshParts)
+            //    {
+
+            //        part.Effect = copiedEffect;
+            //        //copiedEffect.Techniques = EffectTechnique
+            //        copiedEffect.Parameters["World"].SetValue(Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world * mesh.ParentBone.Transform);
+            //        //copiedEffect.Parameters["World"].SetValue(world * mesh.ParentBone.Transform);
+            //        copiedEffect.Parameters["View"].SetValue(view);
+            //        copiedEffect.Parameters["Projection"].SetValue(projection);
+
+            //        Matrix worldInverseTransposeMatrix = Matrix.Transpose(mesh.ParentBone.Transform * Matrix.Invert(Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world));
+            //        //Matrix worldInverseTransposeMatrix = Matrix.Transpose(mesh.ParentBone.Transform * world);
+            //        copiedEffect.Parameters["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix);
+
+            //        //copiedEffect.Parameters["AmbientColor"].SetValue(Color.Red.ToVector4());
+            //        //copiedEffect.Parameters["AmbientIntensity"].SetValue(0.9f);
+            //        //copiedEffect.Parameters["AmbientIntensity"].SetValue(overlayValue);
+            //    }
+            //    mesh.Draw();
+            //}
+
+            //foreach (ModelMesh mesh in shadow2.Meshes)
+            //{
+            //    foreach (BasicEffect effect in mesh.Effects)
+            //    {
+
+            //        effect.EnableDefaultLighting();
+            //        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+            //        effect.View = view;
+            //        effect.Projection = projection;
+            //        effect.AmbientLightColor = new Vector3(0, 0, 0);
+            //        effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
+            //        effect.SpecularColor = new Vector3(0, 0, 0);
+            //        effect.EmissiveColor = new Vector3(0, 0, 0);
+            //        effect.SpecularPower = 0;
+            //        effect.PreferPerPixelLighting = true;
+            //        //effect.Texture = shadowTexture;
+            //        effect.Alpha = 0.3f;
+            //    }
+            //    mesh.Draw();
+            //}
+
+
+
             foreach (ModelMesh mesh in npcModel.Meshes)
             {
 
                 //Console.WriteLine(mesh.Name);
-                    // Only renders the Right assigned Weapon
+                // Only renders the Right assigned Weapon
                 if (mesh.Name == "Stock" && activeWeapon != Weapon.Stock)
                 {
 
@@ -335,16 +404,16 @@ namespace EmodiaQuest.Core.NPCs
                 {
 
                 }
-                    // Only renders the Meshes with the right resolution
-                else if(mesh.Name == "NPC_body" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.High)
+                // Only renders the Meshes with the right resolution
+                else if (mesh.Name == "NPC_body" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.High)
                 {
 
                 }
-                else if(mesh.Name == "NPC_body_lowPoly" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.Low)
+                else if (mesh.Name == "NPC_body_lowPoly" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.Low)
                 {
 
                 }
-                    // renders everything that should be
+                // renders everything that should be
                 else
                 {
                     foreach (SkinnedEffect effect in mesh.Effects)
@@ -459,7 +528,7 @@ namespace EmodiaQuest.Core.NPCs
                         }
                     }
                     mesh.Draw();
-                }              
+                }
             }
         }
     }

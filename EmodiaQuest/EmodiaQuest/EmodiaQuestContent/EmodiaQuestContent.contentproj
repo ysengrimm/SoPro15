@@ -521,6 +521,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\miscellaneous\shadow2\shadow2.fbx">
+      <Name>shadow2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -808,6 +813,11 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="fbxContent\miscellaneous\shadow\Texture1.png">
+      <Name>Texture1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\miscellaneous\shadow2\Texture1.png">
       <Name>Texture1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
