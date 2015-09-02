@@ -130,7 +130,7 @@ namespace EmodiaQuest.Core
             foreach (Enemy enemy in generator.EnemyList)
             {
                 enemy.Draw(world, view, projection);
-            }          
+            }
         }
 
         private void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
