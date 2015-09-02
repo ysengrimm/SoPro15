@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ChangeValueEvent.cs" />
+    <Compile Include="Core\ColorListDungeon.cs" />
     <Compile Include="Core\Delegates_CORE.cs" />
     <Compile Include="Core\DungeonGeneration\Room.cs" />
     <Compile Include="Core\GUI\IntVector2.cs" />

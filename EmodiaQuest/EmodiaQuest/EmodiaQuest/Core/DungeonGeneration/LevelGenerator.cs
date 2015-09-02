@@ -27,12 +27,6 @@ namespace EmodiaQuest.Core.DungeonGeneration
         public System.Drawing.Bitmap Map;
         public EnvironmentController Controller;
 
-        public Color Wall = new Color(101, 101, 0);
-        public Color Floor = new Color(101, 102, 0);
-        public Color Item = new Color(255, 0, 0);
-        public Color Teleporter = new Color(101, 103, 0);
-        public Color Nothing = new Color(0, 0, 0);  // for more drawing performance
-
         // trigger for setting spawnroom
         bool set = true;
 
@@ -74,7 +68,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 for (int j = 0; j < Settings.Instance.DungeonMapSize; j++)
                 {
                     Map.SetPixel(i, j, System.Drawing.Color.Black);
-                    Controller.PlacementColors[i, j] = Wall;
+                    Controller.PlacementColors[i, j] = ColorListDungeon.Instance.Wall;
                 } 
             }
 
@@ -170,13 +164,13 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 for (int j = (int)room.Y; j < room.Y + room.Height; j++)
                 {
                     Map.SetPixel(i, j, System.Drawing.Color.White);
-                    Controller.PlacementColors[i, j] = Floor;
+                    Controller.PlacementColors[i, j] = ColorListDungeon.Instance.Ground;
 
                     // randomly setting items in a room
                     // does not set an item in spawn room
                     if (rnd.Next(10) == 0 && !set)     // 10% chance for setting item
                     {
-                        Controller.ItemColors[i, j] = Item;
+                        Controller.ItemColors[i, j] = ColorListDungeon.Instance.Item;
                         Map.SetPixel(i, j, System.Drawing.Color.Gray);
                     }
                     else if(!set)
@@ -189,7 +183,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     if (set)
                     {
                         Map.SetPixel((int)room.X2-2, (int)room.Y2-2, System.Drawing.Color.Violet);
-                        Controller.PlacementColors[(int)room.X2 - 2, (int)room.Y2 - 2] = Teleporter;
+                        Controller.PlacementColors[(int)room.X2 - 2, (int)room.Y2 - 2] = ColorListDungeon.Instance.Teleporter;
                     }
                 }
             }
@@ -203,9 +197,14 @@ namespace EmodiaQuest.Core.DungeonGeneration
         /// <param name="y"> Choosen y-axis</param>
         private void HCorridor(int x1, int x2, int y) {
             for (int i = (int)Math.Min(x1, x2); i < (int)Math.Max(x1, x2)+1; i++){
-			    // destory the tiles to "carve" out corridor
-                Map.SetPixel(i, y, System.Drawing.Color.White);
-                Controller.PlacementColors[i, y] = Floor;
+			    // does not set ground again if ground is allready there
+                // is important to prevent overvriting objects in rooms
+                if (Controller.PlacementColors[i, y] == ColorListDungeon.Instance.Wall || Controller.PlacementColors[i, y] == ColorListDungeon.Instance.Nothing)
+                {
+                    // destory the tiles to "carve" out corridor
+                    Map.SetPixel(i, y, System.Drawing.Color.White);
+                    Controller.PlacementColors[i, y] = ColorListDungeon.Instance.Ground;
+                }
 		    }
 	    }
 
@@ -217,9 +216,14 @@ namespace EmodiaQuest.Core.DungeonGeneration
         /// <param name="x"> Choosen x-axis</param>
 	    private void VCorridor(int y1, int y2, int x) {
             for (int i = (int)Math.Min(y1, y2); i < (int)Math.Max(y1, y2) + 1; i++) {
-			    // destroy the tiles to "carve" out corridor
-                Map.SetPixel(x, i, System.Drawing.Color.White);
-                Controller.PlacementColors[x, i] = Floor;
+                // does not set ground again if ground is allready there
+                // is important to prevent overvriting objects in rooms
+                if (Controller.PlacementColors[x, i] == ColorListDungeon.Instance.Wall || Controller.PlacementColors[x, i] == ColorListDungeon.Instance.Nothing)
+                {
+                    // destroy the tiles to "carve" out corridor
+                    Map.SetPixel(x, i, System.Drawing.Color.White);
+                    Controller.PlacementColors[x, i] = ColorListDungeon.Instance.Ground;
+                }
 		    }
 	    }
 
@@ -240,15 +244,15 @@ namespace EmodiaQuest.Core.DungeonGeneration
             {
                 for (int j = 1; j < Math.Sqrt(Controller.PlacementColors.Length) - 1; j++)
                 {
-                    if (Controller.PlacementColors[i, j] == Wall &&
-                        Controller.PlacementColors[i + 1, j] == Wall &&
-                        Controller.PlacementColors[i - 1, j] == Wall &&
-                        Controller.PlacementColors[i, j + 1] == Wall &&
-                        Controller.PlacementColors[i, j - 1] == Wall &&
-                        Controller.PlacementColors[i + 1, j + 1] == Wall &&
-                        Controller.PlacementColors[i - 1, j + 1] == Wall &&
-                        Controller.PlacementColors[i + 1, j - 1] == Wall &&
-                        Controller.PlacementColors[i - 1, j - 1] == Wall)
+                    if (Controller.PlacementColors[i, j] == ColorListDungeon.Instance.Wall &&
+                        Controller.PlacementColors[i + 1, j] == ColorListDungeon.Instance.Wall &&
+                        Controller.PlacementColors[i - 1, j] == ColorListDungeon.Instance.Wall &&
+                        Controller.PlacementColors[i, j + 1] == ColorListDungeon.Instance.Wall &&
+                        Controller.PlacementColors[i, j - 1] == ColorListDungeon.Instance.Wall &&
+                        Controller.PlacementColors[i + 1, j + 1] == ColorListDungeon.Instance.Wall &&
+                        Controller.PlacementColors[i - 1, j + 1] == ColorListDungeon.Instance.Wall &&
+                        Controller.PlacementColors[i + 1, j - 1] == ColorListDungeon.Instance.Wall &&
+                        Controller.PlacementColors[i - 1, j - 1] == ColorListDungeon.Instance.Wall)
                     {
                         walls.Add(new Point(i, j));
                     }
@@ -258,7 +262,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
             // set all pixels in the List to "nothing"
             foreach (Point item in walls)
             {
-                Controller.PlacementColors[item.X, item.Y] = Nothing;
+                Controller.PlacementColors[item.X, item.Y] = ColorListDungeon.Instance.Nothing;
                 Map.SetPixel(item.X, item.Y, System.Drawing.Color.White);
             }
         }
@@ -272,9 +276,9 @@ namespace EmodiaQuest.Core.DungeonGeneration
             {
                 for (int j = 1; j < Math.Sqrt(Controller.PlacementColors.Length) - 1; j++)
                 {
-                    if (Controller.PlacementColors[i, j] == Floor && rnd.Next(100) == 0)     // 1% chance for setting item
+                    if (Controller.PlacementColors[i, j] == ColorListDungeon.Instance.Ground && rnd.Next(100) == 0)     // 1% chance for setting item
                     {
-                        Controller.ItemColors[i, j] = Item;
+                        Controller.ItemColors[i, j] = ColorListDungeon.Instance.Item;
                         Map.SetPixel(i, j, System.Drawing.Color.Green);
                     }
                 }

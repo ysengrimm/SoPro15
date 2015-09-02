@@ -68,20 +68,20 @@ namespace EmodiaQuest.Core
             generator = new LevelGenerator(Controller, enemies);            
 
             // Walls
-            EnvironmentController.Object wall = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/NormalWall_10x10"), new Color(101, 101, 0), new Vector2(1, 1)); Controller.CollisionObjList.Add(wall);
+            EnvironmentController.Object wall = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/NormalWall_10x10"), ColorListDungeon.Instance.Wall, new Vector2(1, 1)); Controller.CollisionObjList.Add(wall);
             // Grounds
-            EnvironmentController.Object ground = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Ground_10x10/Ground_10x10"), new Color(101, 102, 0), new Vector2(1, 1));
+            EnvironmentController.Object ground = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Ground_10x10/Ground_10x10"), ColorListDungeon.Instance.Ground, new Vector2(1, 1));
             // Items
-            EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1));
+            EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), ColorListDungeon.Instance.Item, new Vector2(1, 1));
             // Teleporter
-            EnvironmentController.TeleObject teleporter = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/Teleporter_10x10/Teleporter_10x10"), new Color(101, 103, 0), new Vector2(1, 1), new Vector2(0, 0)); Controller.TeleporterObjList.Add(teleporter);
+            EnvironmentController.TeleObject teleporter = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/Teleporter_10x10/Teleporter_10x10"), ColorListDungeon.Instance.Teleporter, new Vector2(1, 1), new Vector2(0, 0)); Controller.TeleporterObjList.Add(teleporter);
 
             // Nothing
             // this is important for level generation 
             // it allows to build black pixels in collision map for every point in map, wich has no model
             // (it's for performance)
             // Do not insert in the map !!!
-            EnvironmentController.Object nothing = new EnvironmentController.Object(null, new Color(0, 0, 0), Vector2.One); Controller.CollisionObjList.Add(nothing);
+            EnvironmentController.Object nothing = new EnvironmentController.Object(null, ColorListDungeon.Instance.Nothing, Vector2.One); Controller.CollisionObjList.Add(nothing);
 
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall.Model, wall.Color, 0);
