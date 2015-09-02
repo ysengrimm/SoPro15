@@ -105,6 +105,7 @@ namespace EmodiaQuest.Core
             {
                 enemy.Update(gametime); ;
             }
+            Controller.UpdateEnvironment(gametime);
 
             // Update for the Skybox
             Skybox.Position = new Vector3(Player.Instance.Position.X, 70, Player.Instance.Position.Y);

@@ -119,6 +119,7 @@ namespace EmodiaQuest.Core
             {
                 npc.Update(gametime);
             }
+            Controller.UpdateEnvironment(gametime);
         }
 
         /// <summary>

@@ -55,7 +55,7 @@ namespace EmodiaQuest.Core
 
         public void update(GameTime gametime)
         {
-
+            distanceToPlayer = (float)EuclideanDistance(new Vector2(this.position.X, this.position.Z), Player.Instance.Position);
         }
 
         /*
@@ -110,7 +110,7 @@ namespace EmodiaQuest.Core
             else
             {
                 copiedEffect = Player.Instance.copiedEffect;
-                distanceToPlayer = (float)EuclideanDistance(new Vector2(this.position.X, this.position.Z), Player.Instance.Position);
+                
                 if (distanceToPlayer > 60)
                 {
                     
