@@ -27,6 +27,8 @@ namespace EmodiaQuest.Core
         public List<Quest> ActiveQuests = new List<Quest>();
         public List<Quest> SolvedQuests = new List<Quest>();
 
+        public Dictionary<string, int> KilledEnemies = new Dictionary<string, int>();
+
         public void LoadContent(ContentManager contentMngr)
         {
             XMLName = "testquest.xml";
@@ -74,7 +76,7 @@ namespace EmodiaQuest.Core
                     select quest;
                 foreach (Quest activeQuest in activeQuestsByOwner)
                 {
-                    bool level, solved, visit = false, kill = false, item, gold;
+                    bool level, solved, visit = false, kill, item, gold;
                     List<bool> outCompare = new List<bool>();
                     foreach (var key in activeQuest.Tasks.Keys)
                     {
@@ -99,10 +101,22 @@ namespace EmodiaQuest.Core
                                 }
                                 break;
                             case "visit":
-                                Console.WriteLine("Not yet implemented!");
+                                // wontfix
                                 break;
                             case "kill":
-                                Console.WriteLine("Not yet implemented!");
+                                String killOut;
+                                activeQuest.Tasks.TryGetValue(key, out killOut);
+
+                                string[] enemyAndCount = killOut.Split(',');
+
+                                int monsterKilled;
+                                KilledEnemies.TryGetValue(enemyAndCount[0], out monsterKilled);
+                                if (monsterKilled >= int.Parse(enemyAndCount[1]))
+                                {
+                                    kill = true;
+                                    outCompare.Add(kill);
+                                    KilledEnemies[enemyAndCount[0]] = 0;
+                                }
                                 break;
                             case "item":
                                 String itemOut;
@@ -126,7 +140,7 @@ namespace EmodiaQuest.Core
                     }
 
                     var questCompareResult = from res in outCompare where !res select res;
-                    if (!questCompareResult.Any())
+                    if (outCompare.Any() && !questCompareResult.Any())
                     {
                         ActiveQuests.Remove(activeQuest);
                         SolvedQuests.Add(activeQuest);
@@ -165,10 +179,10 @@ namespace EmodiaQuest.Core
                                 }
                                 break;
                             case "visit":
-                                Console.WriteLine("Not yet implemented!");
+                                // wontfix
                                 break;
                             case "kill":
-                                Console.WriteLine("Not yet implemented!");
+                                // meh
                                 break;
                             case "item":
                                 String itemOut;
