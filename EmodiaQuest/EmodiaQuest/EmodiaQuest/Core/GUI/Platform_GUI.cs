@@ -160,40 +160,41 @@ namespace EmodiaQuest.Core.GUI
             mouseHandle = Mouse.GetState();
 
 
-
             foreach (Button_GUI bb in buttons)
             {
-                if (Button_GUI.isInside(mouseHandle.X, mouseHandle.Y, bb.XPos, bb.YPos, bb.Width, bb.Height))
+                if (bb.isClickable)
                 {
-                    if (mouseHandle.LeftButton == ButtonState.Pressed)
+                    if (Button_GUI.isInside(mouseHandle.X, mouseHandle.Y, bb.XPos, bb.YPos, bb.Width, bb.Height))
                     {
-                        if (pushed_name_button == bb.Function)
+                        if (mouseHandle.LeftButton == ButtonState.Pressed)
                         {
-                            bb.Button_State = ButtonState_GUI.Pressed;
+                            if (pushed_name_button == bb.Function)
+                            {
+                                bb.Button_State = ButtonState_GUI.Pressed;
+                            }
+                            if (mouseHandle_Old.LeftButton == ButtonState.Released)
+                            {
+                                pushed_name_button = bb.Function;
+                            }
                         }
-                        if (mouseHandle_Old.LeftButton == ButtonState.Released)
+                        else
+                            bb.Button_State = ButtonState_GUI.MouseOver;
+
+                        if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name_button == bb.Function)
                         {
-                            pushed_name_button = bb.Function;
+                            Jukebox.Instance.PlayAudioMouseFeedback();
+                            //Console.WriteLine("Sound!");
+
+                            //this.functionCalled = bb.onClick();
+                            if (OnButtonValue != null)
+                            {
+                                OnButtonValue(this, new ButtonEvent_GUI(bb.Function));
+                            }
                         }
                     }
                     else
-                        bb.Button_State = ButtonState_GUI.MouseOver;
-
-                    if (mouseHandle.LeftButton == ButtonState.Released && mouseHandle_Old.LeftButton == ButtonState.Pressed && pushed_name_button == bb.Function)
-                    {
-                        Jukebox.Instance.PlayAudioMouseFeedback();
-                        //Console.WriteLine("Sound!");
-
-                        //this.functionCalled = bb.onClick();
-                        if (OnButtonValue != null)
-                        {
-                            OnButtonValue(this, new ButtonEvent_GUI(bb.Function));
-                        }
-                    }
+                        bb.Button_State = ButtonState_GUI.Normal;
                 }
-                else
-                    bb.Button_State = ButtonState_GUI.Normal;
-
             }
 
             foreach (InventoryItem_GUI ii in invItems)
@@ -306,15 +307,19 @@ namespace EmodiaQuest.Core.GUI
             //spritebatch.Draw(overlay, new Rectangle(0, 0, 800, 480), Color.White*0.7f);
             foreach (Label_GUI ls in labels)
             {
-                if (ls.Width < 0.01f)
+                if(ls.IsVisible)
                 {
-                    spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.XPos, ls.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);
+                    if (ls.Width < 0.01f)
+                    {
+                        spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.XPos, ls.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);
+                    }
+                    else
+                    {
+                        spritebatch.Draw(label, new Rectangle(ls.XPos, ls.YPos, ls.Width, ls.Height), drawColor);
+                        spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.TextXPos, ls.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);
+                    }
                 }
-                else
-                {
-                    spritebatch.Draw(label, new Rectangle(ls.XPos, ls.YPos, ls.Width, ls.Height), drawColor);
-                    spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.TextXPos, ls.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);
-                }
+
             }
 
 
@@ -329,11 +334,12 @@ namespace EmodiaQuest.Core.GUI
                         spritebatch.Draw(button_m, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                     else if (bb.Button_State == ButtonState_GUI.Pressed)
                         spritebatch.Draw(button_p, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                    if (bb.ButtonText != null)
+                    {
+                        spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(bb.TextXPos, bb.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), bb.TextScaleFactor, SpriteEffects.None, 0.0f);
+                    }
                 }
-                if (bb.ButtonText != null)
-                {
-                    spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(bb.TextXPos, bb.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), bb.TextScaleFactor, SpriteEffects.None, 0.0f);
-                }
+
             }
             foreach (InventoryItem_GUI ii in invItems)
             {
@@ -636,6 +642,70 @@ namespace EmodiaQuest.Core.GUI
             foreach (PlainImage_GUI pi in pimages.Where(n => n.Function == imageName))
             {
                 pi.IsVisible = visibility;
+            }
+        }
+        public Vector2 getButtonPosition(string buttonName)
+        {
+            Vector2 result = new Vector2(0, 0);
+            foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
+            {
+                result.X = bb.XPosRelative;
+                result.Y = bb.YPosRelative;
+            }
+            return result;
+        }
+        public void updateButtonVisibility(string buttonName, bool visibility)
+        {
+            foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
+            {
+                bb.IsVisible = visibility;
+            }
+        }
+        public void updateButtonClickability(string buttonName, bool isClickable)
+        {
+            foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
+            {
+                bb.isClickable = isClickable;
+            }
+        }
+        public void updateButtonPosition(string buttonName, float xPos, float yPos)
+        {
+            foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
+            {
+                bb.XPosRelative = xPos;
+                bb.YPosRelative = yPos;
+            }
+        }
+        public void updateButtonText(string buttonName, string buttonText)
+        {
+            foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
+            {
+                bb.ButtonText = buttonText;
+            }
+        }
+        public Vector2 getLabelPosition(string labelName)
+        {
+            Vector2 result = new Vector2(0, 0);
+            foreach (Label_GUI ls in labels.Where(n => n.LabelName == labelName))
+            {
+                result.X = ls.XPosRelative;
+                result.Y = ls.YPosRelative;
+            }
+            return result;
+        }
+        public void updateLabelVisibility(string labelName, bool visibility)
+        {
+            foreach (Label_GUI ls in labels.Where(n => n.LabelName == labelName))
+            {
+                ls.IsVisible = visibility;
+            }
+        }
+        public void updateLabelPosition(string labelName, float xPos, float yPos)
+        {
+            foreach (Label_GUI ls in labels.Where(n => n.LabelName == labelName))
+            {
+                ls.XPosRelative = xPos;
+                ls.YPosRelative = yPos;
             }
         }
 

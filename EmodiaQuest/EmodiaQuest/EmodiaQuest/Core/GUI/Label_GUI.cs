@@ -24,6 +24,7 @@ namespace EmodiaQuest.Core.GUI
         public string LabelName { get; set; }
         public float TextScaleFactor { get; set; }
         public bool Centered { get; set; }
+        public bool IsVisible = true;
 
         public Label_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, SpriteFont spriteFont, string labelText, string labelName, float textScaleFactor, bool centered)
         {

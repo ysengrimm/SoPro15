@@ -23,6 +23,7 @@ namespace EmodiaQuest.Core.GUI
         public int TextXPos { get; set; }
         public int TextYPos { get; set; }
         public float TextScaleFactor { get; set; }
+        public bool isClickable = true;
 
         private string buttonText = null;
         private ButtonState_GUI button_State = ButtonState_GUI.Normal;

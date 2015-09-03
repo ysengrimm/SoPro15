@@ -327,7 +327,7 @@ namespace EmodiaQuest.Core
                         if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Z))
                         {
                             EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName = npc.Name.ToString();
-                            Console.WriteLine(EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName);//wtf ist npcname
+                            //Console.WriteLine(EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName);
                             EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.NPCScreen;
                         }
                     }
