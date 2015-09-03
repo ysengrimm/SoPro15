@@ -369,8 +369,6 @@ namespace EmodiaQuest.Core
 
         public void UpdateEnvironment(GameTime gametime)
         {
-            jump += 0.11f;
-
             foreach (GameObject obj in Ground)
             {
                 obj.update(gametime);
@@ -399,7 +397,7 @@ namespace EmodiaQuest.Core
 
         public void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
-            jump += 0.11f;
+            jump += 0.1f;
 
             foreach(GameObject obj in Ground)
             {
