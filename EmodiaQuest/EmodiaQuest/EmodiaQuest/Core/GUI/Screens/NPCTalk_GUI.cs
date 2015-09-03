@@ -157,6 +157,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             get { return nPCName; }
             set
             {
+                isOpened = true;
                 this.nPCName = value;
                 this.qTest = from quest in QuestController.Instance.Quests where quest.Owner == NPCName select quest;
                 questCount = 0;
@@ -178,6 +179,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                 this.platform.updateLabel("npcname", value);
             }
         }
+
+        // bool for the case, that this dialogue is just opened
+        public bool isOpened = false;
 
         // Questlist
         private IEnumerable<Quest> qTest;
@@ -235,7 +239,20 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             this.platform.update();
 
+            // Check if the dialogue was just opened
+            if(isOpened)
+            {
+                setVisibleClickable();
+                this.platform.updateButtonVisibility("accept", false);
+                this.platform.updateButtonClickability("accept", false);
 
+                this.platform.updateButtonPosition(buttonInMovement, buttonPosSave.X, buttonPosSave.Y);
+                this.platform.updateLabelPosition(labelInMovement, labelPosSave.X, labelPosSave.Y);
+                this.platform.updateButtonText(buttonInMovement, "Ansehen");
+                this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+                unfold = false;
+                isOpened = false;
+            }
 
             // Get Keyboard input to change overall GameState
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Z))
