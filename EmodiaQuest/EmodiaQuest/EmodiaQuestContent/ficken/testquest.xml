@@ -126,7 +126,7 @@
 					Na wie geht es dem alten Yorlgon?
 				
 				Mics:
-					Immer noch am ausnhüchtern. Ich soll ihm seine Boerse wieder zurück bringen, kannst du mir die mal reichen?
+					Immer noch am ausnuechtern. Ich soll ihm seine Boerse wieder zurück bringen, kannst du mir die mal reichen?
 				
 				Jack:
 					Hier hast du sie.
@@ -171,10 +171,10 @@
 		
 		<quest>
             <name>Kill Them All!</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Jack</owner>
             <conditions>
-                <level>1337</level>
+                <level>0</level>
             </conditions>
             <story>
 				Jack:
@@ -185,14 +185,105 @@
 					Ich geb dir die Haelfte von dem was er mir dafuer zahlt.
             </story>
             <description>
-                Do thing XY!
+                Geh und besiege 10x Wuermer!
             </description>
             <tasks>
-                <kill>Monster 2, 10</kill>
+                <kill>Monster 2,10</kill>
             </tasks>
             <rewards>
                 <xp>200</xp>
                 <gold>150</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Kill Them All! Part 2.</name>
+            <difficulty>1</difficulty>
+            <owner>Jack</owner>
+            <conditions>
+				<solved>Kill Them All!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Jack:
+					Du hast bei deiner letzten Aufgabe einen guten Job gemacht.
+					Der Scharlatan verlangt nun nach 20 Koepfen der Wuermer. Seine Experimente scheinen ihm zu gelingen.
+					Wegen der Bezahlung musst du dir freilich keine Sorgen machen.
+            </story>
+            <description>
+                Geh und besiege 20x Wuermer!
+            </description>
+            <tasks>
+                <kill>Monster 2,20</kill>
+            </tasks>
+            <rewards>
+                <xp>400</xp>
+                <gold>300</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Eine kleine Sammlung</name>
+            <difficulty>2</difficulty>
+            <owner>Konstantin</owner>
+            <conditions>
+                <level>5</level>
+            </conditions>
+            <story>
+				Konstantin:
+					Hallo mein alter Freund. Weisst du ich habe mir letztens gedacht, dass ich mein
+					kleines Haeuschen ein bisschen aufpeppen könnte indem ich mir ein paar Trophaeen an die Waende haenge.
+					Nun ehm ... leider bin ich ja wie du weisst den ganzen Tag beschäftigt und habe leider keine Zeit,
+					auf die Jagd zu gehen. Könntest du mir da ein bisschen Behilflich sein und Köpfe von jeder einzelnen 
+					Kreatur mitbringen, die so in den Labyrinthen rumlaufen?
+					
+					Ich werde dich selbstverstaendlich gut dafuer bezahlen. Du weisst ja, geizig bin ich nicht.
+					Ah und das Gespraech sollte unter uns bleiben, ich hoffe du verstehst.
+            </story>
+            <description>
+                Geh und besiege jeweils ein Monster von jeder Sorte aus dem Labyrinth.
+            </description>
+            <tasks>
+                <kill>Monster 1,1</kill>
+				<kill>Monster 2,1</kill>
+				<kill>Monster 3,1</kill>
+				<kill>Monster 4,1</kill>
+				<kill>Monster 5,1</kill>
+				<kill>Monster 6,1</kill>
+				<kill>Monster 7,1</kill>
+				<kill>Monster 8,1</kill>
+            </tasks>
+            <rewards>
+                <xp>1000</xp>
+                <gold>1000</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Lost Treasure</name>
+            <difficulty>1</difficulty>
+            <owner>Jack</owner>
+            <conditions>
+                <level>3</level>
+            </conditions>
+            <story>
+				Jack:
+					Hallo Mics. Ich habe letztens ein Gespräch zwischen zwei Haendlern gehoert.
+					Diese sind mit noch einem Dritten durch die Labyrinthe gelaufen und haben dabei wohl disen einen Dritten
+					aus den Augen verloren. Sie vermuten, dass er wohl draufgegangen ist. Aus dem Gespräch konnte man heraushoeren
+					dass es ihnen eigentlich egal war das mit dem Typen passiert ist, er hatte aber einen sehr kostbaren Diamanten
+					bei sich gehabt.
+					Du kannst ja versuchen den Diamant zu finden und den Gewinn vom Verkauf koennen wir uns ja dann teilen.
+            </story>
+            <description>
+                Geh und finde den Diamant.
+            </description>
+            <tasks>
+                <item>Diamant</item>
+            </tasks>
+            <rewards>
+                <xp>200</xp>
+                <gold>200</gold>
             </rewards>
         </quest>
 		
