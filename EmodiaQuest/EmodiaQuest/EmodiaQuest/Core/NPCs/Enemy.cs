@@ -130,7 +130,7 @@ namespace EmodiaQuest.Core.NPCs
                     Damage = 5;
 
                     // movement
-                    TrackingRadius = 50f;
+                    TrackingRadius = 90f;
                     MovementSpeed = 0.25f;
                     enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
                     ViewAngle = -enemyAi.TrackingAngle;
@@ -147,7 +147,7 @@ namespace EmodiaQuest.Core.NPCs
                     Damage = 5;
 
                     // movement
-                    TrackingRadius = 50f;
+                    TrackingRadius = 90f;
                     MovementSpeed = 0.25f;
                     enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
                     ViewAngle = -enemyAi.TrackingAngle;
@@ -164,7 +164,7 @@ namespace EmodiaQuest.Core.NPCs
                     Damage = 5;
 
                     // movement
-                    TrackingRadius = 50f;
+                    TrackingRadius = 90f;
                     MovementSpeed = 0.25f;
                     enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
                     ViewAngle = -enemyAi.TrackingAngle;
@@ -181,7 +181,7 @@ namespace EmodiaQuest.Core.NPCs
                     Damage = 5;
 
                     // movement
-                    TrackingRadius = 50f;
+                    TrackingRadius = 90f;
                     MovementSpeed = 0.25f;
                     enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
                     ViewAngle = -enemyAi.TrackingAngle;
@@ -198,7 +198,7 @@ namespace EmodiaQuest.Core.NPCs
                     Damage = 5;
 
                     // movement
-                    TrackingRadius = 50f;
+                    TrackingRadius = 90f;
                     MovementSpeed = 0.25f;
                     enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
                     ViewAngle = -enemyAi.TrackingAngle;
@@ -215,7 +215,7 @@ namespace EmodiaQuest.Core.NPCs
                     Damage = 5;
 
                     // movement
-                    TrackingRadius = 50f;
+                    TrackingRadius = 90f;
                     MovementSpeed = 0.25f;
                     enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
                     ViewAngle = -enemyAi.TrackingAngle;
@@ -232,7 +232,7 @@ namespace EmodiaQuest.Core.NPCs
                     Damage = 5;
 
                     // movement
-                    TrackingRadius = 50f;
+                    TrackingRadius = 90f;
                     MovementSpeed = 0.25f;
                     enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
                     ViewAngle = -enemyAi.TrackingAngle;
@@ -249,7 +249,7 @@ namespace EmodiaQuest.Core.NPCs
                     Damage = 5;
 
                     // movement
-                    TrackingRadius = 50f;
+                    TrackingRadius = 90f;
                     MovementSpeed = 0.25f;
                     enemyAi = new Ai(Position, CurrentEnemyState, LastEnemyState, TrackingRadius, MovementSpeed, currentEnvironment);
                     ViewAngle = -enemyAi.TrackingAngle;
@@ -486,12 +486,18 @@ namespace EmodiaQuest.Core.NPCs
                 ViewAngle = -enemyAi.TrackingAngle;
 
                 // object collision
-                if (IsAlive && Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.CollisionColors, 2.0f))
+                if (IsAlive)
                 {
-                    if (currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 5)
+                    if (currentEnvironment.enemyArray[(int)Math.Round(newPosition.X / 10), (int)Math.Round(newPosition.Y / 10)].Count < 15)
                     {
-                        Position.Y = newPosition.Y;
-                        Position.X = newPosition.X;
+                        if (Color.White == collHandler.GetCollisionColor(new Vector2(Position.X, newPosition.Y), collHandler.Controller.CollisionColors, 2.0f))
+                        {
+                            Position.Y = newPosition.Y;
+                        }
+                        if (Color.White == collHandler.GetCollisionColor(new Vector2(newPosition.X, Position.Y), collHandler.Controller.CollisionColors, 2.0f))
+                        {
+                            Position.X = newPosition.X;
+                        }
 
                         Vector2 currentGridPos = new Vector2((float)Math.Round(newPosition.X / gridSize), (float)Math.Round(newPosition.Y / gridSize));
                         for (int i = -1; i < 2; i++)
@@ -515,11 +521,16 @@ namespace EmodiaQuest.Core.NPCs
                                 {
                                     if (this != enemy)
                                     {
-                                        var dx = (Position.X - enemy.Position.X) * (Position.X - enemy.Position.X);
-                                        var dy = (Position.Y - enemy.Position.Y) * (Position.Y - enemy.Position.Y);
-                                        if (Math.Sqrt(dx + dy) < (CircleCollision + enemy.CircleCollision))
+                                        var dx1 = (Position.X - enemy.Position.X) * (Position.X - enemy.Position.X);
+                                        var dy1 = (oldPosition.Y - enemy.Position.Y) * (oldPosition.Y - enemy.Position.Y);
+                                        if (Math.Sqrt(dx1 + dy1) < (CircleCollision + enemy.CircleCollision / 2))
                                         {
                                             Position.X = oldPosition.X;
+                                        }
+                                        var dx2 = (oldPosition.X - enemy.Position.X) * (oldPosition.X - enemy.Position.X);
+                                        var dy2 = (Position.Y - enemy.Position.Y) * (Position.Y - enemy.Position.Y);
+                                        if (Math.Sqrt(dx2 + dy2) < (CircleCollision + enemy.CircleCollision / 2))
+                                        {
                                             Position.Y = oldPosition.Y;
                                         }
                                     }
@@ -562,24 +573,30 @@ namespace EmodiaQuest.Core.NPCs
 
                 // setting the right EnemyStates
 
-                if (oldPosition.X != Position.X || oldPosition.Y != Position.Y)
+                if (oldPosition.X != Position.X || oldPosition.Y != Position.Y && stateTime == 0)
                 {
                     CurrentEnemyState = EnemyState.Run;
                     stateTime = runDuration;
                     fixedBlendDuration = 150;
                 }
-                else if (isAttacking == true)
+                else if (isAttacking == true && stateTime == 0)
                 {
                     CurrentEnemyState = EnemyState.Fight;
                     stateTime = fightDuration;
                     fixedBlendDuration = 250;
                 }
-                else
+                else if (stateTime == 0)
                 {
                     CurrentEnemyState = EnemyState.Idle;
                     stateTime = idleDuration;
                     fixedBlendDuration = 100;
                 }
+
+                if (stateTime > 0)
+                {
+                    stateTime -= gameTime.ElapsedGameTime.Milliseconds;
+                }
+                else stateTime = 0;
 
                 //Console.WriteLine(CurrentEnemyState + ", " + LastEnemyState);
 
@@ -641,7 +658,6 @@ namespace EmodiaQuest.Core.NPCs
                             break;
                     }
                 }
-
             }
         }
 
