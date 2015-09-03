@@ -245,13 +245,6 @@
             </description>
             <tasks>
                 <kill>Monster 1,1</kill>
-				<kill>Monster 2,1</kill>
-				<kill>Monster 3,1</kill>
-				<kill>Monster 4,1</kill>
-				<kill>Monster 5,1</kill>
-				<kill>Monster 6,1</kill>
-				<kill>Monster 7,1</kill>
-				<kill>Monster 8,1</kill>
             </tasks>
             <rewards>
                 <xp>1000</xp>
