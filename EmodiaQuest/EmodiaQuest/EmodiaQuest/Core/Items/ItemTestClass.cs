@@ -137,10 +137,10 @@ namespace EmodiaQuest.Core.Items
         }
 
 
-        public void ItemGeneratorMerchant(int currentHeroLevel, bool dungeonDone)
+        public void ItemGeneratorMerchant(int currentHeroLevel, string npcName, bool dungeonDone)
         {
             int chooseItemDie;
-            int healingPots;
+            int healingPots = 0;
             if (currentHeroLevel < 4)
             {
                 chooseItemDie = random.Next(3) + 1;
@@ -165,6 +165,14 @@ namespace EmodiaQuest.Core.Items
             switch (chooseItemDie)
             {
                 case 1:
+                    if(npcName == "Yorlgon")
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
                     break;
                 case 2:
                     break;
@@ -194,6 +202,11 @@ namespace EmodiaQuest.Core.Items
         public void ItemGeneratorMonster(int currentHeroLevel)
         {
             // + monstertyp!
+        }
+
+        private void dieMagic(int currentHeroLevel, ItemClass itemClass)
+        {
+
         }
 
 

@@ -89,6 +89,16 @@ namespace EmodiaQuest.Core.NPCs
         // Effects
         private Effect copiedEffect;
 
+        // Portal Content
+        int portalCount = 1;
+        private Model portal;
+
+        List<Texture2D> portalList = new List<Texture2D>();
+
+        Texture2D portalTest;
+        private float portalTimer = 0;
+
+        // Variable for distance to player
         private float distanceToPlayer = 0.0f;
 
 
@@ -176,6 +186,15 @@ namespace EmodiaQuest.Core.NPCs
             copiedEffect = contentMngr.Load<Effect>("shaders/simples/Copied");
             copiedEffect.Parameters["ModelTexture"].SetValue(shadowTexture);
 
+            // Portal Content
+            portal = contentMngr.Load<Model>("fbxContent/miscellaneous/portal/portal");
+
+            for (int i = 0; i < 16; i++)
+            {
+                portalList.Add(portalTest);
+                portalList[i] = contentMngr.Load<Texture2D>("fbxContent/miscellaneous/portal/Texture" + (i + 1));
+            }
+            portalTest = portalList[0];
         }
 
         private double EuclideanDistance(Vector2 p1, Vector2 p2)
@@ -186,6 +205,16 @@ namespace EmodiaQuest.Core.NPCs
 
         public void Update(GameTime gameTime)
         {
+            portalTimer += gameTime.ElapsedGameTime.Milliseconds;
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.B))
+            if (portalTimer > 75)
+            {
+                portalCount++;
+                portalTimer = 0;
+                if (portalCount > 16)
+                    portalCount = 1;
+                portalTest = portalList[portalCount - 1];
+            }
             oldPosition = Position;
 
             //update only the animation which is required if the changed Playerstate
@@ -337,6 +366,28 @@ namespace EmodiaQuest.Core.NPCs
                         effect.EmissiveColor = new Vector3(0.2f, 0.2f, 0.2f);
                         effect.SpecularColor = new Vector3(0.25f);
                         effect.SpecularPower = 16;
+                        effect.PreferPerPixelLighting = true;
+                    }
+                    mesh.Draw();
+                }
+            }
+
+            // Drawing the portal
+            if (distanceToPlayer < 4)
+            {
+                foreach (ModelMesh mesh in portal.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.Texture = portalTest;
+                        effect.EnableDefaultLighting();
+                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X + 2, 0, Position.Y)) * world;
+                        effect.View = view;
+                        effect.Projection = projection;
+                        effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.5f);
+                        effect.SpecularColor = new Vector3(0.0f);
+                        effect.SpecularPower = 0;
+                        effect.Alpha = 0.8f;
                         effect.PreferPerPixelLighting = true;
                     }
                     mesh.Draw();

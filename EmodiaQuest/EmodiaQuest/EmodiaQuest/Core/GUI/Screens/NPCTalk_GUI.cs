@@ -43,6 +43,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
                         this.platform.updateButtonPosition(buttonInMovement, buttonPosSave.X, buttonPosSave.Y);
                         this.platform.updateLabelPosition(labelInMovement, labelPosSave.X, labelPosSave.Y);
+                        this.platform.updateButtonText(buttonInMovement, "Ansehen");
                         this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                         unfold = false;
                     }
