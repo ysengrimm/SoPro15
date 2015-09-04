@@ -38,7 +38,7 @@ namespace EmodiaQuest.Core
         public void LoadContent(ContentManager contentMngr)
         {
             XMLName = "testquest.xml";
-            String contentRoot = AppDomain.CurrentDomain.BaseDirectory + "Content\\ficken\\";
+            String contentRoot = AppDomain.CurrentDomain.BaseDirectory + "Content\\quests\\";
             XmlDocument doc = new XmlDocument();
             doc.Load(contentRoot + XMLName);
 
