@@ -32,11 +32,13 @@ namespace EmodiaQuest.Core
         public bool IsQuestActive = false;
 
         public Dictionary<string, int> KilledEnemies = new Dictionary<string, int>();
+        public List<Item> ActiveQuestItems = new List<Item>();
+        
 
         public void LoadContent(ContentManager contentMngr)
         {
             XMLName = "testquest.xml";
-            String contentRoot = AppDomain.CurrentDomain.BaseDirectory + "Content\\ficken\\";
+            String contentRoot = AppDomain.CurrentDomain.BaseDirectory + "Content\\quests\\";
             XmlDocument doc = new XmlDocument();
             doc.Load(contentRoot + XMLName);
 
@@ -51,6 +53,7 @@ namespace EmodiaQuest.Core
                 tempQuest.Owner = innerXml.DocumentElement.SelectSingleNode("/quest/owner").InnerText;
                 tempQuest.Description = innerXml.DocumentElement.SelectSingleNode("/quest/description").InnerText;
                 tempQuest.Difficulty = int.Parse(innerXml.DocumentElement.SelectSingleNode("/quest/difficulty").InnerText);
+                tempQuest.IsRepeatable = innerXml.DocumentElement.SelectSingleNode("/quest/repeatable").InnerText == "yes";
                 foreach (XmlNode innerNode in innerXml.DocumentElement.SelectSingleNode("/quest/conditions").ChildNodes)
                 {
                     tempQuest.Conditions.Add(innerNode.Name, innerNode.InnerText);
@@ -125,6 +128,7 @@ namespace EmodiaQuest.Core
                                 }
                                 break;
                             case "item":
+                                // change to real inventory
                                 String itemOut;
                                 activeQuest.Tasks.TryGetValue(key, out itemOut);
                                 foreach (var itemQ in ItemTestClass.Instance.Quests)
@@ -189,6 +193,7 @@ namespace EmodiaQuest.Core
                                 // meh
                                 break;
                             case "item":
+                                // inventory!
                                 String itemOut;
                                 quest.Conditions.TryGetValue(key, out itemOut);
                                 foreach (var itemQ in ItemTestClass.Instance.Quests)
@@ -244,11 +249,20 @@ namespace EmodiaQuest.Core
             {
                 foreach (Quest quest in requestedQuest)
                 {
-                    ActiveQuests.Remove(quest);
-                    SolvedQuests.Add(quest);
-                    Console.WriteLine("Solved Quest: " + quest.Name);
+                    if (!quest.IsRepeatable)
+                    {
+                        ActiveQuests.Remove(quest);
+                        SolvedQuests.Add(quest);
+                        Console.WriteLine("Solved Quest: " + quest.Name);
+                    }
                 }
                 IsQuestActive = false;
+
+                // clear quest items
+                foreach (Item item in ActiveQuestItems)
+                {
+                    ActiveQuestItems.Remove(item);
+                }
                 return true;
             }
             return false;
@@ -285,6 +299,17 @@ namespace EmodiaQuest.Core
                     {
                         ActiveQuests.Add(quest);
                         Console.WriteLine("Added Quest: " + quest.Name);
+
+                        // adding active quest items
+                        String itemOut;
+                        quest.Conditions.TryGetValue("item", out itemOut);
+                        foreach (var itemQ in ItemTestClass.Instance.Quests)
+                        {
+                            if (itemQ.Name == itemOut)
+                            {
+                                ActiveQuestItems.Add(itemQ);
+                            }
+                        }
                     }
                     IsQuestActive = true;
                 }

@@ -907,17 +907,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\test1.png">
-      <Name>test1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Content_GUI\test2.png">
-      <Name>test2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Content Include="ficken\testquest.xml">
+    <Content Include="quests\testquest.xml">
       <Name>testquest</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
