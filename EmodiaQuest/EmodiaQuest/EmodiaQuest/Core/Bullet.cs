@@ -19,7 +19,7 @@ namespace EmodiaQuest.Core
         public Vector2 Position;
         private Vector2 movement;
         private Vector2 bulletDirection;
-        private float speed = 5f;
+        private float speed = 20f;
         private Vector2 playerPosition;
         private float range = 30;
         private float gridSize = Settings.Instance.GridSize;
