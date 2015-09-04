@@ -16,22 +16,23 @@ namespace EmodiaQuest.Core
     public class Bullet
     {
         private Model bulletModel;
-        public Vector2 bulletPosition;
-        public Vector2 bulletMovement;
+        public Vector2 Position;
+        private Vector2 movement;
         private Vector2 bulletDirection;
-        private float moveSpeed = 20f;
+        private float speed = 5f;
         private Vector2 playerPosition;
         private float range = 30;
         private float gridSize = Settings.Instance.GridSize;
         private float Damage = 50;
         public bool isActive = true;
+        private float movementOffset = 0.4f;
 
         public Bullet(Model bulletModel, Vector2 bulletMovement, Vector2 playerPosition)
         {
-            this.bulletPosition = playerPosition;
+            this.Position = playerPosition;
             this.playerPosition = playerPosition;
             this.bulletModel = bulletModel;
-            this.bulletMovement = bulletMovement;
+            this.movement = bulletMovement;
             bulletMovement.Normalize();
             bulletDirection = bulletMovement;
         }
@@ -39,21 +40,27 @@ namespace EmodiaQuest.Core
         public void Update(GameTime gameTime, CollisionHandler collisionHandler, Player.Shootingtype shootingtype)
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            CollisionHandling(collisionHandler, shootingtype);
-            bulletPosition += (bulletMovement * moveSpeed * elapsedTime);
-        }
 
-        public void CollisionHandling(CollisionHandler collisionHandler, Player.Shootingtype shootingtype)
-        {
-            if (EuclideanDistance(playerPosition, bulletPosition) > range) Kill();
+            if (EuclideanDistance(playerPosition, Position) > range) Kill();
 
             // Collision with walls
+
+            if (Color.White == collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y + (movement.Y * speed * elapsedTime)), collisionHandler.Controller.CollisionColors, movementOffset))
+            {
+                Position.Y += (movement.Y * speed * elapsedTime);
+            } 
+            else Kill();
+            if (Color.White == collisionHandler.GetCollisionColor(new Vector2(Position.X + (movement.X * speed * elapsedTime), Position.Y), collisionHandler.Controller.CollisionColors, movementOffset))
+            {
+                Position.X += (movement.X * speed * elapsedTime);
+            }
+            else Kill();
 
             // Collision with enemies
             if (Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
                 // collision with enemies
-                Vector2 currentGridPos = new Vector2((float)Math.Round(bulletPosition.X / gridSize), (float)Math.Round(bulletPosition.Y / gridSize));
+                Vector2 currentGridPos = new Vector2((float)Math.Round(Position.X / gridSize), (float)Math.Round(Position.Y / gridSize));
 
                 List<Enemy> currentBlockEnemyListtest = new List<Enemy>();
 
@@ -76,7 +83,7 @@ namespace EmodiaQuest.Core
                     case Player.Shootingtype.Normal:
                         foreach (var nmy in currentBlockEnemyListtest)
                         {
-                            Vector2 circlePos = bulletPosition + bulletMovement;
+                            Vector2 circlePos = Position + movement;
                             if (EuclideanDistance(circlePos, nmy.Position) < 1.8f)
                             {
                                 nmy.Attack(Damage);
@@ -91,7 +98,7 @@ namespace EmodiaQuest.Core
                         bool blastAttack = false;
                         foreach (var nmy in currentBlockEnemyListtest)
                         {
-                            Vector2 circlePos = bulletPosition + bulletMovement;
+                            Vector2 circlePos = Position + movement;
                             if (EuclideanDistance(circlePos, nmy.Position) < 1.8f)
                             {
                                 currentEnemyPosition = nmy.Position;
@@ -119,7 +126,7 @@ namespace EmodiaQuest.Core
                         {
                             foreach (var nmy in currentBlockEnemyListtest)
                             {
-                                Vector2 circlePos = bulletPosition + bulletMovement;
+                                Vector2 circlePos = Position + movement;
                                 if (EuclideanDistance(currentEnemyPosition, nmy.Position) < 6f)
                                 {
                                     nmy.Attack(Damage);
@@ -174,6 +181,11 @@ namespace EmodiaQuest.Core
             }
         }
 
+        public void CollisionHandling(CollisionHandler collisionHandler, Player.Shootingtype shootingtype)
+        {
+            
+        }
+
         public void Kill()
         {
             isActive = false;
@@ -198,7 +210,7 @@ namespace EmodiaQuest.Core
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = world * Matrix.CreateScale(0.3f) * Matrix.CreateTranslation(new Vector3(bulletPosition.X, 1.3f, bulletPosition.Y));
+                    effect.World = world * Matrix.CreateScale(0.3f) * Matrix.CreateTranslation(new Vector3(Position.X, 1.3f, Position.Y));
                     effect.View = view;
                     effect.Projection = projection;
                 }
