@@ -13,6 +13,7 @@ namespace EmodiaQuest.Core
         public Dictionary<String,String> Conditions = new Dictionary<string, string>();
         public Dictionary<String, String> Rewards = new Dictionary<string, string>();
         public Dictionary<String, String> Tasks = new Dictionary<string, string>();
+        public bool IsRepeatable;
 
         public Quest()
         {
