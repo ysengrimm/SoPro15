@@ -108,7 +108,7 @@ namespace EmodiaQuest.Core.GUI
 
             // Button Content
             //button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
-            button_n = Content.Load<Texture2D>("Content_GUI/label");
+            button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
             button_m = Content.Load<Texture2D>("Content_GUI/button_mouseOver");
             button_p = Content.Load<Texture2D>("Content_GUI/button_pressed");
 

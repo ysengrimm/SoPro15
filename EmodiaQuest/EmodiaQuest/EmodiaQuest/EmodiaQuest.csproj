@@ -118,6 +118,7 @@
     <Compile Include="Core\GUI\Screens\Credits_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Inventory_GUI.cs" />
     <Compile Include="Core\DungeonGeneration\LevelGenerator.cs" />
+    <Compile Include="Core\GUI\Screens\Keybinding_GUI.cs" />
     <Compile Include="Core\GUI\Screens\NPCTalk_GUI.cs" />
     <Compile Include="Core\GUI\Screens\ShowControls_GUI.cs" />
     <Compile Include="Core\Items\Enums_Item.cs" />

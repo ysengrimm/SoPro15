@@ -23,6 +23,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "options":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
                     break;
+                case "bindings":
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.KeyBindingsScreen;
+                    break;
                 default:
                     Console.WriteLine("No such Function.");
                     break;
@@ -58,6 +61,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             this.platform.addButton(35, 60, 30, 8, "nextState", "Start Game");
             this.platform.addButton(35, 75, 30, 8, "options", "Options");
+            this.platform.addButton(35, 90, 30, 8, "bindings", "KeyBinds");
 
             this.platform.addLabel(50, 0, 20, "dice_big", "Menu" ,"Menu", true);
             //this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", "Menu2", true);

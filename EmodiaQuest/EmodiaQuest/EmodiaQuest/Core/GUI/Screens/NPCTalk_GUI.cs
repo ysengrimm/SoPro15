@@ -35,7 +35,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             {
                 case "quest1":
                     //this.platform.updateLabel("label1", "Angenommen");
-                    if(unfold)
+                    if (unfold)
                     {
                         setVisibleClickable();
                         this.platform.updateButtonVisibility("accept", false);
@@ -150,7 +150,19 @@ namespace EmodiaQuest.Core.GUI.Screens
             }
         }
 
-
+        private NPCs.NPC currentNPC;
+        public NPCs.NPC CurrentNPC
+        {
+            get
+            {
+                return currentNPC;
+            }
+            set
+            {
+                currentNPC = value;
+                NPCName = value.Name.ToString();
+            }
+        }
 
         private string nPCName = "Konstantin";
         public string NPCName
@@ -160,7 +172,8 @@ namespace EmodiaQuest.Core.GUI.Screens
             {
                 isOpened = true;
                 this.nPCName = value;
-                this.qTest = from quest in QuestController.Instance.Quests where quest.Owner == NPCName select quest;
+                //this.qTest = from quest in QuestController.Instance.PossibleActiveQuests where quest.Owner == NPCName select quest;
+                this.qTest = QuestController.Instance.GetAllAvailableQuests(CurrentNPC);
                 questCount = 0;
                 foreach (var q in qTest)
                 {
@@ -168,9 +181,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                     questCount++;
                     this.platform.updateButtonVisibility("quest" + questCount, true);
                     this.platform.updateButtonClickability("quest" + questCount, true);
-                    this.platform.updateLabel("label"+questCount, q.Name);
+                    this.platform.updateLabel("label" + questCount, q.Name);
                 }
-                while(questCount<6)
+                while (questCount < 5)
                 {
                     questCount++;
                     this.platform.updateButtonVisibility("quest" + questCount, false);
@@ -178,6 +191,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     this.platform.updateLabel("label" + questCount, "");
                 }
                 this.platform.updateLabel("npcname", value);
+                Console.WriteLine(questCount);
             }
         }
 
@@ -186,6 +200,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         // Questlist
         private IEnumerable<Quest> qTest;
+        private List<Quest> qTest2 = new List<Quest>();
 
         // QuestCounter
         private int questCount = 0;
@@ -225,23 +240,23 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.updateButtonVisibility("accept", false);
             this.platform.updateButtonClickability("accept", false);
 
-            qTest = from quest in QuestController.Instance.Quests where quest.Owner == NPCName select quest;
+            //qTest = from quest in QuestController.Instance.PossibleActiveQuests where quest.Owner == NPCName select quest;
+            this.qTest = QuestController.Instance.GetAllAvailableQuests(CurrentNPC);
 
 
-
-                platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
+            platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
         }
 
         public void update()
         {
-            
+
             //QuestController.Instance.Quests
-            
+
 
             this.platform.update();
 
             // Check if the dialogue was just opened
-            if(isOpened)
+            if (isOpened)
             {
                 setVisibleClickable();
                 this.platform.updateButtonVisibility("accept", false);
@@ -256,7 +271,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             }
 
             // Get Keyboard input to change overall GameState
-            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Z))
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.E))
             {
                 setVisibleClickable();
                 this.platform.updateButtonVisibility("accept", false);
@@ -275,18 +290,25 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.U))
             {
+                int counter = 0;
+                this.qTest2 = QuestController.Instance.GetAllAvailableQuests(CurrentNPC);
+                foreach (var item in qTest2)
+                {
+                    counter++;
+                }
+                Console.WriteLine(counter);
                 //this.platform.updateButtonPosition("quest1", 60, 60);
                 //this.platform.updateLabelPosition("label1", 80, 60);
                 //this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                 //this.platform.updateLabelVisibility("label1", false);
                 //Console.WriteLine(platform.getLabelPosition("label1"));
-                platform.updateButtonText("quest1", "fuu");
-                this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+                //platform.updateButtonText("quest1", "fuu");
+                //this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
             }
-                //    //this.platform.updateButtonVisibility("quest1", false);
-                //    //this.platform.updateButtonClickability("quest1", false);
-                //    this.platform.addButton(10, 35, 30, 8, "quest3", "Quest 3");
-            if(inMovement)
+            //    //this.platform.updateButtonVisibility("quest1", false);
+            //    //this.platform.updateButtonClickability("quest1", false);
+            //    this.platform.addButton(10, 35, 30, 8, "quest3", "Quest 3");
+            if (inMovement)
             {
                 buttonPosSave = platform.getButtonPosition(buttonInMovement);
                 labelPosSave = platform.getLabelPosition(labelInMovement);
@@ -301,7 +323,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                 this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
 
                 this.platform.updateButtonClickability(buttonInMovement, true);
-                
+
 
                 this.platform.updateButtonVisibility("accept", true);
                 this.platform.updateButtonClickability("accept", true);
@@ -337,7 +359,8 @@ namespace EmodiaQuest.Core.GUI.Screens
         private void setVisibleClickable()
         {
             //QuestController.Instance.
-            this.qTest = from quest in QuestController.Instance.Quests where quest.Owner == NPCName select quest;
+            //this.qTest = from quest in QuestController.Instance.PossibleActiveQuests where quest.Owner == NPCName select quest;
+            this.qTest = QuestController.Instance.GetAllAvailableQuests(CurrentNPC);
             //this.qTest = QuestController.Instance.GetAllAvailableQuests()
             questCount = 0;
             foreach (var q in qTest)
@@ -348,7 +371,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                 this.platform.updateButtonClickability("quest" + questCount, true);
                 this.platform.updateLabelVisibility("label" + questCount, true);
             }
-            while (questCount < 6)
+            while (questCount < 5)
             {
                 questCount++;
                 this.platform.updateButtonVisibility("quest" + questCount, false);
