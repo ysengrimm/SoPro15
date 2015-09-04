@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using EmodiaQuest.Core.Items;
 using EmodiaQuest.Core.NPCs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -78,6 +79,8 @@ namespace EmodiaQuest.Core
 
         public int Gold;
         public int Experience;
+
+        public List<Item> PlayerInventory { get; set; }
 
         /**
          * Animation and Model
@@ -185,6 +188,8 @@ namespace EmodiaQuest.Core
 
             Gold = 100;
             Experience = 0;
+
+            PlayerInventory = new List<Item>();
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;

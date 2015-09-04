@@ -129,10 +129,9 @@ namespace EmodiaQuest.Core
                                 outCompare.Add(kill);
                                 break;
                             case "item":
-                                // change to real inventory
                                 String itemOut;
                                 activeQuest.Tasks.TryGetValue(key, out itemOut);
-                                foreach (var itemQ in ItemTestClass.Instance.Quests)
+                                foreach (var itemQ in Player.Instance.PlayerInventory)
                                 {
                                     if (itemQ.Name == itemOut)
                                     {
@@ -195,10 +194,9 @@ namespace EmodiaQuest.Core
                                 // meh
                                 break;
                             case "item":
-                                // inventory!
                                 String itemOut;
                                 quest.Conditions.TryGetValue(key, out itemOut);
-                                foreach (var itemQ in ItemTestClass.Instance.Quests)
+                                foreach (var itemQ in Player.Instance.PlayerInventory)
                                 {
                                     if (itemQ.Name == itemOut)
                                     {
