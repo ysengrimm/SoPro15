@@ -128,6 +128,7 @@ namespace EmodiaQuest.Core
                                 }
                                 break;
                             case "item":
+                                // change to real inventory
                                 String itemOut;
                                 activeQuest.Tasks.TryGetValue(key, out itemOut);
                                 foreach (var itemQ in ItemTestClass.Instance.Quests)
@@ -192,6 +193,7 @@ namespace EmodiaQuest.Core
                                 // meh
                                 break;
                             case "item":
+                                // inventory!
                                 String itemOut;
                                 quest.Conditions.TryGetValue(key, out itemOut);
                                 foreach (var itemQ in ItemTestClass.Instance.Quests)
@@ -255,6 +257,12 @@ namespace EmodiaQuest.Core
                     }
                 }
                 IsQuestActive = false;
+
+                // clear quest items
+                foreach (Item item in ActiveQuestItems)
+                {
+                    ActiveQuestItems.Remove(item);
+                }
                 return true;
             }
             return false;
@@ -292,17 +300,16 @@ namespace EmodiaQuest.Core
                         ActiveQuests.Add(quest);
                         Console.WriteLine("Added Quest: " + quest.Name);
 
-                        /* Wire gemacht wenn die Items verfügbar sind
+                        // adding active quest items
                         String itemOut;
                         quest.Conditions.TryGetValue("item", out itemOut);
                         foreach (var itemQ in ItemTestClass.Instance.Quests)
                         {
                             if (itemQ.Name == itemOut)
                             {
-
+                                ActiveQuestItems.Add(itemQ);
                             }
                         }
-                         */
                     }
                     IsQuestActive = true;
                 }
