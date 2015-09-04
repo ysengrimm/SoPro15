@@ -3,6 +3,7 @@
             <name>Test Quest</name>
             <difficulty>0</difficulty>
             <owner>Jack</owner>
+            <repeatable>yes</repeatable>
             <conditions>
                 <level>0</level>
                 <solved>FooBar</solved>
@@ -41,6 +42,7 @@
             <name>A New Journey</name>
             <difficulty>0</difficulty>
             <owner>Jack</owner>
+            <repeatable>no</repeatable>
             <conditions>
                 <level>0</level>
             </conditions>
@@ -73,6 +75,7 @@
             <name>Drunken Nights</name>
             <difficulty>0</difficulty>
             <owner>Yorlgon</owner>
+            <repeatable>no</repeatable>
             <conditions>
 				<solved>A New Journey</solved>
             </conditions>
@@ -118,6 +121,7 @@
             <name>Drunken Nights. Part 2</name>
             <difficulty>0</difficulty>
             <owner>Jack</owner>
+            <repeatable>no</repeatable>
             <conditions>
 				<solved>Drunken Nights</solved>
             </conditions>
@@ -145,6 +149,7 @@
             <name>Drunken Nights. Part 3</name>
             <difficulty>0</difficulty>
             <owner>Jack</owner>
+            <repeatable>no</repeatable>
             <conditions>
 				<solved>Drunken Nights. Part 2</solved>
 				<item>Yorlgons Boerse</item>
@@ -173,6 +178,7 @@
             <name>Kill Them All!</name>
             <difficulty>1</difficulty>
             <owner>Jack</owner>
+            <repeatable>no</repeatable>
             <conditions>
                 <level>0</level>
             </conditions>
@@ -200,6 +206,7 @@
             <name>Kill Them All! Part 2.</name>
             <difficulty>1</difficulty>
             <owner>Jack</owner>
+            <repeatable>no</repeatable>
             <conditions>
 				<solved>Kill Them All!</solved>
                 <level>0</level>
@@ -226,6 +233,7 @@
             <name>Eine kleine Sammlung</name>
             <difficulty>2</difficulty>
             <owner>Konstantin</owner>
+            <repeatable>no</repeatable>
             <conditions>
                 <level>5</level>
             </conditions>
@@ -256,6 +264,7 @@
             <name>Lost Treasure</name>
             <difficulty>1</difficulty>
             <owner>Jack</owner>
+            <repeatable>no</repeatable>
             <conditions>
                 <level>3</level>
             </conditions>
