@@ -26,6 +26,8 @@ namespace EmodiaQuest.Core.GUI
         private List<PlainImage_GUI> pimages = new List<PlainImage_GUI>();
         private List<Slider_GUI> sliders = new List<Slider_GUI>();
         private List<Label_GUI> labels = new List<Label_GUI>();
+        private List<DialogueBox_GUI> dialogues = new List<DialogueBox_GUI>();
+
         private List<InventoryItem_GUI> invItems = new List<InventoryItem_GUI>();
 
         // Items
@@ -79,6 +81,9 @@ namespace EmodiaQuest.Core.GUI
         // Label Textures
         private Texture2D label;
 
+        // Dialogue Textures
+        private Texture2D dialogue;
+
         // Fonts
         private SpriteFont monoFont_big;
         private SpriteFont dice_big;
@@ -123,6 +128,9 @@ namespace EmodiaQuest.Core.GUI
 
             // Label Content
             label = Content.Load<Texture2D>("Content_GUI/label");
+
+            // Dialogue Content
+            dialogue = Content.Load<Texture2D>("Content_GUI/label");
 
             //fonts.Add()
             //dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
@@ -307,7 +315,7 @@ namespace EmodiaQuest.Core.GUI
             //spritebatch.Draw(overlay, new Rectangle(0, 0, 800, 480), Color.White*0.7f);
             foreach (Label_GUI ls in labels)
             {
-                if(ls.IsVisible)
+                if (ls.IsVisible)
                 {
                     if (ls.Width < 0.01f)
                     {
@@ -319,7 +327,15 @@ namespace EmodiaQuest.Core.GUI
                         spritebatch.DrawString(ls.SpriteFont, ls.LabelText, new Vector2(ls.TextXPos, ls.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), ls.TextScaleFactor, SpriteEffects.None, 0.0f);
                     }
                 }
+            }
 
+            foreach (DialogueBox_GUI db in dialogues)
+            {
+                if (db.IsVisible)
+                {
+                    spritebatch.Draw(dialogue, new Rectangle(db.XPos, db.YPos, db.Width, db.Height), drawColor);
+                    spritebatch.DrawString(db.SpriteFont, db.LabelText, new Vector2(db.TextXPos, db.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), db.TextScaleFactor, SpriteEffects.None, 0.0f);
+                }
             }
 
 
@@ -576,6 +592,48 @@ namespace EmodiaQuest.Core.GUI
             labels.Add(new Label_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, lFont, labelText, labelName, textX, textY, textScaleFactor));
         }
 
+        public void addDialogue(float xPos, float yPos, float width, float height, string dialogFont, string labelText, string labelName)
+        {
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
+
+            SpriteFont dFont;
+            switch (dialogFont)
+            {
+                case "dice_big":
+                    dFont = dice_big;
+                    break;
+                case "monoFont_big":
+                    dFont = monoFont_big;
+                    break;
+                case "monoFont_small":
+                    dFont = monoFont_small;
+                    break;
+                default:
+                    dFont = dice_big;
+                    break;
+            }
+
+            Vector2 spriteFontSize = dFont.MeasureString("A");
+
+
+            // 1.0f means the factor to make the fontSize smaller is 1 right know
+            //float textScaleFactor = (MainWindowSize.Y * height * 0.01f * 1.0f) / spriteFontSize.Y;
+            //float textScaleFactor = spriteFontSize.Y;
+            float textScaleFactor = (MainWindowSize.Y * 10 * 0.01f) / spriteFontSize.Y;
+
+            //int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2));
+            int textX = (int)(MainWindowSize.X * (xPos+1) * 0.01f);
+
+            // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
+            //int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
+            int textY = (int)(MainWindowSize.Y * (yPos+1) * 0.01f);
+
+            dialogues.Add(new DialogueBox_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, dFont, labelText, labelName, textX, textY, textScaleFactor));
+        }
+
         public void addInventoryItem(float xPos, float yPos, float width, float height)
         {
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
@@ -788,6 +846,21 @@ namespace EmodiaQuest.Core.GUI
                     ls.TextYPos = (int)(((MainWindowSize.Y * ls.YPosRelative * 0.01f)) + (MainWindowSize.Y * ls.HeightRelative * 0.01f / 2) - ((ls.TextScaleFactor - 0.15f) * spriteFontSize.Y / 2));
                 }
             }
+            foreach(DialogueBox_GUI db in dialogues)
+            {
+                db.XPos = (int)(MainWindowSize.X * db.XPosRelative * 0.01);
+                db.YPos = (int)(MainWindowSize.Y * db.YPosRelative * 0.01);
+                db.Width = (int)(MainWindowSize.X * db.WidthRelative * 0.01);
+                db.Height = (int)(MainWindowSize.Y * db.HeightRelative * 0.01);
+
+                Vector2 spriteFontSize = db.SpriteFont.MeasureString("A");
+
+                db.TextScaleFactor = (MainWindowSize.Y * 10 * 0.01f) / spriteFontSize.Y;
+
+                db.TextXPos = (int)(MainWindowSize.X * (db.XPosRelative + 1) * 0.01f);
+                db.TextYPos = (int)(MainWindowSize.Y * (db.YPosRelative + 1) * 0.01f);
+            }
+
             foreach (PlainImage_GUI pi in pimages)
             {
                 pi.XPos = (int)(MainWindowSize.X * pi.XPosRelative * 0.01);

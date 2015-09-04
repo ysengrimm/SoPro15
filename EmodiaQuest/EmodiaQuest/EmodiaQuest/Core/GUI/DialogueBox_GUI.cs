@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace EmodiaQuest.Core.GUI
 {
-    public class Label_GUI
+    public class DialogueBox_GUI
     {
         public float XPosRelative { get; set; }
         public float YPosRelative { get; set; }
@@ -26,24 +26,8 @@ namespace EmodiaQuest.Core.GUI
         public bool Centered { get; set; }
         public bool IsVisible = true;
 
-        public Label_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, SpriteFont spriteFont, string labelText, string labelName, float textScaleFactor, bool centered)
-        {
-            this.XPosRelative = xPosRelative;
-            this.YPosRelative = yPosRelative;
-            this.XPos = xPos;
-            this.YPos = yPos;
-            this.WidthRelative = widthRelative;
-            this.HeightRelative = heightRelative;
-            this.Width = width;
-            this.Height = height;
-            this.SpriteFont = spriteFont;
-            this.LabelText = labelText;
-            this.LabelName = labelName;
-            this.TextScaleFactor = textScaleFactor;
-            this.Centered = centered;
-        }
 
-        public Label_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, SpriteFont spriteFont, string labelText, string labelName, int textXPos, int textYPos, float textScaleFactor)
+        public DialogueBox_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, SpriteFont spriteFont, string labelText, string labelName, int textXPos, int textYPos, float textScaleFactor)
         {
             this.XPosRelative = xPosRelative;
             this.YPosRelative = yPosRelative;

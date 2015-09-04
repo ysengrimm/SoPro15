@@ -336,6 +336,7 @@ namespace EmodiaQuest.Core.GUI.Screens
         }
         private void setVisibleClickable()
         {
+            //QuestController.Instance.
             this.qTest = from quest in QuestController.Instance.Quests where quest.Owner == NPCName select quest;
             questCount = 0;
             foreach (var q in qTest)
