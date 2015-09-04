@@ -338,6 +338,7 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             //QuestController.Instance.
             this.qTest = from quest in QuestController.Instance.Quests where quest.Owner == NPCName select quest;
+            //this.qTest = QuestController.Instance.GetAllAvailableQuests()
             questCount = 0;
             foreach (var q in qTest)
             {

@@ -63,6 +63,10 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             this.platform.setBackground(Content, "Content_GUI/inventory_background");
 
+            //mystuff
+            //this.platform.addPlainImage(0, 0, 50, 50, "testtest1", "test1");
+            //this.platform.addPlainImage(50, 50, 50, 50, "testtest2", "test2");
+
             this.platform.addSlider(5, 5, 24, 8, 0, 2, 0, "changeinventory");
 
             //this.platform.addLabel(15, 0, 10, "monoFont_big", "QuestLog", "questlog", true);

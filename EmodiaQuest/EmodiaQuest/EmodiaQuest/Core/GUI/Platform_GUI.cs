@@ -84,6 +84,10 @@ namespace EmodiaQuest.Core.GUI
         // Dialogue Textures
         private Texture2D dialogue;
 
+        // Test Textures
+        private Texture2D test1;
+        private Texture2D test2;
+
         // Fonts
         private SpriteFont monoFont_big;
         private SpriteFont dice_big;
@@ -131,6 +135,10 @@ namespace EmodiaQuest.Core.GUI
 
             // Dialogue Content
             dialogue = Content.Load<Texture2D>("Content_GUI/label");
+
+            // Test Content
+            test1 = Content.Load<Texture2D>("Content_GUI/test1");
+            test2 = Content.Load<Texture2D>("Content_GUI/test2");
 
             //fonts.Add()
             //dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
@@ -500,6 +508,12 @@ namespace EmodiaQuest.Core.GUI
                     break;
                 case "pixel_red":
                     plTexture = pixel_red;
+                    break;
+                case "test1":
+                    plTexture = test1;
+                    break;
+                case "test2":
+                    plTexture = test2;
                     break;
                 default:
                     plTexture = pixel_black;
