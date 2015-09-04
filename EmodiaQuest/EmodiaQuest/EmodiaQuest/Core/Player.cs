@@ -307,7 +307,7 @@ namespace EmodiaQuest.Core
                 {
                     if (gameEnv.EuclideanDistance(npc.Position, Position) < 5f)
                     {
-                        //mystuff   
+                        //mystuff <-- why, just why?
                         //double a = Kosinussatz(npc.Position, v);
                         //Console.WriteLine(DegreeToRadian(a) - DegreeToRadian(Angle));
 
@@ -320,13 +320,22 @@ namespace EmodiaQuest.Core
                         //else
                         //    Console.WriteLine("Keinkreis");
 
-                        if (Keyboard.GetState().IsKeyDown(Keys.E))
+                        // solve quests when near the quest provider
+                        foreach (Quest sQuest in QuestController.Instance.GetAllAvailableSolvedQuests(npc))
                         {
-                            QuestController.Instance.QuestUpdate(npc);
+                            if (QuestController.Instance.SolveQuest(sQuest.Name))
+                            {
+                                Console.WriteLine("You solved the Quest " + sQuest.Name);
+                            }
+                            else
+                            {
+                                Console.WriteLine("There is a unsolved quest to be solved, something is wrong!");
+                            }
                         }
-                        if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Z))
+                        
+                        if (GUI.Controls_GUI.Instance.keyClicked(Keys.E))
                         {
-                            EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName = npc.Name.ToString();
+                            GUI.Screens.NPCTalk_GUI.Instance.NPCName = npc.Name.ToString();
                             //Console.WriteLine(EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName);
                             EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.NPCScreen;
                         }
