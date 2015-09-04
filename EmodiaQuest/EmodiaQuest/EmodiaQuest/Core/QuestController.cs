@@ -255,9 +255,10 @@ namespace EmodiaQuest.Core
                         SolvedQuests.Add(quest);
                         Console.WriteLine("Solved Quest: " + quest.Name);
                     }
+                    GrandQuestRewards(quest);
                 }
                 IsQuestActive = false;
-
+                
                 // clear quest items
                 foreach (Item item in ActiveQuestItems)
                 {
@@ -266,6 +267,33 @@ namespace EmodiaQuest.Core
                 return true;
             }
             return false;
+        }
+
+        void GrandQuestRewards(Quest quest)
+        {
+            foreach (var key in quest.Conditions.Keys)
+            {
+                switch (key)
+                {
+                    case "xp":
+                        String xpOut;
+                        quest.Conditions.TryGetValue(key, out xpOut);
+                        Player.Instance.Experience += int.Parse(xpOut);
+
+                        break;
+                    case "item":
+                        // inventory!
+                        String itemOut;
+                        quest.Conditions.TryGetValue(key, out itemOut);
+                        Console.WriteLine("The player gets: " + itemOut);
+                        break;
+                    case "gold":
+                        String goldOut;
+                        quest.Conditions.TryGetValue(key, out goldOut);
+                        Player.Instance.Gold += int.Parse(goldOut);
+                        break;
+                }
+            }
         }
 
         /// <summary>

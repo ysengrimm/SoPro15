@@ -77,6 +77,7 @@ namespace EmodiaQuest.Core
         public float RotationSpeed;
 
         public int Gold;
+        public int Experience;
 
         /**
          * Animation and Model
@@ -181,7 +182,9 @@ namespace EmodiaQuest.Core
             Armor = 0;
             Damage = 50;
             Level = 1;
+
             Gold = 100;
+            Experience = 0;
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
