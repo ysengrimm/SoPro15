@@ -28,6 +28,8 @@ namespace EmodiaQuest.Core
 
         private EnemyType[] enemies;
 
+        public int EnemiesAlive;
+
         /// <summary>
         /// 
         /// </summary>
@@ -101,9 +103,14 @@ namespace EmodiaQuest.Core
         
         public void UpdateDungeon(GameTime gametime)
         {
+            EnemiesAlive = 0;
             foreach (Enemy enemy in generator.EnemyList)
             {
-                enemy.Update(gametime); ;
+                if (enemy.IsAlive)
+                {
+                    EnemiesAlive++;
+                }
+                enemy.Update(gametime);
             }
             Controller.UpdateEnvironment(gametime);
 

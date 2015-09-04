@@ -338,8 +338,8 @@ namespace EmodiaQuest.Core
                         
                         if (GUI.Controls_GUI.Instance.keyClicked(Keys.E))
                         {
-                            //GUI.Screens.NPCTalk_GUI.Instance.NPCName = npc.Name.ToString();
-                            GUI.Screens.NPCTalk_GUI.Instance.CurrentNPC = npc;
+
+                            GUI.Screens.NPCTalk_GUI.Instance.NPCName = npc;
                             //Console.WriteLine(EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName);
                             EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.NPCScreen;
                         }
