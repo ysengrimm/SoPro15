@@ -24,6 +24,7 @@ namespace EmodiaQuest.Core.GUI
             this.Text = text;
             this.Centered = Centered;
             this.Size = Size;
+            Console.WriteLine("DON'T USE THIS. DEPRECATED.");
         }
     }
 }

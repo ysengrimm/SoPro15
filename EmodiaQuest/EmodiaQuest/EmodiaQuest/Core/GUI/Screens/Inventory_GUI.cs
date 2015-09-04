@@ -70,6 +70,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addLabel(15, 20, 10, "monoFont_big", "QuestSide", "changeside", true);
 
             this.platform.addLabel(50, 0, 10, "monoFont_big", "Character Stats", "story", true);
+
             this.platform.addLabel(50, 40, 10, "monoFont_big", "Item Stats", "stats", true);
             this.platform.addLabel(85, 0, 10, "monoFont_big", "Mini-Map", "inventory", true);
 

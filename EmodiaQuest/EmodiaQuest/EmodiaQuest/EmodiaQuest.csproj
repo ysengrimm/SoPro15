@@ -112,11 +112,14 @@
     <Compile Include="Core\ColorListDungeon.cs" />
     <Compile Include="Core\Delegates_CORE.cs" />
     <Compile Include="Core\DungeonGeneration\Room.cs" />
+    <Compile Include="Core\GUI\DialogueBox_GUI.cs" />
     <Compile Include="Core\GUI\IntVector2.cs" />
     <Compile Include="Core\GUI\InventoryItem_GUI.cs" />
+    <Compile Include="Core\GUI\Screens\Credits_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Inventory_GUI.cs" />
     <Compile Include="Core\DungeonGeneration\LevelGenerator.cs" />
     <Compile Include="Core\GUI\Screens\NPCTalk_GUI.cs" />
+    <Compile Include="Core\GUI\Screens\ShowControls_GUI.cs" />
     <Compile Include="Core\Items\Enums_Item.cs" />
     <Compile Include="Core\Items\Item.cs" />
     <Compile Include="Core\Items\ItemTestClass.cs" />
