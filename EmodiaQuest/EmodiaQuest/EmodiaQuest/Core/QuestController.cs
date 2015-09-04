@@ -25,7 +25,11 @@ namespace EmodiaQuest.Core
 
         public List<Quest> Quests = new List<Quest>();
         public List<Quest> ActiveQuests = new List<Quest>();
+        public List<Quest> PossibleActiveQuests = new List<Quest>();
+        public List<Quest> PossibleSolvedQuests = new List<Quest>();
         public List<Quest> SolvedQuests = new List<Quest>();
+
+        public bool IsQuestActive = false;
 
         public Dictionary<string, int> KilledEnemies = new Dictionary<string, int>();
 
@@ -66,7 +70,7 @@ namespace EmodiaQuest.Core
 
         public void Update()
         {
-            
+
         }
 
         public void QuestUpdate(NPC owner)
@@ -144,9 +148,7 @@ namespace EmodiaQuest.Core
                     var questCompareResult = from res in outCompare where !res select res;
                     if (outCompare.Any() && !questCompareResult.Any())
                     {
-                        ActiveQuests.Remove(activeQuest);
-                        SolvedQuests.Add(activeQuest);
-                        Console.WriteLine("Solved Quest: " + activeQuest.Name);
+                        PossibleSolvedQuests.Add(activeQuest);
                     }
 
                 }
@@ -212,12 +214,92 @@ namespace EmodiaQuest.Core
 
                     if (outCompare.Any() && !otherList.Any())
                     {
-                        ActiveQuests.Add(quest);
-                        Console.WriteLine("Addded Quest: " + quest.Name);
+                        PossibleActiveQuests.Add(quest);
                     }
 
                 }
             }
+        }
+
+        /// <summary>
+        /// Get all quests that are solved.
+        /// </summary>
+        /// <param name="npc">NPC object for whom you want the quests.</param>
+        /// <returns>A list of quests.</returns>
+        public List<Quest> GetAllAvailableSolvedQuests(NPC npc)
+        {
+            QuestUpdate(npc);
+            return PossibleSolvedQuests;
+        }
+
+        /// <summary>
+        /// Allows for a quest from PossibleSolvedQuests to be set as active quest.
+        /// </summary>
+        /// <param name="questName">The name of the quest you want to be solved.</param>
+        /// <returns>true => quest was successfully solved, false => there is no quest with the specified name.</returns>
+        public bool SolveQuest(string questName)
+        {
+            var requestedQuest = from quest in PossibleSolvedQuests where quest.Name == questName select quest;
+            if (requestedQuest.Any() && IsQuestActive)
+            {
+                foreach (Quest quest in requestedQuest)
+                {
+                    ActiveQuests.Remove(quest);
+                    SolvedQuests.Add(quest);
+                    Console.WriteLine("Solved Quest: " + quest.Name);
+                }
+                IsQuestActive = false;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Get all quests that are available for activation.
+        /// </summary>
+        /// <param name="npc">NPC object for whom you want the quests.</param>
+        /// <returns>A list of quests.</returns>
+        public List<Quest> GetAllAvailableQuests(NPC npc)
+        {
+            QuestUpdate(npc);
+            return PossibleActiveQuests;
+        }
+
+        /// <summary>
+        /// Allows for a quest from PossibleActiveQuests to be set as active quest.
+        /// </summary>
+        /// <param name="questName">The name of the quest you want active.</param>
+        /// <returns>true => quest was successfully set as active, false => there is no quest with the specified name.</returns>
+        public bool AcceptQuest(string questName)
+        {
+            var requestedQuest = from quest in PossibleActiveQuests where quest.Name == questName select quest;
+            if (requestedQuest.Any())
+            {
+                if (IsQuestActive)
+                {
+                    foreach (Quest quest in ActiveQuests)
+                    {
+                        ActiveQuests.Remove(quest);
+                    }
+                    foreach (Quest quest in requestedQuest)
+                    {
+                        ActiveQuests.Add(quest);
+                        Console.WriteLine("Added Quest: " + quest.Name);
+                    }
+                    IsQuestActive = true;
+                }
+                else
+                {
+                    foreach (Quest quest in requestedQuest)
+                    {
+                        ActiveQuests.Add(quest);
+                        Console.WriteLine("Added Quest: " + quest.Name);
+                    }
+                    IsQuestActive = true;
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

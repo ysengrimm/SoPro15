@@ -355,6 +355,10 @@ namespace EmodiaQuest.Core
             movement = Position;
 
             // running ;)
+            if (ActivePlayerState == PlayerState.Swordfighting && !IsBlending)
+            {
+                PlayerSpeed = Settings.Instance.PlayerSpeed / 2f;
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
             {
                 if (PlayerSpeed < 0.6)
@@ -374,6 +378,7 @@ namespace EmodiaQuest.Core
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
+                PlayerSpeed = Settings.Instance.PlayerSpeed / 1.5f;
                 movement.Y -= PlayerSpeed * (float)Math.Cos(Angle);
                 movement.X -= PlayerSpeed * (float)Math.Sin(Angle);
             }
@@ -585,11 +590,7 @@ namespace EmodiaQuest.Core
 
             // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
             // only == 2 in edges, else normal 3 in a row
-            if (ActivePlayerState == PlayerState.Swordfighting && !IsBlending)
-            {
-                position.X = lastPos.X;
-                position.Y = lastPos.Y;
-            }
+
             if (Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
                 attackTimer += gameTime.ElapsedGameTime.Milliseconds;
@@ -616,11 +617,16 @@ namespace EmodiaQuest.Core
 
                         foreach (var enemy in currentBlockEnemyList)
                         {
-                            var dx = (Position.X - enemy.Position.X) * (Position.X - enemy.Position.X);
-                            var dy = (Position.Y - enemy.Position.Y) * (Position.Y - enemy.Position.Y);
-                            if (Math.Sqrt(dx + dy) < (CollisionRadius + enemy.CircleCollision))
+                            var dx1 = (Position.X - enemy.Position.X) * (Position.X - enemy.Position.X);
+                            var dy1 = (lastPos.Y - enemy.Position.Y) * (lastPos.Y - enemy.Position.Y);
+                            if (Math.Sqrt(dx1 + dy1) < (CollisionRadius + enemy.CircleCollision / 2))
                             {
                                 position.X = lastPos.X;
+                            }
+                            var dx2 = (lastPos.X - enemy.Position.X) * (lastPos.X - enemy.Position.X);
+                            var dy2 = (Position.Y - enemy.Position.Y) * (Position.Y - enemy.Position.Y);
+                            if (Math.Sqrt(dx2 + dy2) < (CollisionRadius + enemy.CircleCollision/2))
+                            {
                                 position.Y = lastPos.Y;
                             }
                         }
@@ -644,7 +650,7 @@ namespace EmodiaQuest.Core
                         Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
                         view.Normalize();
 
-                        Vector2 circlePos = Position + view * 3.5f;
+                        Vector2 circlePos = Position + view * 2.5f;
                         if (gameEnv.EuclideanDistance(circlePos, nmy.Position) < 1.2f)
                         {
                             if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
