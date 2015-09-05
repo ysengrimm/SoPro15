@@ -621,6 +621,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\gameobjects\Schmiede_10x10\Schmiede_dim_10x10.fbx">
+      <Name>Schmiede_dim_10x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -1324,6 +1329,16 @@
     </Compile>
     <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Tumbleweed_1_tex_1.png">
       <Name>Random_Tumbleweed_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Schmiede_10x10\Schmiede_tex_1.png">
+      <Name>Schmiede_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Schmiede_10x10\boden_tex_gras_1.png">
+      <Name>boden_tex_gras_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
