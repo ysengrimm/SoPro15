@@ -94,9 +94,6 @@ namespace EmodiaQuest.Core
                 this.IsRandomStuff = isRandomStuff;
             }
         }
-
-        //lets items jump :D
-        float jump = 0;
         
         public EnvironmentController(WorldState currentWorld, ContentManager content) 
         { 
@@ -470,8 +467,6 @@ namespace EmodiaQuest.Core
 
         public void DrawEnvironment(Matrix world, Matrix view, Matrix projection)
         {
-            jump += 0.1f;
-
             foreach(GameObject obj in Ground)
             {
                 obj.drawGameobject(world, view, projection);
@@ -482,7 +477,7 @@ namespace EmodiaQuest.Core
             }
             foreach (GameObject obj in Items)
             {
-                obj.drawGameobject(world * Matrix.CreateTranslation(0, (float)Math.Sin(jump)+1, 0), view, projection);
+                obj.drawGameobject(world, view, projection);
             }
             foreach (GameObject obj in Accessoires)
             {

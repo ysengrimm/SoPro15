@@ -76,9 +76,7 @@ namespace EmodiaQuest.Core
             // Grounds
             EnvironmentController.Object brownWay = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/brownway_dim10x10"), new Color(100, 100, 0), new Vector2(1, 1), "brownWay", false);
             EnvironmentController.Object grasGround = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/grasGround_dim10x10"), new Color(0, 100, 0), new Vector2(1, 1), "grasGround", false);
-            // Items
-            EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), new Color(255, 0, 0), new Vector2(1, 1), "item", false);
-
+           
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall1.Model, wall1.Color, 0, wall1.Name, wall1.IsRandomStuff);
             Controller.InsertObj(Controller.Wall, wall2.Model, wall2.Color, 0, wall2.Name, wall2.IsRandomStuff);
@@ -88,9 +86,6 @@ namespace EmodiaQuest.Core
             Controller.InsertObj(Controller.Buildings, taverne.Model, taverne.Color, 0, taverne.Name, taverne.IsRandomStuff);
             Controller.InsertObj(Controller.Buildings, kaufladen.Model, kaufladen.Color, 0, kaufladen.Name, kaufladen.IsRandomStuff);
             Controller.InsertObj(Controller.Teleporter, wallDoor.Model, wallDoor.Color, 0, wallDoor.Name, wallDoor.IsRandomStuff);
-
-            // Insert items
-            Controller.InsertItem(Controller.Items, item.Model, item.Color, 0, item.Name, item.IsRandomStuff);
 
             //now after all collision objects are choosen generate and load collision map
             
