@@ -100,7 +100,38 @@ namespace EmodiaQuest.Core
                 enemy.LoadContent(Content);
             }             
         }
-        
+
+        /// <summary>
+        /// Should be called in the Ingame Class, after the Player and the Collision Handler were Loaded
+        /// </summary>
+        public void CreateRandomStuff()
+        {
+            // Random Stuff
+            EnvironmentController.Object Gras_1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Gras_1/Gras_1"), new Color(300, 300, 0), new Vector2(0, 0), "Gras_1", true);
+            EnvironmentController.Object Gras_2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Gras_2/Gras_2"), new Color(300, 300, 0), new Vector2(0, 0), "Gras_2", true);
+            EnvironmentController.Object Gras_3 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Gras_3/Gras_3"), new Color(300, 300, 0), new Vector2(0, 0), "Gras_3", true);
+            EnvironmentController.Object Busch_1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Busch_1/Busch_1"), new Color(300, 300, 0), new Vector2(0, 0), "Busch_1", true);
+            EnvironmentController.Object Busch_2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Busch_2/Busch_2"), new Color(300, 300, 0), new Vector2(0, 0), "Busch_2", true);
+            EnvironmentController.Object Busch_3 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Busch_3/Busch_3"), new Color(300, 300, 0), new Vector2(0, 0), "Busch_3", true);
+            EnvironmentController.Object Stein_1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Stein_1/Stein_1"), new Color(300, 300, 0), new Vector2(0, 0), "Stein_1", true);
+            EnvironmentController.Object Stein_2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Stein_2/Stein_2"), new Color(300, 300, 0), new Vector2(0, 0), "Stein_2", true);
+            EnvironmentController.Object Stein_3 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Stein_3/Stein_3"), new Color(300, 300, 0), new Vector2(0, 0), "Stein_3", true);
+
+            // Insert Random Stuff (after the collisionMap was generated, we don´t want random stuff in walls and buildings)
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_1.Model, 500, Gras_1.Name, Gras_1.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_2.Model, 500, Gras_2.Name, Gras_2.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_3.Model, 500, Gras_3.Name, Gras_3.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_1.Model, 300, Busch_1.Name, Busch_1.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_2.Model, 300, Busch_2.Name, Busch_2.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_3.Model, 300, Busch_3.Name, Busch_3.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_1.Model, 4000, Stein_1.Name, Stein_1.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_2.Model, 4000, Stein_2.Name, Stein_2.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_3.Model, 4000, Stein_3.Name, Stein_3.IsRandomStuff);
+
+            // After everything in the environment is added we load the stuff for the objects (textures etc.)
+            Controller.LoadEnvironment(Content);
+        }
+
         public void UpdateDungeon(GameTime gametime)
         {
             EnemiesAlive = 0;

@@ -152,7 +152,7 @@ namespace EmodiaQuest.Core
             Player.Instance.GameEnv = this.Dungeon.Controller;
             Player.Instance.Position = this.Dungeon.Controller.StartPoint;
             CollisionHandler.Instance.SetEnvironmentController(Dungeon.Controller);
-
+            Dungeon.CreateRandomStuff();
         }
 
         public void ChangeToSafeworld()
@@ -161,7 +161,6 @@ namespace EmodiaQuest.Core
             Player.Instance.GameEnv = SafeWorld.Instance.Controller;
             Player.Instance.Position = new Vector2(170, 330);
             CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
-
         }
 
         /// <summary>
