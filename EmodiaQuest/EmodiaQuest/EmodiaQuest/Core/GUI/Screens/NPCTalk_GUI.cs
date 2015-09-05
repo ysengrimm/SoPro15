@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EmodiaQuest.Core.NPCs;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -29,6 +30,8 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private Platform_GUI platform = new Platform_GUI();
 
+        private Quest currentActiveQuest;
+
         void ButtonEventValue(object source, ButtonEvent_GUI e)
         {
             switch (e.ButtonFunction)
@@ -52,6 +55,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                         buttonInMovement = e.ButtonFunction;
                         labelInMovement = "label1";
                         inMovement = true;
+                        currentActiveQuest = QuestController.Instance.PossibleActiveQuests[0];
                     }
 
                     break;
@@ -74,6 +78,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                         buttonInMovement = e.ButtonFunction;
                         labelInMovement = "label2";
                         inMovement = true;
+                        currentActiveQuest = QuestController.Instance.PossibleActiveQuests[1];
                     }
                     break;
                 case "quest3":
@@ -95,6 +100,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                         buttonInMovement = e.ButtonFunction;
                         labelInMovement = "label3";
                         inMovement = true;
+                        currentActiveQuest = QuestController.Instance.PossibleActiveQuests[2];
                     }
                     break;
                 case "quest4":
@@ -116,6 +122,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                         buttonInMovement = e.ButtonFunction;
                         labelInMovement = "label4";
                         inMovement = true;
+                        currentActiveQuest = QuestController.Instance.PossibleActiveQuests[3];
                     }
                     break;
                 case "quest5":
@@ -137,11 +144,13 @@ namespace EmodiaQuest.Core.GUI.Screens
                         buttonInMovement = e.ButtonFunction;
                         labelInMovement = "label5";
                         inMovement = true;
+                        currentActiveQuest = QuestController.Instance.PossibleActiveQuests[4];
                     }
                     break;
                 case "accept":
                     // Quest annehmen
-                    Console.WriteLine("Quest angenommen");
+                    QuestController.Instance.AcceptQuest(currentActiveQuest.Name);
+                    Console.WriteLine("Quest " + currentActiveQuest.Name + " angenommen");
                     break;
                 default:
                     //Console.WriteLine(e.ButtonFunction);
@@ -150,30 +159,17 @@ namespace EmodiaQuest.Core.GUI.Screens
             }
         }
 
-        private NPCs.NPC currentNPC;
-        public NPCs.NPC CurrentNPC
-        {
-            get
-            {
-                return currentNPC;
-            }
-            set
-            {
-                currentNPC = value;
-                NPCName = value.Name.ToString();
-            }
-        }
-
-        private string nPCName = "Konstantin";
-        public string NPCName
+        // this is super random but without it there is a nullpointer exception somwhere down there, just ignore it :)
+        private NPC nPCName = new NPC(Vector2.Zero, new EnvironmentController(WorldState.Safeworld, Player.Instance.ContentMngr),NPC.NPCName.Jack, NPCProfession.Arbeitslos);
+        public NPC NPCName
         {
             get { return nPCName; }
             set
             {
                 isOpened = true;
-                this.nPCName = value;
-                //this.qTest = from quest in QuestController.Instance.PossibleActiveQuests where quest.Owner == NPCName select quest;
-                this.qTest = QuestController.Instance.GetAllAvailableQuests(CurrentNPC);
+
+                nPCName = value;
+                qTest = QuestController.Instance.GetAllAvailableQuests(nPCName);
                 questCount = 0;
                 foreach (var q in qTest)
                 {
@@ -190,8 +186,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     this.platform.updateButtonClickability("quest" + questCount, false);
                     this.platform.updateLabel("label" + questCount, "");
                 }
-                this.platform.updateLabel("npcname", value);
-                Console.WriteLine(questCount);
+                platform.updateLabel("npcname", nPCName.ToString());
             }
         }
 
@@ -199,8 +194,7 @@ namespace EmodiaQuest.Core.GUI.Screens
         public bool isOpened = false;
 
         // Questlist
-        private IEnumerable<Quest> qTest;
-        private List<Quest> qTest2 = new List<Quest>();
+        private List<Quest> qTest;
 
         // QuestCounter
         private int questCount = 0;
@@ -219,7 +213,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.backgroundOff();
 
             // headline
-            this.platform.addLabel(50, 10, 8, "monoFont_big", this.nPCName, "npcname", true);
+            this.platform.addLabel(50, 10, 8, "monoFont_big", nPCName.ToString(), "npcname", true);
 
             // labels for buttons
             this.platform.addLabel(70, 30, 8, "monoFont_small", "Hau 3 Monster um.", "label1", true);
@@ -240,10 +234,8 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.updateButtonVisibility("accept", false);
             this.platform.updateButtonClickability("accept", false);
 
-            //qTest = from quest in QuestController.Instance.PossibleActiveQuests where quest.Owner == NPCName select quest;
-            this.qTest = QuestController.Instance.GetAllAvailableQuests(CurrentNPC);
-
-
+            qTest = QuestController.Instance.GetAllAvailableQuests(nPCName);
+            
             platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
         }
 
@@ -285,17 +277,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
             }
 
-
-
-
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.U))
             {
                 int counter = 0;
-                this.qTest2 = QuestController.Instance.GetAllAvailableQuests(CurrentNPC);
-                foreach (var item in qTest2)
-                {
-                    counter++;
-                }
                 Console.WriteLine(counter);
                 //this.platform.updateButtonPosition("quest1", 60, 60);
                 //this.platform.updateLabelPosition("label1", 80, 60);
@@ -359,8 +343,7 @@ namespace EmodiaQuest.Core.GUI.Screens
         private void setVisibleClickable()
         {
             //QuestController.Instance.
-            //this.qTest = from quest in QuestController.Instance.PossibleActiveQuests where quest.Owner == NPCName select quest;
-            this.qTest = QuestController.Instance.GetAllAvailableQuests(CurrentNPC);
+            this.qTest = QuestController.Instance.GetAllAvailableQuests(nPCName);
             //this.qTest = QuestController.Instance.GetAllAvailableQuests()
             questCount = 0;
             foreach (var q in qTest)

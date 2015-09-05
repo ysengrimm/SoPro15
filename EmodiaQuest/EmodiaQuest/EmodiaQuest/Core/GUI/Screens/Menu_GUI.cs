@@ -81,6 +81,18 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.update();
             //if ((this.functionCalled = this.platform.update()) != null)
             //    this.functionCall();
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.U))
+            {
+                List<EmodiaQuest.Core.Items.Item> testList = new List<EmodiaQuest.Core.Items.Item>();
+                testList = EmodiaQuest.Core.Items.ItemTestClass.Instance.ItemGeneratorMerchant(3, "Yorlgon");
+                foreach (var item in testList)
+                {
+                    Console.WriteLine(item.Class + ", " + item.Lvl + ", " + item.StrengthPlus + ", " + item.SkillPlus + ", " + item.IntelligencePlus);
+                    
+
+                }
+                //Console.WriteLine(testList.Count);
+            }
         }
 
         public void draw(SpriteBatch spritebatch)

@@ -87,6 +87,9 @@ namespace EmodiaQuest.Core
             Player.Instance.LoadContent();
             Player.Instance.GameEnv = SafeWorld.Instance.Controller;
 
+            // filling the safeworld with random Stuff
+            SafeWorld.Instance.CreateRandomStuff();
+
             //Initialize the matrizes with reasonable values
             Renderer.Instance.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
             Renderer.Instance.View = Matrix.CreateLookAt(new Vector3(Player.Instance.Position.X + 3f, 3, Player.Instance.Position.Y + 3f), new Vector3(Player.Instance.Position.X, 1, Player.Instance.Position.Y), Vector3.UnitY);

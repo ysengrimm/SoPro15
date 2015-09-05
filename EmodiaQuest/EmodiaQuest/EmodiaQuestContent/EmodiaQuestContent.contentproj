@@ -531,6 +531,86 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_1\Busch_1.fbx">
+      <Name>Busch_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_2\Busch_2.fbx">
+      <Name>Busch_2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_3\Busch_3.fbx">
+      <Name>Busch_3</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_1\Gras_1.fbx">
+      <Name>Gras_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_2\Gras_2.fbx">
+      <Name>Gras_2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_3\Gras_3.fbx">
+      <Name>Gras_3</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Holzplanke_1\Holzplanke_1.fbx">
+      <Name>Holzplanke_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Kaputter_Flugzeugmotor_1\Kaputter_Flugzeugmotor_1.fbx">
+      <Name>Kaputter_Flugzeugmotor_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_1\MetallStück_1.fbx">
+      <Name>MetallStück_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_2\MetallStück_2.fbx">
+      <Name>MetallStück_2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_1\Stein_1.fbx">
+      <Name>Stein_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_2\Stein_2.fbx">
+      <Name>Stein_2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_3\Stein_3.fbx">
+      <Name>Stein_3</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Tonne_1\Tonne_1.fbx">
+      <Name>Tonne_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Tumbleweed_1\Tumbleweed_1.fbx">
+      <Name>Tumbleweed_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\haus1_dim30x10.fbx">
+      <Name>haus1_dim30x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -914,6 +994,286 @@
     </Compile>
     <Compile Include="Content_GUI\test2.png">
       <Name>test2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_1\Random_Busch_1_tex_1.png">
+      <Name>Random_Busch_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_1\Random_Busch_1_tex_2.png">
+      <Name>Random_Busch_1_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_2\Random_Busch_2_tex_1.png">
+      <Name>Random_Busch_2_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_2\Random_Busch_2_tex_2.png">
+      <Name>Random_Busch_2_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_3\Random_Busch_3_tex_1.png">
+      <Name>Random_Busch_3_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_3\Random_Busch_3_tex_2.png">
+      <Name>Random_Busch_3_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_1\Random_Gras_1_tex_1.png">
+      <Name>Random_Gras_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_1\Random_Gras_1_tex_2.png">
+      <Name>Random_Gras_1_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_1\Random_Gras_1_tex_3.png">
+      <Name>Random_Gras_1_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_1\Random_Gras_1_tex_4_rostig.png">
+      <Name>Random_Gras_1_tex_4_rostig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_2\Random_Gras_2_tex_1_rostig.png">
+      <Name>Random_Gras_2_tex_1_rostig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_2\Random_Gras_2_tex_2.png">
+      <Name>Random_Gras_2_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_2\Random_Gras_2_tex_3.png">
+      <Name>Random_Gras_2_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_2\Random_Gras_2_tex_4.png">
+      <Name>Random_Gras_2_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_3\Random_Gras_3_tex_1.png">
+      <Name>Random_Gras_3_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_3\Random_Gras_3_tex_2.png">
+      <Name>Random_Gras_3_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_3\Random_Gras_3_tex_3.png">
+      <Name>Random_Gras_3_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Gras_3\Random_Gras_3_tex_4_rostig.png">
+      <Name>Random_Gras_3_tex_4_rostig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Holzplanke_1\Random_Holzplanke_1_tex_1.png">
+      <Name>Random_Holzplanke_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Holzplanke_1\Random_Holzplanke_1_tex_2.png">
+      <Name>Random_Holzplanke_1_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Holzplanke_1\Random_Holzplanke_1_tex_3.png">
+      <Name>Random_Holzplanke_1_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Holzplanke_1\Random_Holzplanke_1_tex_4_rostig.png">
+      <Name>Random_Holzplanke_1_tex_4_rostig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Kaputter_Flugzeugmotor_1\Random_Kaputter_Flugzeugmotor_1_tex_1.png">
+      <Name>Random_Kaputter_Flugzeugmotor_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Kaputter_Flugzeugmotor_1\Random_Kaputter_Flugzeugmotor_1_tex_2.png">
+      <Name>Random_Kaputter_Flugzeugmotor_1_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Kaputter_Flugzeugmotor_1\Random_Kaputter_Flugzeugmotor_1_tex_3.png">
+      <Name>Random_Kaputter_Flugzeugmotor_1_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_1\Random_MetallStück_1_tex_1.png">
+      <Name>Random_MetallStück_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_1\Random_MetallStück_1_tex_2.png">
+      <Name>Random_MetallStück_1_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_1\Random_MetallStück_1_tex_4.png">
+      <Name>Random_MetallStück_1_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_2\Random_MetallStück_2_tex_1.png">
+      <Name>Random_MetallStück_2_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_2\Random_MetallStück_2_tex_2.png">
+      <Name>Random_MetallStück_2_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_2\Random_MetallStück_2_tex_3.png">
+      <Name>Random_MetallStück_2_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\MetallStück_2\Random_MetallStück_2_tex_4.png">
+      <Name>Random_MetallStück_2_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_1\Random_Stein1_tex_1.png">
+      <Name>Random_Stein1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_1\Random_Stein1_tex_2.png">
+      <Name>Random_Stein1_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_1\Random_Stein1_tex_3.png">
+      <Name>Random_Stein1_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_1\Random_Stein1_tex_4.png">
+      <Name>Random_Stein1_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_1\Random_Stein1_tex_5.png">
+      <Name>Random_Stein1_tex_5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_1\Random_Stein1_tex_6.png">
+      <Name>Random_Stein1_tex_6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_2\Random_Stein2_tex_1.png">
+      <Name>Random_Stein2_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_2\Random_Stein2_tex_2.png">
+      <Name>Random_Stein2_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_2\Random_Stein2_tex_3.png">
+      <Name>Random_Stein2_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_2\Random_Stein2_tex_4.png">
+      <Name>Random_Stein2_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_2\Random_Stein2_tex_5.png">
+      <Name>Random_Stein2_tex_5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_3\Random_Stein_3_tex_1.png">
+      <Name>Random_Stein_3_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_3\Random_Stein_3_tex_2.png">
+      <Name>Random_Stein_3_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_3\Random_Stein_3_tex_3.png">
+      <Name>Random_Stein_3_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_3\Random_Stein_3_tex_4.png">
+      <Name>Random_Stein_3_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Stein_3\Random_Stein_3_tex_5.png">
+      <Name>Random_Stein_3_tex_5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Tonne_1\Random_Tonne_tex_1.png">
+      <Name>Random_Tonne_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Tonne_1\Random_Tonne_tex_2.png">
+      <Name>Random_Tonne_tex_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Tonne_1\Random_Tonne_tex_3.png">
+      <Name>Random_Tonne_tex_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Tonne_1\Random_Tonne_tex_4.png">
+      <Name>Random_Tonne_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Tumbleweed_1\Random_Tumbleweed_1_tex2.png">
+      <Name>Random_Tumbleweed_1_tex2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\RandomStuff\Tumbleweed_1\Random_Tumbleweed_1_tex_1.png">
+      <Name>Random_Tumbleweed_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\boden_tex_gras_1.png">
+      <Name>boden_tex_gras_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\Wohnhaus_1_tex_1.png">
+      <Name>Wohnhaus_1_tex_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -317,7 +317,11 @@ namespace EmodiaQuest.Core.GUI
                 spritebatch.Draw(background, new Rectangle(0, 0, MainWindowWidthInt, MainWindowHeightInt), drawColor);
             }
 
-
+            foreach (PlainImage_GUI pi in pimages)
+                if (pi.IsVisible)
+                {
+                    spritebatch.Draw(pi.Image, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), drawColor);
+                }
 
 
             //spritebatch.Draw(overlay, new Rectangle(0, 0, 800, 480), Color.White*0.7f);
@@ -369,11 +373,7 @@ namespace EmodiaQuest.Core.GUI
             {
                 spritebatch.Draw(itemSocket, new Rectangle(ii.XPos, ii.YPos, ii.Width, ii.Height), drawColor);
             }
-            foreach (PlainImage_GUI pi in pimages)
-                if (pi.IsVisible)
-                {
-                    spritebatch.Draw(pi.Image, new Rectangle(pi.XPos, pi.YPos, pi.Width, pi.Height), drawColor);
-                }
+
 
             foreach (PlainText_GUI pt in ptexts)
                 spritebatch.DrawString(pt.SpriteFont, pt.Text, new Vector2(pt.XPos, pt.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), OverallFontScale, SpriteEffects.None, 0.0f);

@@ -19,11 +19,13 @@ namespace EmodiaQuest.Core
     {
         // TODO: Controll the whole environment, is used for getting easy access of everything wich is static, needs to be rendered or has collsion
         // will have a lot of lists with items
+        public ContentManager Content;
+        Random rnd = new Random();
 
         public Texture2D PlacementMap, CollisionMap, ItemMap;
         public Color[,] PlacementColors, CollisionColors, ItemColors;
 
-        public List<GameObject> Ground, Wall, Items, Accessoires, Buildings, Teleporter;
+        public List<GameObject> Ground, Wall, Items, Accessoires, Buildings, Teleporter, RandomStuff;
         public List<NPCs.Enemy>[,] enemyArray;
         public List<NPCs.NPC> NPCList;
 
@@ -53,12 +55,16 @@ namespace EmodiaQuest.Core
             public Model Model;
             public Color Color;
             public Vector2 Dimension;
+            public String Name;
+            public bool IsRandomStuff;
 
-            public Object(Model model, Color color, Vector2 dimension)
+            public Object(Model model, Color color, Vector2 dimension, String name, bool isRandomStuff)
             {
                 this.Model = model;
                 this.Color = color;
                 this.Dimension = dimension;
+                this.Name = name;
+                this.IsRandomStuff = isRandomStuff;
             }
         }
 
@@ -68,6 +74,8 @@ namespace EmodiaQuest.Core
             public Color Color;
             public Vector2 Dimension;
             public Vector2 TeleVector;
+            public String Name;
+            public bool IsRandomStuff;
 
             /// <summary>
             /// This struct supports the use of creating teleportfields in the collision map
@@ -76,19 +84,21 @@ namespace EmodiaQuest.Core
             /// <param name="color"> The color, which is used for the teleporter object </param>
             /// <param name="dimension"> The dimension, of the teleporter object</param>
             /// <param name="teleVector"> the Vecor, where the Teleport is, relative to the placement middle</param>
-            public TeleObject(Model model, Color color, Vector2 dimension, Vector2 teleVector)
+            public TeleObject(Model model, Color color, Vector2 dimension, Vector2 teleVector, String name, bool isRandomStuff)
             {
                 this.Model = model;
                 this.Color = color;
                 this.Dimension = dimension;
                 this.TeleVector = teleVector;
+                this.Name = name;
+                this.IsRandomStuff = isRandomStuff;
             }
         }
 
         //lets items jump :D
         float jump = 0;
         
-        public EnvironmentController(WorldState currentWorld) 
+        public EnvironmentController(WorldState currentWorld, ContentManager content) 
         { 
             CurrentWorld = currentWorld;
 
@@ -109,6 +119,7 @@ namespace EmodiaQuest.Core
             Accessoires = new List<GameObject>();
             Buildings = new List<GameObject>();
             Teleporter = new List<GameObject>();
+            RandomStuff = new List<GameObject>();
 
             CollisionObjList = new List<Object>();
             TeleporterObjList = new List<TeleObject>();
@@ -190,8 +201,10 @@ namespace EmodiaQuest.Core
         /// <param name="model">What model of objects should be used?</param>
         /// <param name="color">On wich pixel-color is used to display the objects?</param>
         /// <param name="height">Integer for placing the object in Z-axis</param>
+        /// <param name="name">Name of this Object</param>
+        /// <param name="isRandomStuff">Decides, if this Object is type of Random Stuff</param>
         /// </summary>
-        public void InsertObj(List<GameObject> objList, Model model, Color color, int height)
+        public void InsertObj(List<GameObject> objList, Model model, Color color, int height, String name, bool isRandomStuff)
         {
             for (int i = 0; i < MapWidth; i++)
             {
@@ -203,8 +216,31 @@ namespace EmodiaQuest.Core
                         {
                             Console.WriteLine("GameObject has a wrong rotation: Blue Channel!" + PlacementColors[i,j]);
                         }
-                        objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), PlacementColors[i, j].B));
+                        objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), PlacementColors[i, j].B, name, isRandomStuff));
                     }    
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserting random Stuff to the environment
+        /// </summary>
+        /// <param name="objList"></param>
+        /// <param name="model"></param>
+        /// <param name="count">number of Stuff Obejects, added to the environment</param>
+        /// <param name="name">bane of the random Stuff object, which will be added to the environment</param>
+        /// <param name="isRandomStuff"></param>
+        public void InsertRandomStuffObj(List<GameObject> objList, Model model, int count, String name, bool isRandomStuff)
+        {
+            int counter = count;
+            while (counter > 0)
+            {
+                float X = Math.Abs((float)rnd.NextDouble() * (MapWidth * Settings.Instance.GridSize) - 6);
+                float Y = Math.Abs((float)rnd.NextDouble() * (MapHeight * Settings.Instance.GridSize) - 6);
+                if (Color.White == Player.Instance.CollisionHandler.GetCollisionColor(new Vector2(X, Y), Player.Instance.CollisionHandler.Controller.CollisionColors, 0f))
+                {
+                    objList.Add(new GameObject(model, new Vector3(X, 0, Y), 0, name, isRandomStuff));
+                    counter--;
                 }
             }
         }
@@ -217,8 +253,10 @@ namespace EmodiaQuest.Core
         /// <param name="model">What model of item should be used?</param>
         /// <param name="color">Wich pixel-color is used to display the items?</param>
         /// <param name="height">Integer for placing the item in Z-axis</param>
+        /// <param name="name">Name of this Object</param>
+        /// <param name="isRandomStuff">Decides, if this Object is type of Random Stuff</param>
         /// </summary>
-        public void InsertItem(List<GameObject> itemList, Model model, Color color, int height)
+        public void InsertItem(List<GameObject> itemList, Model model, Color color, int height, String name, bool isRandomStuff)
         {
             for (int i = 0; i < MapWidth; i++)
             {
@@ -226,7 +264,7 @@ namespace EmodiaQuest.Core
                 {
                     if (ItemColors[i, j].R == color.R && ItemColors[i, j].G == color.G)
                     {
-                        itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), ItemColors[i, j].B));
+                        itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), ItemColors[i, j].B, name, isRandomStuff));
                     }
                 }
             }
@@ -365,7 +403,38 @@ namespace EmodiaQuest.Core
             return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }
 
-        //public void LoadEnvironment(Conten)
+
+        public void LoadEnvironment(ContentManager content)
+        {
+            foreach (GameObject obj in Ground)
+            {
+                obj.loadContent(content);
+            }
+            foreach (GameObject obj in Wall)
+            {
+                obj.loadContent(content);
+            }
+            foreach (GameObject obj in Items)
+            {
+                obj.loadContent(content);
+            }
+            foreach (GameObject obj in Accessoires)
+            {
+                obj.loadContent(content);
+            }
+            foreach (GameObject obj in Buildings)
+            {
+                obj.loadContent(content);
+            }
+            foreach (GameObject obj in Teleporter)
+            {
+                obj.loadContent(content);
+            }
+            foreach (GameObject obj in RandomStuff)
+            {
+                obj.loadContent(content);
+            }
+        }
 
         public void UpdateEnvironment(GameTime gametime)
         {
@@ -390,6 +459,10 @@ namespace EmodiaQuest.Core
                 obj.update(gametime);
             }
             foreach (GameObject obj in Teleporter)
+            {
+                obj.update(gametime);
+            }
+            foreach (GameObject obj in RandomStuff)
             {
                 obj.update(gametime);
             }
@@ -420,6 +493,10 @@ namespace EmodiaQuest.Core
                 obj.drawGameobject(world, view, projection);
             }
             foreach (GameObject obj in Teleporter)
+            {
+                obj.drawGameobject(world, view, projection);
+            }
+            foreach (GameObject obj in RandomStuff)
             {
                 obj.drawGameobject(world, view, projection);
             }
