@@ -570,7 +570,7 @@ namespace EmodiaQuest.Core
             {
                 foreach (NPC npc in SafeWorld.Instance.NPCList)
                 {
-                    if (gameEnv.EuclideanDistance(npc.Position, Position) < 5f)
+                    if (gameEnv.EuclideanDistance(npc.Position, Position) < 15f)
                     {
                         //mystuff <-- why, just why?
                         //double a = Kosinussatz(npc.Position, v);

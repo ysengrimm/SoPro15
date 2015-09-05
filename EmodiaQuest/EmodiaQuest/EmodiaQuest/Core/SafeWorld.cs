@@ -71,6 +71,7 @@ namespace EmodiaQuest.Core
             // Buildings
             EnvironmentController.Object house2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Wohnhaus2_30x10/Wohnhaus2_dim30x10"), new Color(10, 0, 0), new Vector2(1, 3), "house1", false); Controller.CollisionObjList.Add(house2);
             EnvironmentController.Object taverne = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Taverne_30x10/Taverne_dim30x10"), new Color(11, 0, 0), new Vector2(1, 3), "taverne", false); Controller.CollisionObjList.Add(taverne);
+            EnvironmentController.Object kaufladen = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Kaufladen_30x30/Kaufladen_dim_30x30"), new Color(12, 0, 0), new Vector2(3, 3), "kaufladen", false); Controller.CollisionObjList.Add(kaufladen);
             EnvironmentController.TeleObject wallDoor = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/mauerTor30x10"), new Color(3, 0, 0), new Vector2(1, 3), new Vector2(0, 0), "wallDoor", false); Controller.TeleporterObjList.Add(wallDoor);
             // Grounds
             EnvironmentController.Object brownWay = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/brownway_dim10x10"), new Color(100, 100, 0), new Vector2(1, 1), "brownWay", false);
@@ -85,6 +86,7 @@ namespace EmodiaQuest.Core
             Controller.InsertObj(Controller.Ground, grasGround.Model, grasGround.Color, 0, grasGround.Name, grasGround.IsRandomStuff);
             Controller.InsertObj(Controller.Buildings, house2.Model, house2.Color, 0, house2.Name, house2.IsRandomStuff);
             Controller.InsertObj(Controller.Buildings, taverne.Model, taverne.Color, 0, taverne.Name, taverne.IsRandomStuff);
+            Controller.InsertObj(Controller.Buildings, kaufladen.Model, kaufladen.Color, 0, kaufladen.Name, kaufladen.IsRandomStuff);
             Controller.InsertObj(Controller.Teleporter, wallDoor.Model, wallDoor.Color, 0, wallDoor.Name, wallDoor.IsRandomStuff);
 
             // Insert items
@@ -99,8 +101,8 @@ namespace EmodiaQuest.Core
             NPCList = new List<NPC>();
             // Create NPCs
             NPC Jack = new NPC(new Vector2(230,330), Controller, NPC.NPCName.Jack, NPCProfession.Wirt);
-            NPC Yorlgon = new NPC(new Vector2(200,220), Controller, NPC.NPCName.Yorlgon, NPCProfession.Schmied);
-            NPC Konstantin = new NPC(new Vector2(200, 240), Controller, NPC.NPCName.Konstantin, NPCProfession.Haendler);
+            NPC Yorlgon = new NPC(new Vector2(200,200), Controller, NPC.NPCName.Yorlgon, NPCProfession.Schmied);
+            NPC Konstantin = new NPC(new Vector2(293.5f,338), Controller, NPC.NPCName.Konstantin, NPCProfession.Haendler);
 
             Jack.LoadContent(Content);
             Yorlgon.LoadContent(Content);

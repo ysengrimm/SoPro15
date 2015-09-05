@@ -616,6 +616,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Kaufladen_dim_30x30.fbx">
+      <Name>Kaufladen_dim_30x30</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -1289,6 +1294,36 @@
     </Compile>
     <Compile Include="fbxContent\gameobjects\Wohnhaus2_30x10\Random_Tonne_tex_4.png">
       <Name>Random_Tonne_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\boden_tex_gras_1.png">
+      <Name>boden_tex_gras_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Kaufladen_tex_1.png">
+      <Name>Kaufladen_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Baum_1_tex_1.png">
+      <Name>Random_Baum_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Kaputter_Flugzeugmotor_1_tex_1.png">
+      <Name>Random_Kaputter_Flugzeugmotor_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Tumbleweed_1_tex2.png">
+      <Name>Random_Tumbleweed_1_tex2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Tumbleweed_1_tex_1.png">
+      <Name>Random_Tumbleweed_1_tex_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
