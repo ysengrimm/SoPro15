@@ -22,11 +22,11 @@ namespace EmodiaQuest.Core.GUI.Screens
                     {
                         case 0:
                             platform.updateLabel("changeside", "Aktiver Quest");
-                            platform.updateLabel("active_quest", QuestController.Instance.ActiveQuests.Any() ? QuestController.Instance.ActiveQuests[0].Name : "Keine aktiven Quests!");
+                            
                             break;
                         case 1:
                             this.platform.updateLabel("changeside", "Aufgaben");
-                            platform.updateLabel("active_quest", QuestController.Instance.ActiveQuests.Any() ? QuestController.Instance.ActiveQuests[0].Description : "Keine aktiven Quests!");
+                            
                             break;
                         case 2:
                             this.platform.updateLabel("changeside", "Questside");
@@ -48,6 +48,11 @@ namespace EmodiaQuest.Core.GUI.Screens
             switch (e.Function)
             {
                 case "hp":
+                    break;
+                case "xp":
+                    float scaledXp = (e.ChangeValue / Player.Instance.XPToNextLevel) * 100;
+
+                    platform.updatePlainImage("xpBar", 0, 99, scaledXp, 2);
                     break;
                 case "xp_next_lvl":
                     platform.updateLabel("xp_text", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel);
@@ -73,6 +78,10 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "dmg":
                     platform.updateLabel("damage", "Schaden: " + Player.Instance.MinDamage + " - " + Player.Instance.MaxDamage);
                     break;
+                case "quest":
+                    platform.updateLabel("active_quest", Player.Instance.ActiveQuest.Name != "" ? Player.Instance.ActiveQuest.Name : "Kein aktiver Quest");
+                    platform.updateLabel("active_quest_desc", Player.Instance.ActiveQuest.Description != "" ? Player.Instance.ActiveQuest.Description : "");
+                    break;
             }
         }
 
@@ -96,22 +105,15 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         public void loadContent(ContentManager Content)
         {
-
-            this.platform.loadContent(Content);
+            platform.loadContent(Content);
 
             this.platform.setBackground(Content, "Content_GUI/inventory_background");
 
-            //mystuff
-            //this.platform.addPlainImage(0, 0, 50, 50, "testtest1", "test1");
-            //this.platform.addPlainImage(50, 50, 50, 50, "testtest2", "test2");
+            //this.platform.addSlider(5, 5, 24, 8, 0, 2, 0, "changeinventory");
 
-            this.platform.addSlider(5, 5, 24, 8, 0, 2, 0, "changeinventory");
-
-            //this.platform.addLabel(15, 0, 10, "monoFont_big", "QuestLog", "questlog", true);
-            //this.platform.addLabel(15, 40, 10, "monoFont_big", "QuestText", "questtext", true);
-            this.platform.addLabel(15, 20, 10, "monoFont_big", "Aktiver Quest", "changeside", true);
-            platform.addLabel(15, 35, 5, "monoFont_big", QuestController.Instance.ActiveQuests.Any() ? QuestController.Instance.ActiveQuests[0].Name : "Keine aktiven Quests!", "active_quest", true);
-
+            this.platform.addLabel(15, 0, 10, "monoFont_big", "Questlog", "changeside", true);
+            platform.addLabel(15, 10, 5, "monoFont_big", Player.Instance.ActiveQuest.Name != "" ? Player.Instance.ActiveQuest.Name : "Kein aktiver Quest", "active_quest", true);
+            platform.addLabel(15, 15, 4, "monoFont_big", Player.Instance.ActiveQuest.Description != "" ? Player.Instance.ActiveQuest.Description : "", "active_quest_desc", true);
 
             this.platform.addLabel(50, 0, 10, "monoFont_big", "Character Stats", "story", true);
 
@@ -143,16 +145,19 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addInventoryItem(69 + 4.7f * 4, 42 + 8.2f * 2, 4.5f, 8f);
             this.platform.addInventoryItem(69 + 4.7f * 5, 42 + 8.2f * 2, 4.5f, 8f);
 
-            this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD", "HUD_small");
+            platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD", "HUD_small");
             //this.platform.addPlainImage(100, 100, -100, -100 * 0.189f * 1.777f, "HUD", "HUD_small");
 
-            platform.OnSliderValue += new GUI_Delegate_Slider(this.SliderEventValue);
+            // platform.OnSliderValue += new GUI_Delegate_Slider(this.SliderEventValue);
 
             // XP Number
-            platform.addLabel(50, 50, 5, "monoFont_big", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel, "xp_text", true);
+            platform.addLabel(96, 97, 3, "monoFont_big", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel, "xp_text", true);
+
+            // XP Bar
+            platform.addPlainImage(0, 99, 0, 2, "xpBar", "pixel_red");
 
             // Level Number
-            platform.addLabel(50, 40, 5, "monoFont_big", Player.Instance.Level.ToString(), "lvl", true);
+            platform.addLabel(99, 97, 3, "monoFont_big", Player.Instance.Level.ToString(), "lvl", true);
 
             // Gold
             platform.addLabel(50, 60, 5, "monoFont_big", Player.Instance.Gold.ToString(), "gold", true);

@@ -47,7 +47,7 @@ namespace EmodiaQuest.Core
         public float Angle;
 
         // Eventhandler
-        public event EmodiaQuest.Core.Delegates_CORE.ChangeValueDelegate OnChangeValue;
+        public event Delegates_CORE.ChangeValueDelegate OnChangeValue;
 
         // Collision
         public float CollisionRadius;
@@ -304,6 +304,21 @@ namespace EmodiaQuest.Core
         private Item oldEquippedBoots;
         private Item oldEquippedWeapon;
 
+        private Quest activeQuest = new Quest() {Name = "", Description = ""};
+        public Quest ActiveQuest
+        {
+            get { return activeQuest; }
+            set
+            {
+                activeQuest = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(0, "quest"));
+                }
+            }
+        }
+        private Quest oldQuest;
+
         /**
          * Animation and Model
         **/
@@ -430,6 +445,8 @@ namespace EmodiaQuest.Core
             CurrentEquippedArmor = new Item(0, ItemClass.Armor,0,0,0,10,10);
             CurrentEquippedBoots = new Item(ItemClass.Boots, "InitBoots");
             CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 5, 7, 0, 0);
+
+            ActiveQuest = new Quest {Name = "", Description = ""};
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
@@ -955,6 +972,14 @@ namespace EmodiaQuest.Core
                 Focus = MaxFocus;
             }
 
+            if (ActiveQuest != oldQuest)
+            {
+                UpdateQuest();
+                oldQuest = activeQuest;
+            }
+
+            
+
             // Call Sounds
             if (HitEnemyWithSword)
             {
@@ -1017,6 +1042,14 @@ namespace EmodiaQuest.Core
             MaxFocus = (int) (100 + Math.Round(Intelligence/10.0));
 
             FocusRegen = (int) Math.Round(Intelligence/2.0);
+        }
+
+        private void UpdateQuest()
+        {
+            if (QuestController.Instance.ActiveQuests.Any())
+            {
+                ActiveQuest = QuestController.Instance.ActiveQuests[0];
+            }
         }
 
         private Enemy getClosestMonster(List<Enemy> enemyList)
