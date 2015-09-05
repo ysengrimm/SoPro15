@@ -74,6 +74,7 @@ namespace EmodiaQuest
             EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.loadContent(Content);
             EmodiaQuest.Core.GUI.Screens.Keybinding_GUI.Instance.loadContent(Content);
+            EmodiaQuest.Core.GUI.Screens.Intro_GUI.Instance.loadContent(Content);
 
             EmodiaQuest.Core.NetGraph.Instance.LoadContent(Content);
 
@@ -172,6 +173,9 @@ namespace EmodiaQuest
                 case GameStates_Overall.KeyBindingsScreen:
                     EmodiaQuest.Core.GUI.Screens.Keybinding_GUI.Instance.update();
                     break;
+                case GameStates_Overall.IntroScreen:
+                    EmodiaQuest.Core.GUI.Screens.Intro_GUI.Instance.update();
+                    break;
                 default:
                     Console.WriteLine("Wrong Gamestate chosen.");
                     break;
@@ -231,6 +235,11 @@ namespace EmodiaQuest
 
                     this.IsMouseVisible = true;
                     EmodiaQuest.Core.GUI.Screens.Keybinding_GUI.Instance.draw(spriteBatch);
+                    break;
+                case GameStates_Overall.IntroScreen:
+
+                    this.IsMouseVisible = true;
+                    EmodiaQuest.Core.GUI.Screens.Intro_GUI.Instance.draw(spriteBatch);
                     break;
                 default:
                     Console.WriteLine("Wrong Gamestate chosen.");

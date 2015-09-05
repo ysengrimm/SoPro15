@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace EmodiaQuest.Core.GUI.Screens
 {
-    
+
     class Menu_GUI
     {
         // EventHandler
@@ -20,7 +20,10 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "playGame":
                     this.platform.updateButtonText("playGame", "Fortsetzen");
                     this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
-                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+                    if (showIntro)
+                        EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IntroScreen;
+                    else
+                        EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
                     break;
                 case "options":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
@@ -52,6 +55,8 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private Platform_GUI platform = new Platform_GUI();
 
+        public bool showIntro = true;
+
         //private string functionCalled = null;
 
         public void loadContent(ContentManager Content)
@@ -65,7 +70,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addButton(35, 75, 30, 8, "options", "Optionen");
             this.platform.addButton(35, 90, 30, 8, "bindings", "Tastenbelegung");
 
-            this.platform.addLabel(50, 0, 20, "dice_big", "Menu" ,"Menu", true);
+            this.platform.addLabel(50, 0, 20, "dice_big", "Menu", "Menu", true);
             //this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", "Menu2", true);
             //this.platform.addLabel(30, 50, 40, 20, "monoFont_big", "labelText", "label1");
             //this.platform.updateLabel("label1", "newText");
@@ -76,7 +81,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
         }
 
-        
+
 
         public void update()
         {
@@ -91,7 +96,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                 foreach (var item in testList)
                 {
                     Console.WriteLine(item.Class + ", " + item.Lvl + ", " + item.StrengthPlus + ", " + item.SkillPlus + ", " + item.IntelligencePlus);
-                    
+
 
                 }
                 //Console.WriteLine(testList.Count);

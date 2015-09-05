@@ -116,6 +116,7 @@
     <Compile Include="Core\GUI\IntVector2.cs" />
     <Compile Include="Core\GUI\InventoryItem_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Credits_GUI.cs" />
+    <Compile Include="Core\GUI\Screens\Intro_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Inventory_GUI.cs" />
     <Compile Include="Core\DungeonGeneration\LevelGenerator.cs" />
     <Compile Include="Core\GUI\Screens\Keybinding_GUI.cs" />
