@@ -152,12 +152,6 @@
     <Compile Include="Core\GUI\Screens\Menu_GUI.cs" />
     <Compile Include="Core\GUI\Screens\Start_GUI.cs" />
     <Compile Include="Core\GUI\Slider_GUI.cs" />
-    <Compile Include="Core\Items\Old\ItemStash.cs" />
-    <Compile Include="Core\Items\Old\Item_Armor.cs" />
-    <Compile Include="Core\Items\Old\Item_Quest.cs" />
-    <Compile Include="Core\Items\Old\Item_Useable.cs" />
-    <Compile Include="Core\Items\Old\Item_ValueParent.cs" />
-    <Compile Include="Core\Items\Old\Item_Weapon.cs" />
     <Compile Include="Core\NetGraph.cs" />
     <Compile Include="Core\NPCs\Ai.cs" />
     <Compile Include="Core\CollisionHandler.cs" />
