@@ -138,7 +138,7 @@ namespace EmodiaQuest.Core.Items
 
         }
 
-        public List<Item> ItemGeneratorMonster(int currentHeroLevel, )
+        //public List<Item> ItemGeneratorMonster(int currentHeroLevel, )
 
 
         public List<Item> ItemGeneratorMerchant(int currentHeroLevel, string npcName)
