@@ -147,7 +147,7 @@ namespace EmodiaQuest.Core
 
         public void ChangeToDungeon()
         {
-            createNewDungeon();     // everytime the player enters the dungeon it generates a new one
+            CreateNewDungeon();     // everytime the player enters the dungeon it generates a new one
             ActiveWorld = WorldState.Dungeon;
             Player.Instance.GameEnv = this.Dungeon.Controller;
             Player.Instance.Position = this.Dungeon.Controller.StartPoint;
@@ -166,7 +166,7 @@ namespace EmodiaQuest.Core
         /// <summary>
         /// Generating and loading new dungeon
         /// </summary>
-        public void createNewDungeon()
+        public void CreateNewDungeon()
         {     
             Dungeon = new Dungeon(100, 100, 100, new EnemyType[] { EnemyType.Monster8 });
             Dungeon.LoadContent(Content);

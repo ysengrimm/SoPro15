@@ -251,6 +251,7 @@ namespace EmodiaQuest.Core
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
+                            effect.PreferPerPixelLighting = true;
                             effect.EnableDefaultLighting();
                             effect.World = world * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
                             effect.View = view;
