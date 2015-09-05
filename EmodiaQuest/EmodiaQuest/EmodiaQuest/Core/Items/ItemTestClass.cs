@@ -50,6 +50,13 @@ namespace EmodiaQuest.Core.Items
             Quests.Add(new Item(ItemClass.Quest, "leg10MonsterUmQuest"));
             Quests.Add(new Item(ItemClass.Quest, "leg15MonsterUmQuest"));
             Quests.Add(new Item(ItemClass.Quest, "leg3SteinmonsterumQuest"));
+            Quests.Add(new Item(ItemClass.Quest, "Diebesgut"));
+            Quests.Add(new Item(ItemClass.Quest, "Kochbuch"));
+            Quests.Add(new Item(ItemClass.Quest, "Schatztruhe"));
+            Quests.Add(new Item(ItemClass.Quest, "Sack"));
+            Quests.Add(new Item(ItemClass.Quest, "Messing"));
+            Quests.Add(new Item(ItemClass.Quest, "Eisen"));
+            Quests.Add(new Item(ItemClass.Quest, "Truhe"));
 
             //Lvl 1
             Helmets.Add(new Item(1, ItemClass.Helmet, 0, 1, 0, 0));
@@ -138,7 +145,41 @@ namespace EmodiaQuest.Core.Items
 
         }
 
-        //public List<Item> ItemGeneratorMonster(int currentHeroLevel, )
+        public List<Item> ItemGeneratorMonster(int currentHeroLevel, NPCs.EnemyType monsterType)
+        {
+            int heroItemLvl = 0;
+            if (currentHeroLevel >= 0)
+                heroItemLvl = 1;
+            if (currentHeroLevel > 3)
+                heroItemLvl = 2;
+            if (currentHeroLevel > 7)
+                heroItemLvl = 3;
+            if (currentHeroLevel > 11)
+                heroItemLvl = 4;
+
+            List<Item> availableList = new List<Item>();
+            availableList = getAvailable(heroItemLvl);
+
+            List<Item> giveList = new List<Item>();
+
+            int droppedItemsCount = random.Next(3) + 1;
+            int availableItemsCount = availableList.Count;
+
+            for (int i = 0; i < droppedItemsCount; i++)
+            {
+                int pickedItem = random.Next(availableItemsCount - 1);
+                giveList.Add(availableList[pickedItem]);
+            }
+
+            // computer the magic values
+            foreach (var item in giveList)
+            {
+                dieMagic(item);
+            }
+
+            return giveList;
+            
+        }
 
 
         public List<Item> ItemGeneratorMerchant(int currentHeroLevel, string npcName)
@@ -325,10 +366,39 @@ namespace EmodiaQuest.Core.Items
                     break;
             }
 
+            // computer the magic values
             foreach (var item in giveList)
             {
                 dieMagic(item);
             }
+
+            // Put in the healing pots
+            if (npcName == "Konstantin")
+            {
+                switch (heroItemLvl)
+                {
+                    case 1:
+                        giveList.Add(Useables[0]);
+                        break;
+                    case 2:
+                        giveList.Add(Useables[0]);
+                        giveList.Add(Useables[1]);
+                        break;
+                    case 3:
+                        giveList.Add(Useables[0]);
+                        giveList.Add(Useables[1]);
+                        giveList.Add(Useables[2]);
+                        break;
+                    case 4:
+                        giveList.Add(Useables[0]);
+                        giveList.Add(Useables[1]);
+                        giveList.Add(Useables[2]);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
 
             return giveList;
 
@@ -347,9 +417,9 @@ namespace EmodiaQuest.Core.Items
             int magicNumber;
             int magicCount = 0;
             magicNumber = random.Next(10);
-            while(magicNumber == 0)
+            while (magicNumber == 0)
             {
-                int magicStrength = (random.Next(3)+1)*itemLvl;
+                int magicStrength = (random.Next(3) + 1) * itemLvl;
                 int property = random.Next(3);
                 switch (property)
                 {

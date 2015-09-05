@@ -17,7 +17,9 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             switch (e.ButtonFunction)
             {
-                case "nextState":
+                case "playGame":
+                    this.platform.updateButtonText("playGame", "Fortsetzen");
+                    this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
                     break;
                 case "options":
@@ -59,9 +61,9 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.setBackground(Content, "Content_GUI/menu_background");
             this.platform.setBackground(Content, "Content_GUI/menu_full_small");
 
-            this.platform.addButton(35, 60, 30, 8, "nextState", "Start Game");
-            this.platform.addButton(35, 75, 30, 8, "options", "Options");
-            this.platform.addButton(35, 90, 30, 8, "bindings", "KeyBinds");
+            this.platform.addButton(35, 60, 30, 8, "playGame", "Spiel starten");
+            this.platform.addButton(35, 75, 30, 8, "options", "Optionen");
+            this.platform.addButton(35, 90, 30, 8, "bindings", "Tastenbelegung");
 
             this.platform.addLabel(50, 0, 20, "dice_big", "Menu" ,"Menu", true);
             //this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", "Menu2", true);
@@ -84,7 +86,8 @@ namespace EmodiaQuest.Core.GUI.Screens
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.U))
             {
                 List<EmodiaQuest.Core.Items.Item> testList = new List<EmodiaQuest.Core.Items.Item>();
-                testList = EmodiaQuest.Core.Items.ItemTestClass.Instance.ItemGeneratorMerchant(3, "Yorlgon");
+                //testList = EmodiaQuest.Core.Items.ItemTestClass.Instance.ItemGeneratorMerchant(15, "Konstantin");
+                testList = EmodiaQuest.Core.Items.ItemTestClass.Instance.ItemGeneratorMonster(15, NPCs.EnemyType.Monster1);
                 foreach (var item in testList)
                 {
                     Console.WriteLine(item.Class + ", " + item.Lvl + ", " + item.StrengthPlus + ", " + item.SkillPlus + ", " + item.IntelligencePlus);
