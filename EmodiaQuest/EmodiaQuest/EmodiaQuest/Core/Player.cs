@@ -45,6 +45,7 @@ namespace EmodiaQuest.Core
         private Vector2 lastPos; //position from last step (fixes false kamera focus)
         public float MovementOffset, ItemOffset;
         public float Angle;
+        public Vector2 PlayerViewDirection = new Vector2(0, 0);
 
         // Eventhandler
         public event EmodiaQuest.Core.Delegates_CORE.ChangeValueDelegate OnChangeValue;
@@ -348,7 +349,7 @@ namespace EmodiaQuest.Core
             PlayerInventory = new List<Item>();
 
             CurrentEquippedHelmet = new Item(ItemClass.Helmet, "InitHelmet");
-            CurrentEquippedArmor = new Item(0, ItemClass.Armor,0,0,0,10,10);
+            CurrentEquippedArmor = new Item(0, ItemClass.Armor, 0, 0, 0, 10, 10);
             CurrentEquippedBoots = new Item(ItemClass.Boots, "InitBoots");
             CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 5, 7, 0, 0);
 
@@ -446,12 +447,12 @@ namespace EmodiaQuest.Core
             return Math.Abs(Angle) / Math.PI * 180;
         }
 
-        private double Kosinussatz (Vector2 npcPos, Vector2 viewPos)
+        private double Kosinussatz(Vector2 npcPos, Vector2 viewPos)
         {
             double a = Math.Sqrt(Math.Pow(Position.X - viewPos.X, 2) + Math.Pow(Position.Y - viewPos.Y, 2));
             double b = Math.Sqrt(Math.Pow(viewPos.X - npcPos.X, 2) + Math.Pow(viewPos.Y - npcPos.Y, 2));
             double c = Math.Sqrt(Math.Pow(Position.X - npcPos.X, 2) + Math.Pow(Position.Y - npcPos.Y, 2));
-            double e = (Math.Pow(a, 2) + Math.Pow(c, 2) - Math.Pow(b, 2))/(2*a*c);
+            double e = (Math.Pow(a, 2) + Math.Pow(c, 2) - Math.Pow(b, 2)) / (2 * a * c);
             return Math.Acos(e); ;
         }
 
@@ -459,6 +460,12 @@ namespace EmodiaQuest.Core
         {
             HitEnemyWithSword = false;
             HitAir = false;
+
+            // Computer view direction
+            PlayerViewDirection = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
+            //PlayerViewDirection.Normalize();
+
+
             // update weapon
             if (Keyboard.GetState().IsKeyDown(Keys.D1))
             {
@@ -470,7 +477,7 @@ namespace EmodiaQuest.Core
             }
 
             //Update interaction with NPCs
-            if(activeWorld == WorldState.Safeworld)
+            if (activeWorld == WorldState.Safeworld)
             {
                 foreach (NPC npc in SafeWorld.Instance.NPCList)
                 {
@@ -501,7 +508,7 @@ namespace EmodiaQuest.Core
                                 //Console.WriteLine("There is a unsolved quest to be solved, something is wrong!");
                             }
                         }
-                        
+
                         if (GUI.Controls_GUI.Instance.keyClicked(Keys.E))
                         {
 
@@ -582,6 +589,8 @@ namespace EmodiaQuest.Core
                 position.X = movement.X;
             }
 
+
+
             //Console.WriteLine(shootingTimer);
             // Shooting bullet
             if (activeWorld == WorldState.Dungeon)
@@ -589,7 +598,7 @@ namespace EmodiaQuest.Core
                 //if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed)
                 if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
                 {
-                    BulletList.Add(new Bullet(bulletModel, new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle)), Position));                   
+                    BulletList.Add(new Bullet(bulletModel, PlayerViewDirection, Position));
                     shootingTimer = 0;
                 }
                 for (int i = 0; i < BulletList.Count; i++)
@@ -599,7 +608,7 @@ namespace EmodiaQuest.Core
                     else BulletList.RemoveAt(i);
                 }
             }
-            
+
             // Running towards teleporters
             if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
@@ -804,7 +813,7 @@ namespace EmodiaQuest.Core
                             }
                             var dx2 = (lastPos.X - enemy.Position.X) * (lastPos.X - enemy.Position.X);
                             var dy2 = (Position.Y - enemy.Position.Y) * (Position.Y - enemy.Position.Y);
-                            if (Math.Sqrt(dx2 + dy2) < (CollisionRadius + enemy.CircleCollision/2))
+                            if (Math.Sqrt(dx2 + dy2) < (CollisionRadius + enemy.CircleCollision / 2))
                             {
                                 position.Y = lastPos.Y;
                             }
@@ -819,7 +828,7 @@ namespace EmodiaQuest.Core
                 //Console.WriteLine(Math.Sin(Angle) + ", " + Math.Cos(Angle));
 
                 //Console.WriteLine((float)Math.Asin(Math.Sin(Angle)) / Math.PI * 180 + 90 + (float)Math.Acos(Math.Cos(Angle)) / Math.PI * 180 + 90);
-                
+
                 if (ActivePlayerState == PlayerState.Swordfighting)
                 {
                     //mystuff
@@ -833,7 +842,7 @@ namespace EmodiaQuest.Core
                         if (gameEnv.EuclideanDistance(circlePos, nmy.Position) < 1.2f)
                         {
                             if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
-                            { 
+                            {
                                 nmy.Attack(rnd.Next(MinDamage, MaxDamage + 1));
                                 //attackTimer = 0;
                                 at = true;
@@ -943,7 +952,7 @@ namespace EmodiaQuest.Core
         public void Attack(float damage)
         {
             // you geht 10% damage reduction on your armor
-            Hp -= (damage - (int)Math.Round(Armor/10.0));
+            Hp -= (damage - (int)Math.Round(Armor / 10.0));
             if (Hp <= 0)
             {
                 Hp = 100;

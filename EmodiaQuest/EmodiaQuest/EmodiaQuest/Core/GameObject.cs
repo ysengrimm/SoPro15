@@ -20,6 +20,7 @@ namespace EmodiaQuest.Core
         private int texture;
 
         public Vector3 position;
+        public Vector2 Position2D;
         public int rotation;
         private int rotationY = 0;
         private int rotationX = 0;
@@ -28,12 +29,20 @@ namespace EmodiaQuest.Core
         public List<Texture2D> Textures;
         public String Name;
         public bool IsRandomStuff;
+        float testwert = 0.0f;
+        static int test = 0;
+        bool JanosWHY = true;
+
+        Vector2 directionWith90Degrees;
+        Vector2 directionPlusPlayer;
+        Vector2 playerPos;
+        Vector2 playerView;
 
         // Effect
         Effect copiedEffect;
 
         private float distanceToPlayer = 0.0f;
-        
+
         /*
         private Vector3 ambi = new Vector3(0.05333332f, 0.09882354f, 0.1819608f) * 3;
         private Vector3 diff = new Vector3(0.1178511f, 0.05631156f, 0.03418359f) * 2;
@@ -63,7 +72,7 @@ namespace EmodiaQuest.Core
 
         public void loadContent(ContentManager Content)
         {
-            if(IsRandomStuff)
+            if (IsRandomStuff)
             {
                 switch (Name)
                 {
@@ -124,16 +133,30 @@ namespace EmodiaQuest.Core
                 }
                 rotationY = rnd.Next(360);
                 texture = rnd.Next(Textures.Count - 1);
-            }
 
+            }
+            
+            //Console.WriteLine(Position2D);
 
         }
-        
+
         public void update(GameTime gametime)
         {
             distanceToPlayer = (float)EuclideanDistance(new Vector2(this.position.X, this.position.Z), Player.Instance.Position);
+            //directionWith90Degrees = new Vector2(-(Player.Instance.PlayerViewDirection.X+Player.Instance.Position.X), (Player.Instance.PlayerViewDirection.Y+Player.Instance.Position.Y));            
+            //directionWith90Degrees.Normalize();
+
+            //directionPlusPlayer = Player.Instance.PlayerViewDirection + Player.Instance.Position;
+            playerPos = Player.Instance.Position;
+            playerView = Player.Instance.PlayerViewDirection;
+            playerView.Normalize();
+
+            //playerPos.Y = Player.Instance.Position.Y;
+            //testwert += 0.05f;
+            //directionWith90Degrees = Vector2.Add(directionWith90Degrees, new Vector2(0.1f,0));
+            //directionWith90Degrees = Vector2.Transform(directionWith90Degrees, Matrix.CreateRotationZ((float)(0.5f * Math.PI)));
         }
-        
+
         /*
   
         public void drawGameobject(Matrix world, Matrix view, Matrix projection)
@@ -159,6 +182,13 @@ namespace EmodiaQuest.Core
         public void addTexture(Texture2D tex)
         {
             Textures.Add(tex);
+        }
+
+        private float pointSide(Vector2 g, Vector2 s, Vector2 p)
+        {
+            float result;
+            result = g.Y * (p.X - s.X) - (g.X * (p.Y - s.Y));
+            return result;
         }
 
         /// <summary>
@@ -188,7 +218,7 @@ namespace EmodiaQuest.Core
                             effect.Projection = projection;
                             if (IsRandomStuff)
                             {
-                                
+
                                 effect.FogEnabled = true;
                                 effect.FogStart = 15f;
                                 effect.FogEnd = Settings.Instance.EnvironmentDetailDistance;
@@ -234,15 +264,15 @@ namespace EmodiaQuest.Core
                         }
                         mesh.Draw();
                     }
-                }               
+                }
             }
             else
             {
                 copiedEffect = Player.Instance.copiedEffect;
-                
+
                 if (distanceToPlayer > 60)
                 {
-                    
+
                     foreach (ModelMesh mesh in model.Meshes)
                     {
                         foreach (BasicEffect effect in mesh.Effects)
@@ -281,35 +311,75 @@ namespace EmodiaQuest.Core
                 }
                 else
                 {
-                    foreach (ModelMesh mesh in model.Meshes)
+                    //Vector2 directionWith90Degrees = Vector2.Transform(Player.Instance.PlayerViewDirection, Matrix.CreateRotationZ((float)(0.5 * Math.PI)));
+                    //Vector2 directionWith90Degrees = Vector2.Transform(directionPlusPlayer, Matrix.CreateRotationZ((float)(0.5 * Math.PI)));
+                    //if (pointSide(directionWith90Degrees, Position2D, Player.Instance.Position) > 0)
+                    //Console.WriteLine(pointSide(directionWith90Degrees, Player.Instance.Position, Position2D));
+                    //if (pointSide(directionWith90Degrees, playerPos, Position2D) > 0)
+                    //this.Position2D = Vector2.Transform(playerView, Matrix.CreateRotationZ((float)(Math.PI)));
+
+                    Vector2 position2D = new Vector2(this.position.X, this.position.Z);
+                    Vector2 pp = new Vector2(playerView.X,playerView.Y);
+                    Vector2 turnedBulletDirection = Vector2.Transform(playerView, Matrix.CreateRotationZ((float)(0.5 * Math.PI)));
+                    Vector2 ppp = Vector2.Transform(playerView, Matrix.CreateRotationZ((float)(Math.PI)));
+                    ppp.Normalize();
+                    ppp *= -10;
+                    ppp = Vector2.Add(ppp, position2D);
+
+                    
+                    Vector2 posi = position2D;
+                    posi.Normalize();
+
+                    //Vector2 p1 = playerPos;
+                    //p1.Normalize();
+                    //playerView.Normalize();
+                    pp.Normalize();
+                    pp *= 10;
+                    //Vector2 pp = playerView*10;
+
+                    //playerPos = Vector2.Add(playerPos, p1*10);
+                    //turnedBulletDirection = Vector2.Add(turnedBulletDirection, p1 * 10);
+
+                    //Console.WriteLine(this.Position2D);
+
+                    //if (pointSide(turnedBulletDirection, playerPos, position2D) > 0)
+                    if (pointSide(turnedBulletDirection, playerPos, ppp) > 0)
+
+
+
+                    //if (pointSide(directionWith90Degrees, playerPos, Position2D) < 0)
+                    //if (pointSide(Player.Instance.PlayerViewDirection, Vector2.Transform(Player.Instance.PlayerViewDirection,  Position2D > 0)
                     {
-                        foreach (BasicEffect effect in mesh.Effects)
+                        foreach (ModelMesh mesh in model.Meshes)
                         {
-                            effect.EnableDefaultLighting();
-                            effect.World = world * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
-                            effect.View = view;
-                            effect.Projection = projection;
+                            foreach (BasicEffect effect in mesh.Effects)
+                            {
+                                effect.EnableDefaultLighting();
+                                effect.World = world * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
+                                effect.View = view;
+                                effect.Projection = projection;
 
 
-                            effect.FogColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            effect.FogEnabled = true;
-                            effect.FogStart = 8f;
-                            effect.FogEnd = 75f;
-                            effect.PreferPerPixelLighting = true;
+                                effect.FogColor = new Vector3(0.0f, 0.0f, 0.0f);
+                                effect.FogEnabled = true;
+                                effect.FogStart = 8f;
+                                effect.FogEnd = 75f;
+                                effect.PreferPerPixelLighting = true;
 
-                            effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
-                            effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
+                                effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
+                                effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
 
-                            //effect.Texture = Textures.ElementAt(0);
-                            //effect.SpecularColor = spec * (2.0f - distanceToPlayer * 0.05f);
-                            //effect.EmissiveColor = emis * (1.0f - distanceToPlayer * 0.005f);
+                                //effect.Texture = Textures.ElementAt(0);
+                                //effect.SpecularColor = spec * (2.0f - distanceToPlayer * 0.05f);
+                                //effect.EmissiveColor = emis * (1.0f - distanceToPlayer * 0.005f);
 
 
 
-                            //}
+                                //}
 
+                            }
+                            mesh.Draw();
                         }
-                        mesh.Draw();
                     }
                 }
             }
