@@ -11,6 +11,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 {
     public class Inventory_GUI
     {
+        private int sliderPos;
         //EventHandler
         void SliderEventValue(object source, SliderEvent_GUI e)
         {
@@ -20,13 +21,16 @@ namespace EmodiaQuest.Core.GUI.Screens
                     switch (e.SliderValue)
                     {
                         case 0:
-                            this.platform.updateLabel("changeside", "Questside");
+                            platform.updateLabel("changeside", "Aktiver Quest");
+                            platform.updateLabel("active_quest", QuestController.Instance.ActiveQuests.Any() ? QuestController.Instance.ActiveQuests[0].Name : "Keine aktiven Quests!");
                             break;
                         case 1:
-                            this.platform.updateLabel("changeside", "StorySide");
+                            this.platform.updateLabel("changeside", "Aufgaben");
+                            platform.updateLabel("active_quest", QuestController.Instance.ActiveQuests.Any() ? QuestController.Instance.ActiveQuests[0].Description : "Keine aktiven Quests!");
                             break;
                         case 2:
                             this.platform.updateLabel("changeside", "Questside");
+                            platform.updateLabel("active_quest", "");
                             break;
                         default:
                             break;
@@ -105,7 +109,9 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             //this.platform.addLabel(15, 0, 10, "monoFont_big", "QuestLog", "questlog", true);
             //this.platform.addLabel(15, 40, 10, "monoFont_big", "QuestText", "questtext", true);
-            this.platform.addLabel(15, 20, 10, "monoFont_big", "QuestSide", "changeside", true);
+            this.platform.addLabel(15, 20, 10, "monoFont_big", "Aktiver Quest", "changeside", true);
+            platform.addLabel(15, 35, 5, "monoFont_big", QuestController.Instance.ActiveQuests.Any() ? QuestController.Instance.ActiveQuests[0].Name : "Keine aktiven Quests!", "active_quest", true);
+
 
             this.platform.addLabel(50, 0, 10, "monoFont_big", "Character Stats", "story", true);
 
@@ -168,11 +174,10 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         public void update()
         {
-
-            this.platform.update();
+            platform.update();
 
             // Get Keyboard input to change overall GameState
-            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.I))
+            if (Controls_GUI.Instance.keyClicked(Keys.I))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
         }
 

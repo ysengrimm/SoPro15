@@ -32,7 +32,7 @@
                 Geh und finde den Sack mit dem Diebesgut.
             </description>
             <tasks>
-                <item>Diebesgut</item>
+                <level>0</level>
             </tasks>
             <rewards>
                 <xp>300</xp>
