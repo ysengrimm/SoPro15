@@ -606,8 +606,13 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\haus1_dim30x10.fbx">
-      <Name>haus1_dim30x10</Name>
+    <Compile Include="fbxContent\gameobjects\Wohnhaus2_30x10\Wohnhaus2_dim30x10.fbx">
+      <Name>Wohnhaus2_dim30x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Taverne_30x10\Taverne_dim30x10.fbx">
+      <Name>Taverne_dim30x10</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
@@ -1267,13 +1272,18 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\boden_tex_gras_1.png">
+    <Compile Include="fbxContent\gameobjects\Wohnhaus2_30x10\Wohnhaus_2_tex_1.png">
+      <Name>Wohnhaus_2_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Taverne_30x10\boden_tex_gras_1.png">
       <Name>boden_tex_gras_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\Wohnhaus_1_tex_1.png">
-      <Name>Wohnhaus_1_tex_1</Name>
+    <Compile Include="fbxContent\gameobjects\Taverne_30x10\Taverne_tex_1.png">
+      <Name>Taverne_tex_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -24,6 +24,7 @@ namespace EmodiaQuest.Core
         private float rotationY = 0;
         private float rotationX = 0;
         private float rotationZ = 0;
+        private float scale = 1;
         public Model model;
         public List<Texture2D> Textures;
         public String Name;
@@ -124,7 +125,9 @@ namespace EmodiaQuest.Core
                         break;
                 }
                 rotationY = (float) (rnd.NextDouble() * 2 * Math.PI);
-                texture = rnd.Next(Textures.Count - 1);
+                texture = rnd.Next(Textures.Count);
+                scale *= (float) (rnd.NextDouble() *1.5);
+                
             }
 
 
@@ -184,7 +187,7 @@ namespace EmodiaQuest.Core
                         {
                             effect.SpecularPower = 2f;
                             effect.EnableDefaultLighting();
-                            effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateRotationX(rotationX) * Matrix.CreateRotationY(rotationY) * Matrix.CreateRotationZ(rotationZ) * Matrix.CreateTranslation(position) * world;
+                            effect.World = Matrix.CreateScale(scale) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateRotationX(rotationX) * Matrix.CreateRotationY(rotationY) * Matrix.CreateRotationZ(rotationZ) * Matrix.CreateTranslation(position) * world;
                             effect.View = view;
                             effect.Projection = projection;
                             if (IsRandomStuff)

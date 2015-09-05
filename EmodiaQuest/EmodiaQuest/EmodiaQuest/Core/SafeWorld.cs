@@ -69,7 +69,8 @@ namespace EmodiaQuest.Core
             EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1), "wall1", false); Controller.CollisionObjList.Add(wall1);
             EnvironmentController.Object wall2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall2"), new Color(2, 0, 0), new Vector2(1, 1), "wall2", false); Controller.CollisionObjList.Add(wall2);
             // Buildings
-            EnvironmentController.Object house1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Wohnhaus1_30x10/haus1_dim30x10"), new Color(100, 0, 0), new Vector2(1, 3), "house1", false); Controller.CollisionObjList.Add(house1);
+            EnvironmentController.Object house2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Wohnhaus2_30x10/Wohnhaus2_dim30x10"), new Color(10, 0, 0), new Vector2(1, 3), "house1", false); Controller.CollisionObjList.Add(house2);
+            EnvironmentController.Object taverne = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Taverne_30x10/Taverne_dim30x10"), new Color(11, 0, 0), new Vector2(1, 3), "taverne", false); Controller.CollisionObjList.Add(taverne);
             EnvironmentController.TeleObject wallDoor = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/mauerTor30x10"), new Color(3, 0, 0), new Vector2(1, 3), new Vector2(0, 0), "wallDoor", false); Controller.TeleporterObjList.Add(wallDoor);
             // Grounds
             EnvironmentController.Object brownWay = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/brownway_dim10x10"), new Color(100, 100, 0), new Vector2(1, 1), "brownWay", false);
@@ -82,8 +83,10 @@ namespace EmodiaQuest.Core
             Controller.InsertObj(Controller.Wall, wall2.Model, wall2.Color, 0, wall2.Name, wall2.IsRandomStuff);
             Controller.InsertObj(Controller.Ground, brownWay.Model, brownWay.Color, 0, brownWay.Name, brownWay.IsRandomStuff);
             Controller.InsertObj(Controller.Ground, grasGround.Model, grasGround.Color, 0, grasGround.Name, grasGround.IsRandomStuff);
-            Controller.InsertObj(Controller.Buildings, house1.Model, house1.Color, 0, house1.Name, house1.IsRandomStuff);
+            Controller.InsertObj(Controller.Buildings, house2.Model, house2.Color, 0, house2.Name, house2.IsRandomStuff);
+            Controller.InsertObj(Controller.Buildings, taverne.Model, taverne.Color, 0, taverne.Name, taverne.IsRandomStuff);
             Controller.InsertObj(Controller.Teleporter, wallDoor.Model, wallDoor.Color, 0, wallDoor.Name, wallDoor.IsRandomStuff);
+
             // Insert items
             Controller.InsertItem(Controller.Items, item.Model, item.Color, 0, item.Name, item.IsRandomStuff);
 
@@ -95,7 +98,7 @@ namespace EmodiaQuest.Core
             // Create NPCList
             NPCList = new List<NPC>();
             // Create NPCs
-            NPC Jack = new NPC(new Vector2(200,200), Controller, NPC.NPCName.Jack, NPCProfession.Wirt);
+            NPC Jack = new NPC(new Vector2(230,330), Controller, NPC.NPCName.Jack, NPCProfession.Wirt);
             NPC Yorlgon = new NPC(new Vector2(200,220), Controller, NPC.NPCName.Yorlgon, NPCProfession.Schmied);
             NPC Konstantin = new NPC(new Vector2(200, 240), Controller, NPC.NPCName.Konstantin, NPCProfession.Haendler);
 
@@ -129,12 +132,12 @@ namespace EmodiaQuest.Core
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_1.Model, 500, Gras_1.Name, Gras_1.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_2.Model, 500, Gras_2.Name, Gras_2.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_3.Model, 500, Gras_3.Name, Gras_3.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_1.Model, 3000, Busch_1.Name, Busch_1.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_2.Model, 3000, Busch_2.Name, Busch_2.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_3.Model, 3000, Busch_3.Name, Busch_3.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_1.Model, 2000, Stein_1.Name, Stein_1.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_2.Model, 2000, Stein_2.Name, Stein_2.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_3.Model, 2000, Stein_3.Name, Stein_3.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_1.Model, 300, Busch_1.Name, Busch_1.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_2.Model, 300, Busch_2.Name, Busch_2.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_3.Model, 300, Busch_3.Name, Busch_3.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_1.Model, 4000, Stein_1.Name, Stein_1.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_2.Model, 4000, Stein_2.Name, Stein_2.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_3.Model, 4000, Stein_3.Name, Stein_3.IsRandomStuff);
 
             // After everything in the environment is added we load the stuff for the objects (textures etc.)
             Controller.LoadEnvironment(Content);

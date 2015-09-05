@@ -7,3 +7,21 @@ Dungeon Objects ( Color Bereich RGB (101-200, 101-200, B))
 Color (101, 101, B) == Standart wall
 Color (101, 102, B) == Standart Boden
 Color (101, 103, B) == Teleporter
+
+
+
+Safeworld Objects ( Color Bereich RGB (001-100, 001-100, B))
+============================================================
+
+# Wälle
+Color (001, 000, B) == Standart wall
+Color (002, 000, B) == Eck wall
+
+#Teleporter
+Color (003, 000, B) == wallDoor
+
+# Gebäude
+Color (010, 000, B) == Wohnhaus 2
+Color (011, 000, B) == Taverne
+
+#Böden
