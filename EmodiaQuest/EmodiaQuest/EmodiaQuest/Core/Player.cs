@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using EmodiaQuest.Core.Items;
 using EmodiaQuest.Core.NPCs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -70,14 +71,69 @@ namespace EmodiaQuest.Core
             }
         }
 
-        public int Level;
         public float Armor;
         public float Damage;
         public float PlayerSpeed;
         public float RotationSpeed;
 
-        public int Gold;
-        public int Experience;
+        private int gold;
+        public int Gold
+        {
+            get { return gold; }
+            set
+            {
+                gold = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(gold, "gold"));
+                }
+            }
+        }
+
+        private int level;
+        public int Level
+        {
+            get { return level; }
+            set
+            {
+                level = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(level, "level"));
+                }
+            }
+        }
+
+        private int experience;
+        public int Experience
+        {
+            get { return experience; }
+            set
+            {
+                experience = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(experience, "xp"));
+                }
+            }
+        }
+
+        private int xpToNextLevel;
+        public int XPToNextLevel
+        {
+            get { return xpToNextLevel; }
+            set
+            {
+                xpToNextLevel = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(xpToNextLevel, "xp_next_lvl"));
+                }
+            }
+        }
+        private int xpScaleFactor = 100;
+
+        public List<Item> PlayerInventory { get; set; }
 
         /**
          * Animation and Model
@@ -182,10 +238,13 @@ namespace EmodiaQuest.Core
             Hp = 100; // Settings.Instance.MaxPlayerHealth ?
             Armor = 0;
             Damage = 50;
-            Level = 1;
-
             Gold = 100;
+
+            Level = 1;
             Experience = 0;
+            XPToNextLevel = 100;
+
+            PlayerInventory = new List<Item>();
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
@@ -333,14 +392,14 @@ namespace EmodiaQuest.Core
                             }
                             else
                             {
-                                Console.WriteLine("There is a unsolved quest to be solved, something is wrong!");
+                                //Console.WriteLine("There is a unsolved quest to be solved, something is wrong!");
                             }
                         }
                         
                         if (GUI.Controls_GUI.Instance.keyClicked(Keys.E))
                         {
-                            //GUI.Screens.NPCTalk_GUI.Instance.NPCName = npc.Name.ToString();
-                            GUI.Screens.NPCTalk_GUI.Instance.CurrentNPC = npc;
+
+                            GUI.Screens.NPCTalk_GUI.Instance.NPCName = npc;
                             //Console.WriteLine(EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.NPCName);
                             EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.NPCScreen;
                         }
@@ -683,9 +742,10 @@ namespace EmodiaQuest.Core
                 currentBlockEnemyListtest.Clear();
             }
 
+            // Leveling
+            XpToLevel();
 
             // Call Sounds
-
             if (HitEnemyWithSword)
             {
                 Jukebox.Instance.PlaySwordFightSound();
@@ -700,6 +760,18 @@ namespace EmodiaQuest.Core
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.InventoryScreen;
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.O))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
+        }
+
+        private void XpToLevel()
+        {
+            if (Experience >= XPToNextLevel)
+            {
+                Level++;
+                Console.WriteLine("Level Up! You are now lvl " + Level);
+
+                Experience = Experience - XPToNextLevel;
+                XPToNextLevel = (int)Math.Round(xpScaleFactor * Math.Sqrt(Level));
+            }
         }
 
         private Enemy getClosestMonster(List<Enemy> enemyList)

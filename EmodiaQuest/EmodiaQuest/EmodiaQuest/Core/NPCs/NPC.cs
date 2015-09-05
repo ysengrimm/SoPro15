@@ -306,6 +306,11 @@ namespace EmodiaQuest.Core.NPCs
 
         }
 
+        public override string ToString()
+        {
+            return Name.ToString();
+        }
+
         public void Draw(Matrix world, Matrix view, Matrix projection)
         {
             // Bone updates for each required animation   

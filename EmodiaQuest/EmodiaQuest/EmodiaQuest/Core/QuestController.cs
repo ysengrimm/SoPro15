@@ -83,9 +83,11 @@ namespace EmodiaQuest.Core
                 var activeQuestsByOwner = from quest in Quests
                     where quest.Owner == owner.Name.ToString() && ActiveQuests.Contains(quest)
                     select quest;
+
+                PossibleSolvedQuests.Clear();
                 foreach (Quest activeQuest in activeQuestsByOwner)
                 {
-                    bool level, solved, visit = false, kill, item, gold;
+                    bool solved = false, visit = false, kill = false, item = false;
                     List<bool> outCompare = new List<bool>();
                     foreach (var key in activeQuest.Tasks.Keys)
                     {
@@ -94,8 +96,7 @@ namespace EmodiaQuest.Core
                             case "level":
                                 String levelVal;
                                 activeQuest.Tasks.TryGetValue(key, out levelVal);
-                                level = Player.Instance.Level >= int.Parse(levelVal);
-                                outCompare.Add(level);
+                                outCompare.Add(Player.Instance.Level >= int.Parse(levelVal));
                                 break;
                             case "solved":
                                 String solvedOut;
@@ -105,9 +106,9 @@ namespace EmodiaQuest.Core
                                     if (sq.Name == solvedOut)
                                     {
                                         solved = true;
-                                        outCompare.Add(solved);
                                     }
                                 }
+                                outCompare.Add(solved);
                                 break;
                             case "visit":
                                 // wontfix
@@ -123,28 +124,27 @@ namespace EmodiaQuest.Core
                                 if (monsterKilled >= int.Parse(enemyAndCount[1]))
                                 {
                                     kill = true;
-                                    outCompare.Add(kill);
                                     KilledEnemies[enemyAndCount[0]] = 0;
                                 }
+                                outCompare.Add(kill);
                                 break;
                             case "item":
-                                // change to real inventory
                                 String itemOut;
                                 activeQuest.Tasks.TryGetValue(key, out itemOut);
-                                foreach (var itemQ in ItemTestClass.Instance.Quests)
+                                foreach (var itemQ in Player.Instance.PlayerInventory)
                                 {
                                     if (itemQ.Name == itemOut)
                                     {
                                         item = true;
-                                        outCompare.Add(item);
+                                        
                                     }
                                 }
+                                outCompare.Add(item);
                                 break;
                             case "gold":
                                 String goldOut;
                                 activeQuest.Tasks.TryGetValue(key, out goldOut);
-                                gold =  Player.Instance.Gold >= int.Parse(goldOut);
-                                outCompare.Add(gold);
+                                outCompare.Add(Player.Instance.Gold >= int.Parse(goldOut));
                                 break;
                         }
                     }
@@ -160,9 +160,11 @@ namespace EmodiaQuest.Core
             else
             {
                 var questsByOwner = from quest in Quests where quest.Owner == owner.Name.ToString() && !SolvedQuests.Contains(quest) select quest;
+
+                PossibleActiveQuests.Clear();
                 foreach (Quest quest in questsByOwner)
                 {
-                    bool level, solved, visit = false, kill = false, item, gold;
+                    bool solved = false, visit = false, kill = false, item = false;
                     List<bool> outCompare = new List<bool>();
                     foreach (var key in quest.Conditions.Keys)
                     {
@@ -171,8 +173,7 @@ namespace EmodiaQuest.Core
                             case "level":
                                 String levelVal;
                                 quest.Conditions.TryGetValue(key, out levelVal);
-                                level = Player.Instance.Level >= int.Parse(levelVal);
-                                outCompare.Add(level);
+                                outCompare.Add(Player.Instance.Level >= int.Parse(levelVal));
                                 break;
                             case "solved":
                                 String solvedOut;
@@ -182,9 +183,9 @@ namespace EmodiaQuest.Core
                                     if (sq.Name == solvedOut)
                                     {
                                         solved = true;
-                                        outCompare.Add(solved);
                                     }
                                 }
+                                outCompare.Add(solved);
                                 break;
                             case "visit":
                                 // wontfix
@@ -193,27 +194,24 @@ namespace EmodiaQuest.Core
                                 // meh
                                 break;
                             case "item":
-                                // inventory!
                                 String itemOut;
                                 quest.Conditions.TryGetValue(key, out itemOut);
-                                foreach (var itemQ in ItemTestClass.Instance.Quests)
+                                foreach (var itemQ in Player.Instance.PlayerInventory)
                                 {
                                     if (itemQ.Name == itemOut)
                                     {
                                         item = true;
-                                        outCompare.Add(item);
                                     }
                                 }
+                                outCompare.Add(item);
                                 break;
                             case "gold":
                                 String goldOut;
                                 quest.Conditions.TryGetValue(key, out goldOut);
-                                gold = Player.Instance.Gold >= int.Parse(goldOut);
-                                outCompare.Add(gold);
+                                outCompare.Add(Player.Instance.Gold >= int.Parse(goldOut));
                                 break;
                         }
                     }
-
                     
                     List<bool> otherList = outCompare.Where(res => !res).ToList();
 
@@ -260,10 +258,7 @@ namespace EmodiaQuest.Core
                 IsQuestActive = false;
                 
                 // clear quest items
-                foreach (Item item in ActiveQuestItems)
-                {
-                    ActiveQuestItems.Remove(item);
-                }
+                ActiveQuestItems.Clear();
                 return true;
             }
             return false;
@@ -271,25 +266,25 @@ namespace EmodiaQuest.Core
 
         void GrandQuestRewards(Quest quest)
         {
-            foreach (var key in quest.Conditions.Keys)
+            foreach (var key in quest.Rewards.Keys)
             {
                 switch (key)
                 {
                     case "xp":
                         String xpOut;
-                        quest.Conditions.TryGetValue(key, out xpOut);
+                        quest.Rewards.TryGetValue(key, out xpOut);
                         Player.Instance.Experience += int.Parse(xpOut);
 
                         break;
                     case "item":
-                        // inventory!
                         String itemOut;
-                        quest.Conditions.TryGetValue(key, out itemOut);
+                        quest.Rewards.TryGetValue(key, out itemOut);
+                        // needs items!
                         Console.WriteLine("The player gets: " + itemOut);
                         break;
                     case "gold":
                         String goldOut;
-                        quest.Conditions.TryGetValue(key, out goldOut);
+                        quest.Rewards.TryGetValue(key, out goldOut);
                         Player.Instance.Gold += int.Parse(goldOut);
                         break;
                 }
@@ -319,10 +314,11 @@ namespace EmodiaQuest.Core
             {
                 if (IsQuestActive)
                 {
-                    foreach (Quest quest in ActiveQuests)
+                    foreach (Quest q in ActiveQuests)
                     {
-                        ActiveQuests.Remove(quest);
+                        Console.WriteLine("Cleared " + q.Name);
                     }
+                    ActiveQuests.Clear();
                     foreach (Quest quest in requestedQuest)
                     {
                         ActiveQuests.Add(quest);

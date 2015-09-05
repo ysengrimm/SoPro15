@@ -6,10 +6,6 @@
             <repeatable>yes</repeatable>
             <conditions>
                 <level>0</level>
-                <solved>FooBar</solved>
-                <kill>Oger,10</kill>
-                <item>Stein der Weisen</item>
-                <gold>200</gold>
             </conditions>
             <story>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -29,12 +25,11 @@
                 Do thing XY!
             </description>
             <tasks>
-                <level>1</level>
+                <level>0</level>
             </tasks>
             <rewards>
-                <xp>42</xp>
+                <xp>150</xp>
                 <gold>1337</gold>
-                <item>Monter Slayer</item>
             </rewards>
         </quest>
       
@@ -78,6 +73,7 @@
             <repeatable>no</repeatable>
             <conditions>
 				<solved>A New Journey</solved>
+                <level>0</level>
             </conditions>
             <story>	
 				Mics:
