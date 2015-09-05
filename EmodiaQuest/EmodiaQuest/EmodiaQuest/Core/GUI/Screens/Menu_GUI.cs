@@ -84,7 +84,8 @@ namespace EmodiaQuest.Core.GUI.Screens
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.U))
             {
                 List<EmodiaQuest.Core.Items.Item> testList = new List<EmodiaQuest.Core.Items.Item>();
-                testList = EmodiaQuest.Core.Items.ItemTestClass.Instance.ItemGeneratorMerchant(3, "Yorlgon");
+                //testList = EmodiaQuest.Core.Items.ItemTestClass.Instance.ItemGeneratorMerchant(15, "Konstantin");
+                testList = EmodiaQuest.Core.Items.ItemTestClass.Instance.ItemGeneratorMonster(15, NPCs.EnemyType.Monster1);
                 foreach (var item in testList)
                 {
                     Console.WriteLine(item.Class + ", " + item.Lvl + ", " + item.StrengthPlus + ", " + item.SkillPlus + ", " + item.IntelligencePlus);
