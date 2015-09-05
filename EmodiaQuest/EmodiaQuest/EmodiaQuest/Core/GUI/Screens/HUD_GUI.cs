@@ -32,9 +32,6 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "level":
                     platform.updateLabel("lvl", e.ChangeValue.ToString());
                     break;
-                default:
-                    Console.WriteLine("Function name does not exist");
-                    break;
             }
         }
 

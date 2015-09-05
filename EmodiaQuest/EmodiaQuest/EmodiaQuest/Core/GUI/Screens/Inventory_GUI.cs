@@ -38,6 +38,40 @@ namespace EmodiaQuest.Core.GUI.Screens
             }
         }
 
+        //EventHandler
+        void ChangeValueEventValue(object source, ChangeValueEvent e)
+        {
+            switch (e.Function)
+            {
+                case "hp":
+                    break;
+                case "xp_next_lvl":
+                    platform.updateLabel("xp_text", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel);
+                    break;
+                case "level":
+                    platform.updateLabel("lvl", e.ChangeValue.ToString());
+                    break;
+                case "gold":
+                    platform.updateLabel("gold", e.ChangeValue.ToString());
+                    break;
+                case "armor":
+                    platform.updateLabel("armor", "Ruestung: " + e.ChangeValue.ToString());
+                    break;
+                case "strength":
+                    platform.updateLabel("str", "Kraft: " + e.ChangeValue.ToString());
+                    break;
+                case "skill":
+                    platform.updateLabel("skill", "Fertigkeit: " + e.ChangeValue.ToString());
+                    break;
+                case "intelligence":
+                    platform.updateLabel("intel", "Intelligenz: " + e.ChangeValue.ToString());
+                    break;
+                case "dmg":
+                    platform.updateLabel("damage", "Schaden: " + Player.Instance.MinDamage + " - " + Player.Instance.MaxDamage);
+                    break;
+            }
+        }
+
         private static Inventory_GUI instance;
 
         private Inventory_GUI() { }
@@ -108,6 +142,23 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             platform.OnSliderValue += new GUI_Delegate_Slider(this.SliderEventValue);
 
+            // XP Number
+            platform.addLabel(50, 50, 5, "monoFont_big", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel, "xp_text", true);
+
+            // Level Number
+            platform.addLabel(50, 40, 5, "monoFont_big", Player.Instance.Level.ToString(), "lvl", true);
+
+            // Gold
+            platform.addLabel(50, 60, 5, "monoFont_big", Player.Instance.Gold.ToString(), "gold", true);
+
+            // Player stats
+            platform.addLabel(50, 10, 5, "monoFont_big", "Ruestung: " + Player.Instance.Armor, "armor", true);
+            platform.addLabel(50, 15, 5, "monoFont_big", "Schaden: " + Player.Instance.MinDamage + " - " + Player.Instance.MaxDamage, "damage", true);
+            platform.addLabel(50, 20, 5, "monoFont_big", "Kraft: " + Player.Instance.Strength, "str", true);
+            platform.addLabel(50, 25, 5, "monoFont_big", "Fertigkeit: " + Player.Instance.Skill, "skill", true);
+            platform.addLabel(50, 30, 5, "monoFont_big", "Intelligenz: " + Player.Instance.Intelligence, "intel", true);
+
+            Player.Instance.OnChangeValue += new Delegates_CORE.ChangeValueDelegate(ChangeValueEventValue);
 
             // Items
             // Hab grad nur First genommen, weil ich erst ein Item drin hab. Sonst natuerlich ElementAt

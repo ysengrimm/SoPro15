@@ -1,40 +1,6 @@
-    <emodia_quest>
-        <quest>
-            <name>Test Quest</name>
-            <difficulty>0</difficulty>
-            <owner>Jack</owner>
-            <repeatable>yes</repeatable>
-            <conditions>
-                <level>0</level>
-            </conditions>
-            <story>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </story>
-            <description>
-                Do thing XY!
-            </description>
-            <tasks>
-                <kill>Monster8, 2</kill>
-            </tasks>
-            <rewards>
-                <xp>150</xp>
-                <gold>1337</gold>
-            </rewards>
-        </quest>
-      
-        <quest>
-            <name>A New Journey</name>
+	<emodia_quest>
+		<quest>
+            <name>Im Anfang war die Tat!</name>
             <difficulty>0</difficulty>
             <owner>Jack</owner>
             <repeatable>no</repeatable>
@@ -43,154 +9,233 @@
             </conditions>
             <story>
 				Jack:
-					Guten Morgen Mics. 
-					Ich habe gehoert, dass Yorlgon nach dir gesucht hat.
-					Waerest du so freundlich ihm einen Besuch abzustatten und ihm auch noch von mir zu sagen,
-					dass er letzten Abend seine Geldbörse hier verloren hat. Er kann die sich gerne bei mir abholen.
-				
-				Mics:
-					Klar mach ich. Man sieht sich.
-				
-				Jack:
-					Ciao.
+					HEY MICS, ich ... mir ... arrrrrgh
+					Ich wurde eben BESTOHLEN!!!!
+					Als ich noch geschlafen habe hoerte ich irgendwo ein knarksen in dem Haus.
+					Ich dacht, dass das nur eine alte Diele war und hab mich auf die andere Seite gedreht
+					und bin wieder eingeschlafen.
+					Und heute frueh da stand ich auf, und was sehe ich da???
+					Alles weg, ALLES!
+					Mein ganzes Gold, der ganze Schmuck alles an wertvollen Dingen, die ich je besessen hab!
+					Ich bin rausgerannt und hab bei den Nachbarn nachgefragt ob sie was gesehen haben, doch nein, niemand
+					hat irgendetwas gesehen.
+					Doch dann hat mir eine der Wachen gesagt, dass er im Morgengrauen einen Fremdling in das Labyrinth hat
+					gehen sehen. Er hat ihm noch gesagt dass es da unten nicht ungefaehrlich sei, aber der Fremde ist trotzdem 
+					herunter gegangen.
+					Der Wachman konnte sich noch erinnern, dass der Fremde einen grossen Sack auf den Schultern hatte.
+					Mics, das muss der Dieb gewesen sein. Er ist bestimmt schon von den Bestien da unten zerfetzt wurden.
+					Bitte geh und schau nach ob du dort irgendwo den Sack finden kannst!!
+					Ich werde dich selbstverstaendlich gut fuer den Fund belohnen.
+					Und pass bitte trotzdem auf dich auf, ok?
             </story>
             <description>
-                Do thing XY!
+                Geh und finde den Sack mit dem Diebesgut.
             </description>
             <tasks>
-                <visit>Yorlgon.Position</visit>
-                <kill>Oger,2</kill>
+                <item>Diebesgut</item>
             </tasks>
             <rewards>
-                <xp>100</xp>
+                <xp>300</xp>
+                <gold>200</gold>
             </rewards>
         </quest>
 		
 		<quest>
-            <name>Drunken Nights</name>
+            <name>Blut ist ein ganz besondrer Saft.</name>
+            <difficulty>0</difficulty>
+            <owner>Konstantin</owner>
+            <repeatable>no</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Konstantin:
+					Hallo mein lieber Freund.
+					Weisst du, die durch die Seuche hervorgegangenen Monster werden von den Forschern und Heiler
+					staendig erforscht. Ich helfe da manchmal ein bisschen mit und mir ist aufgefallen, dass mit der
+					Seuche eindeutig nicht alles mit rechten Dingen zu geht. Ich kann nicht genau sagen was es
+					ist aber mein Gefuehl sagt mir, dass hier irgendetwas nicht stimmt.
+					Wir haben letztens rausgefunden, dass die Mutationen immer neuere besondere Formen annehmen.
+					In den Labyrinthen tummeln sich mittlerweile MONSTER, welche frueher noch nicht dagewesen sind.
+					Wir muessen der Sache unbedingt auf den Grund gehen und herausfinden wie diese entstanden sind.
+					Es waere uns eine grosse Hilfe wenn du 10 Blutproben von MONSTER mitbringen koenntest.
+					Wir koennen diese dann genau untersuchen und wer weiss, vielleicht finden wir neue Hinweise.
+            </story>
+            <description>
+                Geh und besiege 10x MONSTER!
+				Komm anschliessend zu Konstantin zurueck.
+            </description>
+            <tasks>
+                <kill>MONSTER,10</kill>
+            </tasks>
+            <rewards>
+                <xp>300</xp>
+                <gold>200</gold>
+            </rewards>
+        </quest>
+
+		<quest>
+            <name>Blut ist ein ganz besondrer Saft</name>
+            <difficulty>0</difficulty>
+            <owner>Konstantin</owner>
+            <repeatable>no</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Konstantin:
+					Hallo mein lieber Freund.
+					Weisst du, die durch die Seuche hervorgegangenen Monster werden von den Forschern und Heiler
+					staendig erforscht. Ich helfe da manchmal ein bisschen mit und mir ist aufgefallen, dass mit der
+					Seuche eindeutig nicht alles mit rechten Dingen zu geht. Ich kann nicht genau sagen was es
+					ist aber mein Gefuehl sagt mir, dass hier irgendetwas nicht stimmt.
+					Wir haben letztens rausgefunden, dass die Mutationen immer neuere besondere Formen annehmen.
+					In den Labyrinthen tummeln sich mittlerweile MONSTER, welche frueher noch nicht dagewesen sind.
+					Wir muessen der Sache unbedingt auf den Grund gehen und herausfinden wie diese entstanden sind.
+					Es waere uns eine grosse Hilfe wenn du 10 Blutproben von MONSTER mitbringen koenntest.
+					Wir koennen diese dann genau untersuchen und wer weiss, vielleicht finden wir neue Hinweise.
+            </story>
+            <description>
+                Geh und besiege 10x MONSTER!
+				Komm anschliessend zu Konstantin zurueck.
+            </description>
+            <tasks>
+                <kill>MONSTER,10</kill>
+            </tasks>
+            <rewards>
+                <xp>300</xp>
+                <gold>200</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Das also war des Pudels Kern!</name>
+            <difficulty>0</difficulty>
+            <owner>Konstantin</owner>
+            <repeatable>no</repeatable>
+            <conditions>
+				<solved>Blut ist ein ganz besondrer Saft</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Konstantin:
+					Hallo mein lieber Freund.
+					Deine Hilfe bei den Blutproben hat uns sehr viel weiter gebracht.
+					Mein Verdacht hat sich bestaetigt. Wir wurden alle getaeuscht.
+					Es gab niemals eine Seuche. Es gab ein Virus, welches eindeutig von menschlicher Hand ist.
+					Die Proben sagen eindeutig aus, dass die ganzen mutierten Menschen, welche nun viele
+					verschiedene Formen angenommen haben und die wir als Monster bezeichnen, von einem Virus
+					befallen wurden. Dieser Virus ist eindeutig kuenstlichen Ursprungs. Er ruft bei den Menschen
+					abhaengig vom Alter, Geschlecht, Gewicht usw. verschiedene Mutationen vor. Einige sind dagegen
+					von vorherein Immun. Das sind wohl all diejenigen, welche heute noch Leben.
+					Wir muessen weitervorschen. Bitte bringe mir weitere 20 Blutproben von MONSTER.
+					Wir koennen sicherlich weitere Schluesse ziehen sobald wir genuegend Proben haben.
+					
+					Ah und uebrigens, wenn du damit fertig bist kannst du ja mal bei 
+					Yorlgon vorbeischauen. Er hat nach dir gesucht.
+            </story>
+            <description>
+                Geh und besiege 20x MONSTER!
+				Komm anschliessend zu Konstantin zurueck.
+            </description>
+            <tasks>
+                <kill>MONSTER,20</kill>
+            </tasks>
+            <rewards>
+                <xp>300</xp>
+                <gold>200</gold>
+            </rewards>
+        </quest>
+
+		<quest>
+            <name>Es lebe, wer sich tapfer haelt!</name>
             <difficulty>0</difficulty>
             <owner>Yorlgon</owner>
             <repeatable>no</repeatable>
             <conditions>
-				<solved>A New Journey</solved>
+				<solved>Das also war des Pudels Kern!</solved>
                 <level>0</level>
             </conditions>
-            <story>	
-				Mics:
-					Guten Morgen Yorlgon. Jack meinte, dass du nach mir gesucht haettest. Deswegen dachte ich, dass ein Spaziergang
-					zu dir am ...
-					
-				Yorlgon:
-					UND WIE ICH NACH DIR GESUCHT HAB. Du ********* hast mir meinen Portmonee gestohlen !!!
-					
-				Mics:
-					Jetzt mach mal einen ruhigen. Waerst du letzte nach nicht so stockbesoffen gewesen, wuesstest du, dass
-					du deine Boerse bei Jack liegen gelassen hast. Schau dich nur an, du kannst kaum gerade auf den Beinen stehen!
-					Und dabei bist du der beste Schmied weit und breit. Wie sollen wir denn ohne dich ueberleben wenn du die ganze Zeit 
-					nur am Saufen bist? 
-					
-				Yorlgon:
-					Oh ... ehm ... hm.
-					Ja kann sein, dass ich letzte Nacht tatsaechlich ein bisschen zuviel intus hatte. Wer trinkt denn nicht gerne bei unserem Leben hier, hm?
-					Schopn gut tut mir leid, ich werde mich bessern.
-					Koenntest du mir die Boerse vielleicht wieder zurueck bringen? Ich geb dir 100 Gold dafuer ok? Als Finderlohn sozusagen.
-					
-				Mics:
-					Ja kann ich machen. Hm ... aber nur wenn du noch diesen alten Helm da dazu legst. Ich habe bei meinem letzten Kampf 
-					fast alles verloren und naja, viel Geld hab ich zur Zeit auch nicht.
-					
-				Yorlgon:
-					Ja kannst das Teil habn. Is eh nur Schrott.
-            </story>
-            <description>
-                Do thing XY!
-            </description>
-            <tasks>
-                <visit>Jack.Position</visit>
-            </tasks>
-            <rewards>
-                <xp>100</xp>
-            </rewards>
-        </quest>
-		
-		<quest>
-            <name>Drunken Nights. Part 2</name>
-            <difficulty>0</difficulty>
-            <owner>Jack</owner>
-            <repeatable>no</repeatable>
-            <conditions>
-				<solved>Drunken Nights</solved>
-            </conditions>
             <story>
-				Jack:
-					Na wie geht es dem alten Yorlgon?
-				
-				Mics:
-					Immer noch am ausnuechtern. Ich soll ihm seine Boerse wieder zurück bringen, kannst du mir die mal reichen?
-				
-				Jack:
-					Hier hast du sie.
+				Yorlgon:
+					Konstantin hat mir letztens erzaehlt, dass du sehr gerne in den Labyrinthen bist
+					um dort Monster umzulegen.
+					Nun ich glaube ihm nicht, dass jemand wie du ein guter Kaempfer sein kannst.
+					Schlachte doch mal bitte 50 MONSTER im Dungeon ab und bringe mir ihre Koepfe.
+					Ich habe mit Konstantin gewettet, dass du das garantiert nicht schaffen wirst. 
+					Wenn du aber dennoch erfolgreich sein solltest werde ich den Gewinn mit dir teilen.
             </story>
             <description>
-                Do thing XY!
+                Geh und besiege 50x MONSTER!
+				Komm anschliessend zu Yorlgon zurueck.
             </description>
             <tasks>
+                <kill>MONSTER,50</kill>
             </tasks>
             <rewards>
-				<item>Yorlgons Boerse</item>
+                <xp>5000</xp>
+                <gold>2000</gold>
             </rewards>
         </quest>
-		
+
 		<quest>
-            <name>Drunken Nights. Part 3</name>
-            <difficulty>0</difficulty>
-            <owner>Jack</owner>
-            <repeatable>no</repeatable>
-            <conditions>
-				<solved>Drunken Nights. Part 2</solved>
-				<item>Yorlgons Boerse</item>
-            </conditions>
-            <story>
-				Mics:
-					Na dann bringe ich sie ihm mal zurück.
-				
-				Jack:
-					Mach das.
-            </story>
-            <description>
-                Do thing XY!
-            </description>
-            <tasks>
-				<visit>Yorlgon.Position</visit>
-            </tasks>
-            <rewards>
-				<xp>100</xp>
-				<gold>100</gold>
-				<item>Alter Helm</item>
-            </rewards>
-        </quest>
-		
-		<quest>
-            <name>Kill Them All!</name>
+            <name>Kulinarische Erlebnisse</name>
             <difficulty>1</difficulty>
             <owner>Jack</owner>
             <repeatable>no</repeatable>
             <conditions>
+				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
 				Jack:
-					Geh unn bringe mir 10 Koepfe von dem Wuermern aus dem Labyrinth.
-					Einer meiner Kunden hier, der sich selbst als Heiler bezeichnet, meinte er würde die Koepfe
+					Hallo Mics. Ich habe letztens ein Gespraech zwischen zwei Haendlern gehoert.
+					Diese sind mit noch einem Freund durch die Labyrinthe gelaufen und haben dabei wohl disen einen
+					aus den Augen verloren. Sie vermuten, dass er wohl draufgegangen ist. Aus dem Gespraech konnte man heraushoeren
+					dass es sich wohl um einen sehr beruehmten Koch gehandelt hat. Ich bin ganz begeistert von seinen Rezepten
+					gewesen. Er war auch bereits oefters hier bei mir zu Gast und mir ist aufgefallen, dass er immer ein Buechlein bie sich
+					hatte. Ich vermute, dass es sich dabei um sein Kochbuch gehandelt hat. 
+					Waerst du so freundlich nach diesem Buch zu suchen?
+					Ich wuerde mich darueber sehr freuen, und an der Bezahlung soll es natuerlich nicht scheitern.
+            </story>
+            <description>
+                Geh und finde das Kochbuch.
+				Komm anschliessend zu Jack zurueck.
+            </description>
+            <tasks>
+                <item>Kochbuch</item>
+            </tasks>
+            <rewards>
+                <xp>300</xp>
+                <gold>200</gold>
+            </rewards>
+        </quest>
+	
+		<quest>
+            <name>Toete sie alle!</name>
+            <difficulty>0</difficulty>
+            <owner>Jack</owner>
+            <repeatable>yes</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Jack:
+					Geh und bringe mir 10 Koepfe von den MONSTER aus dem Labyrinth.
+					Einer meiner Kunden hier, der sich selbst als Heiler bezeichnet, meinte er wuerde die Koepfe
 					fuer seine Experimente benoetigen. Naja mir solls nur recht sein, er selbst hat sowieso keine Kunden
 					da jeder weiss, dass er ein Scharlatan ist. 
 					Ich geb dir die Haelfte von dem was er mir dafuer zahlt.
             </story>
             <description>
-                Geh und besiege 10x Wuermer!
+                Geh und besiege 10x MONSTER!
+				Komm anschliessend zu Jack zurueck.
             </description>
             <tasks>
-                <kill>Monster 2,10</kill>
+                <kill>MONSTER,10</kill>
             </tasks>
             <rewards>
                 <xp>200</xp>
@@ -199,22 +244,23 @@
         </quest>
 		
 		<quest>
-            <name>Kill Them All! Part 2.</name>
+            <name>Toete sie alle! Teil 2.</name>
             <difficulty>1</difficulty>
             <owner>Jack</owner>
-            <repeatable>no</repeatable>
+            <repeatable>yes</repeatable>
             <conditions>
-				<solved>Kill Them All!</solved>
+				<solved>Toete sie alle!</solved>
                 <level>0</level>
             </conditions>
             <story>
 				Jack:
 					Du hast bei deiner letzten Aufgabe einen guten Job gemacht.
-					Der Scharlatan verlangt nun nach 20 Koepfen der Wuermer. Seine Experimente scheinen ihm zu gelingen.
+					Der Scharlatan verlangt nun nach 20 weiteren Koepfen der MONSTER. Seine Experimente scheinen ihm zu gelingen.
 					Wegen der Bezahlung musst du dir freilich keine Sorgen machen.
             </story>
             <description>
-                Geh und besiege 20x Wuermer!
+                Geh und besiege 20x MONSTER!
+				Komm anschliessend zu Jack zurueck.
             </description>
             <tasks>
                 <kill>Monster 2,20</kill>
@@ -226,29 +272,65 @@
         </quest>
 		
 		<quest>
+            <name>Ein versteckter Schatz</name>
+            <difficulty>3</difficulty>
+            <owner>Jack</owner>
+            <repeatable>yes</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Jack:
+					Hey, pssssst ...
+					Ja, komm mal her.
+					Du weisst ja ich bin ein einfacher Wirt und ich mische mich freilich nicht in Dinge ein,
+					welche mich gar nichts angehen, aber ...
+					Ich habe da letztens ein paar Klienten belauscht...
+					Die meinten, dass unter der Stadt irgendwo ein ganz wertvoller Schatz versteckt ist.
+					Es sollen lauter teure Steinchen in einer Truhe sein.
+					Du weisst ja wie ich zu den Labyrinthen stehe, aber du, du bist da doch ganz oft unterwegs.
+					Wuerdest du dich mal nach dem Schatz umschauen? Du bist hier der einzige weit und breit, dem ich 
+					vertrauen kann. Den Gewinn koennen wir mit dir sicherlich gut aufteilen.
+            </story>
+            <description>
+                Geh und finde die Schatztruhe im Labyrinth.
+				Komm anschliessend zu Jack zurueck.
+            </description>
+            <tasks>
+                <item>Schatztruhe</item>
+            </tasks>
+            <rewards>
+                <xp>300</xp>
+                <gold>500</gold>
+            </rewards>
+        </quest>
+			
+		<quest>
             <name>Eine kleine Sammlung</name>
-            <difficulty>2</difficulty>
+            <difficulty>0</difficulty>
             <owner>Konstantin</owner>
             <repeatable>no</repeatable>
             <conditions>
-                <level>5</level>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
             </conditions>
             <story>
 				Konstantin:
-					Hallo mein alter Freund. Weisst du ich habe mir letztens gedacht, dass ich mein
-					kleines Haeuschen ein bisschen aufpeppen könnte indem ich mir ein paar Trophaeen an die Waende haenge.
-					Nun ehm ... leider bin ich ja wie du weisst den ganzen Tag beschäftigt und habe leider keine Zeit,
-					auf die Jagd zu gehen. Könntest du mir da ein bisschen Behilflich sein und Köpfe von jeder einzelnen 
-					Kreatur mitbringen, die so in den Labyrinthen rumlaufen?
+					Hallo mein lieber Freund. Weisst du ich habe mir letztens gedacht, dass ich mein
+					kleines Haeuschen ein bisschen aufpeppen koennte indem ich mir ein paar Trophaeen an die Waende haenge.
+					Nun ehm ... leider bin ich ja wie du weisst den ganzen Tag beschaeftigt und habe leider keine Zeit auf die Jagd zu gehen. 
+					Koenntest du mir da ein bisschen behilflich sein und den	Kopf vom MONSTER aus dem Labyrinth mitbringen?
 					
 					Ich werde dich selbstverstaendlich gut dafuer bezahlen. Du weisst ja, geizig bin ich nicht.
 					Ah und das Gespraech sollte unter uns bleiben, ich hoffe du verstehst.
             </story>
             <description>
-                Geh und besiege jeweils ein Monster von jeder Sorte aus dem Labyrinth.
+                Geh und besiege ein MONSTER aus dem Labyrinth.
+				Komm anschliessend zu Konstantin zurueck.
             </description>
             <tasks>
-                <kill>Monster 1,1</kill>
+                <kill>MONSTER,1</kill>
             </tasks>
             <rewards>
                 <xp>1000</xp>
@@ -257,32 +339,226 @@
         </quest>
 		
 		<quest>
-            <name>Lost Treasure</name>
-            <difficulty>1</difficulty>
-            <owner>Jack</owner>
-            <repeatable>no</repeatable>
+            <name>Warum einfach, wenn es auch kompliziert geht?</name>
+            <difficulty>0</difficulty>
+            <owner>Konstantin</owner>
+            <repeatable>yes</repeatable>
             <conditions>
-                <level>3</level>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
             </conditions>
             <story>
-				Jack:
-					Hallo Mics. Ich habe letztens ein Gespräch zwischen zwei Haendlern gehoert.
-					Diese sind mit noch einem Dritten durch die Labyrinthe gelaufen und haben dabei wohl disen einen Dritten
-					aus den Augen verloren. Sie vermuten, dass er wohl draufgegangen ist. Aus dem Gespräch konnte man heraushoeren
-					dass es ihnen eigentlich egal war das mit dem Typen passiert ist, er hatte aber einen sehr kostbaren Diamanten
-					bei sich gehabt.
-					Du kannst ja versuchen den Diamant zu finden und den Gewinn vom Verkauf koennen wir uns ja dann teilen.
+				Konstantin:
+					Mein lieber Freund!
+					Meine Lieferanten haben mal wieder eine Abkuerzung durch die Labyrinthe genommen, statt
+					ganz einfach den Feldweg zu nehmen. Wieso sie das immer wieder machen ist mir nicht klar,
+					es ist doch viel einfacher den schoenen geraden Weg von ihrer Burg zu unserer zu nehmen, auch
+					wenn er ein bisschen laenger ist. Aber dafuer doch weitaus ungefaehrlicher!
+					Da sie immer noch nich da sind vermute ich, dass sie laengst tot sind.
+					Koenntest du bitte nachschauen ob du im Labyrinth den Sack mit meinen Waren findest?
             </story>
             <description>
-                Geh und finde den Diamant.
+                Geh in das Labyrinth und suche nach dem Sack. 
+				Bringe ihn anschliessend zu Konstantin zurueck.
             </description>
             <tasks>
-                <item>Diamant</item>
+                <item>Sack</item>
             </tasks>
             <rewards>
-                <xp>200</xp>
-                <gold>200</gold>
+                <xp>400</xp>
+                <gold>300</gold>
             </rewards>
         </quest>
 		
+		<quest>
+            <name>Candyshop</name>
+            <difficulty>2</difficulty>
+            <owner>Konstantin</owner>
+            <repeatable>yes</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Konstantin:
+					Mein lieber Freund. Ich habe letztens gehoert, dass das Knochenmark vom MONSTER, in 
+					entsprechender Zubereitung, bei Menschen gewisse schoene Haluzinazionen hervorruft.
+					Man denkt dann auf einmal, dass man nicht mehr in unserer treurigen und elenden Welt ist,
+					sondern dass man in seiner eigenen Fantasiewelt ist, wo alles einen gluecklich macht. 
+					Du weisst ja wie Menschenfreundlich ich bin, ich wuerde nur zu gern dieses grosse Glueck mit anderen
+					teilen.
+					Koenntest du mir ein bisschen von diesem Knochenmark beschaffen? Ich denke 30 MONSTER sollten
+					dafuer ausreichen.
+            </story> 
+            <description>
+                Geh in das Labyrinth und toete 30 MONSTER. 
+				Begib dich anschliessend zu Konstantin.
+            </description>
+            <tasks>
+                <kill>MONSTER,30</kill>
+            </tasks>
+            <rewards>
+                <xp>400</xp>
+                <gold>300</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Wer Lust zu tauschen hat, hat Lust zu taeuschen</name>
+            <difficulty>0</difficulty>
+            <owner>Konstantin</owner>
+            <repeatable>yes</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Konstantin:
+					Mein lieber Freund. 
+					Du weisst ja, dass man in den Labyrinthen frueher ganz viel Gold gefunden hat.
+					Ich habe dieses frueher immer sehr gut mit fahrenden Haendlern gegen Vorraete gertauscht.
+					Nun hat man aber seit einer langen Zeit kein Gold mehr dort unten gefunden.
+					Ich habe aber gehoert, dass man dort immer ncoh Messing finden kann. Und da dachte ich mir,
+					dass du mir sicherlich ein bisschen davon mitbringen koenntest nicht wahr? Ich wuerde diesen
+					dann den Haendlern als Gold geben. Hihihi.
+					Die Narren werden den Unterschied sicherlich nie bemerken.
+					Du wirst an dem Gewinn natuerlich teilhaben.
+            </story> 
+            <description>
+                Geh in das Labyrinth und suche nach einem Klumpen Messing. 
+				Bringe ihn anschliessend zu Konstantin zurueck.
+            </description>
+            <tasks>
+                <item>Messing</item>
+            </tasks>
+            <rewards>
+                <xp>400</xp>
+                <gold>300</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Das schmieden ist des Schmiedes Lust</name>
+            <difficulty>0</difficulty>
+            <owner>Yorlgon</owner>
+            <repeatable>yes</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Yorlgon:
+					Naaaaaa du alter Gauner, weisst du ich koennte deine Hilfe doch sicherlich in
+					Anspruch nehmen nicht wahr? Genauer gesagt deine Dienste, du tust ja nichts unentgeltlich.
+					Nun also um ordentlich meinen Job machen zu koennen, benoetige ich Eisen.
+					Die Haendler verkaufen schon lange nichts mehr, und meine Vorraete gehen nun auch zur Neige.
+					Bringe mir doch einen ordentlichen Klumpen Eisen aus dem Labyrinth.
+            </story> 
+            <description>
+                Geh in das Labyrinth und suche nach einem Klumpen Eisen. 
+				Bringe ihn anschliessend zu Yorlgon.
+            </description>
+            <tasks>
+                <item>Eisen</item>
+            </tasks>
+            <rewards>
+                <xp>400</xp>
+                <gold>300</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Haerter, Besser, Staerker</name>
+            <difficulty>0</difficulty>
+            <owner>Yorlgon</owner>
+            <repeatable>yes</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Yorlgon:
+					Toete fuer mich mal 20 MONSTER und sammle das Gift von ihnen ein.
+					Wenn ich meine Schwerter in dieses Gift tauche, wird das stahl noch
+					viel staerker und fester.
+            </story> 
+            <description>
+                Geh in das Labyrinth und toete 20 MONSTER. 
+				Begib dich anschliessend zu Yorlgon.
+            </description>
+            <tasks>
+                <kill>MONSTER,20</kill>
+            </tasks>
+            <rewards>
+                <xp>400</xp>
+                <gold>300</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Mann, dessen Schneider ein Schmied ist</name>
+            <difficulty>0</difficulty>
+            <owner>Yorlgon</owner>
+            <repeatable>yes</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Yorlgon:
+					Du kaufst bei mir doch immer viele gute Ruestungen ein.
+					Willst du dich auch ein bisschen bemuehen damit meine Ruestungen noch etwas besser werden?
+					Dir ist sicherlich aufgefallen, dass MONSTER relativ schwer zu toeten sind, nicht wahr?
+					Nun deren Panzer hat eine besondere Festigkeit und Resistenz gegenueber Schlaegen.
+					Wenn du mir ein 30 solcher Panzer mitbringst, werde ich diese in meine Ruestungen verbauen
+					koennen.
+            </story> 
+            <description>
+                Geh in das Labyrinth und toete 30 MONSTER. 
+				Begib dich anschliessend zu Yorlgon.
+            </description>
+            <tasks>
+                <kill>MONSTER,30</kill>
+            </tasks>
+            <rewards>
+                <xp>400</xp>
+                <gold>300</gold>
+            </rewards>
+        </quest>
+		
+		<quest>
+            <name>Das Gegengift</name>
+            <difficulty>0</difficulty>
+            <owner>Yorlgon</owner>
+            <repeatable>no</repeatable>
+            <conditions>
+				<solved>Im Anfang war die Tat!</solved>
+                <level>0</level>
+            </conditions>
+            <story>
+				Yorlgon:
+					Mir ist letztens zu Ohren gekommen, dass ein paar Forscher nun ein Gegengift gegen
+					ein paar giftige Kreaturen aus den Labyrinthen entwickelt haben.
+					Sie hatten ja aber keine lebenden Vieher zur hand um das Gegengift ordentlich testen zu koennen.
+					Was macht man in einer solchen Situation? Richtig, man geht selbst in das Labyrinth,
+					laesst sich vergiften und schaut dann ob man sich heilen kann. Sie haben diesen Versuch wohl
+					auch tatsaechlich erfolgreich durchgefuehrt und waren nun auf dem Weg zurueck, als sie von anderen
+					Monstern angegriffen wurden. Nun diesen war es komplett egal ob es ein Gegengift gibt oder nicht, 
+					denn sie hatten Klauen und scharfe Zaehne und haben die Narren einfach zerfetzt. Nur einer konnte 
+					entfliehen, um schnell seine Geschichte zu erzaehlen, und sich danach sofort in das Jenseits zu begeben.
+					Ich glaube es waere vom Vorteil wenn du die Truhe mit den restlichen Gegengiften findest und herauf
+					bringst. Wir wuessten sicherlich was besseres damit anzufangen, als es dort unten verroten zu lassen.
+            </story> 
+            <description>
+                Geh in das Labyrinth und finde die Truhe mit dem Gegengift. 
+				Begib dich anschliessend zu Yorlgon.
+            </description>
+            <tasks>
+                <item>Truhe</item>
+            </tasks>
+            <rewards>
+                <xp>400</xp>
+                <gold>300</gold>
+            </rewards>
+        </quest>
     </emodia_quest>
