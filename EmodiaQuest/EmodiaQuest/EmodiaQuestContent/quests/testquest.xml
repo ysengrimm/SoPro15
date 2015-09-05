@@ -28,11 +28,9 @@
 					Ich werde dich selbstverstaendlich gut fuer den Fund belohnen.
 					Und pass bitte trotzdem auf dich auf, ok?
             </story>
-            <description>
-                Geh und finde den Sack mit dem Diebesgut.
-            </description>
+            <description>Finde den Sack mit dem Diebesgut.</description>
             <tasks>
-                <item>Diebesgut</item>
+                <level>4</level>
             </tasks>
             <rewards>
                 <xp>300</xp>

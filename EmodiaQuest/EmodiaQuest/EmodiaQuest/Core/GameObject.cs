@@ -22,9 +22,10 @@ namespace EmodiaQuest.Core
         public Vector3 position;
         public Vector2 Position2D;
         public int rotation;
-        private int rotationY = 0;
-        private int rotationX = 0;
-        private int rotationZ = 0;
+        private float rotationY = 0;
+        private float rotationX = 0;
+        private float rotationZ = 0;
+        private float scale = 1;
         public Model model;
         public List<Texture2D> Textures;
         public String Name;
@@ -74,6 +75,7 @@ namespace EmodiaQuest.Core
         {
             if (IsRandomStuff)
             {
+                rnd = new Random();
                 switch (Name)
                 {
                     case "Gras_1":
@@ -109,8 +111,8 @@ namespace EmodiaQuest.Core
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_1/Random_Stein1_tex_3"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_1/Random_Stein1_tex_4"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_1/Random_Stein1_tex_5"));
-                        rotationZ = rnd.Next(360);
-                        rotationX = rnd.Next(360);
+                        rotationZ = (float)(rnd.NextDouble() * 2 * Math.PI);
+                        rotationX = (float)(rnd.NextDouble() * 2 * Math.PI);
                         break;
                     case "Stein_2":
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_2/Random_Stein2_tex_1"));
@@ -118,8 +120,8 @@ namespace EmodiaQuest.Core
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_2/Random_Stein2_tex_3"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_2/Random_Stein2_tex_4"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_2/Random_Stein2_tex_5"));
-                        rotationZ = rnd.Next(360);
-                        rotationX = rnd.Next(360);
+                        rotationZ = (float)(rnd.NextDouble() * 2 * Math.PI);
+                        rotationX = (float)(rnd.NextDouble() * 2 * Math.PI);
                         break;
                     case "Stein_3":
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_3/Random_Stein_3_tex_1"));
@@ -127,16 +129,14 @@ namespace EmodiaQuest.Core
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_3/Random_Stein_3_tex_3"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_3/Random_Stein_3_tex_4"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_3/Random_Stein_3_tex_5"));
-                        rotationZ = rnd.Next(360);
-                        rotationX = rnd.Next(360);
+                        rotationZ = (float)(rnd.NextDouble() * 2 * Math.PI);
+                        rotationX = (float)(rnd.NextDouble() * 2 * Math.PI);
                         break;
                 }
                 rotationY = rnd.Next(360);
                 texture = rnd.Next(Textures.Count - 1);
-
             }
-            
-            //Console.WriteLine(Position2D);
+
 
         }
 
@@ -213,7 +213,7 @@ namespace EmodiaQuest.Core
                         {
                             effect.SpecularPower = 2f;
                             effect.EnableDefaultLighting();
-                            effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateRotationX(rotationX) * Matrix.CreateRotationY(rotationY) * Matrix.CreateRotationZ(rotationZ) * Matrix.CreateTranslation(position) * world;
+                            effect.World = Matrix.CreateScale(scale) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateRotationX(rotationX) * Matrix.CreateRotationY(rotationY) * Matrix.CreateRotationZ(rotationZ) * Matrix.CreateTranslation(position) * world;
                             effect.View = view;
                             effect.Projection = projection;
                             if (IsRandomStuff)
@@ -277,6 +277,7 @@ namespace EmodiaQuest.Core
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
+                            effect.PreferPerPixelLighting = true;
                             effect.EnableDefaultLighting();
                             effect.World = world * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
                             effect.View = view;

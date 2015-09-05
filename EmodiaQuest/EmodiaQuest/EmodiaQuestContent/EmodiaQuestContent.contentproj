@@ -606,8 +606,23 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\haus1_dim30x10.fbx">
-      <Name>haus1_dim30x10</Name>
+    <Compile Include="fbxContent\gameobjects\Wohnhaus2_30x10\Wohnhaus2_dim30x10.fbx">
+      <Name>Wohnhaus2_dim30x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Taverne_30x10\Taverne_dim30x10.fbx">
+      <Name>Taverne_dim30x10</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Kaufladen_dim_30x30.fbx">
+      <Name>Kaufladen_dim_30x30</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Schmiede_10x10\Schmiede_dim_10x10.fbx">
+      <Name>Schmiede_dim_10x10</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
@@ -1267,13 +1282,63 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\boden_tex_gras_1.png">
+    <Compile Include="fbxContent\gameobjects\Wohnhaus2_30x10\Wohnhaus_2_tex_1.png">
+      <Name>Wohnhaus_2_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Taverne_30x10\boden_tex_gras_1.png">
       <Name>boden_tex_gras_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\Wohnhaus1_30x10\Wohnhaus_1_tex_1.png">
-      <Name>Wohnhaus_1_tex_1</Name>
+    <Compile Include="fbxContent\gameobjects\Taverne_30x10\Taverne_tex_1.png">
+      <Name>Taverne_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Wohnhaus2_30x10\Random_Tonne_tex_4.png">
+      <Name>Random_Tonne_tex_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\boden_tex_gras_1.png">
+      <Name>boden_tex_gras_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Kaufladen_tex_1.png">
+      <Name>Kaufladen_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Baum_1_tex_1.png">
+      <Name>Random_Baum_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Kaputter_Flugzeugmotor_1_tex_1.png">
+      <Name>Random_Kaputter_Flugzeugmotor_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Tumbleweed_1_tex2.png">
+      <Name>Random_Tumbleweed_1_tex2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Kaufladen_30x30\Random_Tumbleweed_1_tex_1.png">
+      <Name>Random_Tumbleweed_1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Schmiede_10x10\Schmiede_tex_1.png">
+      <Name>Schmiede_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Schmiede_10x10\boden_tex_gras_1.png">
+      <Name>boden_tex_gras_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

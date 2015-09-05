@@ -48,7 +48,7 @@ namespace EmodiaQuest.Core
         public Vector2 PlayerViewDirection = new Vector2(0, 0);
 
         // Eventhandler
-        public event EmodiaQuest.Core.Delegates_CORE.ChangeValueDelegate OnChangeValue;
+        public event Delegates_CORE.ChangeValueDelegate OnChangeValue;
 
         // Collision
         public float CollisionRadius;
@@ -59,8 +59,8 @@ namespace EmodiaQuest.Core
         private MouseState currentMouseState;
 
         // Playerstats
-        private float hp = 100;
-        public float Hp
+        private int hp = 100;
+        public int Hp
         {
             get { return hp; }
             set
@@ -72,6 +72,76 @@ namespace EmodiaQuest.Core
                 }
             }
         }
+
+        private int maxHp;
+        public int MaxHp
+        {
+            get { return maxHp; }
+            set
+            {
+                maxHp = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(maxHp, "max_hp"));
+                }
+            }
+        }
+
+        private int hpRegen;
+        public int HpRegen
+        {
+            get { return hpRegen; }
+            set
+            {
+                hpRegen = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(hpRegen, "hp_regen"));
+                }
+            }
+        } 
+
+        private int focus;
+        public int Focus
+        {
+            get { return focus; }
+            set
+            {
+                focus = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(focus, "focus"));
+                }
+            }
+        }
+
+        private int maxFocus;
+        public int MaxFocus
+        {
+            get { return maxFocus; }
+            set
+            {
+                maxFocus = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(maxFocus, "max_focus"));
+                }
+            }
+        }
+
+        private int focusRegen;
+        public int FocusRegen
+        {
+            get { return focusRegen; }
+            set
+            {
+                focusRegen = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(focusRegen, "focus_regen"));
+                }
+            }
+        } 
 
         public float PlayerSpeed;
         public float RotationSpeed;
@@ -235,6 +305,21 @@ namespace EmodiaQuest.Core
         private Item oldEquippedBoots;
         private Item oldEquippedWeapon;
 
+        private Quest activeQuest = new Quest() {Name = "", Description = ""};
+        public Quest ActiveQuest
+        {
+            get { return activeQuest; }
+            set
+            {
+                activeQuest = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(0, "quest"));
+                }
+            }
+        }
+        private Quest oldQuest;
+
         /**
          * Animation and Model
         **/
@@ -336,7 +421,16 @@ namespace EmodiaQuest.Core
             RotationSpeed = Settings.Instance.PlayerRotationSpeed;
 
             // set defaults
-            Hp = 100; // Settings.Instance.MaxPlayerHealth ?
+            // Max HP is XP for next lvl + 10% strength with base 100
+            MaxHp = (int)((100 * Math.Sqrt(Level)) < 100 ? 100 : (100 * Math.Sqrt(Level)) + Math.Round(Strength / 10.0));
+            Hp = MaxHp;
+            HpRegen = 10;
+
+            // Max Focus is 100 + 10% intel
+            MaxFocus = (int)(100 + Math.Round(Intelligence / 10.0));
+            Focus = MaxFocus;
+            FocusRegen = (int) Math.Round(Intelligence/50.0);
+
             Armor = 0;
             MinDamage = 0;
             MaxDamage = 0;
@@ -349,9 +443,11 @@ namespace EmodiaQuest.Core
             PlayerInventory = new List<Item>();
 
             CurrentEquippedHelmet = new Item(ItemClass.Helmet, "InitHelmet");
-            CurrentEquippedArmor = new Item(0, ItemClass.Armor, 0, 0, 0, 10, 10);
+            CurrentEquippedArmor = new Item(0, ItemClass.Armor,0,0,0,10,10);
             CurrentEquippedBoots = new Item(ItemClass.Boots, "InitBoots");
             CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 5, 7, 0, 0);
+
+            ActiveQuest = new Quest {Name = "", Description = ""};
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
@@ -481,7 +577,7 @@ namespace EmodiaQuest.Core
             {
                 foreach (NPC npc in SafeWorld.Instance.NPCList)
                 {
-                    if (gameEnv.EuclideanDistance(npc.Position, Position) < 5f)
+                    if (gameEnv.EuclideanDistance(npc.Position, Position) < 15f)
                     {
                         //mystuff <-- why, just why?
                         //double a = Kosinussatz(npc.Position, v);
@@ -864,12 +960,34 @@ namespace EmodiaQuest.Core
             if (CurrentEquippedArmor != oldEquippedArmor || CurrentEquippedBoots != oldEquippedBoots || CurrentEquippedHelmet != oldEquippedHelmet || CurrentEquippedWeapon != oldEquippedWeapon)
             {
                 Console.WriteLine("Equipped items changed, computed new stats.");
-                grandStatsFromItems();
+                GrandStats();
                 oldEquippedArmor = CurrentEquippedArmor;
                 oldEquippedBoots = CurrentEquippedBoots;
                 oldEquippedHelmet = CurrentEquippedHelmet;
                 oldEquippedWeapon = CurrentEquippedWeapon;
             }
+
+            // Regen HP and Focus 
+            // TODO: Timer or something?!
+            Hp += HpRegen;
+            if (Hp > MaxHp)
+            {
+                Hp = MaxHp;
+            }
+
+            Focus += FocusRegen;
+            if (Focus > MaxFocus)
+            {
+                Focus = MaxFocus;
+            }
+
+            if (ActiveQuest != oldQuest)
+            {
+                UpdateQuest();
+                oldQuest = activeQuest;
+            }
+
+            
 
             // Call Sounds
             if (HitEnemyWithSword)
@@ -896,19 +1014,17 @@ namespace EmodiaQuest.Core
                 Console.WriteLine("Level Up! You are now lvl " + Level);
 
                 // Grant lvlup boni
-                Strength++;
                 strengthGaidedThrougLvls++;
-                Skill++;
                 skillGainedThroughLvls++;
-                Intelligence++;
                 intellGainedThroughLvls++;
+                GrandStats();
 
                 Experience = Experience - XPToNextLevel;
                 XPToNextLevel = (int)Math.Round(xpScaleFactor * Math.Sqrt(Level));
             }
         }
 
-        private void grandStatsFromItems()
+        private void GrandStats()
         {
             Strength = CurrentEquippedArmor.StrengthPlus + CurrentEquippedBoots.StrengthPlus + CurrentEquippedHelmet.StrengthPlus +
                     CurrentEquippedWeapon.StrengthPlus + strengthGaidedThrougLvls;
@@ -919,17 +1035,30 @@ namespace EmodiaQuest.Core
             Intelligence = CurrentEquippedArmor.IntelligencePlus + CurrentEquippedBoots.IntelligencePlus + CurrentEquippedHelmet.IntelligencePlus +
                     CurrentEquippedWeapon.IntelligencePlus + intellGainedThroughLvls;
 
-            // TODO: Armor gain through strength?!
             Armor = CurrentEquippedArmor.Armor + CurrentEquippedBoots.Armor + CurrentEquippedHelmet.Armor +
                     CurrentEquippedWeapon.Armor;
 
-            // TODO: DMG gain through skill?!
             MinDamage = CurrentEquippedArmor.MinDamage + CurrentEquippedBoots.MinDamage + CurrentEquippedHelmet.MinDamage +
                     CurrentEquippedWeapon.MinDamage;
+            // max dmg + 10% skill 
             MaxDamage = CurrentEquippedArmor.MaxDamage + CurrentEquippedBoots.MaxDamage + CurrentEquippedHelmet.MaxDamage +
-                    CurrentEquippedWeapon.MaxDamage;
+                    CurrentEquippedWeapon.MaxDamage + (int)Math.Round(Skill/10.0);
 
-            // TODO: Health gain?!
+            // Max HP is XP for next lvl + 10% strength with base 100
+            MaxHp = (int)((100 * Math.Sqrt(Level)) < 100 ? 100 : (100 * Math.Sqrt(Level)) + Math.Round(Strength / 10.0));
+
+            // Max Focus is 100 + 10% intel
+            MaxFocus = (int) (100 + Math.Round(Intelligence/10.0));
+
+            FocusRegen = (int) Math.Round(Intelligence/2.0);
+        }
+
+        private void UpdateQuest()
+        {
+            if (QuestController.Instance.ActiveQuests.Any())
+            {
+                ActiveQuest = QuestController.Instance.ActiveQuests[0];
+            }
         }
 
         private Enemy getClosestMonster(List<Enemy> enemyList)
@@ -952,7 +1081,7 @@ namespace EmodiaQuest.Core
         public void Attack(float damage)
         {
             // you geht 10% damage reduction on your armor
-            Hp -= (damage - (int)Math.Round(Armor / 10.0));
+            Hp -= (int)(damage - Math.Round(Armor/10.0));
             if (Hp <= 0)
             {
                 Hp = 100;
