@@ -42,7 +42,7 @@ namespace EmodiaQuest.Core
             Settings.Instance.DungeonMapSize = mapWidth;
             Settings.Instance.DungeonMapSize = mapHeight;
 
-            Controller = new EnvironmentController(WorldState.Dungeon);
+            Controller = new EnvironmentController(WorldState.Dungeon, Content);
 
             Settings.Instance.NumEnemies = numEnemies;
         }
@@ -68,27 +68,27 @@ namespace EmodiaQuest.Core
             generator = new LevelGenerator(Controller, enemies);            
 
             // Walls
-            EnvironmentController.Object wall = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/NormalWall_10x10"), ColorListDungeon.Instance.Wall, new Vector2(1, 1)); Controller.CollisionObjList.Add(wall);
+            EnvironmentController.Object wall = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/NormalWall_10x10"), ColorListDungeon.Instance.Wall, new Vector2(1, 1), "wall", false); Controller.CollisionObjList.Add(wall);
             // Grounds
-            EnvironmentController.Object ground = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Ground_10x10/Ground_10x10"), ColorListDungeon.Instance.Ground, new Vector2(1, 1));
+            EnvironmentController.Object ground = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Ground_10x10/Ground_10x10"), ColorListDungeon.Instance.Ground, new Vector2(1, 1), "ground", false);
             // Items
-            EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), ColorListDungeon.Instance.Item, new Vector2(1, 1));
+            EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), ColorListDungeon.Instance.Item, new Vector2(1, 1), "item", false);
             // Teleporter
-            EnvironmentController.TeleObject teleporter = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/Teleporter_10x10/Teleporter_10x10"), ColorListDungeon.Instance.Teleporter, new Vector2(1, 1), new Vector2(0, 0)); Controller.TeleporterObjList.Add(teleporter);
+            EnvironmentController.TeleObject teleporter = new EnvironmentController.TeleObject(Content.Load<Model>("fbxContent/gameobjects/Teleporter_10x10/Teleporter_10x10"), ColorListDungeon.Instance.Teleporter, new Vector2(1, 1), new Vector2(0, 0), "teleporter", false); Controller.TeleporterObjList.Add(teleporter);
 
             // Nothing
             // this is important for level generation 
             // it allows to build black pixels in collision map for every point in map, wich has no model
             // (it's for performance)
             // Do not insert in the map !!!
-            EnvironmentController.Object nothing = new EnvironmentController.Object(null, ColorListDungeon.Instance.Nothing, Vector2.One); Controller.CollisionObjList.Add(nothing);
+            EnvironmentController.Object nothing = new EnvironmentController.Object(null, ColorListDungeon.Instance.Nothing, Vector2.One, "nothing", false); Controller.CollisionObjList.Add(nothing);
 
             // Insert objects
-            Controller.InsertObj(Controller.Wall, wall.Model, wall.Color, 0);
-            Controller.InsertObj(Controller.Ground, ground.Model,ground.Color, 0);
-            Controller.InsertObj(Controller.Teleporter, teleporter.Model, teleporter.Color, 0);
+            Controller.InsertObj(Controller.Wall, wall.Model, wall.Color, 0, wall.Name, wall.IsRandomStuff);
+            Controller.InsertObj(Controller.Ground, ground.Model,ground.Color, 0, ground.Name, ground.IsRandomStuff);
+            Controller.InsertObj(Controller.Teleporter, teleporter.Model, teleporter.Color, 0, teleporter.Name, teleporter.IsRandomStuff);
             // Insert items
-            Controller.InsertItem(Controller.Items, item.Model, item.Color, 0);
+            Controller.InsertItem(Controller.Items, item.Model, item.Color, 0, item.Name, item.IsRandomStuff);
 
             //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content);

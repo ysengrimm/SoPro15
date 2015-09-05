@@ -140,6 +140,7 @@ namespace EmodiaQuest.Core
         public CollisionHandler CollisionHandler
         {
             set { collisionHandler = value; }
+            get { return collisionHandler; }
         }
 
         private bool gameIsInFocus;

@@ -125,6 +125,7 @@ namespace EmodiaQuest.Core
         /// </summary>
         public float ViewDistance;
 
+        public float EnvironmentDetailDistance;
         /********************************
          *      Audio Settings        *
          ********************************/
@@ -219,6 +220,8 @@ namespace EmodiaQuest.Core
             HumanEnemySpeed = 0.5f;
 
             MaxHumanEnemyHealth = 100f;
+
+            EnvironmentDetailDistance = 100f;
         }
 
 
