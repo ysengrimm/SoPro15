@@ -183,6 +183,7 @@ namespace EmodiaQuest.Core
         public ContentManager ContentMngr
         {
             set { contentMngr = value; }
+            get { return contentMngr; }
         }
 
         private Vector2 position;

@@ -160,7 +160,7 @@ namespace EmodiaQuest.Core.GUI.Screens
         }
 
         // this is super random but without it there is a nullpointer exception somwhere down there, just ignore it :)
-        private NPC nPCName = new NPC(Vector2.Zero, new EnvironmentController(WorldState.Safeworld),NPC.NPCName.Jack, NPCProfession.Arbeitslos);
+        private NPC nPCName = new NPC(Vector2.Zero, new EnvironmentController(WorldState.Safeworld, Player.Instance.ContentMngr),NPC.NPCName.Jack, NPCProfession.Arbeitslos);
         public NPC NPCName
         {
             get { return nPCName; }
