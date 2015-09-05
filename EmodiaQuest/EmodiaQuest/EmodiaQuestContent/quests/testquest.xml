@@ -25,7 +25,7 @@
                 Do thing XY!
             </description>
             <tasks>
-                <level>0</level>
+                <kill>Monster8, 2</kill>
             </tasks>
             <rewards>
                 <xp>150</xp>
