@@ -132,6 +132,37 @@ namespace EmodiaQuest.Core
                         rotationZ = (float)(rnd.NextDouble() * 2 * Math.PI);
                         rotationX = (float)(rnd.NextDouble() * 2 * Math.PI);
                         break;
+                    case "Holzplanke_1":
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Holzplanke_1/Random_Holzplanke_1_tex_1"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Holzplanke_1/Random_Holzplanke_1_tex_2"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Holzplanke_1/Random_Holzplanke_1_tex_3"));
+                        break;
+                    case "Kaputter_Flugzeugmotor_1":
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Kaputter_Flugzeugmotor_1/Random_Kaputter_Flugzeugmotor_1_tex_1"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Kaputter_Flugzeugmotor_1/Random_Kaputter_Flugzeugmotor_1_tex_2"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Kaputter_Flugzeugmotor_1/Random_Kaputter_Flugzeugmotor_1_tex_3"));
+                        break;
+                    case "MetallStück_1":
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/MetallStück_1/Random_MetallStück_1_tex_1"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/MetallStück_1/Random_MetallStück_1_tex_2"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/MetallStück_1/Random_MetallStück_1_tex_4"));
+                        break;
+                    case "MetallStück_2":
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/MetallStück_2/Random_MetallStück_2_tex_1"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/MetallStück_2/Random_MetallStück_2_tex_2"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/MetallStück_2/Random_MetallStück_2_tex_2"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/MetallStück_2/Random_MetallStück_2_tex_3"));
+                        break;
+                    case "Tonne_1":
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Tonne_1/Random_Tonne_tex_1"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Tonne_1/Random_Tonne_tex_2"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Tonne_1/Random_Tonne_tex_3"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Tonne_1/Random_Tonne_tex_4"));
+                        break;
+                    case "Tumbleweed_1":
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Tumbleweed_1/Random_Tumbleweed_1_tex_1"));
+                        addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Tumbleweed_1/Random_Tumbleweed_1_tex_1"));
+                        break;
                 }
                 rotationY = rnd.Next(360);
                 texture = rnd.Next(Textures.Count - 1);
