@@ -21,9 +21,9 @@ namespace EmodiaQuest.Core
 
         public Vector3 position;
         public int rotation;
-        private int rotationY = 0;
-        private int rotationX = 0;
-        private int rotationZ = 0;
+        private float rotationY = 0;
+        private float rotationX = 0;
+        private float rotationZ = 0;
         public Model model;
         public List<Texture2D> Textures;
         public String Name;
@@ -65,6 +65,7 @@ namespace EmodiaQuest.Core
         {
             if(IsRandomStuff)
             {
+                rnd = new Random();
                 switch (Name)
                 {
                     case "Gras_1":
@@ -100,8 +101,8 @@ namespace EmodiaQuest.Core
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_1/Random_Stein1_tex_3"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_1/Random_Stein1_tex_4"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_1/Random_Stein1_tex_5"));
-                        rotationZ = rnd.Next(360);
-                        rotationX = rnd.Next(360);
+                        rotationZ = (float)(rnd.NextDouble() * 2 * Math.PI);
+                        rotationX = (float)(rnd.NextDouble() * 2 * Math.PI);
                         break;
                     case "Stein_2":
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_2/Random_Stein2_tex_1"));
@@ -109,8 +110,8 @@ namespace EmodiaQuest.Core
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_2/Random_Stein2_tex_3"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_2/Random_Stein2_tex_4"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_2/Random_Stein2_tex_5"));
-                        rotationZ = rnd.Next(360);
-                        rotationX = rnd.Next(360);
+                        rotationZ = (float)(rnd.NextDouble() * 2 * Math.PI);
+                        rotationX = (float)(rnd.NextDouble() * 2 * Math.PI);
                         break;
                     case "Stein_3":
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_3/Random_Stein_3_tex_1"));
@@ -118,11 +119,11 @@ namespace EmodiaQuest.Core
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_3/Random_Stein_3_tex_3"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_3/Random_Stein_3_tex_4"));
                         addTexture(Content.Load<Texture2D>("fbxContent/gameobjects/RandomStuff/Stein_3/Random_Stein_3_tex_5"));
-                        rotationZ = rnd.Next(360);
-                        rotationX = rnd.Next(360);
+                        rotationZ = (float)(rnd.NextDouble() * 2 * Math.PI);
+                        rotationX = (float)(rnd.NextDouble() * 2 * Math.PI);
                         break;
                 }
-                rotationY = rnd.Next(360);
+                rotationY = (float) (rnd.NextDouble() * 2 * Math.PI);
                 texture = rnd.Next(Textures.Count - 1);
             }
 

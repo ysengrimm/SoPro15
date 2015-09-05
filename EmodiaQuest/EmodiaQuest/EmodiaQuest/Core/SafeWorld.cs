@@ -126,15 +126,15 @@ namespace EmodiaQuest.Core
             EnvironmentController.Object Stein_3 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Stein_3/Stein_3"), new Color(300, 300, 0), new Vector2(0, 0), "Stein_3", true);
 
             // Insert Random Stuff (after the collisionMap was generated, we don´t want random stuff in walls and buildings)
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_1.Model, 1000, Gras_1.Name, Gras_1.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_2.Model, 1000, Gras_2.Name, Gras_2.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_3.Model, 1000, Gras_3.Name, Gras_3.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_1.Model, 500, Gras_1.Name, Gras_1.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_2.Model, 500, Gras_2.Name, Gras_2.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_3.Model, 500, Gras_3.Name, Gras_3.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_1.Model, 3000, Busch_1.Name, Busch_1.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_2.Model, 3000, Busch_2.Name, Busch_2.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_3.Model, 3000, Busch_3.Name, Busch_3.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_1.Model, 4000, Stein_1.Name, Stein_1.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_2.Model, 4000, Stein_2.Name, Stein_2.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_3.Model, 4000, Stein_3.Name, Stein_3.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_1.Model, 2000, Stein_1.Name, Stein_1.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_2.Model, 2000, Stein_2.Name, Stein_2.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_3.Model, 2000, Stein_3.Name, Stein_3.IsRandomStuff);
 
             // After everything in the environment is added we load the stuff for the objects (textures etc.)
             Controller.LoadEnvironment(Content);
