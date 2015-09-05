@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EmodiaQuest.Core.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -705,10 +706,22 @@ namespace EmodiaQuest.Core.NPCs
                     {
                         QuestController.Instance.KilledEnemies.Add(enemyAndCount[0], 1);    
                     }
-                    
                 }
             }
             Console.WriteLine("Enemy at " + Position + " died");
+
+            List<Item> droppedItems = ItemTestClass.Instance.ItemGeneratorMonster(Player.Instance.Level, EnemyType);
+            foreach (Item item in droppedItems)
+            {
+                if (Player.Instance.PlayerInventory.Count < 18)
+                {
+                    Player.Instance.PlayerInventory.Add(item);    
+                }
+                else
+                {
+                    Player.Instance.ItemsDropped.Add(item);
+                }
+            }
         }
 
         public void SetAsAlive()

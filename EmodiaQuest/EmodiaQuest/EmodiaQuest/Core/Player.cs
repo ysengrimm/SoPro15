@@ -295,6 +295,8 @@ namespace EmodiaQuest.Core
         // inventory
         public List<Item> PlayerInventory { get; set; }
 
+        public List<Item> ItemsDropped { get; set; } 
+
         public Item CurrentEquippedHelmet;
         public Item CurrentEquippedArmor;
         public Item CurrentEquippedBoots;
@@ -445,7 +447,7 @@ namespace EmodiaQuest.Core
             CurrentEquippedHelmet = new Item(ItemClass.Helmet, "InitHelmet");
             CurrentEquippedArmor = new Item(0, ItemClass.Armor,0,0,0,10,10);
             CurrentEquippedBoots = new Item(ItemClass.Boots, "InitBoots");
-            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 5, 7, 0, 0);
+            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 500, 800, 0, 0);
 
             ActiveQuest = new Quest {Name = "", Description = ""};
 
