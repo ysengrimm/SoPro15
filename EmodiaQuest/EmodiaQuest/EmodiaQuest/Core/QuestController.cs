@@ -277,9 +277,9 @@ namespace EmodiaQuest.Core
 
                         break;
                     case "item":
-                        // inventory!
                         String itemOut;
                         quest.Rewards.TryGetValue(key, out itemOut);
+                        // needs items!
                         Console.WriteLine("The player gets: " + itemOut);
                         break;
                     case "gold":
