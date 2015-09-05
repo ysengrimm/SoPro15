@@ -374,13 +374,15 @@ namespace EmodiaQuest.Core
 
                     //Console.WriteLine(this.Position2D);
 
-                    //if (pointSide(turnedBulletDirection, playerPos, position2D) > 0)
-                    if (pointSide(turnedBulletDirection, playerPos, ppp) > 0)
+                    
+                    //if (pointSide(turnedBulletDirection, playerPos, ppp) > 0)
+
 
 
 
                     //if (pointSide(directionWith90Degrees, playerPos, Position2D) < 0)
                     //if (pointSide(Player.Instance.PlayerViewDirection, Vector2.Transform(Player.Instance.PlayerViewDirection,  Position2D > 0)
+                    if (pointSide(turnedBulletDirection, playerPos, position2D) > 0 || this.Name == "ground")
                     {
                         foreach (ModelMesh mesh in model.Meshes)
                         {
