@@ -54,6 +54,21 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "gold":
                     platform.updateLabel("gold", e.ChangeValue.ToString());
                     break;
+                case "armor":
+                    platform.updateLabel("armor", "Ruestung: " + e.ChangeValue.ToString());
+                    break;
+                case "strength":
+                    platform.updateLabel("str", "Kraft: " + e.ChangeValue.ToString());
+                    break;
+                case "skill":
+                    platform.updateLabel("skill", "Fertigkeit: " + e.ChangeValue.ToString());
+                    break;
+                case "intelligence":
+                    platform.updateLabel("intel", "Intelligenz: " + e.ChangeValue.ToString());
+                    break;
+                case "dmg":
+                    platform.updateLabel("damage", "Schaden: " + Player.Instance.MinDamage + " - " + Player.Instance.MaxDamage);
+                    break;
             }
         }
 
@@ -135,6 +150,13 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             // Gold
             platform.addLabel(50, 60, 5, "monoFont_big", Player.Instance.Gold.ToString(), "gold", true);
+
+            // Player stats
+            platform.addLabel(50, 10, 5, "monoFont_big", "Ruestung: " + Player.Instance.Armor, "armor", true);
+            platform.addLabel(50, 15, 5, "monoFont_big", "Schaden: " + Player.Instance.MinDamage + " - " + Player.Instance.MaxDamage, "damage", true);
+            platform.addLabel(50, 20, 5, "monoFont_big", "Kraft: " + Player.Instance.Strength, "str", true);
+            platform.addLabel(50, 25, 5, "monoFont_big", "Fertigkeit: " + Player.Instance.Skill, "skill", true);
+            platform.addLabel(50, 30, 5, "monoFont_big", "Intelligenz: " + Player.Instance.Intelligence, "intel", true);
 
             Player.Instance.OnChangeValue += new Delegates_CORE.ChangeValueDelegate(ChangeValueEventValue);
 

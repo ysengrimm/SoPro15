@@ -20,6 +20,7 @@ namespace EmodiaQuest.Core
     {
         private static Player _instance;
 
+        private Random rnd = new Random();
 
         // time for attacking
         private float attackTimer;
@@ -71,10 +72,97 @@ namespace EmodiaQuest.Core
             }
         }
 
-        public float Armor;
-        public float Damage;
         public float PlayerSpeed;
         public float RotationSpeed;
+
+        // Player Stats
+        private int armor;
+        public int Armor
+        {
+            get { return armor; }
+            set
+            {
+                armor = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(armor, "armor"));
+                }
+            }
+        }
+
+        private int minDamage;
+        public int MinDamage
+        {
+            get { return minDamage; }
+            set
+            {
+                minDamage = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(minDamage, "dmg"));
+                }
+            }
+        }
+
+        private int maxDamage;
+        public int MaxDamage
+        {
+            get { return maxDamage; }
+            set
+            {
+                maxDamage = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(maxDamage, "dmg"));
+                }
+            }
+        }
+
+        private int strength;
+        public int Strength
+        {
+            get { return strength; }
+            set
+            {
+                strength = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(strength, "strength"));
+                }
+            }
+        }
+
+        private int skill;
+        public int Skill
+        {
+            get { return skill; }
+            set
+            {
+                skill = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(skill, "skill"));
+                }
+            }
+        }
+
+        private int intelligence;
+        public int Intelligence
+        {
+            get { return intelligence; }
+            set
+            {
+                intelligence = value;
+                if (OnChangeValue != null)
+                {
+                    OnChangeValue(this, new ChangeValueEvent(intelligence, "intelligence"));
+                }
+            }
+        }
+
+        private int strengthGaidedThrougLvls;
+        private int skillGainedThroughLvls;
+        private int intellGainedThroughLvls;
 
         private int gold;
         public int Gold
@@ -133,7 +221,18 @@ namespace EmodiaQuest.Core
         }
         private int xpScaleFactor = 100;
 
+        // inventory
         public List<Item> PlayerInventory { get; set; }
+
+        public Item CurrentEquippedHelmet;
+        public Item CurrentEquippedArmor;
+        public Item CurrentEquippedBoots;
+        public Item CurrentEquippedWeapon;
+
+        private Item oldEquippedHelmet;
+        private Item oldEquippedArmor;
+        private Item oldEquippedBoots;
+        private Item oldEquippedWeapon;
 
         /**
          * Animation and Model
@@ -238,14 +337,20 @@ namespace EmodiaQuest.Core
             // set defaults
             Hp = 100; // Settings.Instance.MaxPlayerHealth ?
             Armor = 0;
-            Damage = 50;
-            Gold = 100;
+            MinDamage = 0;
+            MaxDamage = 0;
+            Gold = 0;
 
             Level = 1;
             Experience = 0;
             XPToNextLevel = 100;
 
             PlayerInventory = new List<Item>();
+
+            CurrentEquippedHelmet = new Item(ItemClass.Helmet, "InitHelmet");
+            CurrentEquippedArmor = new Item(0, ItemClass.Armor,0,0,0,10,10);
+            CurrentEquippedBoots = new Item(ItemClass.Boots, "InitBoots");
+            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 5, 7, 0, 0);
 
             MovementOffset = 2.0f;
             ItemOffset = 0.0f;
@@ -729,7 +834,7 @@ namespace EmodiaQuest.Core
                         {
                             if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
                             { 
-                                nmy.Attack(Damage);
+                                nmy.Attack(rnd.Next(MinDamage, MaxDamage + 1));
                                 //attackTimer = 0;
                                 at = true;
                                 HitEnemyWithSword = true;
@@ -743,8 +848,19 @@ namespace EmodiaQuest.Core
                 currentBlockEnemyListtest.Clear();
             }
 
+
             // Leveling
             XpToLevel();
+            // Calculate stats on equipment change
+            if (CurrentEquippedArmor != oldEquippedArmor || CurrentEquippedBoots != oldEquippedBoots || CurrentEquippedHelmet != oldEquippedHelmet || CurrentEquippedWeapon != oldEquippedWeapon)
+            {
+                Console.WriteLine("Equipped items changed, computed new stats.");
+                grandStatsFromItems();
+                oldEquippedArmor = CurrentEquippedArmor;
+                oldEquippedBoots = CurrentEquippedBoots;
+                oldEquippedHelmet = CurrentEquippedHelmet;
+                oldEquippedWeapon = CurrentEquippedWeapon;
+            }
 
             // Call Sounds
             if (HitEnemyWithSword)
@@ -770,9 +886,41 @@ namespace EmodiaQuest.Core
                 Level++;
                 Console.WriteLine("Level Up! You are now lvl " + Level);
 
+                // Grant lvlup boni
+                Strength++;
+                strengthGaidedThrougLvls++;
+                Skill++;
+                skillGainedThroughLvls++;
+                Intelligence++;
+                intellGainedThroughLvls++;
+
                 Experience = Experience - XPToNextLevel;
                 XPToNextLevel = (int)Math.Round(xpScaleFactor * Math.Sqrt(Level));
             }
+        }
+
+        private void grandStatsFromItems()
+        {
+            Strength = CurrentEquippedArmor.StrengthPlus + CurrentEquippedBoots.StrengthPlus + CurrentEquippedHelmet.StrengthPlus +
+                    CurrentEquippedWeapon.StrengthPlus + strengthGaidedThrougLvls;
+
+            Skill = CurrentEquippedArmor.SkillPlus + CurrentEquippedBoots.SkillPlus + CurrentEquippedHelmet.SkillPlus +
+                    CurrentEquippedWeapon.SkillPlus + skillGainedThroughLvls;
+
+            Intelligence = CurrentEquippedArmor.IntelligencePlus + CurrentEquippedBoots.IntelligencePlus + CurrentEquippedHelmet.IntelligencePlus +
+                    CurrentEquippedWeapon.IntelligencePlus + intellGainedThroughLvls;
+
+            // TODO: Armor gain through strength?!
+            Armor = CurrentEquippedArmor.Armor + CurrentEquippedBoots.Armor + CurrentEquippedHelmet.Armor +
+                    CurrentEquippedWeapon.Armor;
+
+            // TODO: DMG gain through skill?!
+            MinDamage = CurrentEquippedArmor.MinDamage + CurrentEquippedBoots.MinDamage + CurrentEquippedHelmet.MinDamage +
+                    CurrentEquippedWeapon.MinDamage;
+            MaxDamage = CurrentEquippedArmor.MaxDamage + CurrentEquippedBoots.MaxDamage + CurrentEquippedHelmet.MaxDamage +
+                    CurrentEquippedWeapon.MaxDamage;
+
+            // TODO: Health gain?!
         }
 
         private Enemy getClosestMonster(List<Enemy> enemyList)
@@ -794,7 +942,8 @@ namespace EmodiaQuest.Core
 
         public void Attack(float damage)
         {
-            Hp -= damage;
+            // you geht 10% damage reduction on your armor
+            Hp -= (damage - (int)Math.Round(Armor/10.0));
             if (Hp <= 0)
             {
                 Hp = 100;
