@@ -337,6 +337,7 @@ namespace EmodiaQuest.Core
                     }
                     IsQuestActive = true;
                     Player.Instance.ActiveQuest = ActiveQuests[0];
+                    Ingame.Instance.CreateNewDungeon();
                 }
                 else
                 {
@@ -347,6 +348,7 @@ namespace EmodiaQuest.Core
                     }
                     IsQuestActive = true;
                     Player.Instance.ActiveQuest = ActiveQuests[0];
+                    Ingame.Instance.CreateNewDungeon();
                 }
                 return true;
             }
