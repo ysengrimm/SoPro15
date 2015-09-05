@@ -35,6 +35,8 @@ namespace EmodiaQuest.Core.Items
         public List<Item> Boots = new List<Item>();
         public List<Item> Weapons = new List<Item>();
 
+
+
         public void loadContent()
         {
 
@@ -50,9 +52,9 @@ namespace EmodiaQuest.Core.Items
             Quests.Add(new Item(ItemClass.Quest, "leg3SteinmonsterumQuest"));
 
             //Lvl 1
-            Helmets.Add(new Item(0, ItemClass.Helmet, 0, 1, 0, 0));
-            Helmets.Add(new Item(0, ItemClass.Helmet, 0, 2, 0, 0));
-            Helmets.Add(new Item(0, ItemClass.Helmet, 0, 3, 0, 0));
+            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 1, 0, 0));
+            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 2, 0, 0));
+            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 3, 0, 0));
 
             //Lvl 2
             Helmets.Add(new Item(2, ItemClass.Helmet, 5, 5, 0, 0));
@@ -108,92 +110,227 @@ namespace EmodiaQuest.Core.Items
             Armors.Add(new Item(4, ItemClass.Armor, 20, 30, 0, 0));
             Armors.Add(new Item(4, ItemClass.Armor, 20, 35, 0, 0));
 
+            //Lvl 0
+            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 1, 3, 0, 0));
+            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 1, 4, 0, 0));
+            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 1, 5, 0, 0));
+
             //Lvl 1
-            Weapons.Add(new Item(1, ItemClass.Weapon, 0, 1, 3, 0, 0));
-            Weapons.Add(new Item(1, ItemClass.Weapon, 0, 1, 4, 0, 0));
-            Weapons.Add(new Item(1, ItemClass.Weapon, 0, 1, 5, 0, 0));
+            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 3, 6, 0, 0));
+            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 3, 7, 0, 0));
+            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 3, 8, 0, 0));
 
             //Lvl 2
-            Weapons.Add(new Item(2, ItemClass.Weapon, 3, 3, 6, 0, 0));
-            Weapons.Add(new Item(2, ItemClass.Weapon, 3, 3, 7, 0, 0));
-            Weapons.Add(new Item(2, ItemClass.Weapon, 3, 3, 8, 0, 0));
+            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 8, 12, 0, 0));
+            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 8, 14, 0, 0));
+            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 8, 16, 0, 0));
 
             //Lvl 3
-            Weapons.Add(new Item(3, ItemClass.Weapon, 7, 8, 12, 0, 0));
-            Weapons.Add(new Item(3, ItemClass.Weapon, 7, 8, 14, 0, 0));
-            Weapons.Add(new Item(3, ItemClass.Weapon, 7, 8, 16, 0, 0));
+            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 14, 20, 0, 0));
+            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 14, 24, 0, 0));
+            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 14, 28, 0, 0));
 
             //Lvl 4
-            Weapons.Add(new Item(4, ItemClass.Weapon, 12, 14, 20, 0, 0));
-            Weapons.Add(new Item(4, ItemClass.Weapon, 12, 14, 24, 0, 0));
-            Weapons.Add(new Item(4, ItemClass.Weapon, 12, 14, 28, 0, 0));
-
-            //Lvl 5
-            Weapons.Add(new Item(5, ItemClass.Weapon, 20, 25, 40, 0, 0));
-            Weapons.Add(new Item(5, ItemClass.Weapon, 20, 25, 45, 0, 0));
-            Weapons.Add(new Item(5, ItemClass.Weapon, 20, 25, 50, 0, 0));
+            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 25, 40, 0, 0));
+            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 25, 45, 0, 0));
+            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 25, 50, 0, 0));
 
 
         }
 
+        public List<Item> ItemGeneratorMonster(int currentHeroLevel, )
 
-        public void ItemGeneratorMerchant(int currentHeroLevel, string npcName, bool dungeonDone)
+
+        public List<Item> ItemGeneratorMerchant(int currentHeroLevel, string npcName)
         {
-            int chooseItemDie;
+            int heroItemLvl = 0;
+            if (currentHeroLevel >= 0)
+                heroItemLvl = 1;
+            if (currentHeroLevel > 3)
+                heroItemLvl = 2;
+            if (currentHeroLevel > 7)
+                heroItemLvl = 3;
+            if (currentHeroLevel > 11)
+                heroItemLvl = 4;
+
+            int chooseItemDie = 0;
             int healingPots = 0;
-            if (currentHeroLevel < 4)
-            {
-                chooseItemDie = random.Next(3) + 1;
-                healingPots = 1;
-            }
-            else if (currentHeroLevel < 10)
-            {
-                chooseItemDie = random.Next(1, 5) + 1;
-                healingPots = 2;
-            }
-            else
-            {
-                chooseItemDie = random.Next(4, 9) + 1;
-                healingPots = 3;
-            }
 
-            for (int i = 0; i < chooseItemDie; i++)
+            switch (heroItemLvl)
             {
-
+                case 1:
+                    chooseItemDie = random.Next(3) + 1;
+                    healingPots = 1;
+                    break;
+                case 2:
+                    chooseItemDie = random.Next(1, 5) + 1;
+                    healingPots = 2;
+                    break;
+                case 3:
+                    chooseItemDie = random.Next(4, 9) + 1;
+                    healingPots = 3;
+                    break;
+                case 4:
+                    chooseItemDie = random.Next(4, 9) + 1;
+                    healingPots = 3;
+                    break;
+                default:
+                    Console.WriteLine("Wrong heroItemLevelChoosen.");
+                    break;
             }
+            if (npcName == "Konstantin")
+            {
+                chooseItemDie -= 3;
+            }
+            if (chooseItemDie < 1)
+                chooseItemDie = 1;
+
+            //for (int i = 0; i < chooseItemDie; i++)
+            //{
+
+            //}
+
+            List<Item> availableList = new List<Item>();
+            availableList = getAvailable(heroItemLvl);
+
+            List<Item> giveList = new List<Item>();
+
+
+
 
             switch (chooseItemDie)
             {
                 case 1:
-                    if(npcName == "Yorlgon")
+                    if (npcName == "Yorlgon")
                     {
-
+                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
                     }
                     else
                     {
-
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
                     }
                     break;
                 case 2:
+                    if (npcName == "Yorlgon")
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    }
+                    else
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    }
                     break;
                 case 3:
+                    if (npcName == "Yorlgon")
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    }
+                    else
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                    }
                     break;
                 case 4:
+                    if (npcName == "Yorlgon")
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                    }
+                    else
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    }
                     break;
                 case 5:
+                    if (npcName == "Yorlgon")
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                    }
+                    else
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    }
                     break;
                 case 6:
+                    if (npcName == "Yorlgon")
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    }
+                    else
+                    {
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                    }
                     break;
                 case 7:
+                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
                     break;
                 case 8:
+                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
                     break;
                 case 9:
+                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
                     break;
                 default:
                     Console.WriteLine("Wrong number in chooseItemDie");
                     break;
             }
+
+            foreach (var item in giveList)
+            {
+                dieMagic(item);
+            }
+
+            return giveList;
 
         }
 
@@ -204,12 +341,88 @@ namespace EmodiaQuest.Core.Items
             // + monstertyp!
         }
 
-        private void dieMagic(int currentHeroLevel, ItemClass itemClass)
+        private void dieMagic(Item item)
         {
-
+            int itemLvl = item.Lvl;
+            int magicNumber;
+            int magicCount = 0;
+            magicNumber = random.Next(10);
+            while(magicNumber == 0)
+            {
+                int magicStrength = (random.Next(3)+1)*itemLvl;
+                int property = random.Next(3);
+                switch (property)
+                {
+                    case 0:
+                        item.StrengthPlus += magicStrength;
+                        break;
+                    case 1:
+                        item.SkillPlus += magicStrength;
+                        break;
+                    case 2:
+                        item.IntelligencePlus += magicStrength;
+                        break;
+                    default:
+                        break;
+                }
+                magicNumber = random.Next(6);
+                magicCount++;
+                if (magicCount > 5)
+                    break;
+            }
         }
 
+        private Item getOneItem(List<Item> available, ItemClass itemClass)
+        {
+            List<Item> possible = new List<Item>();
+            int chosenItem = 0;
+            int chooseItemCount = 0;
+            foreach (var item in available)
+            {
+                if (item.Class.ToString() == itemClass.ToString())
+                {
+                    possible.Add(item);
+                    chooseItemCount++;
+                }
+            }
+            chosenItem = random.Next(chooseItemCount);
+            return possible[chosenItem];
+        }
 
+        private List<Item> getAvailable(int heroItemLvl)
+        {
+            List<Item> available = new List<Item>();
+
+            foreach (var item in Helmets)
+            {
+                if (heroItemLvl >= item.Lvl)
+                {
+                    available.Add(item);
+                }
+            }
+            foreach (var item in Armors)
+            {
+                if (heroItemLvl >= item.Lvl)
+                {
+                    available.Add(item);
+                }
+            }
+            foreach (var item in Boots)
+            {
+                if (heroItemLvl >= item.Lvl)
+                {
+                    available.Add(item);
+                }
+            }
+            foreach (var item in Weapons)
+            {
+                if (heroItemLvl >= item.Lvl)
+                {
+                    available.Add(item);
+                }
+            }
+            return available;
+        }
 
         //int dieValue = random.Next(6) + 1;
 
