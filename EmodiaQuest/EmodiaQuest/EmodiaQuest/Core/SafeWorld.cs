@@ -69,6 +69,7 @@ namespace EmodiaQuest.Core
             EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1), "wall1", false); Controller.CollisionObjList.Add(wall1);
             EnvironmentController.Object wall2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall2"), new Color(2, 0, 0), new Vector2(1, 1), "wall2", false); Controller.CollisionObjList.Add(wall2);
             // Buildings
+            EnvironmentController.Object house1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Wohnhaus1_10x10/Wohnhaus_1"), new Color(10, 1, 0), new Vector2(1, 1), "house1", false); Controller.CollisionObjList.Add(house1);
             EnvironmentController.Object house2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Wohnhaus2_30x10/Wohnhaus2_dim30x10"), new Color(10, 0, 0), new Vector2(1, 3), "house2", false); Controller.CollisionObjList.Add(house2);
             EnvironmentController.Object taverne = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Taverne_30x10/Taverne_dim30x10"), new Color(11, 0, 0), new Vector2(1, 3), "taverne", false); Controller.CollisionObjList.Add(taverne);
             EnvironmentController.Object kaufladen = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Kaufladen_30x30/Kaufladen_dim_30x30"), new Color(12, 0, 0), new Vector2(3, 3), "kaufladen", false); Controller.CollisionObjList.Add(kaufladen);
@@ -83,6 +84,7 @@ namespace EmodiaQuest.Core
             Controller.InsertObj(Controller.Wall, wall2.Model, wall2.Color, 0, wall2.Name, wall2.IsRandomStuff);
             Controller.InsertObj(Controller.Ground, brownWay.Model, brownWay.Color, 0, brownWay.Name, brownWay.IsRandomStuff);
             Controller.InsertObj(Controller.Ground, grasGround.Model, grasGround.Color, 0, grasGround.Name, grasGround.IsRandomStuff);
+            Controller.InsertObj(Controller.Buildings, house1.Model, house1.Color, 0, house1.Name, house1.IsRandomStuff);
             Controller.InsertObj(Controller.Buildings, house2.Model, house2.Color, 0, house2.Name, house2.IsRandomStuff);
             Controller.InsertObj(Controller.Buildings, taverne.Model, taverne.Color, 0, taverne.Name, taverne.IsRandomStuff);
             Controller.InsertObj(Controller.Buildings, schmiede.Model, schmiede.Color, 0, schmiede.Name, schmiede.IsRandomStuff);

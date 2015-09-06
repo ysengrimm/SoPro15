@@ -626,6 +626,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\gameobjects\Wohnhaus1_10x10\Wohnhaus_1.fbx">
+      <Name>Wohnhaus_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -1339,6 +1344,11 @@
     </Compile>
     <Compile Include="fbxContent\gameobjects\Schmiede_10x10\boden_tex_gras_1.png">
       <Name>boden_tex_gras_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\Wohnhaus1_10x10\Wohnhaus_1_tex_2.png">
+      <Name>Wohnhaus_1_tex_2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
