@@ -78,15 +78,18 @@ namespace EmodiaQuest.Core
             // (it's for performance)
             // Do not insert in the map !!!
             EnvironmentController.Object nothing = new EnvironmentController.Object(null, ColorListDungeon.Instance.Nothing, Vector2.One, "nothing", false); Controller.CollisionObjList.Add(nothing);
+            
 
-            EnvironmentController.Object questItem = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), ColorListDungeon.Instance.Item, new Vector2(1, 1), "questItem", false);
+            if(QuestController.Instance.ActiveQuestItems.Any() && QuestController.Instance.ActiveQuestItems[0].Name != "")
+            {
+                EnvironmentController.Object questItem = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/" + QuestController.Instance.ActiveQuestItems[0].Name), ColorListDungeon.Instance.Item, new Vector2(1, 1), "questItem", false);
+                Controller.InsertItem(Controller.Items, questItem.Model, questItem.Color, 0, questItem.Name, questItem.IsRandomStuff);
+            }
 
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall.Model, wall.Color, 0, wall.Name, wall.IsRandomStuff);
             Controller.InsertObj(Controller.Ground, ground.Model,ground.Color, 0, ground.Name, ground.IsRandomStuff);
             Controller.InsertObj(Controller.Teleporter, teleporter.Model, teleporter.Color, 0, teleporter.Name, teleporter.IsRandomStuff);
-
-            Controller.InsertItem(Controller.Items, questItem.Model, questItem.Color, 0, questItem.Name, questItem.IsRandomStuff);
 
             //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content);
