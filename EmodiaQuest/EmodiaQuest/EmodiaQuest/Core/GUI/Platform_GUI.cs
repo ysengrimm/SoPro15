@@ -384,7 +384,7 @@ namespace EmodiaQuest.Core.GUI
                 {
                     if (bb.Button_State == ButtonState_GUI.Normal)
                         if (bb.PathOfPicture.Length > 2)
-                            spritebatch.Draw(itemPicture, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                            spritebatch.Draw(bb.itemTexture, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                         else
                             spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                     else if (bb.Button_State == ButtonState_GUI.MouseOver)
@@ -451,13 +451,13 @@ namespace EmodiaQuest.Core.GUI
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, isVisible));
         }
-        public void addButton(float xPos, float yPos, float width, float height, string name, bool isVisible, string pathOfPicture)
+        public void addButton(float xPos, float yPos, float width, float height, string name)
         {
             int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
-            buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, isVisible, pathOfPicture));
+            buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, true, "AAA", itemSocket));
         }
 
 
@@ -778,12 +778,42 @@ namespace EmodiaQuest.Core.GUI
             }
         }
 
-        public void updateButtonPicture(string buttonName, string newPicturePath)
+        public void updateButtonPicture(string buttonName, string newPictureType)
         {
             foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
             {
-                bb.PathOfPicture = newPicturePath; // Is doing quiet nothing right know
-                itemPicture = this.platformContent.Load<Texture2D>(newPicturePath);
+                bb.PathOfPicture = "AAA"; // Important!
+                //itemPicture = this.platformContent.Load<Texture2D>(newPicturePath);
+
+                Texture2D itemTexture = itemSocket;
+                switch (newPictureType)
+                {
+                    case "armor":
+                        itemTexture = icon_armor;
+                        break;
+                    case "boot":
+                        itemTexture = icon_boot;
+                        break;
+                    case "helmet":
+                        itemTexture = icon_helmet;
+                        break;
+                    case "quest":
+                        itemTexture = icon_quest;
+                        break;
+                    case "weapon":
+                        itemTexture = icon_weapon;
+                        break;
+                    case "useable":
+                        itemTexture = icon_useable;
+                        break;
+                    case "socket":
+                        itemTexture = itemSocket;
+                        break;
+                    default:
+                        Console.WriteLine("Wrong name for item chosen");
+                        break;
+                }
+                bb.itemTexture = itemTexture;
             }
         }
 

@@ -32,7 +32,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.KeyBindingsScreen;
                     break;
                 case "test":
-                    platform.updateButtonPicture("test", "fbxContent/items/icon_armor");
+                    platform.updateButtonPicture("test", "armor");
                     break;
                 default:
                     Console.WriteLine("No such Function.");
@@ -69,7 +69,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.setBackground(Content, "Content_GUI/menu_background");
             this.platform.setBackground(Content, "Content_GUI/menu_full_small");
 
-            platform.addButton(0, 0, 50, 50, "test", true, "Content_GUI/menu_full_small");
+            platform.addButton(0, 0, 50, 50, "test");
 
             this.platform.addButton(35, 60, 30, 8, "playGame", "Spiel starten");
             this.platform.addButton(35, 75, 30, 8, "options", "Optionen");
