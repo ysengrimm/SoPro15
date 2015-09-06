@@ -555,7 +555,6 @@ namespace EmodiaQuest.Core.GUI
                 case "test2":
                     plTexture = test2;
                     break;
-<<<<<<< a8a6ade2c07fec31c12dcf053c48941948ef96da
                 case "icon_armor":
                     plTexture = icon_armor;
                     break;
@@ -573,10 +572,9 @@ namespace EmodiaQuest.Core.GUI
                     break;
                 case "icon_useable":
                     plTexture = icon_useable;
-=======
+                    break;
                 case "item_socket":
                     plTexture = itemSocket;
->>>>>>> 4ebf63110139b020db922cd581057cff0ae48ccc
                     break;
                 default:
                     plTexture = pixel_black;
