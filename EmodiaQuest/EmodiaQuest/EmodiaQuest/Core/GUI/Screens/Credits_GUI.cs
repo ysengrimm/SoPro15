@@ -33,8 +33,18 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             this.platform.loadContent(Content);
 
+            this.platform.setBackground(Content, "Content_GUI/menu_full_small");
+
             // headline
             this.platform.addLabel(50, 10, 20, "monoFont_big", "Credits", "credits", true);
+
+            this.platform.addButton(38, 85, 24, 8, "menu", "Menue");
+
+            platform.addPlainImage(5, 5, 20, 20, "acagamics", "pixel_red");
+            platform.updatePlainImagePicture("acagamics", "other/acagamics");
+
+            //EventHandler;
+            platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
         }
 
         public void update()
@@ -46,5 +56,20 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             this.platform.draw(spritebatch);
         }
+
+        // EventHandler
+        void ButtonEventValue(object source, ButtonEvent_GUI e)
+        {
+            switch (e.ButtonFunction)
+            {
+                case "menu":
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
+                    break;
+                default:
+                    Console.WriteLine("No such Function.");
+                    break;
+            }
+        }
+
     }
 }
