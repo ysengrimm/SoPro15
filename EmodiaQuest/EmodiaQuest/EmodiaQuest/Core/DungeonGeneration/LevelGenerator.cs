@@ -56,7 +56,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
         {
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
-            if(debugON) contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
+            if (debugON) contentPath = AppDomain.CurrentDomain.BaseDirectory + "Content\\";
 
             this.Controller = controller;
 

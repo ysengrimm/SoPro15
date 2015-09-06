@@ -28,11 +28,7 @@
 					Ich werde dich selbstverstaendlich gut fuer den Fund belohnen.
 					Und pass bitte trotzdem auf dich auf, ok?
             </story>
-            <description>
-				Jack wurde bestohlen.
-				Geh in die Labyrinthe und
-				finde den Sack mit dem Diebesgut!
-			</description>
+            <description>Jack wurde bestohlen.Geh in die Labyrinthe und finde den Sack mit dem Diebesgut!</description>
             <tasks>
 				<item>Diebesgut</item>
             </tasks>
@@ -64,10 +60,7 @@
 					Es waere uns eine grosse Hilfe wenn du 10 Blutproben von Weraffen mitbringen koenntest.
 					Wir koennen diese dann genau untersuchen und wer weiss, vielleicht finden wir neue Hinweise.
             </story>
-            <description>
-                Geh und besiege 10 Weraffen!
-				Komm anschliessend zu Konstantin zurueck.
-            </description>
+            <description>Geh und besiege 10 Weraffen! Komm anschliessend zu Konstantin zurueck.</description>
             <tasks>
                 <kill>Monster7,10</kill>
             </tasks>
@@ -103,10 +96,7 @@
 					Ah und uebrigens, wenn du damit fertig bist kannst du ja mal bei 
 					Yorlgon vorbeischauen. Er hat nach dir gesucht.
             </story>
-            <description>
-                Geh und besiege 20x Diamant-Weraffen!
-				Komm anschliessend zu Konstantin zurueck.
-            </description>
+            <description>Geh und besiege 20x Diamant-Weraffen! Komm anschliessend zu Konstantin zurueck.</description>
             <tasks>
                 <kill>Monster8,20</kill>
             </tasks>
@@ -134,10 +124,7 @@
 					Ich habe mit Konstantin gewettet, dass du das garantiert nicht schaffen wirst. 
 					Wenn du aber dennoch erfolgreich sein solltest werde ich den Gewinn mit dir teilen.
             </story>
-            <description>
-                Geh und besiege 50 Wurmkoeniginen!
-				Komm anschliessend zu Yorlgon zurueck.
-            </description>
+            <description>Geh und besiege 50 Wurmkoeniginen! Komm anschliessend zu Yorlgon zurueck.</description>
             <tasks>
                 <kill>Monster5,50</kill>
             </tasks>
@@ -167,10 +154,7 @@
 					Waerst du so freundlich nach diesem Buch zu suchen?
 					Ich wuerde mich darueber sehr freuen, und an der Bezahlung soll es natuerlich nicht scheitern.
             </story>
-            <description>
-                Geh und finde das Kochbuch im Labyrinth.
-				Komm anschliessend zu Jack zurueck.
-            </description>
+            <description>Geh und finde das Kochbuch im Labyrinth. Komm anschliessend zu Jack zurueck.</description>
             <tasks>
                 <item>Kochbuch</item>
             </tasks>
@@ -196,10 +180,7 @@
 					da jeder weiss, dass er ein Scharlatan ist. 
 					Ich geb dir die Haelfte von dem was er mir dafuer zahlt.
             </story>
-            <description>
-                Geh und besiege 10 kleine Nachtmahre!
-				Komm anschliessend zu Jack zurueck.
-            </description>
+            <description>Geh und besiege 10 kleine Nachtmahre! Komm anschliessend zu Jack zurueck.</description>
             <tasks>
                 <kill>Monster2,10</kill>
             </tasks>
@@ -224,10 +205,7 @@
 					Der Scharlatan verlangt nun nach 20 weiteren Koepfen der kleinen Nachtmahren. Seine Experimente scheinen ihm zu gelingen.
 					Wegen der Bezahlung musst du dir freilich keine Sorgen machen.
             </story>
-            <description>
-                Geh und besiege 20 kleine Nachtmahren!
-				Komm anschliessend zu Jack zurueck.
-            </description>
+            <description>Geh und besiege 20 kleine Nachtmahren! Komm anschliessend zu Jack zurueck.</description>
             <tasks>
                 <kill>Monster2,20</kill>
             </tasks>
@@ -258,10 +236,7 @@
 					Wuerdest du dich mal nach dem Schatz umschauen? Du bist hier der einzige weit und breit, dem ich 
 					vertrauen kann. Den Gewinn koennen wir mit dir sicherlich gut aufteilen.
             </story>
-            <description>
-                Geh und finde die Schatztruhe im Labyrinth.
-				Komm anschliessend zu Jack zurueck.
-            </description>
+            <description>Geh und finde die Schatztruhe im Labyrinth. Komm anschliessend zu Jack zurueck.</description>
             <tasks>
                 <item>Schatztruhe</item>
             </tasks>
@@ -290,10 +265,7 @@
 					Ich werde dich selbstverstaendlich gut dafuer bezahlen. Du weisst ja, geizig bin ich nicht.
 					Ah und das Gespraech sollte unter uns bleiben, ich hoffe du verstehst.
             </story>
-            <description>
-                Geh und besiege ein Steinwesen aus dem Labyrinth.
-				Komm anschliessend zu Konstantin zurueck.
-            </description>
+            <description>Geh und besiege ein Steinwesen aus dem Labyrinth. Komm anschliessend zu Konstantin zurueck.</description>
             <tasks>
                 <kill>Monster3,1</kill>
             </tasks>
@@ -321,10 +293,7 @@
 					Da sie immer noch nich da sind vermute ich, dass sie laengst tot sind.
 					Koenntest du bitte nachschauen ob du im Labyrinth den Sack mit meinen Waren findest?
             </story>
-            <description>
-                Geh in das Labyrinth und suche nach dem Sack. 
-				Bringe ihn anschliessend zu Konstantin zurueck.
-            </description>
+            <description>Geh in das Labyrinth und suche nach dem Sack. Bringe ihn anschliessend zu Konstantin zurueck.</description>
             <tasks>
                 <item>Sack</item>
             </tasks>
@@ -353,10 +322,7 @@
 					Koenntest du mir ein bisschen von diesem Knochenmark beschaffen? Ich denke 30 Weraffen sollten
 					dafuer ausreichen.
             </story> 
-            <description>
-                Geh in das Labyrinth und toete 30 Weraffen. 
-				Begib dich anschliessend zu Konstantin.
-            </description>
+            <description>Geh in das Labyrinth und toete 30 Weraffen. Begib dich anschliessend zu Konstantin.</description>
             <tasks>
                 <kill>Monster7,30</kill>
             </tasks>
@@ -386,10 +352,7 @@
 					Die Narren werden den Unterschied sicherlich nie bemerken.
 					Du wirst an dem Gewinn natuerlich teilhaben.
             </story> 
-            <description>
-                Geh in das Labyrinth und suche nach einem Klumpen Messing. 
-				Bringe ihn anschliessend zu Konstantin zurueck.
-            </description>
+            <description>Geh in das Labyrinth und suche nach einem Klumpen Messing. Bringe ihn anschliessend zu Konstantin zurueck.</description>
             <tasks>
                 <item>Messing</item>
             </tasks>
@@ -415,10 +378,7 @@
 					Die Haendler verkaufen schon lange nichts mehr, und meine Vorraete gehen nun auch zur Neige.
 					Bringe mir doch einen ordentlichen Klumpen Eisen aus dem Labyrinth.
             </story> 
-            <description>
-                Geh in das Labyrinth und suche nach einem Klumpen Eisen. 
-				Bringe ihn anschliessend zu Yorlgon.
-            </description>
+            <description>Geh in das Labyrinth und suche nach einem Klumpen Eisen. Bringe ihn anschliessend zu Yorlgon.</description>
             <tasks>
                 <item>Eisen</item>
             </tasks>
@@ -442,10 +402,7 @@
 					Wenn ich meine Schwerter in dieses Gift tauche, wird das stahl noch
 					viel staerker und fester.
             </story> 
-            <description>
-                Geh in das Labyrinth und toete 20 Wurmdrohnen. 
-				Begib dich anschliessend zu Yorlgon.
-            </description>
+            <description>Geh in das Labyrinth und toete 20 Wurmdrohnen. Begib dich anschliessend zu Yorlgon.</description>
             <tasks>
                 <kill>Monster4,20</kill>
             </tasks>
@@ -472,10 +429,7 @@
 					Wenn du mir ein 30 solcher Panzer mitbringst, werde ich diese in meine Ruestungen verbauen
 					koennen.
             </story> 
-            <description>
-                Geh in das Labyrinth und toete 30 Steinwesen. 
-				Begib dich anschliessend zu Yorlgon.
-            </description>
+            <description>Geh in das Labyrinth und toete 30 Steinwesen. Begib dich anschliessend zu Yorlgon.</description>
             <tasks>
                 <kill>Monster3,30</kill>
             </tasks>
@@ -507,11 +461,7 @@
 					Ich glaube es waere vom Vorteil wenn du die Truhe mit den restlichen Gegengiften findest und herauf
 					bringst. Wir wuessten sicherlich was besseres damit anzufangen, als es dort unten verroten zu lassen.
             </story> 
-            <description>
-                Geh in das Labyrinth und finde 
-				die Truhe mit dem Gegengift. 
-				Begib dich anschliessend zu Yorlgon.
-            </description>
+            <description>Geh in das Labyrinth und finde die Truhe mit dem Gegengift. Begib dich anschliessend zu Yorlgon.</description>
             <tasks>
                 <item>Schatztruhe</item>
             </tasks>

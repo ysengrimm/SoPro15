@@ -58,7 +58,7 @@ namespace EmodiaQuest.Core
 
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
-            string contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
+            string contentPath = AppDomain.CurrentDomain.BaseDirectory + "Content\\";
             
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
 
