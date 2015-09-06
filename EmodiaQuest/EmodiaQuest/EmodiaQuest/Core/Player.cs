@@ -1037,7 +1037,7 @@ namespace EmodiaQuest.Core
             }
         }
 
-        private void GrandStats()
+        public void GrandStats()
         {
             Strength = CurrentEquippedArmor.StrengthPlus + CurrentEquippedBoots.StrengthPlus + CurrentEquippedHelmet.StrengthPlus +
                     CurrentEquippedWeapon.StrengthPlus + strengthGaidedThrougLvls;
