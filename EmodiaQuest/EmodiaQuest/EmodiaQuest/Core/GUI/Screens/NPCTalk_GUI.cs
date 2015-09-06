@@ -56,6 +56,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         labelInMovement = "label1";
                         inMovement = true;
                         currentActiveQuest = QuestController.Instance.PossibleActiveQuests[0];
+
+                        platform.updateButtonText("accept", "Annehmen");
+                        platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                     }
 
                     break;
@@ -79,6 +82,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         labelInMovement = "label2";
                         inMovement = true;
                         currentActiveQuest = QuestController.Instance.PossibleActiveQuests[1];
+
+                        platform.updateButtonText("accept", "Annehmen");
+                        platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                     }
                     break;
                 case "quest3":
@@ -101,6 +107,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         labelInMovement = "label3";
                         inMovement = true;
                         currentActiveQuest = QuestController.Instance.PossibleActiveQuests[2];
+
+                        platform.updateButtonText("accept", "Annehmen");
+                        platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                     }
                     break;
                 case "quest4":
@@ -123,6 +132,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         labelInMovement = "label4";
                         inMovement = true;
                         currentActiveQuest = QuestController.Instance.PossibleActiveQuests[3];
+
+                        platform.updateButtonText("accept", "Annehmen");
+                        platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                     }
                     break;
                 case "quest5":
@@ -145,12 +157,18 @@ namespace EmodiaQuest.Core.GUI.Screens
                         labelInMovement = "label5";
                         inMovement = true;
                         currentActiveQuest = QuestController.Instance.PossibleActiveQuests[4];
+
+                        platform.updateButtonText("accept", "Annehmen");
+                        platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                     }
                     break;
                 case "accept":
                     // Quest annehmen
                     QuestController.Instance.AcceptQuest(currentActiveQuest.Name);
                     Console.WriteLine("Quest " + currentActiveQuest.Name + " angenommen");
+
+                    platform.updateButtonText("accept", "Quest angenommen!");
+                    platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                     break;
                 default:
                     //Console.WriteLine(e.ButtonFunction);
@@ -230,7 +248,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addButton(10, 70, 20, 8, "quest5", "Ansehen");
 
             // buttonToAcceptQuest
-            this.platform.addButton(60, 80, 20, 8, "accept", "Annehmen");
+            this.platform.addButton(60, 80, 25, 8, "accept", "Annehmen");
             this.platform.updateButtonVisibility("accept", false);
             this.platform.updateButtonClickability("accept", false);
 
