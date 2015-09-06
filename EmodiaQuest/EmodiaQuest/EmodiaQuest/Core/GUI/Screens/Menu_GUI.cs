@@ -34,6 +34,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "test":
                     platform.updateButtonPicture("test", "armor");
                     break;
+                case "credits":
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.CreditsScreen;
+                    break;
                 default:
                     Console.WriteLine("No such Function.");
                     break;
@@ -74,6 +77,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addButton(38, 40, 24, 8, "playGame", "Spiel starten");
             this.platform.addButton(38, 55, 24, 8, "options", "Optionen");
             this.platform.addButton(38, 70, 24, 8, "bindings", "Tastenbelegung");
+            this.platform.addButton(38, 85, 24, 8, "credits", "Credits");
 
             this.platform.addLabel(50, 10, 20, "dice_big", "Emodia Quest", "Menu", true);
             //this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", "Menu2", true);
