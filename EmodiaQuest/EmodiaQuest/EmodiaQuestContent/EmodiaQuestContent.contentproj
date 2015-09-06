@@ -208,13 +208,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content_GUI\slider_background.png">
-      <Name>slider_background</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="fbxContent\enemies\human\temp_enemy_v1.fbx">
       <Name>temp_enemy_v1</Name>
       <Importer>FbxImporter</Importer>
@@ -1002,16 +995,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\test1.png">
-      <Name>test1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Content_GUI\test2.png">
-      <Name>test2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="fbxContent\gameobjects\RandomStuff\Busch_1\Random_Busch_1_tex_1.png">
       <Name>Random_Busch_1_tex_1</Name>
       <Importer>TextureImporter</Importer>
@@ -1339,6 +1322,16 @@
     </Compile>
     <Compile Include="fbxContent\gameobjects\Schmiede_10x10\boden_tex_gras_1.png">
       <Name>boden_tex_gras_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\test1.png">
+      <Name>test1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\test2.png">
+      <Name>test2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

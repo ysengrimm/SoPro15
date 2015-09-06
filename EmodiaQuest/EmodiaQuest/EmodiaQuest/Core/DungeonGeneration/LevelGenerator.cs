@@ -23,6 +23,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
     public class LevelGenerator
     {
+        private bool debugON = false;
         private string contentPath;
         public System.Drawing.Bitmap Map;
         public EnvironmentController Controller;
@@ -55,11 +56,11 @@ namespace EmodiaQuest.Core.DungeonGeneration
         {
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
-            contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
+            if(debugON) contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
 
             this.Controller = controller;
 
-            Map = new System.Drawing.Bitmap(Settings.Instance.DungeonMapSize, Settings.Instance.DungeonMapSize);
+            if (debugON) Map = new System.Drawing.Bitmap(Settings.Instance.DungeonMapSize, Settings.Instance.DungeonMapSize);
 
             placeRooms();
         }
@@ -73,7 +74,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
             {
                 for (int j = 0; j < Settings.Instance.DungeonMapSize; j++)
                 {
-                    Map.SetPixel(i, j, System.Drawing.Color.Black);
+                    if (debugON) Map.SetPixel(i, j, System.Drawing.Color.Black);
                     Controller.PlacementColors[i, j] = ColorListDungeon.Instance.Wall;
                 } 
             }
@@ -127,7 +128,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     // selecting spawnpoint of player
                     if (set)
                     {
-                        Map.SetPixel((int)newRoom.X, (int)newRoom.Y, System.Drawing.Color.Red);
+                        if (debugON) Map.SetPixel((int)newRoom.X, (int)newRoom.Y, System.Drawing.Color.Red);
                         Controller.StartPoint = new Vector2(newRoom.X * Settings.Instance.GridSize, newRoom.Y * Settings.Instance.GridSize);
                         set = false;
                     }
@@ -137,12 +138,13 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
             DeleteWalls();
 
-            selectDifficulty();
+            if (QuestController.Instance.ActiveQuests.Any() && QuestController.Instance.ActiveQuests[0].Difficulty != 0)
+                Difficulty = QuestController.Instance.ActiveQuests[0].Difficulty;
             selectEnemies();
-
+            Console.Out.WriteLine(Difficulty);
             if(Settings.Instance.NumEnemies != 0) insertEnemies();
 
-            saveMap();
+            if (debugON) saveMap();
 	    }
 
         /// <summary>
@@ -169,7 +171,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
             {
                 for (int j = (int)room.Y; j < room.Y + room.Height; j++)
                 {
-                    Map.SetPixel(i, j, System.Drawing.Color.White);
+                    if (debugON) Map.SetPixel(i, j, System.Drawing.Color.White);
                     Controller.PlacementColors[i, j] = ColorListDungeon.Instance.Ground;
 
                     // setting questitem in center of first amountQuestItem rooms
@@ -177,7 +179,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     if (!itemSet && !set && amountQuestItem > 0)
                     {
                         Controller.ItemColors[room.Center.X, room.Center.Y] = ColorListDungeon.Instance.Item;
-                        Map.SetPixel(room.Center.X, room.Center.Y, System.Drawing.Color.Gray);
+                        if (debugON) Map.SetPixel(room.Center.X, room.Center.Y, System.Drawing.Color.Gray);
                         itemSet = true;
                         amountQuestItem--;
                     }
@@ -190,7 +192,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     // placing teleporter
                     if (set)
                     {
-                        Map.SetPixel((int)room.X2-2, (int)room.Y2-2, System.Drawing.Color.Violet);
+                        if (debugON) Map.SetPixel((int)room.X2 - 2, (int)room.Y2 - 2, System.Drawing.Color.Violet);
                         Controller.PlacementColors[(int)room.X2 - 2, (int)room.Y2 - 2] = ColorListDungeon.Instance.Teleporter;
                     }
                 }
@@ -210,7 +212,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 if (Controller.PlacementColors[i, y] == ColorListDungeon.Instance.Wall || Controller.PlacementColors[i, y] == ColorListDungeon.Instance.Nothing)
                 {
                     // destory the tiles to "carve" out corridor
-                    Map.SetPixel(i, y, System.Drawing.Color.White);
+                    if (debugON) Map.SetPixel(i, y, System.Drawing.Color.White);
                     Controller.PlacementColors[i, y] = ColorListDungeon.Instance.Ground;
                 }
 		    }
@@ -229,7 +231,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 if (Controller.PlacementColors[x, i] == ColorListDungeon.Instance.Wall || Controller.PlacementColors[x, i] == ColorListDungeon.Instance.Nothing)
                 {
                     // destroy the tiles to "carve" out corridor
-                    Map.SetPixel(x, i, System.Drawing.Color.White);
+                    if (debugON) Map.SetPixel(x, i, System.Drawing.Color.White);
                     Controller.PlacementColors[x, i] = ColorListDungeon.Instance.Ground;
                 }
 		    }
@@ -271,24 +273,8 @@ namespace EmodiaQuest.Core.DungeonGeneration
             foreach (Point item in walls)
             {
                 Controller.PlacementColors[item.X, item.Y] = ColorListDungeon.Instance.Nothing;
-                Map.SetPixel(item.X, item.Y, System.Drawing.Color.White);
+                if (debugON) Map.SetPixel(item.X, item.Y, System.Drawing.Color.White);
             }
-        }
-
-        /// <summary>
-        /// Selects diffículty of quest
-        /// </summary>
-        private void selectDifficulty()
-        {
-            String difficulty = "";
-
-            foreach (Quest activeQuest in QuestController.Instance.ActiveQuests)
-            {
-                activeQuest.Tasks.TryGetValue("difficulty", out difficulty);
-            }
-
-            // decides wether a difficulty is choosen or not -> is quest active
-            if(difficulty != "" && difficulty != null) Int32.TryParse(difficulty, out Difficulty);       // difficulty choosen
         }
 
         /// <summary>
@@ -412,7 +398,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 }
                 Console.Out.WriteLine(enemyTypes[i] + " - " + temp);
             }
-             */
+            */
         }
 
         private void insertEnemies()
@@ -428,25 +414,25 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 if (rnd.Next(10) > 4) distX *= -1;
                 if (rnd.Next(10) > 4) distY *= -1;
 
-                if (Controller.enemyArray[point.X, point.Y].Count > 0)        //das feld ist nicht leer
+                if (Controller.enemyArray[point.X, point.Y].Count > 0)        // field is not empty
                 {
                     bool samePosition = false;
-                    foreach (Enemy enemy in Controller.enemyArray[point.X, point.Y])    //gehe die liste in diesem feld durch
+                    foreach (Enemy enemy in Controller.enemyArray[point.X, point.Y])    // iterate trough list in this field
                     {
-                        if (Controller.EuclideanDistance(new Vector2(point.X + distX, point.Y + distY), enemy.Position) < 3) //wenn die random position nah an der eines enemys ist
+                        if (Controller.EuclideanDistance(new Vector2(point.X + distX, point.Y + distY), enemy.Position) < 3) // if the random position is near to one enemy
                         {
-                            samePosition = true;    // an die position kommt kein monster hin
+                            samePosition = true;    // there will be no monster on this position
                             break;
                         }
                     }
 
-                    if (!samePosition)      // wenn man eine position im feld gefunden hat wo kein monster steht
+                    if (!samePosition)      // found position with no enemy there
                     {
                         Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, enemies[count-1], Difficulty);
                         EnemyList.Add(enemy);
                         count--;
 
-                        //Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
+                        if (debugON) Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
                     }
                 }
                 else
@@ -455,7 +441,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     EnemyList.Add(enemy);
                     count--;
 
-                    //Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
+                    if (debugON) Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
                 }
             }
         } 

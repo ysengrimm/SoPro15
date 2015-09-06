@@ -446,6 +446,7 @@ namespace EmodiaQuest.Core
             XPToNextLevel = 100;
 
             PlayerInventory = new List<Item>();
+            ItemsDropped = new List<Item>();
 
             CurrentEquippedHelmet = new Item(ItemClass.Helmet, "InitHelmet");
             CurrentEquippedArmor = new Item(0, ItemClass.Armor,0,0,0,10,10);

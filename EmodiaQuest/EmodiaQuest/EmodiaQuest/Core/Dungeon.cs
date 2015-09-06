@@ -79,14 +79,14 @@ namespace EmodiaQuest.Core
             // Do not insert in the map !!!
             EnvironmentController.Object nothing = new EnvironmentController.Object(null, ColorListDungeon.Instance.Nothing, Vector2.One, "nothing", false); Controller.CollisionObjList.Add(nothing);
 
-            EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), ColorListDungeon.Instance.Item, new Vector2(1, 1), "item", false);
+            EnvironmentController.Object questItem = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), ColorListDungeon.Instance.Item, new Vector2(1, 1), "questItem", false);
 
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall.Model, wall.Color, 0, wall.Name, wall.IsRandomStuff);
             Controller.InsertObj(Controller.Ground, ground.Model,ground.Color, 0, ground.Name, ground.IsRandomStuff);
             Controller.InsertObj(Controller.Teleporter, teleporter.Model, teleporter.Color, 0, teleporter.Name, teleporter.IsRandomStuff);
 
-            Controller.InsertItem(Controller.Items, item.Model, item.Color, 0, item.Name, item.IsRandomStuff);
+            Controller.InsertItem(Controller.Items, questItem.Model, questItem.Color, 0, questItem.Name, questItem.IsRandomStuff);
 
             //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content);
@@ -120,7 +120,7 @@ namespace EmodiaQuest.Core
             EnvironmentController.Object Tonne_1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Tonne_1/Tonne_1"), new Color(300, 300, 0), new Vector2(0, 0), "Tonne_1", true);
             EnvironmentController.Object Tumbleweed_1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Tumbleweed_1/Tumbleweed_1"), new Color(300, 300, 0), new Vector2(0, 0), "Tumbleweed_1", true);
 
-
+            
             // Insert Random Stuff (after the collisionMap was generated, we don´t want random stuff in walls and buildings)
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_1.Model, 100, Gras_1.Name, Gras_1.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Gras_2.Model, 100, Gras_2.Name, Gras_2.IsRandomStuff);
@@ -128,16 +128,16 @@ namespace EmodiaQuest.Core
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_1.Model, 100, Busch_1.Name, Busch_1.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_2.Model, 100, Busch_2.Name, Busch_2.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Busch_3.Model, 100, Busch_3.Name, Busch_3.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_1.Model, 1000, Stein_1.Name, Stein_1.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_2.Model, 1000, Stein_2.Name, Stein_2.IsRandomStuff);
-            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_3.Model, 1000, Stein_3.Name, Stein_3.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_1.Model, 100, Stein_1.Name, Stein_1.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_2.Model, 100, Stein_2.Name, Stein_2.IsRandomStuff);
+            Controller.InsertRandomStuffObj(Controller.RandomStuff, Stein_3.Model, 100, Stein_3.Name, Stein_3.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Holzplanke_1.Model, 100, Holzplanke_1.Name, Holzplanke_1.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Kaputter_Flugzeugmotor_1.Model, 100, Kaputter_Flugzeugmotor_1.Name, Kaputter_Flugzeugmotor_1.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, MetallStück_1.Model, 100, MetallStück_1.Name, MetallStück_1.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, MetallStück_2.Model, 100, MetallStück_2.Name, MetallStück_2.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Tonne_1.Model, 100, Tonne_1.Name, Tonne_1.IsRandomStuff);
             Controller.InsertRandomStuffObj(Controller.RandomStuff, Tumbleweed_1.Model, 100, Tumbleweed_1.Name, Tumbleweed_1.IsRandomStuff);
-
+            
             // After everything in the environment is added we load the stuff for the objects (textures etc.)
             Controller.LoadEnvironment(Content);
         }

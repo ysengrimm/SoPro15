@@ -69,11 +69,11 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.setBackground(Content, "Content_GUI/menu_background");
             this.platform.setBackground(Content, "Content_GUI/menu_full_small");
 
-            platform.addButton(0, 0, 50, 50, "test");
+            //platform.addButton(0, 0, 50, 50, "test");
 
-            this.platform.addButton(35, 60, 30, 8, "playGame", "Spiel starten");
-            this.platform.addButton(35, 75, 30, 8, "options", "Optionen");
-            this.platform.addButton(35, 90, 30, 8, "bindings", "Tastenbelegung");
+            this.platform.addButton(38, 40, 24, 8, "playGame", "Spiel starten");
+            this.platform.addButton(38, 55, 24, 8, "options", "Optionen");
+            this.platform.addButton(38, 70, 24, 8, "bindings", "Tastenbelegung");
 
             this.platform.addLabel(50, 0, 20, "dice_big", "Menu", "Menu", true);
             //this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", "Menu2", true);
