@@ -641,6 +641,36 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\Questitems\Eisen.fbx">
+      <Name>Eisen</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Kochbuch.fbx">
+      <Name>Kochbuch</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Messing.fbx">
+      <Name>Messing</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Sack.fbx">
+      <Name>Sack</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Diebesgut.fbx">
+      <Name>Diebesgut</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Schatztruhe.fbx">
+      <Name>Schatztruhe</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -1569,6 +1599,36 @@
     </Compile>
     <Compile Include="other\acagamics.png">
       <Name>acagamics</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Eisenblock.png">
+      <Name>Questitem_tex_Eisenblock</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Kiste.png">
+      <Name>Questitem_tex_Kiste</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Kochbuch.png">
+      <Name>Questitem_tex_Kochbuch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Messingbarren.png">
+      <Name>Questitem_tex_Messingbarren</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Sack.png">
+      <Name>Questitem_tex_Sack</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Sack_Diebesgut.png">
+      <Name>Questitem_tex_Sack_Diebesgut</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
