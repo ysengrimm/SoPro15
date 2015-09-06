@@ -66,8 +66,8 @@ namespace EmodiaQuest.Core
             Controller.CreateItemMap(ItemMap);
 
             // Walls
-            EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall1"), new Color(1, 0, 0), new Vector2(1, 1), "wall1", false); Controller.CollisionObjList.Add(wall1);
-            EnvironmentController.Object wall2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/wall2"), new Color(2, 0, 0), new Vector2(1, 1), "wall2", false); Controller.CollisionObjList.Add(wall2);
+            EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/Safeworld_wall_1"), new Color(1, 0, 0), new Vector2(1, 1), "wall1", false); Controller.CollisionObjList.Add(wall1);
+            EnvironmentController.Object wall2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/Safeworld_wall_2"), new Color(2, 0, 0), new Vector2(1, 1), "wall2", false); Controller.CollisionObjList.Add(wall2);
             // Buildings
             EnvironmentController.Object house1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Wohnhaus1_10x10/Wohnhaus_1"), new Color(10, 1, 0), new Vector2(1, 1), "house1", false); Controller.CollisionObjList.Add(house1);
             EnvironmentController.Object house2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/Wohnhaus2_30x10/Wohnhaus2_dim30x10"), new Color(10, 0, 0), new Vector2(1, 3), "house2", false); Controller.CollisionObjList.Add(house2);

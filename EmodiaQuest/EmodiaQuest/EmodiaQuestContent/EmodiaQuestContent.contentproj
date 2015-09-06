@@ -641,6 +641,16 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall_1.fbx">
+      <Name>Safeworld_wall_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall_2.fbx">
+      <Name>Safeworld_wall_2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -1569,6 +1579,21 @@
     </Compile>
     <Compile Include="other\acagamics.png">
       <Name>acagamics</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Dungeon_wall_tex_stone1.png">
+      <Name>Dungeon_wall_tex_stone1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall1_tex_1.png">
+      <Name>Safeworld_wall1_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall2_tex_1.png">
+      <Name>Safeworld_wall2_tex_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
