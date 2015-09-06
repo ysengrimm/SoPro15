@@ -26,6 +26,9 @@ namespace EmodiaQuest.Core
         private float attackTimer;
         private float attackThreshold;
 
+        // speedHeck for multiple movement keys pressed
+        float KeysPressing;
+
         // shooting type
         public enum Shootingtype { Normal, Blast, Lightning };
         private Shootingtype shootingtype = Shootingtype.Normal;
@@ -558,6 +561,7 @@ namespace EmodiaQuest.Core
         {
             HitEnemyWithSword = false;
             HitAir = false;
+            KeysPressing = 1;
 
             // Computer view direction
             PlayerViewDirection = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
@@ -647,7 +651,7 @@ namespace EmodiaQuest.Core
             {
                 if (PlayerSpeed < 0.6)
                 {
-                    PlayerSpeed += 0.025f;
+                    PlayerSpeed += 0.1f;
                 }
             }
             else
@@ -657,22 +661,29 @@ namespace EmodiaQuest.Core
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
+                KeysPressing += 0.2f;
                 movement.Y += PlayerSpeed * (float)Math.Cos(Angle);
                 movement.X += PlayerSpeed * (float)Math.Sin(Angle);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
+                KeysPressing += 0.2f;
+                PlayerSpeed /= KeysPressing;
                 PlayerSpeed = Settings.Instance.PlayerSpeed / 1.5f;
                 movement.Y -= PlayerSpeed * (float)Math.Cos(Angle);
                 movement.X -= PlayerSpeed * (float)Math.Sin(Angle);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
+                KeysPressing += 0.2f;
+                PlayerSpeed /= KeysPressing;
                 movement.Y -= PlayerSpeed * (float)Math.Cos(Angle - Math.PI / 2);
                 movement.X -= PlayerSpeed * (float)Math.Sin(Angle - Math.PI / 2);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
+                KeysPressing += 0.2f;
+                PlayerSpeed /= KeysPressing;
                 movement.Y += PlayerSpeed * (float)Math.Cos(Angle + 3 * Math.PI / 2);
                 movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
             }

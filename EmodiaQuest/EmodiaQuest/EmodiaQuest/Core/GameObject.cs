@@ -276,7 +276,7 @@ namespace EmodiaQuest.Core
                                     effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
                                     if(Name == "brownWay")
                                     {
-                                        effect.DiffuseColor = new Vector3(0.1578511f, 0.05631156f, 0.03418359f) * 2;
+                                        effect.DiffuseColor = new Vector3(0.1578511f, 0.05631156f, 0.03418359f) * 3;
                                     }
                                 }
 
