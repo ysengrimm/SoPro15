@@ -34,6 +34,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
         // is a questEnemy choosen
         private bool questEnemyChoosen;
         private int possibleEnemyTypes = 5;
+        private int amountQuestItem = 5;
 
         // trigger for setting spawnroom
         bool set = true;
@@ -136,12 +137,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
             DeleteWalls();
 
-            // this method would place items in rooms and floors
-            // if choosen delete same method from "createRoom", wich places items only in rooms
-            //insertItems();
-
             selectDifficulty();
-            Console.Out.WriteLine(Difficulty);
             selectEnemies();
 
             if(Settings.Instance.NumEnemies != 0) insertEnemies();
@@ -168,6 +164,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
         /// <param name="room"> Current room </param>
         private void createRoom(Room room)
         {
+            bool itemSet = false;
             for (int i = (int)room.X; i < room.X + room.Width; i++)
             {
                 for (int j = (int)room.Y; j < room.Y + room.Height; j++)
@@ -175,12 +172,14 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     Map.SetPixel(i, j, System.Drawing.Color.White);
                     Controller.PlacementColors[i, j] = ColorListDungeon.Instance.Ground;
 
-                    // randomly setting items in a room
+                    // setting questitem in center of first amountQuestItem rooms
                     // does not set an item in spawn room
-                    if (rnd.Next(10) == 0 && !set)     // 10% chance for setting item
+                    if (!itemSet && !set && amountQuestItem > 0)
                     {
-                        Controller.ItemColors[i, j] = ColorListDungeon.Instance.Item;
-                        Map.SetPixel(i, j, System.Drawing.Color.Gray);
+                        Controller.ItemColors[room.Center.X, room.Center.Y] = ColorListDungeon.Instance.Item;
+                        Map.SetPixel(room.Center.X, room.Center.Y, System.Drawing.Color.Gray);
+                        itemSet = true;
+                        amountQuestItem--;
                     }
                     else if(!set)
                     {
@@ -273,24 +272,6 @@ namespace EmodiaQuest.Core.DungeonGeneration
             {
                 Controller.PlacementColors[item.X, item.Y] = ColorListDungeon.Instance.Nothing;
                 Map.SetPixel(item.X, item.Y, System.Drawing.Color.White);
-            }
-        }
-
-        /// <summary>
-        /// Inserts randomly items in rooms and floors
-        /// </summary>
-        private void insertItems()
-        {
-            for (int i = 1; i < Math.Sqrt(Controller.PlacementColors.Length) - 1; i++)
-            {
-                for (int j = 1; j < Math.Sqrt(Controller.PlacementColors.Length) - 1; j++)
-                {
-                    if (Controller.PlacementColors[i, j] == ColorListDungeon.Instance.Ground && rnd.Next(100) == 0)     // 1% chance for setting item
-                    {
-                        Controller.ItemColors[i, j] = ColorListDungeon.Instance.Item;
-                        Map.SetPixel(i, j, System.Drawing.Color.Green);
-                    }
-                }
             }
         }
 
@@ -465,7 +446,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                         EnemyList.Add(enemy);
                         count--;
 
-                        Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
+                        //Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
                     }
                 }
                 else
@@ -474,7 +455,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     EnemyList.Add(enemy);
                     count--;
 
-                    Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
+                    //Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
                 }
             }
         } 

@@ -79,10 +79,14 @@ namespace EmodiaQuest.Core
             // Do not insert in the map !!!
             EnvironmentController.Object nothing = new EnvironmentController.Object(null, ColorListDungeon.Instance.Nothing, Vector2.One, "nothing", false); Controller.CollisionObjList.Add(nothing);
 
+            EnvironmentController.Object item = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/Point"), ColorListDungeon.Instance.Item, new Vector2(1, 1), "item", false);
+
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall.Model, wall.Color, 0, wall.Name, wall.IsRandomStuff);
             Controller.InsertObj(Controller.Ground, ground.Model,ground.Color, 0, ground.Name, ground.IsRandomStuff);
             Controller.InsertObj(Controller.Teleporter, teleporter.Model, teleporter.Color, 0, teleporter.Name, teleporter.IsRandomStuff);
+
+            Controller.InsertItem(Controller.Items, item.Model, item.Color, 0, item.Name, item.IsRandomStuff);
 
             //now after all collision objects are choosen generate collision map
             Controller.GenerateCollisionMap(Content);
