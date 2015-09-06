@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Services;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
@@ -73,6 +74,13 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D pixel_white;
         private Texture2D pixel_red;
 
+        private Texture2D icon_armor;
+        private Texture2D icon_boot;
+        private Texture2D icon_helmet;
+        private Texture2D icon_quest;
+        private Texture2D icon_weapon;
+        private Texture2D icon_useable;
+
         // Slider Textures
         private Texture2D slider_background;
         private Texture2D slider_foreground_normal;
@@ -88,12 +96,17 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D test1;
         private Texture2D test2;
 
+        // Item Content
+        private Texture2D itemPicture;
+
         // Fonts
         private SpriteFont monoFont_big;
         private SpriteFont dice_big;
         private SpriteFont monoFont_small;
 
         public static float OverallFontScale;
+
+        ContentManager platformContent;
 
         // Fontsizes and Scales
         //private float fontFactor_dice_big = 0.41458f;
@@ -105,6 +118,7 @@ namespace EmodiaQuest.Core.GUI
 
         public void loadContent(ContentManager Content)
         {
+            this.platformContent = Content;
 
             // Button Content
             //button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
@@ -125,6 +139,15 @@ namespace EmodiaQuest.Core.GUI
             pixel_white = Content.Load<Texture2D>("Content_GUI/pixel_white");
             pixel_red = Content.Load<Texture2D>("Content_GUI/pixel_red");
 
+            icon_armor = Content.Load<Texture2D>("fbxContent/items/icon_armor");
+            icon_boot = Content.Load<Texture2D>("fbxContent/items/icon_boot");
+            icon_helmet = Content.Load<Texture2D>("fbxContent/items/icon_helmet");
+            icon_quest = Content.Load<Texture2D>("fbxContent/items/icon_quest");
+            icon_weapon = Content.Load<Texture2D>("fbxContent/items/icon_weapon");
+            icon_useable = Content.Load<Texture2D>("fbxContent/items/icon_useable");
+
+
+
             // Slider Content
             slider_background = Content.Load<Texture2D>("Content_GUI/slider_background_new");
             slider_foreground_normal = Content.Load<Texture2D>("Content_GUI/slider_foreground_normal");
@@ -139,6 +162,9 @@ namespace EmodiaQuest.Core.GUI
             // Test Content
             test1 = Content.Load<Texture2D>("Content_GUI/test1");
             test2 = Content.Load<Texture2D>("Content_GUI/test2");
+
+            // Item Content
+            itemPicture = Content.Load<Texture2D>("Content_GUI/itemSocket");
 
             //fonts.Add()
             //dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
@@ -357,7 +383,10 @@ namespace EmodiaQuest.Core.GUI
                 if (bb.IsVisible)
                 {
                     if (bb.Button_State == ButtonState_GUI.Normal)
-                        spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                        if (bb.PathOfPicture.Length > 2)
+                            spritebatch.Draw(bb.itemTexture, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                        else
+                            spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                     else if (bb.Button_State == ButtonState_GUI.MouseOver)
                         spritebatch.Draw(button_m, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                     else if (bb.Button_State == ButtonState_GUI.Pressed)
@@ -422,6 +451,16 @@ namespace EmodiaQuest.Core.GUI
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, isVisible));
         }
+        public void addButton(float xPos, float yPos, float width, float height, string name)
+        {
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
+            buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, true, "AAA", itemSocket));
+        }
+
+
 
         public void addPlainText(float xPos, float yPos, string chooseFont, string text, bool centered)
         {
@@ -495,6 +534,7 @@ namespace EmodiaQuest.Core.GUI
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             Texture2D plTexture;
+
             switch (image)
             {
                 case "HUD_small":
@@ -514,6 +554,27 @@ namespace EmodiaQuest.Core.GUI
                     break;
                 case "test2":
                     plTexture = test2;
+                    break;
+                case "icon_armor":
+                    plTexture = icon_armor;
+                    break;
+                case "icon_boot":
+                    plTexture = icon_boot;
+                    break;
+                case "icon_helmet":
+                    plTexture = icon_helmet;
+                    break;
+                case "icon_quest":
+                    plTexture = icon_quest;
+                    break;
+                case "icon_weapon":
+                    plTexture = icon_weapon;
+                    break;
+                case "icon_useable":
+                    plTexture = icon_useable;
+                    break;
+                case "item_socket":
+                    plTexture = itemSocket;
                     break;
                 default:
                     plTexture = pixel_black;
@@ -639,11 +700,11 @@ namespace EmodiaQuest.Core.GUI
             float textScaleFactor = (MainWindowSize.Y * 10 * 0.01f) / spriteFontSize.Y;
 
             //int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2));
-            int textX = (int)(MainWindowSize.X * (xPos+1) * 0.01f);
+            int textX = (int)(MainWindowSize.X * (xPos + 1) * 0.01f);
 
             // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
             //int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
-            int textY = (int)(MainWindowSize.Y * (yPos+1) * 0.01f);
+            int textY = (int)(MainWindowSize.Y * (yPos + 1) * 0.01f);
 
             dialogues.Add(new DialogueBox_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, dFont, labelText, labelName, textX, textY, textScaleFactor));
         }
@@ -716,6 +777,46 @@ namespace EmodiaQuest.Core.GUI
                 pi.IsVisible = visibility;
             }
         }
+
+        public void updateButtonPicture(string buttonName, string newPictureType)
+        {
+            foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
+            {
+                bb.PathOfPicture = "AAA"; // Important!
+                //itemPicture = this.platformContent.Load<Texture2D>(newPicturePath);
+
+                Texture2D itemTexture = itemSocket;
+                switch (newPictureType)
+                {
+                    case "armor":
+                        itemTexture = icon_armor;
+                        break;
+                    case "boot":
+                        itemTexture = icon_boot;
+                        break;
+                    case "helmet":
+                        itemTexture = icon_helmet;
+                        break;
+                    case "quest":
+                        itemTexture = icon_quest;
+                        break;
+                    case "weapon":
+                        itemTexture = icon_weapon;
+                        break;
+                    case "useable":
+                        itemTexture = icon_useable;
+                        break;
+                    case "socket":
+                        itemTexture = itemSocket;
+                        break;
+                    default:
+                        Console.WriteLine("Wrong name for item chosen");
+                        break;
+                }
+                bb.itemTexture = itemTexture;
+            }
+        }
+
         public Vector2 getButtonPosition(string buttonName)
         {
             Vector2 result = new Vector2(0, 0);
@@ -860,7 +961,7 @@ namespace EmodiaQuest.Core.GUI
                     ls.TextYPos = (int)(((MainWindowSize.Y * ls.YPosRelative * 0.01f)) + (MainWindowSize.Y * ls.HeightRelative * 0.01f / 2) - ((ls.TextScaleFactor - 0.15f) * spriteFontSize.Y / 2));
                 }
             }
-            foreach(DialogueBox_GUI db in dialogues)
+            foreach (DialogueBox_GUI db in dialogues)
             {
                 db.XPos = (int)(MainWindowSize.X * db.XPosRelative * 0.01);
                 db.YPos = (int)(MainWindowSize.Y * db.YPosRelative * 0.01);

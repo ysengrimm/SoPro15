@@ -358,7 +358,7 @@ namespace EmodiaQuest.Core.NPCs
 
 
             // Drawing the questionmark
-            if (distanceToPlayer < 5)
+            if (distanceToPlayer < 15)
             {
                 foreach (ModelMesh mesh in question.Meshes)
                 {
@@ -378,7 +378,7 @@ namespace EmodiaQuest.Core.NPCs
             }
 
             // Drawing the portal
-            if (distanceToPlayer < 4)
+            if (distanceToPlayer < 15)
             {
                 foreach (ModelMesh mesh in portal.Meshes)
                 {

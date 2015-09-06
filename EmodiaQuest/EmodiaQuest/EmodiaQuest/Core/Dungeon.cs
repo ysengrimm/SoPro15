@@ -98,6 +98,7 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void CreateRandomStuff()
         {
+            Controller.RandomStuff.Clear();
             // Random Stuff
             EnvironmentController.Object Gras_1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Gras_1/Gras_1"), new Color(300, 300, 0), new Vector2(0, 0), "Gras_1", true);
             EnvironmentController.Object Gras_2 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/RandomStuff/Gras_2/Gras_2"), new Color(300, 300, 0), new Vector2(0, 0), "Gras_2", true);

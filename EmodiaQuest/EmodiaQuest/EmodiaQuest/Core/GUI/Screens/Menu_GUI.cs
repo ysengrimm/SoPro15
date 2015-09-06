@@ -31,6 +31,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "bindings":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.KeyBindingsScreen;
                     break;
+                case "test":
+                    platform.updateButtonPicture("test", "armor");
+                    break;
                 default:
                     Console.WriteLine("No such Function.");
                     break;
@@ -66,6 +69,8 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.setBackground(Content, "Content_GUI/menu_background");
             this.platform.setBackground(Content, "Content_GUI/menu_full_small");
 
+            platform.addButton(0, 0, 50, 50, "test");
+
             this.platform.addButton(35, 60, 30, 8, "playGame", "Spiel starten");
             this.platform.addButton(35, 75, 30, 8, "options", "Optionen");
             this.platform.addButton(35, 90, 30, 8, "bindings", "Tastenbelegung");
@@ -100,6 +105,10 @@ namespace EmodiaQuest.Core.GUI.Screens
 
                 }
                 //Console.WriteLine(testList.Count);
+            }
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.W))
+            {
+                
             }
         }
 

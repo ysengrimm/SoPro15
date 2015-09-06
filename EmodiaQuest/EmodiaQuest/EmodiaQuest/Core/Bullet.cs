@@ -164,6 +164,7 @@ namespace EmodiaQuest.Core
                         {
                             if (pointSide(bulletDirection, playerPosition, nmy.Position) < 1.5 && pointSide(bulletDirection, playerPosition, nmy.Position) > -1.5)
                             {
+                                // This if is the computation, if the enemy is behind the player or not
                                 if (pointSide(turnedBulletDirection, playerPosition, nmy.Position) > 0)
                                     nmy.Attack(Damage);
                             }

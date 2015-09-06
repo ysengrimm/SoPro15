@@ -23,5 +23,6 @@ Color (003, 000, B) == wallDoor
 # Gebäude
 Color (010, 000, B) == Wohnhaus 2
 Color (011, 000, B) == Taverne
+Color (012, 000, B) == Kaufladen
 
 #Böden
