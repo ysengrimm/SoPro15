@@ -216,11 +216,13 @@ namespace EmodiaQuest.Core
                             Console.WriteLine("GameObject has a wrong rotation: Blue Channel!" + PlacementColors[i,j]);
                         }
                         objList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), PlacementColors[i, j].B, name, isRandomStuff));
+                        
                         if (name == "wall" && CurrentWorld == WorldState.Dungeon)
                         {
                             a = Player.Instance.ContentMngr.Load<Model>("fbxContent/gameobjects/Ground_10x10/Ground_10x10");
                             objList.Add(new GameObject(a, new Vector3(i * 10, height, j * 10), PlacementColors[i, j].B, "ground", false));
                         }
+                        
                     }    
                 }
             }

@@ -230,80 +230,72 @@ namespace EmodiaQuest.Core
         /// </summary>      
         public void drawGameobject(Matrix world, Matrix view, Matrix projection)
         {
+
+            // Safeworld rendering
             if (EmodiaQuest.Core.Ingame.Instance.ActiveWorld == WorldState.Safeworld)
             {
-                if (distanceToPlayer > Settings.Instance.EnvironmentDetailDistance && IsRandomStuff)
+                if(IsRandomStuff && distanceToPlayer > Settings.Instance.EnvironmentDetailDistance)
                 {
                     return;
                 }
                 else
                 {
-                    foreach (ModelMesh mesh in model.Meshes)
+                    Vector2 position2D = new Vector2(this.position.X, this.position.Z);
+                    Vector2 pp = new Vector2(playerView.X, playerView.Y);
+                    Vector2 turnedBulletDirection = Vector2.Transform(playerView, Matrix.CreateRotationZ((float)(0.5 * Math.PI)));
+                    Vector2 ppp = Vector2.Transform(playerView, Matrix.CreateRotationZ((float)(Math.PI)));
+                    ppp.Normalize();
+                    ppp *= -10;
+                    ppp = Vector2.Add(ppp, position2D);
+
+
+                    Vector2 posi = position2D;
+                    posi.Normalize();
+
+                    pp.Normalize();
+                    pp *= 10;
                     {
-                        foreach (BasicEffect effect in mesh.Effects)
+                        foreach (ModelMesh mesh in model.Meshes)
                         {
-                            effect.SpecularPower = 2f;
-                            effect.EnableDefaultLighting();
-                            effect.World = Matrix.CreateScale(scale) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateRotationX(rotationX) * Matrix.CreateRotationY(rotationY) * Matrix.CreateRotationZ(rotationZ) * Matrix.CreateTranslation(position) * world;
-                            effect.View = view;
-                            effect.Projection = projection;
-                            if (IsRandomStuff)
+                            foreach (BasicEffect effect in mesh.Effects)
                             {
 
-                                effect.FogEnabled = true;
-                                effect.FogStart = 15f;
-                                effect.FogEnd = Settings.Instance.EnvironmentDetailDistance;
-                                effect.PreferPerPixelLighting = true;
-                                effect.Texture = Textures.ElementAt(texture);
+                                {
+                                    effect.EnableDefaultLighting();
+                                    effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateRotationY(rotationY) * Matrix.CreateRotationX(rotationX) * Matrix.CreateRotationZ(rotationZ) * Matrix.CreateTranslation(position) * world;
+                                    effect.View = view;
+                                    effect.Projection = projection;
 
-                                if (distanceToPlayer < 20)
-                                {
-                                    effect.FogEnabled = false;
-                                    effect.Alpha = 1.0f;
+                                    effect.FogColor = new Vector3(0.5f, 0.55f, 0.5f);
+                                    effect.FogEnabled = true;
+                                    effect.FogStart = 150f;
+                                    effect.FogEnd = 1000f;
+                                    effect.PreferPerPixelLighting = true;
+
+                                    effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
+                                    effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
+                                    if(Name == "brownWay")
+                                    {
+                                        effect.DiffuseColor = new Vector3(0.1578511f, 0.05631156f, 0.03418359f) * 2;
+                                    }
                                 }
-                                if (distanceToPlayer < 30 && distanceToPlayer > 20)
-                                {
-                                    effect.FogColor = new Vector3(0.1f, 0.1f, 0.1f);
-                                    effect.Alpha = 0.9f;
-                                }
-                                else if (distanceToPlayer < 40 && distanceToPlayer > 30)
-                                {
-                                    effect.FogColor = new Vector3(0.2f, 0.2f, 0.2f);
-                                    effect.Alpha = 0.8f;
-                                }
-                                else if (distanceToPlayer < 50 && distanceToPlayer > 40)
-                                {
-                                    effect.FogColor = new Vector3(0.3f, 0.3f, 0.3f);
-                                    effect.Alpha = 0.6f;
-                                }
-                                else if (distanceToPlayer < 60 && distanceToPlayer > 50)
-                                {
-                                    effect.FogColor = new Vector3(0.4f, 0.4f, 0.4f);
-                                    effect.Alpha = 0.4f;
-                                }
-                                else if (distanceToPlayer > 50)
-                                {
-                                    effect.FogColor = new Vector3(0.5f, 0.5f, 0.5f);
-                                    effect.Alpha = 0.2f;
-                                }
+
                             }
-
-                            //Ambient: {X:0,05333332 Y:0,09882354 Z:0,1819608}         
-                            //Diffuse: {X:0,1178511 Y:0,05631156 Z:0,03418359}
-                            //Specular: {X:0,25 Y:0,25 Z:0,25}
-                            //Emissive: {X:0 Y:0 Z:0}
+                            mesh.Draw();
                         }
-                        mesh.Draw();
                     }
                 }
+                
             }
+
+            // Dungeon Rendering
             else
             {
+
                 copiedEffect = Player.Instance.copiedEffect;
 
                 if (distanceToPlayer > 60)
                 {
-
                     foreach (ModelMesh mesh in model.Meshes)
                     {
                         foreach (BasicEffect effect in mesh.Effects)
@@ -388,20 +380,24 @@ namespace EmodiaQuest.Core
                         {
                             foreach (BasicEffect effect in mesh.Effects)
                             {
-                                effect.EnableDefaultLighting();
-                                effect.World = world * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
-                                effect.View = view;
-                                effect.Projection = projection;
+
+                                {
+                                    effect.EnableDefaultLighting();
+                                    effect.World = world * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateTranslation(position);
+                                    effect.View = view;
+                                    effect.Projection = projection;
 
 
-                                effect.FogColor = new Vector3(0.0f, 0.0f, 0.0f);
-                                effect.FogEnabled = true;
-                                effect.FogStart = 8f;
-                                effect.FogEnd = 75f;
-                                effect.PreferPerPixelLighting = true;
+                                    effect.FogColor = new Vector3(0.0f, 0.0f, 0.0f);
+                                    effect.FogEnabled = true;
+                                    effect.FogStart = 8f;
+                                    effect.FogEnd = 75f;
+                                    effect.PreferPerPixelLighting = true;
 
-                                effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
-                                effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
+                                    effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
+                                    effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
+                                }
+
 
                                 //effect.Texture = Textures.ElementAt(0);
                                 //effect.SpecularColor = spec * (2.0f - distanceToPlayer * 0.05f);
