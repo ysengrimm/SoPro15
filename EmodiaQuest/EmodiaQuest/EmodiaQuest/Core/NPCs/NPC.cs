@@ -378,26 +378,26 @@ namespace EmodiaQuest.Core.NPCs
             }
 
             // Drawing the portal
-            if (distanceToPlayer < 15)
-            {
-                foreach (ModelMesh mesh in portal.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.Texture = portalTest;
-                        effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X + 2, 0, Position.Y)) * world;
-                        effect.View = view;
-                        effect.Projection = projection;
-                        effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.5f);
-                        effect.SpecularColor = new Vector3(0.0f);
-                        effect.SpecularPower = 0;
-                        effect.Alpha = 0.8f;
-                        effect.PreferPerPixelLighting = true;
-                    }
-                    mesh.Draw();
-                }
-            }
+            //if (distanceToPlayer < 15)
+            //{
+            //    foreach (ModelMesh mesh in portal.Meshes)
+            //    {
+            //        foreach (BasicEffect effect in mesh.Effects)
+            //        {
+            //            effect.Texture = portalTest;
+            //            effect.EnableDefaultLighting();
+            //            effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X + 2, 0, Position.Y)) * world;
+            //            effect.View = view;
+            //            effect.Projection = projection;
+            //            effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.5f);
+            //            effect.SpecularColor = new Vector3(0.0f);
+            //            effect.SpecularPower = 0;
+            //            effect.Alpha = 0.8f;
+            //            effect.PreferPerPixelLighting = true;
+            //        }
+            //        mesh.Draw();
+            //    }
+            //}
 
             // Drawing the shadow
 
