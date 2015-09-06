@@ -24,6 +24,7 @@ namespace EmodiaQuest.Core.GUI
         public int TextYPos { get; set; }
         public float TextScaleFactor { get; set; }
         public bool isClickable = true;
+        public string PathOfPicture = "";
 
         private string buttonText = null;
         private ButtonState_GUI button_State = ButtonState_GUI.Normal;
@@ -57,6 +58,21 @@ namespace EmodiaQuest.Core.GUI
             this.Height = height;
             this.Function = function;
             this.IsVisible = isVisible;
+        }
+
+        public Button_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, string function, bool isVisible, string pathOfPicture)
+        {
+            this.XPosRelative = xPosRelative;
+            this.YPosRelative = yPosRelative;
+            this.XPos = xPos;
+            this.YPos = yPos;
+            this.WidthRelative = widthRelative;
+            this.HeightRelative = heightRelative;
+            this.Width = width;
+            this.Height = height;
+            this.Function = function;
+            this.IsVisible = isVisible;
+            this.PathOfPicture = pathOfPicture;
         }
 
         public static bool isInside(int mouse_xPos, int mouse_yPos, int button_xPos, int button_yPos, int button_width, int button_height)

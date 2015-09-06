@@ -95,12 +95,17 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D test1;
         private Texture2D test2;
 
+        // Item Content
+        private Texture2D itemPicture;
+
         // Fonts
         private SpriteFont monoFont_big;
         private SpriteFont dice_big;
         private SpriteFont monoFont_small;
 
         public static float OverallFontScale;
+
+        ContentManager platformContent;
 
         // Fontsizes and Scales
         //private float fontFactor_dice_big = 0.41458f;
@@ -112,6 +117,7 @@ namespace EmodiaQuest.Core.GUI
 
         public void loadContent(ContentManager Content)
         {
+            this.platformContent = Content;
 
             // Button Content
             //button_n = Content.Load<Texture2D>("Content_GUI/button_normal");
@@ -155,6 +161,9 @@ namespace EmodiaQuest.Core.GUI
             // Test Content
             test1 = Content.Load<Texture2D>("Content_GUI/test1");
             test2 = Content.Load<Texture2D>("Content_GUI/test2");
+
+            // Item Content
+            itemPicture = Content.Load<Texture2D>("Content_GUI/itemSocket");
 
             //fonts.Add()
             //dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
@@ -373,7 +382,10 @@ namespace EmodiaQuest.Core.GUI
                 if (bb.IsVisible)
                 {
                     if (bb.Button_State == ButtonState_GUI.Normal)
-                        spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                        if (bb.PathOfPicture.Length > 2)
+                            spritebatch.Draw(itemPicture, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                        else
+                            spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                     else if (bb.Button_State == ButtonState_GUI.MouseOver)
                         spritebatch.Draw(button_m, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                     else if (bb.Button_State == ButtonState_GUI.Pressed)
@@ -438,6 +450,16 @@ namespace EmodiaQuest.Core.GUI
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, isVisible));
         }
+        public void addButton(float xPos, float yPos, float width, float height, string name, bool isVisible, string pathOfPicture)
+        {
+            int xPosAbs = (int)(MainWindowSize.X * xPos * 0.01);
+            int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
+            int widthAbs = (int)(MainWindowSize.X * width * 0.01);
+            int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
+            buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, isVisible, pathOfPicture));
+        }
+
+
 
         public void addPlainText(float xPos, float yPos, string chooseFont, string text, bool centered)
         {
@@ -751,6 +773,16 @@ namespace EmodiaQuest.Core.GUI
                 pi.IsVisible = visibility;
             }
         }
+
+        public void updateButtonPicture(string buttonName, string newPicturePath)
+        {
+            foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
+            {
+                bb.PathOfPicture = newPicturePath; // Is doing quiet nothing right know
+                itemPicture = this.platformContent.Load<Texture2D>(newPicturePath);
+            }
+        }
+
         public Vector2 getButtonPosition(string buttonName)
         {
             Vector2 result = new Vector2(0, 0);
