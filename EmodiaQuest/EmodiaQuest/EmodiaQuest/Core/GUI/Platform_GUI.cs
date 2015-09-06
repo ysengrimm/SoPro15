@@ -73,6 +73,13 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D pixel_white;
         private Texture2D pixel_red;
 
+        private Texture2D icon_armor;
+        private Texture2D icon_boot;
+        private Texture2D icon_helmet;
+        private Texture2D icon_quest;
+        private Texture2D icon_weapon;
+        private Texture2D icon_useable;
+
         // Slider Textures
         private Texture2D slider_background;
         private Texture2D slider_foreground_normal;
@@ -124,6 +131,15 @@ namespace EmodiaQuest.Core.GUI
             pixel_black = Content.Load<Texture2D>("Content_GUI/pixel_black");
             pixel_white = Content.Load<Texture2D>("Content_GUI/pixel_white");
             pixel_red = Content.Load<Texture2D>("Content_GUI/pixel_red");
+
+            icon_armor = Content.Load<Texture2D>("fbxContent/items/icon_armor");
+            icon_boot = Content.Load<Texture2D>("fbxContent/items/icon_boot");
+            icon_helmet = Content.Load<Texture2D>("fbxContent/items/icon_helmet");
+            icon_quest = Content.Load<Texture2D>("fbxContent/items/icon_quest");
+            icon_weapon = Content.Load<Texture2D>("fbxContent/items/icon_weapon");
+            icon_useable = Content.Load<Texture2D>("fbxContent/items/icon_useable");
+
+
 
             // Slider Content
             slider_background = Content.Load<Texture2D>("Content_GUI/slider_background_new");
@@ -495,6 +511,7 @@ namespace EmodiaQuest.Core.GUI
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
             Texture2D plTexture;
+
             switch (image)
             {
                 case "HUD_small":
@@ -514,6 +531,24 @@ namespace EmodiaQuest.Core.GUI
                     break;
                 case "test2":
                     plTexture = test2;
+                    break;
+                case "icon_armor":
+                    plTexture = icon_armor;
+                    break;
+                case "icon_boot":
+                    plTexture = icon_boot;
+                    break;
+                case "icon_helmet":
+                    plTexture = icon_helmet;
+                    break;
+                case "icon_quest":
+                    plTexture = icon_quest;
+                    break;
+                case "icon_weapon":
+                    plTexture = icon_weapon;
+                    break;
+                case "icon_useable":
+                    plTexture = icon_useable;
                     break;
                 default:
                     plTexture = pixel_black;
@@ -639,11 +674,11 @@ namespace EmodiaQuest.Core.GUI
             float textScaleFactor = (MainWindowSize.Y * 10 * 0.01f) / spriteFontSize.Y;
 
             //int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2));
-            int textX = (int)(MainWindowSize.X * (xPos+1) * 0.01f);
+            int textX = (int)(MainWindowSize.X * (xPos + 1) * 0.01f);
 
             // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
             //int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
-            int textY = (int)(MainWindowSize.Y * (yPos+1) * 0.01f);
+            int textY = (int)(MainWindowSize.Y * (yPos + 1) * 0.01f);
 
             dialogues.Add(new DialogueBox_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, dFont, labelText, labelName, textX, textY, textScaleFactor));
         }
@@ -860,7 +895,7 @@ namespace EmodiaQuest.Core.GUI
                     ls.TextYPos = (int)(((MainWindowSize.Y * ls.YPosRelative * 0.01f)) + (MainWindowSize.Y * ls.HeightRelative * 0.01f / 2) - ((ls.TextScaleFactor - 0.15f) * spriteFontSize.Y / 2));
                 }
             }
-            foreach(DialogueBox_GUI db in dialogues)
+            foreach (DialogueBox_GUI db in dialogues)
             {
                 db.XPos = (int)(MainWindowSize.X * db.XPosRelative * 0.01);
                 db.YPos = (int)(MainWindowSize.Y * db.YPosRelative * 0.01);
