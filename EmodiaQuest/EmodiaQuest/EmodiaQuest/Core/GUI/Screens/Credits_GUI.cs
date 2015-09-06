@@ -40,6 +40,11 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             this.platform.addButton(38, 85, 24, 8, "menu", "Menue");
 
+            this.platform.addLabel(50, 35, 6, "monoFont_small", "Janos Zimmermann", "Menu", true);
+            this.platform.addLabel(50, 40, 6, "monoFont_small", "Alex Mikulinski", "Menu", true);
+            this.platform.addLabel(50, 45, 6, "monoFont_small", "Claudius Grimm", "Menu", true);
+            this.platform.addLabel(50, 50, 6, "monoFont_small", "Kim Krietemeier", "Menu", true);
+
             platform.addPlainImage(5, 5, 20, 20, "acagamics", "pixel_red");
             platform.updatePlainImagePicture("acagamics", "other/acagamics");
 
