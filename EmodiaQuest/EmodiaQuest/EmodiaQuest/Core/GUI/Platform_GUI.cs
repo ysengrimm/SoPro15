@@ -778,6 +778,16 @@ namespace EmodiaQuest.Core.GUI
             }
         }
 
+        public void updatePlainImagePicture(string imageName, string pathOfNewPicture )
+        {
+            Texture2D newPicture = pixel_red;
+            foreach (PlainImage_GUI pi in pimages.Where(n => n.Function == imageName))
+            {
+                newPicture = platformContent.Load<Texture2D>(pathOfNewPicture);
+                pi.Image = newPicture;
+            }
+        }
+
         public void updateButtonPicture(string buttonName, string newPictureType)
         {
             foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
