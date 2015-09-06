@@ -641,13 +641,33 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall_1.fbx">
-      <Name>Safeworld_wall_1</Name>
+    <Compile Include="fbxContent\Questitems\Eisen.fbx">
+      <Name>Eisen</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall_2.fbx">
-      <Name>Safeworld_wall_2</Name>
+    <Compile Include="fbxContent\Questitems\Kochbuch.fbx">
+      <Name>Kochbuch</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Messing.fbx">
+      <Name>Messing</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Sack.fbx">
+      <Name>Sack</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Diebesgut.fbx">
+      <Name>Diebesgut</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Schatztruhe.fbx">
+      <Name>Schatztruhe</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
@@ -1582,18 +1602,33 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Dungeon_wall_tex_stone1.png">
-      <Name>Dungeon_wall_tex_stone1</Name>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Eisenblock.png">
+      <Name>Questitem_tex_Eisenblock</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall1_tex_1.png">
-      <Name>Safeworld_wall1_tex_1</Name>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Kiste.png">
+      <Name>Questitem_tex_Kiste</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall2_tex_1.png">
-      <Name>Safeworld_wall2_tex_1</Name>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Kochbuch.png">
+      <Name>Questitem_tex_Kochbuch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Messingbarren.png">
+      <Name>Questitem_tex_Messingbarren</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Sack.png">
+      <Name>Questitem_tex_Sack</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\Questitems\Questitem_tex_Sack_Diebesgut.png">
+      <Name>Questitem_tex_Sack_Diebesgut</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

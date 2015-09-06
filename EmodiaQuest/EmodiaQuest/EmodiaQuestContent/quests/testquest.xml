@@ -34,7 +34,7 @@
 				finde den Sack mit dem Diebesgut!
 			</description>
             <tasks>
-                <level>4</level>
+				<item>Diebesgut</item>
             </tasks>
             <rewards>
                 <xp>300</xp>
@@ -130,12 +130,12 @@
 					Konstantin hat mir letztens erzaehlt, dass du sehr gerne in den Labyrinthen bist
 					um dort Monster umzulegen.
 					Nun ich glaube ihm nicht, dass jemand wie du ein guter Kaempfer sein kannst.
-					Schlachte doch mal bitte 50 Wurmköniginen im Dungeon ab und bringe mir ihre Koepfe.
+					Schlachte doch mal bitte 50 Wurmkoeniginen im Dungeon ab und bringe mir ihre Koepfe.
 					Ich habe mit Konstantin gewettet, dass du das garantiert nicht schaffen wirst. 
 					Wenn du aber dennoch erfolgreich sein solltest werde ich den Gewinn mit dir teilen.
             </story>
             <description>
-                Geh und besiege 50 Wurmköniginen!
+                Geh und besiege 50 Wurmkoeniginen!
 				Komm anschliessend zu Yorlgon zurueck.
             </description>
             <tasks>
@@ -190,14 +190,14 @@
             </conditions>
             <story>
 				Jack:
-					Geh und bringe mir 10 Koepfe von den kleinen Nachtmähren aus dem Labyrinth.
+					Geh und bringe mir 10 Koepfe von den kleinen Nachtmahren aus dem Labyrinth.
 					Einer meiner Kunden hier, der sich selbst als Heiler bezeichnet, meinte er wuerde die Koepfe
 					fuer seine Experimente benoetigen. Naja mir solls nur recht sein, er selbst hat sowieso keine Kunden
 					da jeder weiss, dass er ein Scharlatan ist. 
 					Ich geb dir die Haelfte von dem was er mir dafuer zahlt.
             </story>
             <description>
-                Geh und besiege 10 kleine Nachtmähren!
+                Geh und besiege 10 kleine Nachtmahre!
 				Komm anschliessend zu Jack zurueck.
             </description>
             <tasks>
@@ -221,15 +221,15 @@
             <story>
 				Jack:
 					Du hast bei deiner letzten Aufgabe einen guten Job gemacht.
-					Der Scharlatan verlangt nun nach 20 weiteren Koepfen der kleinen Nachtmähren. Seine Experimente scheinen ihm zu gelingen.
+					Der Scharlatan verlangt nun nach 20 weiteren Koepfen der kleinen Nachtmahren. Seine Experimente scheinen ihm zu gelingen.
 					Wegen der Bezahlung musst du dir freilich keine Sorgen machen.
             </story>
             <description>
-                Geh und besiege 20 kleine Nachtmähren!
+                Geh und besiege 20 kleine Nachtmahren!
 				Komm anschliessend zu Jack zurueck.
             </description>
             <tasks>
-                <kill>Monster 2,20</kill>
+                <kill>Monster2,20</kill>
             </tasks>
             <rewards>
                 <xp>400</xp>
@@ -513,7 +513,7 @@
 				Begib dich anschliessend zu Yorlgon.
             </description>
             <tasks>
-                <item>Truhe</item>
+                <item>Schatztruhe</item>
             </tasks>
             <rewards>
                 <xp>400</xp>
