@@ -28,7 +28,11 @@
 					Ich werde dich selbstverstaendlich gut fuer den Fund belohnen.
 					Und pass bitte trotzdem auf dich auf, ok?
             </story>
-            <description>Finde den Sack mit dem Diebesgut.</description>
+            <description>
+				Jack wurde bestohlen.
+				Geh in die Labyrinthe und
+				finde den Sack mit dem Diebesgut!
+			</description>
             <tasks>
                 <level>4</level>
             </tasks>
@@ -55,52 +59,17 @@
 					Seuche eindeutig nicht alles mit rechten Dingen zu geht. Ich kann nicht genau sagen was es
 					ist aber mein Gefuehl sagt mir, dass hier irgendetwas nicht stimmt.
 					Wir haben letztens rausgefunden, dass die Mutationen immer neuere besondere Formen annehmen.
-					In den Labyrinthen tummeln sich mittlerweile MONSTER, welche frueher noch nicht dagewesen sind.
+					In den Labyrinthen tummeln sich mittlerweile Weraffen, welche frueher noch nicht dagewesen sind.
 					Wir muessen der Sache unbedingt auf den Grund gehen und herausfinden wie diese entstanden sind.
-					Es waere uns eine grosse Hilfe wenn du 10 Blutproben von MONSTER mitbringen koenntest.
+					Es waere uns eine grosse Hilfe wenn du 10 Blutproben von Weraffen mitbringen koenntest.
 					Wir koennen diese dann genau untersuchen und wer weiss, vielleicht finden wir neue Hinweise.
             </story>
             <description>
-                Geh und besiege 10x MONSTER!
+                Geh und besiege 10 Weraffen!
 				Komm anschliessend zu Konstantin zurueck.
             </description>
             <tasks>
-                <kill>MONSTER,10</kill>
-            </tasks>
-            <rewards>
-                <xp>300</xp>
-                <gold>200</gold>
-            </rewards>
-        </quest>
-
-		<quest>
-            <name>Blut ist ein ganz besondrer Saft</name>
-            <difficulty>1</difficulty>
-            <owner>Konstantin</owner>
-            <repeatable>no</repeatable>
-            <conditions>
-				<solved>Im Anfang war die Tat!</solved>
-                <level>0</level>
-            </conditions>
-            <story>
-				Konstantin:
-					Hallo mein lieber Freund.
-					Weisst du, die durch die Seuche hervorgegangenen Monster werden von den Forschern und Heiler
-					staendig erforscht. Ich helfe da manchmal ein bisschen mit und mir ist aufgefallen, dass mit der
-					Seuche eindeutig nicht alles mit rechten Dingen zu geht. Ich kann nicht genau sagen was es
-					ist aber mein Gefuehl sagt mir, dass hier irgendetwas nicht stimmt.
-					Wir haben letztens rausgefunden, dass die Mutationen immer neuere besondere Formen annehmen.
-					In den Labyrinthen tummeln sich mittlerweile MONSTER, welche frueher noch nicht dagewesen sind.
-					Wir muessen der Sache unbedingt auf den Grund gehen und herausfinden wie diese entstanden sind.
-					Es waere uns eine grosse Hilfe wenn du 10 Blutproben von MONSTER mitbringen koenntest.
-					Wir koennen diese dann genau untersuchen und wer weiss, vielleicht finden wir neue Hinweise.
-            </story>
-            <description>
-                Geh und besiege 10x MONSTER!
-				Komm anschliessend zu Konstantin zurueck.
-            </description>
-            <tasks>
-                <kill>MONSTER,10</kill>
+                <kill>Monster7,10</kill>
             </tasks>
             <rewards>
                 <xp>300</xp>
@@ -128,18 +97,18 @@
 					befallen wurden. Dieser Virus ist eindeutig kuenstlichen Ursprungs. Er ruft bei den Menschen
 					abhaengig vom Alter, Geschlecht, Gewicht usw. verschiedene Mutationen vor. Einige sind dagegen
 					von vorherein Immun. Das sind wohl all diejenigen, welche heute noch Leben.
-					Wir muessen weitervorschen. Bitte bringe mir weitere 20 Blutproben von MONSTER.
+					Wir muessen weitervorschen. Bitte bringe mir weitere 20 Blutproben von Diamant-Weraffen.
 					Wir koennen sicherlich weitere Schluesse ziehen sobald wir genuegend Proben haben.
 					
 					Ah und uebrigens, wenn du damit fertig bist kannst du ja mal bei 
 					Yorlgon vorbeischauen. Er hat nach dir gesucht.
             </story>
             <description>
-                Geh und besiege 20x MONSTER!
+                Geh und besiege 20x Diamant-Weraffen!
 				Komm anschliessend zu Konstantin zurueck.
             </description>
             <tasks>
-                <kill>MONSTER,20</kill>
+                <kill>Monster8,20</kill>
             </tasks>
             <rewards>
                 <xp>300</xp>
@@ -161,16 +130,16 @@
 					Konstantin hat mir letztens erzaehlt, dass du sehr gerne in den Labyrinthen bist
 					um dort Monster umzulegen.
 					Nun ich glaube ihm nicht, dass jemand wie du ein guter Kaempfer sein kannst.
-					Schlachte doch mal bitte 50 MONSTER im Dungeon ab und bringe mir ihre Koepfe.
+					Schlachte doch mal bitte 50 Wurmköniginen im Dungeon ab und bringe mir ihre Koepfe.
 					Ich habe mit Konstantin gewettet, dass du das garantiert nicht schaffen wirst. 
 					Wenn du aber dennoch erfolgreich sein solltest werde ich den Gewinn mit dir teilen.
             </story>
             <description>
-                Geh und besiege 50x MONSTER!
+                Geh und besiege 50 Wurmköniginen!
 				Komm anschliessend zu Yorlgon zurueck.
             </description>
             <tasks>
-                <kill>MONSTER,50</kill>
+                <kill>Monster5,50</kill>
             </tasks>
             <rewards>
                 <xp>5000</xp>
@@ -199,7 +168,7 @@
 					Ich wuerde mich darueber sehr freuen, und an der Bezahlung soll es natuerlich nicht scheitern.
             </story>
             <description>
-                Geh und finde das Kochbuch.
+                Geh und finde das Kochbuch im Labyrinth.
 				Komm anschliessend zu Jack zurueck.
             </description>
             <tasks>
@@ -216,24 +185,23 @@
             <difficulty>1</difficulty>
             <owner>Jack</owner>
             <repeatable>yes</repeatable>
-            <conditions>
-				<solved>Im Anfang war die Tat!</solved>
+			<conditions>
                 <level>0</level>
             </conditions>
             <story>
 				Jack:
-					Geh und bringe mir 10 Koepfe von den MONSTER aus dem Labyrinth.
+					Geh und bringe mir 10 Koepfe von den kleinen Nachtmähren aus dem Labyrinth.
 					Einer meiner Kunden hier, der sich selbst als Heiler bezeichnet, meinte er wuerde die Koepfe
 					fuer seine Experimente benoetigen. Naja mir solls nur recht sein, er selbst hat sowieso keine Kunden
 					da jeder weiss, dass er ein Scharlatan ist. 
 					Ich geb dir die Haelfte von dem was er mir dafuer zahlt.
             </story>
             <description>
-                Geh und besiege 10x MONSTER!
+                Geh und besiege 10 kleine Nachtmähren!
 				Komm anschliessend zu Jack zurueck.
             </description>
             <tasks>
-                <kill>MONSTER,10</kill>
+                <kill>Monster2,10</kill>
             </tasks>
             <rewards>
                 <xp>200</xp>
@@ -253,11 +221,11 @@
             <story>
 				Jack:
 					Du hast bei deiner letzten Aufgabe einen guten Job gemacht.
-					Der Scharlatan verlangt nun nach 20 weiteren Koepfen der MONSTER. Seine Experimente scheinen ihm zu gelingen.
+					Der Scharlatan verlangt nun nach 20 weiteren Koepfen der kleinen Nachtmähren. Seine Experimente scheinen ihm zu gelingen.
 					Wegen der Bezahlung musst du dir freilich keine Sorgen machen.
             </story>
             <description>
-                Geh und besiege 20x MONSTER!
+                Geh und besiege 20 kleine Nachtmähren!
 				Komm anschliessend zu Jack zurueck.
             </description>
             <tasks>
@@ -275,7 +243,6 @@
             <owner>Jack</owner>
             <repeatable>yes</repeatable>
             <conditions>
-				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
@@ -306,7 +273,7 @@
 			
 		<quest>
             <name>Eine kleine Sammlung</name>
-            <difficulty>1</difficulty>
+            <difficulty>3</difficulty>
             <owner>Konstantin</owner>
             <repeatable>no</repeatable>
             <conditions>
@@ -318,17 +285,17 @@
 					Hallo mein lieber Freund. Weisst du ich habe mir letztens gedacht, dass ich mein
 					kleines Haeuschen ein bisschen aufpeppen koennte indem ich mir ein paar Trophaeen an die Waende haenge.
 					Nun ehm ... leider bin ich ja wie du weisst den ganzen Tag beschaeftigt und habe leider keine Zeit auf die Jagd zu gehen. 
-					Koenntest du mir da ein bisschen behilflich sein und den	Kopf vom MONSTER aus dem Labyrinth mitbringen?
+					Koenntest du mir da ein bisschen behilflich sein und den Kopf vom Steinwesen aus dem Labyrinth mitbringen?
 					
 					Ich werde dich selbstverstaendlich gut dafuer bezahlen. Du weisst ja, geizig bin ich nicht.
 					Ah und das Gespraech sollte unter uns bleiben, ich hoffe du verstehst.
             </story>
             <description>
-                Geh und besiege ein MONSTER aus dem Labyrinth.
+                Geh und besiege ein Steinwesen aus dem Labyrinth.
 				Komm anschliessend zu Konstantin zurueck.
             </description>
             <tasks>
-                <kill>MONSTER,1</kill>
+                <kill>Monster3,1</kill>
             </tasks>
             <rewards>
                 <xp>1000</xp>
@@ -342,7 +309,6 @@
             <owner>Konstantin</owner>
             <repeatable>yes</repeatable>
             <conditions>
-				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
@@ -374,26 +340,25 @@
             <owner>Konstantin</owner>
             <repeatable>yes</repeatable>
             <conditions>
-				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
 				Konstantin:
-					Mein lieber Freund. Ich habe letztens gehoert, dass das Knochenmark vom MONSTER, in 
+					Mein lieber Freund. Ich habe letztens gehoert, dass das Knochenmark vom Weraff, in 
 					entsprechender Zubereitung, bei Menschen gewisse schoene Haluzinazionen hervorruft.
 					Man denkt dann auf einmal, dass man nicht mehr in unserer treurigen und elenden Welt ist,
 					sondern dass man in seiner eigenen Fantasiewelt ist, wo alles einen gluecklich macht. 
 					Du weisst ja wie Menschenfreundlich ich bin, ich wuerde nur zu gern dieses grosse Glueck mit anderen
 					teilen.
-					Koenntest du mir ein bisschen von diesem Knochenmark beschaffen? Ich denke 30 MONSTER sollten
+					Koenntest du mir ein bisschen von diesem Knochenmark beschaffen? Ich denke 30 Weraffen sollten
 					dafuer ausreichen.
             </story> 
             <description>
-                Geh in das Labyrinth und toete 30 MONSTER. 
+                Geh in das Labyrinth und toete 30 Weraffen. 
 				Begib dich anschliessend zu Konstantin.
             </description>
             <tasks>
-                <kill>MONSTER,30</kill>
+                <kill>Monster7,30</kill>
             </tasks>
             <rewards>
                 <xp>400</xp>
@@ -407,7 +372,6 @@
             <owner>Konstantin</owner>
             <repeatable>yes</repeatable>
             <conditions>
-				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
@@ -441,7 +405,6 @@
             <owner>Yorlgon</owner>
             <repeatable>yes</repeatable>
             <conditions>
-				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
@@ -471,21 +434,20 @@
             <owner>Yorlgon</owner>
             <repeatable>yes</repeatable>
             <conditions>
-				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
 				Yorlgon:
-					Toete fuer mich mal 20 MONSTER und sammle das Gift von ihnen ein.
+					Toete fuer mich mal 20 Wurmdrohnen und sammle das Gift von ihnen ein.
 					Wenn ich meine Schwerter in dieses Gift tauche, wird das stahl noch
 					viel staerker und fester.
             </story> 
             <description>
-                Geh in das Labyrinth und toete 20 MONSTER. 
+                Geh in das Labyrinth und toete 20 Wurmdrohnen. 
 				Begib dich anschliessend zu Yorlgon.
             </description>
             <tasks>
-                <kill>MONSTER,20</kill>
+                <kill>Monster4,20</kill>
             </tasks>
             <rewards>
                 <xp>400</xp>
@@ -499,24 +461,23 @@
             <owner>Yorlgon</owner>
             <repeatable>yes</repeatable>
             <conditions>
-				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
 				Yorlgon:
 					Du kaufst bei mir doch immer viele gute Ruestungen ein.
 					Willst du dich auch ein bisschen bemuehen damit meine Ruestungen noch etwas besser werden?
-					Dir ist sicherlich aufgefallen, dass MONSTER relativ schwer zu toeten sind, nicht wahr?
+					Dir ist sicherlich aufgefallen, dass Steinwesen relativ schwer zu toeten sind, nicht wahr?
 					Nun deren Panzer hat eine besondere Festigkeit und Resistenz gegenueber Schlaegen.
 					Wenn du mir ein 30 solcher Panzer mitbringst, werde ich diese in meine Ruestungen verbauen
 					koennen.
             </story> 
             <description>
-                Geh in das Labyrinth und toete 30 MONSTER. 
+                Geh in das Labyrinth und toete 30 Steinwesen. 
 				Begib dich anschliessend zu Yorlgon.
             </description>
             <tasks>
-                <kill>MONSTER,30</kill>
+                <kill>Monster3,30</kill>
             </tasks>
             <rewards>
                 <xp>400</xp>
@@ -530,7 +491,6 @@
             <owner>Yorlgon</owner>
             <repeatable>no</repeatable>
             <conditions>
-				<solved>Im Anfang war die Tat!</solved>
                 <level>0</level>
             </conditions>
             <story>
@@ -548,7 +508,8 @@
 					bringst. Wir wuessten sicherlich was besseres damit anzufangen, als es dort unten verroten zu lassen.
             </story> 
             <description>
-                Geh in das Labyrinth und finde die Truhe mit dem Gegengift. 
+                Geh in das Labyrinth und finde 
+				die Truhe mit dem Gegengift. 
 				Begib dich anschliessend zu Yorlgon.
             </description>
             <tasks>

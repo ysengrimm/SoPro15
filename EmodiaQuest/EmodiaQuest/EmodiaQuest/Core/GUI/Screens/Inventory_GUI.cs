@@ -30,7 +30,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                             
                             break;
                         case 2:
-                            this.platform.updateLabel("changeside", "Questside");
+                            this.platform.updateLabel("changeside", "Questteil");
                             platform.updateLabel("active_quest", "");
                             break;
                         default:
@@ -611,10 +611,10 @@ namespace EmodiaQuest.Core.GUI.Screens
             platform.addLabel(15, 10, 5, "monoFont_big", Player.Instance.ActiveQuest.Name != "" ? Player.Instance.ActiveQuest.Name : "Kein aktiver Quest", "active_quest", true);
             platform.addLabel(15, 15, 4, "monoFont_big", Player.Instance.ActiveQuest.Description != "" ? Player.Instance.ActiveQuest.Description : "", "active_quest_desc", true);
 
-            this.platform.addLabel(50, 0, 10, "monoFont_big", "Character Stats", "story", true);
+            this.platform.addLabel(50, 0, 10, "monoFont_big", "Charakter Stats", "story", true);
 
             //this.platform.addLabel(50, 40, 10, "monoFont_big", "Item Stats", "stats", true);
-            this.platform.addLabel(85, 0, 10, "monoFont_big", "Mini-Map", "inventory", true);
+            this.platform.addLabel(85, 0, 10, "monoFont_big", "Mini-Karte", "inventory", true);
 
             // ItemSockets (Look out to only use 16:9 or it will not be a square!)
             // First row

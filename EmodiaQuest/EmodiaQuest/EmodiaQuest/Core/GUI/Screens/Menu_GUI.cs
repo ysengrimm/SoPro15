@@ -75,7 +75,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addButton(38, 55, 24, 8, "options", "Optionen");
             this.platform.addButton(38, 70, 24, 8, "bindings", "Tastenbelegung");
 
-            this.platform.addLabel(50, 0, 20, "dice_big", "Menu", "Menu", true);
+            this.platform.addLabel(50, 10, 20, "dice_big", "Emodia Quest", "Menu", true);
             //this.platform.addLabel(50, 30, 20, "monoFont_big", "Menu2", "Menu2", true);
             //this.platform.addLabel(30, 50, 40, 20, "monoFont_big", "labelText", "label1");
             //this.platform.updateLabel("label1", "newText");
