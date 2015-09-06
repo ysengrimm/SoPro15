@@ -34,6 +34,7 @@ namespace EmodiaQuest.Core.NPCs
         public float CircleCollision;
         public float AttackRange;
         public float Damage;
+        public int Level;
 
         private float attackTimer;
         public float AttackThreshold;
@@ -105,8 +106,9 @@ namespace EmodiaQuest.Core.NPCs
         private float distanceToPlayer = 0.0f;
 
 
-        public Enemy(Vector2 position, EnvironmentController currentEnvironment, EnemyType enemyType)
+        public Enemy(Vector2 position, EnvironmentController currentEnvironment, EnemyType enemyType, int Level)
         {
+            this.Level = Level;
             this.currentEnvironment = currentEnvironment;
             this.Position = position;
             this.EnemyType = enemyType;
@@ -125,9 +127,9 @@ namespace EmodiaQuest.Core.NPCs
             {
                 case EnemyType.Monster1:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth*1.5f;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth*1.5f * Level;
                     AttackRange = 7;
-                    Damage = 5;
+                    Damage = 5 * Level;
 
                     // movement
                     TrackingRadius = 90f;
@@ -142,9 +144,9 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster2:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * Level;
                     AttackRange = 7;
-                    Damage = 5;
+                    Damage = 5 * Level;
 
                     // movement
                     TrackingRadius = 90f;
@@ -159,9 +161,9 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster3:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 3;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 3 * Level;
                     AttackRange = 7;
-                    Damage = 5;
+                    Damage = 5 * Level;
 
                     // movement
                     TrackingRadius = 90f;
@@ -176,9 +178,9 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster4:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 1.5f;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 1.5f * Level;
                     AttackRange = 7;
-                    Damage = 5;
+                    Damage = 5 * Level;
 
                     // movement
                     TrackingRadius = 90f;
@@ -193,9 +195,9 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster5:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2.5f;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2.5f * Level;
                     AttackRange = 7;
-                    Damage = 5;
+                    Damage = 5 * Level;
 
                     // movement
                     TrackingRadius = 90f;
@@ -210,9 +212,9 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster6:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2 * Level;
                     AttackRange = 7;
-                    Damage = 5;
+                    Damage = 5 * Level;
 
                     // movement
                     TrackingRadius = 90f;
@@ -227,9 +229,9 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster7:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 2 * Level;
                     AttackRange = 7;
-                    Damage = 5;
+                    Damage = 5 * Level;
 
                     // movement
                     TrackingRadius = 90f;
@@ -244,9 +246,9 @@ namespace EmodiaQuest.Core.NPCs
                     break;
                 case EnemyType.Monster8:
                     MovementSpeed = Settings.Instance.HumanEnemySpeed;
-                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 3.5f;
+                    MaxEnemyHealth = Settings.Instance.MaxHumanEnemyHealth * 3.5f * Level;
                     AttackRange = 7;
-                    Damage = 5;
+                    Damage = 5 * Level;
 
                     // movement
                     TrackingRadius = 90f;

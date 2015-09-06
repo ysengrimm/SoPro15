@@ -1,7 +1,7 @@
 	<emodia_quest>
 		<quest>
             <name>Im Anfang war die Tat!</name>
-            <difficulty>0</difficulty>
+            <difficulty>3</difficulty>
             <owner>Jack</owner>
             <repeatable>no</repeatable>
             <conditions>
@@ -40,7 +40,7 @@
 		
 		<quest>
             <name>Blut ist ein ganz besondrer Saft.</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Konstantin</owner>
             <repeatable>no</repeatable>
             <conditions>
@@ -75,7 +75,7 @@
 
 		<quest>
             <name>Blut ist ein ganz besondrer Saft</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Konstantin</owner>
             <repeatable>no</repeatable>
             <conditions>
@@ -110,7 +110,7 @@
 		
 		<quest>
             <name>Das also war des Pudels Kern!</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Konstantin</owner>
             <repeatable>no</repeatable>
             <conditions>
@@ -149,7 +149,7 @@
 
 		<quest>
             <name>Es lebe, wer sich tapfer haelt!</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Yorlgon</owner>
             <repeatable>no</repeatable>
             <conditions>
@@ -213,7 +213,7 @@
 	
 		<quest>
             <name>Toete sie alle!</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Jack</owner>
             <repeatable>yes</repeatable>
             <conditions>
@@ -306,7 +306,7 @@
 			
 		<quest>
             <name>Eine kleine Sammlung</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Konstantin</owner>
             <repeatable>no</repeatable>
             <conditions>
@@ -338,7 +338,7 @@
 		
 		<quest>
             <name>Warum einfach, wenn es auch kompliziert geht?</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Konstantin</owner>
             <repeatable>yes</repeatable>
             <conditions>
@@ -403,7 +403,7 @@
 		
 		<quest>
             <name>Wer Lust zu tauschen hat, hat Lust zu taeuschen</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Konstantin</owner>
             <repeatable>yes</repeatable>
             <conditions>
@@ -437,7 +437,7 @@
 		
 		<quest>
             <name>Das schmieden ist des Schmiedes Lust</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Yorlgon</owner>
             <repeatable>yes</repeatable>
             <conditions>
@@ -467,7 +467,7 @@
 		
 		<quest>
             <name>Haerter, Besser, Staerker</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Yorlgon</owner>
             <repeatable>yes</repeatable>
             <conditions>
@@ -495,7 +495,7 @@
 		
 		<quest>
             <name>Mann, dessen Schneider ein Schmied ist</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Yorlgon</owner>
             <repeatable>yes</repeatable>
             <conditions>
@@ -526,7 +526,7 @@
 		
 		<quest>
             <name>Das Gegengift</name>
-            <difficulty>0</difficulty>
+            <difficulty>1</difficulty>
             <owner>Yorlgon</owner>
             <repeatable>no</repeatable>
             <conditions>

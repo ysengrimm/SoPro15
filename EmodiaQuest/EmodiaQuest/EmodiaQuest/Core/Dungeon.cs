@@ -26,21 +26,17 @@ namespace EmodiaQuest.Core
 
         public LevelGenerator generator;
 
-        private EnemyType[] enemies;
-
         public int EnemiesAlive;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="numEnemies"> The numbers of Enemies, which will be placed in this Dungeon</param>
+        /// <param name="numEnemies"> The numbers of Enemies, which will be placed in this Dungeon. Number should be mod possible enemy types == 0</param>
         /// <param name="mapWidth"></param>
         /// <param name="mapHeight"></param>
-        /// <param name="enemies"> Array of enemies to appear in the dungeon </param>
-        public Dungeon(int numEnemies, int mapWidth, int mapHeight, EnemyType[] enemies)
+        /// <param name="enemy"> Questenemy, wich is essential to be in dungeon </param>
+        public Dungeon(int numEnemies, int mapWidth, int mapHeight)
         {
-            this.enemies = enemies;
-
             Settings.Instance.DungeonMapSize = mapWidth;
             Settings.Instance.DungeonMapSize = mapHeight;
 
@@ -67,7 +63,7 @@ namespace EmodiaQuest.Core
             Skybox = new Skybox(Content.Load<Model>("fbxContent/skybox"), new Vector2(250, 250));
 
             // generate new dungeon
-            generator = new LevelGenerator(Controller, enemies);            
+            generator = new LevelGenerator(Controller);            
 
             // Walls
             EnvironmentController.Object wall = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/NormalWall_10x10"), ColorListDungeon.Instance.Wall, new Vector2(1, 1), "wall", false); Controller.CollisionObjList.Add(wall);

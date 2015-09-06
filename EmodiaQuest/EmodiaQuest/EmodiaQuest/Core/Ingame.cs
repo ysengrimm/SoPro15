@@ -168,7 +168,7 @@ namespace EmodiaQuest.Core
         /// </summary>
         public void CreateNewDungeon()
         {     
-            Dungeon = new Dungeon(100, 100, 100, new EnemyType[] { EnemyType.Monster8 });
+            Dungeon = new Dungeon(100, 100, 100);
             Dungeon.LoadContent(Content);
         }
     }

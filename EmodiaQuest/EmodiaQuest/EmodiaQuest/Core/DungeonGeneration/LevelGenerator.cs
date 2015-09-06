@@ -26,6 +26,14 @@ namespace EmodiaQuest.Core.DungeonGeneration
         private string contentPath;
         public System.Drawing.Bitmap Map;
         public EnvironmentController Controller;
+        public int Difficulty = 1;
+        // array wich holds number of enemies per type for ex. 0-30 = monster1
+        private EnemyType[] enemies = new EnemyType[Settings.Instance.NumEnemies];
+        // array with possible enemie types in this dungeon
+        private EnemyType[] enemyTypes = new EnemyType[5];
+        // is a questEnemy choosen
+        private bool questEnemyChoosen;
+        private int possibleEnemyTypes = 5;
 
         // trigger for setting spawnroom
         bool set = true;
@@ -39,19 +47,16 @@ namespace EmodiaQuest.Core.DungeonGeneration
         /// This list contains all positions in the map wich are part of rooms (excpt. spawnroom) and do not contain an item
         /// </summary>
         private List<Point> enemyPoints = new List<Point>();
-        
-        private EnemyType[] enemies;
 
         Random rnd = new Random();
 
-        public LevelGenerator(EnvironmentController controller, EnemyType[] enemies)
+        public LevelGenerator(EnvironmentController controller)
         {
             //gets >current< content path
             //at first gets path of debug directory and then replace the end to get path of content folder
             contentPath = Path.GetDirectoryName(Environment.CurrentDirectory).Replace(@"EmodiaQuest\bin\x86", @"EmodiaQuestContent\");
 
             this.Controller = controller;
-            this.enemies = enemies;
 
             Map = new System.Drawing.Bitmap(Settings.Instance.DungeonMapSize, Settings.Instance.DungeonMapSize);
 
@@ -135,7 +140,11 @@ namespace EmodiaQuest.Core.DungeonGeneration
             // if choosen delete same method from "createRoom", wich places items only in rooms
             //insertItems();
 
-            if(enemies.Length != 0 && Settings.Instance.NumEnemies != 0) insertEnemies();
+            selectDifficulty();
+            Console.Out.WriteLine(Difficulty);
+            selectEnemies();
+
+            if(Settings.Instance.NumEnemies != 0) insertEnemies();
 
             saveMap();
 	    }
@@ -285,11 +294,151 @@ namespace EmodiaQuest.Core.DungeonGeneration
             }
         }
 
+        /// <summary>
+        /// Selects diffículty of quest
+        /// </summary>
+        private void selectDifficulty()
+        {
+            String difficulty = "";
+
+            foreach (Quest activeQuest in QuestController.Instance.ActiveQuests)
+            {
+                activeQuest.Tasks.TryGetValue("difficulty", out difficulty);
+            }
+
+            // decides wether a difficulty is choosen or not -> is quest active
+            if(difficulty != "" && difficulty != null) Int32.TryParse(difficulty, out Difficulty);       // difficulty choosen
+        }
+
+        /// <summary>
+        /// Converts a string to an EnemyType
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private EnemyType enemyTypeFromString(String type)
+        {
+            for (int i = 0; i < 8; i++ )
+            {
+                if (((EnemyType)i).ToString() == type)
+                {
+                    return (EnemyType)i;
+                }
+            }
+            Console.Out.WriteLine("NO MONSTERTYPE IN THIS STRING");
+            return EnemyType.Monster1;      //to return anything
+        }
+
+        /// <summary>
+        /// Selects possible enemie types and amount of each for dungeon
+        /// </summary>
+        private void selectEnemies()
+        {
+            String killOut = "";
+            string[] enemyAndCount = new string[2];
+
+            foreach (Quest activeQuest in QuestController.Instance.ActiveQuests)
+            {
+                activeQuest.Tasks.TryGetValue("kill", out killOut);    
+            }
+            
+            // decides wether a monstertype is choosen or not
+            if (killOut != null)        
+            {
+                enemyAndCount = killOut.Split(',');
+                if (enemyAndCount[0] != "") questEnemyChoosen = true;        // monstertype choosen
+            }
+            else
+            {
+                questEnemyChoosen = false;
+            }
+
+            // selecting possible monstertypes for dungeon
+            if (questEnemyChoosen)
+            {
+                enemyTypes[0] = enemyTypeFromString(enemyAndCount[0]);  // if a quest monster is choosen add it as first type
+            }
+            else
+            {
+                enemyTypes[0] = (EnemyType)rnd.Next(8);     // if not choosen select a random one
+            }
+            // choose other types
+            int count = 1;
+            while (count < possibleEnemyTypes)
+            {
+                EnemyType temp = (EnemyType)rnd.Next(8);
+                bool allreadyChoosen = false;
+                for (int i = 0; i < possibleEnemyTypes; i++)
+                {
+                    if (enemyTypes[i] == temp)
+                    {
+                        allreadyChoosen = true;
+                        break;
+                    }
+                }
+                if (!allreadyChoosen)
+                {
+                    enemyTypes[count] = temp;
+                    count++;
+                }
+            }
+
+            // deciding how much monsters per type should spawn
+            int enemiesCount = 0;   //how many questenemies in quest
+            int questEnemiesCount;  //how many there realy should be
+            if (enemyAndCount[0] != "" && enemyAndCount[1] != "")
+            {
+                Int32.TryParse(enemyAndCount[1], out enemiesCount);
+                if (enemiesCount < Settings.Instance.NumEnemies / possibleEnemyTypes)   //there is a little num of questenemies
+                {
+                    questEnemiesCount = Settings.Instance.NumEnemies / possibleEnemyTypes;
+                }
+                else //there is a large num of questenemies
+                {
+                    while ((Settings.Instance.NumEnemies - enemiesCount) % possibleEnemyTypes-1 != 0)  // there will maybe be a bit more monsters then should spawn in quest, but the other types amount will be equal
+                    {
+                        enemiesCount++;
+                    }
+                    questEnemiesCount = enemiesCount;
+                }
+            }
+            else
+            {
+                questEnemiesCount = Settings.Instance.NumEnemies / possibleEnemyTypes; 
+            }
+
+            // fill an array with correct amount of each monstertypes
+            for (int i = 0; i < questEnemiesCount; i++)     // fill amount of questenemies
+            {
+                enemies[i] = enemyTypes[0];
+            }
+
+            int countOtherTypes = (Settings.Instance.NumEnemies - questEnemiesCount) / (possibleEnemyTypes - 1);    // amount of other enemy types
+            for (int i = 1; i < possibleEnemyTypes; i++)
+            {
+                for (int j = questEnemiesCount + countOtherTypes * (i - 1); j < questEnemiesCount + countOtherTypes * i; j++)
+                {
+                    enemies[j] = enemyTypes[i];
+                }
+            }
+            /*// how many monsters of each type are in the dungeon
+            for (int i = 0; i < enemyTypes.Length; i++)
+            {
+                int temp = 0;
+                for (int j = 0; j < enemies.Length; j++)
+                {
+                    if (enemies[j] == enemyTypes[i])
+                        temp++;
+                }
+                Console.Out.WriteLine(enemyTypes[i] + " - " + temp);
+            }
+             */
+        }
+
         private void insertEnemies()
         {
             int count = Settings.Instance.NumEnemies;
 
-            while (count != 0)
+            while (count > 0)
             {
                 Point point = enemyPoints[rnd.Next(enemyPoints.Count)];
 
@@ -312,7 +461,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
                     if (!samePosition)      // wenn man eine position im feld gefunden hat wo kein monster steht
                     {
-                        Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, enemies[rnd.Next(enemies.Length)]);
+                        Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, enemies[count-1], Difficulty);
                         EnemyList.Add(enemy);
                         count--;
 
@@ -321,13 +470,13 @@ namespace EmodiaQuest.Core.DungeonGeneration
                 }
                 else
                 {
-                    Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, enemies[rnd.Next(enemies.Length)]);
+                    Enemy enemy = new Enemy(new Vector2(point.X * Settings.Instance.GridSize + distX, point.Y * Settings.Instance.GridSize + distY), Controller, enemies[count - 1], Difficulty);
                     EnemyList.Add(enemy);
                     count--;
 
                     Map.SetPixel(point.X, point.Y, System.Drawing.Color.LightSkyBlue);
                 }
             }
-        }
+        } 
     }
 }
