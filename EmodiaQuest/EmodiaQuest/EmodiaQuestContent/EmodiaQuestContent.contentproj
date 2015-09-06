@@ -1567,6 +1567,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="other\acagamics.png">
+      <Name>acagamics</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="quests\testquest.xml">
       <Name>testquest</Name>
       <Importer>XmlImporter</Importer>
