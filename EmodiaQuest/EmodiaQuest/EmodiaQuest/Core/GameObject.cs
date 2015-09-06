@@ -347,7 +347,7 @@ namespace EmodiaQuest.Core
                     Vector2 turnedBulletDirection = Vector2.Transform(playerView, Matrix.CreateRotationZ((float)(0.5 * Math.PI)));
                     Vector2 ppp = Vector2.Transform(playerView, Matrix.CreateRotationZ((float)(Math.PI)));
                     ppp.Normalize();
-                    ppp *= -10;
+                    ppp *= -20;
                     ppp = Vector2.Add(ppp, position2D);
 
                     
@@ -374,7 +374,7 @@ namespace EmodiaQuest.Core
 
                     //if (pointSide(directionWith90Degrees, playerPos, Position2D) < 0)
                     //if (pointSide(Player.Instance.PlayerViewDirection, Vector2.Transform(Player.Instance.PlayerViewDirection,  Position2D > 0)
-                    if (pointSide(turnedBulletDirection, playerPos, position2D) > 0 || this.Name == "ground")
+                    if (pointSide(turnedBulletDirection, playerPos, ppp) > 0)
                     {
                         foreach (ModelMesh mesh in model.Meshes)
                         {
