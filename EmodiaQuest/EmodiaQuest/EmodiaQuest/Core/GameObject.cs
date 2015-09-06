@@ -175,7 +175,7 @@ namespace EmodiaQuest.Core
         {
            
             // culling and update
-            //distanceToPlayer = (float)EuclideanDistance(new Vector2(this.position.X, this.position.Z), Player.Instance.Position);
+            distanceToPlayer = (float)EuclideanDistance(new Vector2(this.position.X, this.position.Z), Player.Instance.Position);
             //playerPos = Player.Instance.Position;
             //playerView = Player.Instance.PlayerViewDirection;
             //playerView.Normalize();
