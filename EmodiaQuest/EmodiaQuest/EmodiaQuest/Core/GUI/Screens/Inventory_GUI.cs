@@ -122,28 +122,28 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             // ItemSockets (Look out to only use 16:9 or it will not be a square!)
             // First row
-            this.platform.addInventoryItem(69, 42, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f, 42, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 2, 42, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 3, 42, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 4, 42, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 5, 42, 4.5f, 8f);
+            this.platform.addPlainImage(69, 42, 4.5f, 8f, "itemSlot1", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f, 42, 4.5f, 8f, "itemSlot2", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 2, 42, 4.5f, 8f, "itemSlot3", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 3, 42, 4.5f, 8f, "itemSlot4", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 4, 42, 4.5f, 8f, "itemSlot5", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 5, 42, 4.5f, 8f, "itemSlot6", "item_socket");
 
             // Second row
-            this.platform.addInventoryItem(69, 42 + 8.2f, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f, 42 + 8.2f, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 2, 42 + 8.2f, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 3, 42 + 8.2f, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 4, 42 + 8.2f, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 5, 42 + 8.2f, 4.5f, 8f);
+            this.platform.addPlainImage(69, 42 + 8.2f, 4.5f, 8f, "itemSlot7", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f, 42 + 8.2f, 4.5f, 8f, "itemSlot8", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 2, 42 + 8.2f, 4.5f, 8f, "itemSlot9", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 3, 42 + 8.2f, 4.5f, 8f, "itemSlot10", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 4, 42 + 8.2f, 4.5f, 8f, "itemSlot11", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 5, 42 + 8.2f, 4.5f, 8f, "itemSlot12", "item_socket");
 
             // Third row
-            this.platform.addInventoryItem(69, 42 + 8.2f * 2, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f, 42 + 8.2f * 2, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 2, 42 + 8.2f * 2, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 3, 42 + 8.2f * 2, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 4, 42 + 8.2f * 2, 4.5f, 8f);
-            this.platform.addInventoryItem(69 + 4.7f * 5, 42 + 8.2f * 2, 4.5f, 8f);
+            this.platform.addPlainImage(69, 42 + 8.2f * 2, 4.5f, 8f, "itemSlot13", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f, 42 + 8.2f * 2, 4.5f, 8f, "itemSlot14", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 2, 42 + 8.2f * 2, 4.5f, 8f, "itemSlot15", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 3, 42 + 8.2f * 2, 4.5f, 8f, "itemSlot16", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 4, 42 + 8.2f * 2, 4.5f, 8f, "itemSlot17", "item_socket");
+            this.platform.addPlainImage(69 + 4.7f * 5, 42 + 8.2f * 2, 4.5f, 8f, "itemSlot18", "item_socket");
 
             platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD", "HUD_small");
             //this.platform.addPlainImage(100, 100, -100, -100 * 0.189f * 1.777f, "HUD", "HUD_small");
