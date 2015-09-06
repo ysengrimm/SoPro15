@@ -451,7 +451,7 @@ namespace EmodiaQuest.Core
             CurrentEquippedHelmet = new Item(ItemClass.Helmet, "InitHelmet");
             CurrentEquippedArmor = new Item(0, ItemClass.Armor,0,0,0,10,10);
             CurrentEquippedBoots = new Item(ItemClass.Boots, "InitBoots");
-            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 500, 800, 0, 0);
+            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 50, 80, 0, 0);
 
             ActiveQuest = new Quest {Name = "", Description = ""};
 

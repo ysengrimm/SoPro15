@@ -697,16 +697,19 @@ namespace EmodiaQuest.Core.NPCs
                 {
                     activeQuest.Tasks.TryGetValue("kill", out killOut);    
                 }
-                string[] enemyAndCount = killOut.Split(',');
-                if (EnemyType.ToString() == enemyAndCount[0])
+                if (killOut != null)
                 {
-                    if (QuestController.Instance.KilledEnemies.ContainsKey(enemyAndCount[0]))
+                    string[] enemyAndCount = killOut.Split(',');
+                    if (EnemyType.ToString() == enemyAndCount[0])
                     {
-                        QuestController.Instance.KilledEnemies[enemyAndCount[0]] += 1;    
-                    }
-                    else
-                    {
-                        QuestController.Instance.KilledEnemies.Add(enemyAndCount[0], 1);    
+                        if (QuestController.Instance.KilledEnemies.ContainsKey(enemyAndCount[0]))
+                        {
+                            QuestController.Instance.KilledEnemies[enemyAndCount[0]] += 1;
+                        }
+                        else
+                        {
+                            QuestController.Instance.KilledEnemies.Add(enemyAndCount[0], 1);
+                        }
                     }
                 }
             }
