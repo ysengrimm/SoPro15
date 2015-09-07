@@ -163,7 +163,7 @@ namespace EmodiaQuest.Core
                     // Button Pressed Sound
                     Plop_1.Update(gameTime);
                     // PlayerSounds
-                    if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting)
+                    if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting1)
                     {
                         Hit_1.Update(gameTime);
                     }

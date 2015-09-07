@@ -19,6 +19,7 @@ namespace EmodiaQuest.Core.Items
         public int SkillPlus = 0;
         public int IntelligencePlus = 0;
         public int HitPointsPlus = 0;
+        public bool IsRangedWeapon = false;
 
         // ID-Counter to separate items
         private static int questCount = 10000;
@@ -50,7 +51,7 @@ namespace EmodiaQuest.Core.Items
         }
 
         // Armor-Items ( Helmet, Armor, Boots )
-        public Item(int Lvl, ItemClass itemClass, int requiredStrength, int armor, int strengthPlus, int skillPlus)
+        public Item(int Lvl, ItemClass itemClass, int requiredStrength, int armor, int strengthPlus, int skillPlus, string name)
         {
             switch (itemClass)
             {
@@ -76,11 +77,12 @@ namespace EmodiaQuest.Core.Items
             this.Armor = armor;
             this.StrengthPlus = strengthPlus;
             this.SkillPlus = skillPlus;
+            this.Name = name;
 
         }
 
         // Weapon-Items ( Helmet, Armor, Boots )
-        public Item(int Lvl, ItemClass itemClass, int requiredStrength, int minDamage, int maxDamage, int strengthPlus, int skillPlus)
+        public Item(int Lvl, ItemClass itemClass, int requiredStrength, int minDamage, int maxDamage, int strengthPlus, int skillPlus, bool isRangedWeapon, string name)
         {
             weaponCount++;
 
@@ -92,6 +94,8 @@ namespace EmodiaQuest.Core.Items
             this.MaxDamage = maxDamage;
             this.StrengthPlus = strengthPlus;
             this.SkillPlus = skillPlus;
+            this.IsRangedWeapon = isRangedWeapon;
+            this.Name = name;
         }
 
     }

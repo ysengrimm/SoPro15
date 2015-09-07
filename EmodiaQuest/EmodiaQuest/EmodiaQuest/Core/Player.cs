@@ -62,8 +62,8 @@ namespace EmodiaQuest.Core
         private MouseState currentMouseState;
 
         // Playerstats
-        private int hp = 100;
-        public int Hp
+        private float hp = 100;
+        public float Hp
         {
             get { return hp; }
             set
@@ -76,8 +76,8 @@ namespace EmodiaQuest.Core
             }
         }
 
-        private int maxHp;
-        public int MaxHp
+        private float maxHp;
+        public float MaxHp
         {
             get { return maxHp; }
             set
@@ -90,8 +90,8 @@ namespace EmodiaQuest.Core
             }
         }
 
-        private int hpRegen;
-        public int HpRegen
+        private float hpRegen;
+        public float HpRegen
         {
             get { return hpRegen; }
             set
@@ -336,25 +336,28 @@ namespace EmodiaQuest.Core
         private Model bulletModel;
 
         // The Model
-        private Model playerModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM;
+        private Model playerModel, standingM, walkingM, runningM, swordfighting1M, swordfighting2M, fightingStandM, gunfightingM;
         // Skinning Data
-        private SkinningData standingSD, walkingSD, jumpingSD, swordfightingSD, bowfightingSD;
+        private SkinningData standingSD, walkingSD, runningSD, swordfighting1SD, swordfighting2SD, fightingStandSD, gunfightingSD;
         // The animation Player
-        private AnimationPlayer standingAP, walkingAP, jumpingAP, swordfightingAP, bowfightingAP;
+        private AnimationPlayer standingAP, walkingAP, runningAP, swordfighting1AP, swordfighting2AP, fightingStandAP, gunfightingAP;
         // The animation Clips, which will be used by the model
-        private AnimationClip standingC, walkingC, jumpingC, swordfightingC, bowfightingC;
+        private AnimationClip standingC, walkingC, runningC, swordfighting1C, swordfighting2C, fightingStandC, gunfightingC;
         // The Bone Matrices for each animation
-        private Matrix[] blendingBones, standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones;
+        private Matrix[] blendingBones, standingBones, walkingBones, runningBones, swordfighting1Bones, swordfighting2Bones, fightingStandBones, gunfightingBones;
         // The playerState, which will be needed to update the right animation
         public PlayerState ActivePlayerState = PlayerState.Standing;
         public PlayerState LastPlayerState = PlayerState.Standing;
         public PlayerState TempPlayerState = PlayerState.Standing;
-        public Weapon ActiveWeapon = Weapon.Hammer;
         private WorldState activeWorld = WorldState.Safeworld;
         public float standingDuration;
         public float walkingDuration;
-        public float jumpingDuration;
-        public float swordFightingDuration;
+        public float runningDuration;
+        public float swordFighting1Duration;
+        public float swordFighting2Duration;
+        public float fightingStandDuration;
+        public float gunFightingDuration;
+
         private float stateTime;
         private float fixedBlendDuration;
         // public for Netstat
@@ -427,9 +430,9 @@ namespace EmodiaQuest.Core
 
             // set defaults
             // Max HP is XP for next lvl + 10% strength with base 100
-            MaxHp = (int)((100 * Math.Sqrt(Level)) < 100 ? 100 : (100 * Math.Sqrt(Level)) + Math.Round(Strength / 10.0));
+            MaxHp = (float)((100 * Math.Sqrt(Level)) < 100 ? 100 : (100 * Math.Sqrt(Level)) + Math.Round(Strength / 10.0));
             Hp = MaxHp;
-            HpRegen = 10;
+            HpRegen = 0.02f;
 
             // Max Focus is 100 + 10% intel
             MaxFocus = (int)(100 + Math.Round(Intelligence / 10.0));
@@ -437,8 +440,8 @@ namespace EmodiaQuest.Core
             FocusRegen = (int) Math.Round(Intelligence/50.0);
 
             Armor = 0;
-            MinDamage = 0;
-            MaxDamage = 0;
+            MinDamage = 50;
+            MaxDamage = 80;
             Gold = 0;
 
             Level = 1;
@@ -448,10 +451,10 @@ namespace EmodiaQuest.Core
             PlayerInventory = new List<Item>();
             ItemsDropped = new List<Item>();
 
-            CurrentEquippedHelmet = new Item(ItemClass.Helmet, "InitHelmet");
-            CurrentEquippedArmor = new Item(0, ItemClass.Armor,0,0,0,10,10);
-            CurrentEquippedBoots = new Item(ItemClass.Boots, "InitBoots");
-            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 50, 80, 0, 0);
+            CurrentEquippedHelmet = new Item(1, ItemClass.Helmet, 0, 20, 0, 0, "StoffKappe");
+            CurrentEquippedArmor = new Item(0, ItemClass.Armor, 0, 0, 10, 10, "altesStoffhemd");
+            CurrentEquippedBoots = new Item(1, ItemClass.Boots, 0, 10, 0, 0, "Schuhe");
+            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 50, 70, 0, 0, false, "Stock");
 
             ActiveQuest = new Quest {Name = "", Description = ""};
 
@@ -481,28 +484,33 @@ namespace EmodiaQuest.Core
             defaultHairTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/male02_diffuse_black");
             //loading default mesh
             playerModel = contentMngr.Load<Model>("fbxContent/player/Main_Char_t_pose");
-            //playerModel = contentMngr.Load<Model>("fbxContent/testPlayerv1");
 
             //loading Animation Models
             standingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_idle_stand");
-            //standingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Stand");
             walkingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_walk");
-            //walkingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Run");
-            jumpingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
-            //jumpingM = contentMngr.Load<Model>("fbxContent/testPlayerv1_Jump");
-            swordfightingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
+            runningM = contentMngr.Load<Model>("fbxContent/player/Main_Char_run");
+            swordfighting1M = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting");
+            swordfighting2M = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting2");
+            fightingStandM = contentMngr.Load<Model>("fbxContent/player/Main_Char_fighting_stand");
+            gunfightingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_gunFighting");
 
             //Loading Skinning Data
             standingSD = standingM.Tag as SkinningData;
             walkingSD = walkingM.Tag as SkinningData;
-            jumpingSD = jumpingM.Tag as SkinningData;
-            swordfightingSD = swordfightingM.Tag as SkinningData;
+            runningSD = runningM.Tag as SkinningData;
+            swordfighting1SD = swordfighting1M.Tag as SkinningData;
+            swordfighting2SD = swordfighting2M.Tag as SkinningData;
+            fightingStandSD = fightingStandM.Tag as SkinningData;
+            gunfightingSD = gunfightingM.Tag as SkinningData;
 
             //Load an animation Player for each animation
             standingAP = new AnimationPlayer(standingSD);
             walkingAP = new AnimationPlayer(walkingSD);
-            jumpingAP = new AnimationPlayer(jumpingSD);
-            swordfightingAP = new AnimationPlayer(swordfightingSD);
+            runningAP = new AnimationPlayer(runningSD);
+            swordfighting1AP = new AnimationPlayer(swordfighting1SD);
+            swordfighting2AP = new AnimationPlayer(swordfighting2SD);
+            fightingStandAP = new AnimationPlayer(fightingStandSD);
+            gunfightingAP = new AnimationPlayer(gunfightingSD);
 
             //loading Animation
             /*
@@ -513,20 +521,29 @@ namespace EmodiaQuest.Core
 
             standingC = standingSD.AnimationClips["idle_stand"];
             walkingC = walkingSD.AnimationClips["walk"];
-            jumpingC = jumpingSD.AnimationClips["swordFighting"];
-            swordfightingC = swordfightingSD.AnimationClips["swordFighting"];
+            runningC = runningSD.AnimationClips["run"];
+            swordfighting1C = swordfighting1SD.AnimationClips["swordFighting"];
+            swordfighting2C = swordfighting2SD.AnimationClips["swordFighting2"];
+            fightingStandC = fightingStandSD.AnimationClips["fighting_stand"];
+            gunfightingC = gunfightingSD.AnimationClips["gunFighting"];
+            
 
             //Safty Start Animations
             standingAP.StartClip(standingC);
             walkingAP.StartClip(walkingC);
-            jumpingAP.StartClip(jumpingC);
-            swordfightingAP.StartClip(swordfightingC);
+            runningAP.StartClip(runningC);
+            swordfighting1AP.StartClip(swordfighting1C);
+            swordfighting2AP.StartClip(swordfighting2C);
+            fightingStandAP.StartClip(fightingStandC);
+            gunfightingAP.StartClip(gunfightingC);
 
             //assign the specific animationTimes
-            standingDuration = standingC.Duration.Milliseconds / 1f;
-            walkingDuration = walkingC.Duration.Milliseconds / 1f;
-            jumpingDuration = jumpingC.Duration.Milliseconds / 1f;
-            swordFightingDuration = swordfightingC.Duration.Milliseconds / 1f;
+            standingDuration = 200;
+            walkingDuration = (float)walkingC.Duration.TotalMilliseconds / 1f;
+            runningDuration = (float)runningC.Duration.TotalMilliseconds / 1f;
+            swordFighting1Duration = (float)swordfighting1C.Duration.TotalMilliseconds / 1f;
+            swordFighting2Duration = (float)swordfighting2C.Duration.TotalMilliseconds / 1f;
+            fightingStandDuration = (float)fightingStandC.Duration.TotalMilliseconds / 1f;
             /*
             Console.WriteLine("StandingDuration: " + standingC.Duration.TotalMilliseconds);
             Console.WriteLine("StandingKeyframes: " + standingC.Keyframes.Count);
@@ -534,10 +551,10 @@ namespace EmodiaQuest.Core
             Console.WriteLine("WalkingKeyframes: " + walkingC.Keyframes.Count);
             */
             stateTime = 0;
-            attackThreshold = swordFightingDuration;
-            shootingThreshold = swordFightingDuration;
+            attackThreshold = swordFighting1Duration;
+            shootingThreshold = swordFighting1Duration;
             // Duration of Blending Animations in milliseconds
-            fixedBlendDuration = 200;
+            fixedBlendDuration = 400;
 
             // Load Bullet
             bulletModel = contentMngr.Load<Model>("fbxContent/items/Point");
@@ -560,6 +577,8 @@ namespace EmodiaQuest.Core
 
         public void Update(GameTime gameTime)
         {
+            //Console.WriteLine(CurrentEquippedWeapon.Name);
+
             HitEnemyWithSword = false;
             HitAir = false;
             KeysPressing = 1;
@@ -568,16 +587,6 @@ namespace EmodiaQuest.Core
             PlayerViewDirection = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
             //PlayerViewDirection.Normalize();
 
-
-            // update weapon
-            if (Keyboard.GetState().IsKeyDown(Keys.D1))
-            {
-                ActiveWeapon = Weapon.Stock;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.D2))
-            {
-                ActiveWeapon = Weapon.Hammer;
-            }
 
             //Update interaction with NPCs
             if (activeWorld == WorldState.Safeworld)
@@ -643,14 +652,14 @@ namespace EmodiaQuest.Core
             lastPos = Position;
             movement = Position;
 
-            // running ;)
-            if (ActivePlayerState == PlayerState.Swordfighting && !IsBlending)
+            // running 
+            if ((ActivePlayerState == PlayerState.Swordfighting1 || ActivePlayerState == PlayerState.Swordfighting2 || ActivePlayerState == PlayerState.Gunfighting || ActivePlayerState == PlayerState.Standfighting) && !IsBlending)
             {
                 PlayerSpeed = Settings.Instance.PlayerSpeed / 2f;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
             {
-                if (PlayerSpeed < 0.6)
+                if (PlayerSpeed < 0.65)
                 {
                     PlayerSpeed += 0.1f;
                 }
@@ -706,17 +715,7 @@ namespace EmodiaQuest.Core
             if (activeWorld == WorldState.Dungeon)
             {
                 //if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed)
-                if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed && shootingTimer > shootingThreshold)
-                {
-                    BulletList.Add(new Bullet(bulletModel, PlayerViewDirection, Position));
-                    shootingTimer = 0;
-                }
-                for (int i = 0; i < BulletList.Count; i++)
-                {
-                    if (BulletList[i].isActive)
-                        BulletList[i].Update(gameTime, collisionHandler, shootingtype);
-                    else BulletList.RemoveAt(i);
-                }
+
             }
 
             // Running towards teleporters
@@ -766,31 +765,54 @@ namespace EmodiaQuest.Core
             }
 
             //update playerState
-            if (currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 500 && attackThreshold == swordFightingDuration)
+
+            if (currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 150 )
             {
-                ActivePlayerState = PlayerState.Swordfighting;
-                stateTime = swordFightingDuration;
+                if (CurrentEquippedWeapon.IsRangedWeapon == true && shootingTimer > shootingThreshold)
+                {
+                    ActivePlayerState = PlayerState.Gunfighting;
+                    if (currentMouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
+                    {
+                        BulletList.Add(new Bullet(bulletModel, PlayerViewDirection, Position));
+                        shootingTimer = 0;
+                    }
+                    shootingTimer = 0;
+                    stateTime = gunFightingDuration;
+                }
+                else if (rnd.Next(2) == 0 && CurrentEquippedWeapon.IsRangedWeapon == false)
+                {
+                    ActivePlayerState = PlayerState.Swordfighting1;
+                    stateTime = swordFighting1Duration;
+                }
+                else if (CurrentEquippedWeapon.IsRangedWeapon == false)
+                {
+                    ActivePlayerState = PlayerState.Swordfighting2;
+                    stateTime = swordFighting2Duration;
+                }
+                // Needs to do gunFighting, if gun is equipped
                 fixedBlendDuration = 100;
                 HitAir = true;
             }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 0)
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && PlayerSpeed > Settings.Instance.PlayerSpeed && stateTime <= 100)
             {
-                ActivePlayerState = PlayerState.WalkJumping;
+                ActivePlayerState = PlayerState.Running;
                 fixedBlendDuration = 200;
             }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 200)
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 100)
             {
                 ActivePlayerState = PlayerState.Walking;
                 stateTime = walkingDuration / 2;
                 fixedBlendDuration = 200;
             }
+            /* Do we need this!? (Janos)
             else if (Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 200)
             {
                 ActivePlayerState = PlayerState.Jumping;
-                stateTime = jumpingDuration / 2;
+                stateTime = runningDuration / 2;
                 fixedBlendDuration = 200;
             }
-            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 200)
+            */
+            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 100)
             {
                 ActivePlayerState = PlayerState.Standing;
                 stateTime = standingDuration / 2;
@@ -814,15 +836,20 @@ namespace EmodiaQuest.Core
                 case PlayerState.Walking:
                     walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
-                case PlayerState.Jumping:
-                    jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                case PlayerState.Running:
+                    runningAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
-                case PlayerState.Swordfighting:
-                    swordfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                case PlayerState.Swordfighting1:
+                    swordfighting1AP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
-                case PlayerState.WalkJumping:
-                    walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                    jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                case PlayerState.Swordfighting2:
+                    swordfighting2AP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case PlayerState.Standfighting:
+                    fightingStandAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
+                case PlayerState.Gunfighting:
+                    gunfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
             }
 
@@ -862,15 +889,20 @@ namespace EmodiaQuest.Core
                     case PlayerState.Walking:
                         walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
-                    case PlayerState.Jumping:
-                        jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    case PlayerState.Running:
+                        runningAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
-                    case PlayerState.Swordfighting:
-                        swordfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    case PlayerState.Swordfighting1:
+                        swordfighting1AP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
-                    case PlayerState.WalkJumping:
-                        walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                        jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    case PlayerState.Swordfighting2:
+                        swordfighting2AP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Standfighting:
+                        fightingStandAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Gunfighting:
+                        gunfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
                 }
             }
@@ -939,7 +971,7 @@ namespace EmodiaQuest.Core
 
                 //Console.WriteLine((float)Math.Asin(Math.Sin(Angle)) / Math.PI * 180 + 90 + (float)Math.Acos(Math.Cos(Angle)) / Math.PI * 180 + 90);
 
-                if (ActivePlayerState == PlayerState.Swordfighting)
+                if (ActivePlayerState == PlayerState.Swordfighting1 || ActivePlayerState == PlayerState.Swordfighting2 || ActivePlayerState == PlayerState.Standfighting)
                 {
                     //mystuff
                     bool at = false;
@@ -979,9 +1011,21 @@ namespace EmodiaQuest.Core
                 oldEquippedBoots = CurrentEquippedBoots;
                 oldEquippedHelmet = CurrentEquippedHelmet;
                 oldEquippedWeapon = CurrentEquippedWeapon;
+                if (CurrentEquippedWeapon.Name == "EinfachesGewehr")
+                {
+                    shootingtype = Shootingtype.Normal;
+                }
+                else if(CurrentEquippedWeapon.Name == "Gewehr")
+                {
+                    shootingtype = Shootingtype.Blast;
+                }
+                else
+                {
+                    shootingtype = Shootingtype.Lightning;
+                }
             }
 
-            // Regen HP and Focus 
+            // Regen HP and Focus
             // TODO: Timer or something?!
             Hp += HpRegen;
             if (Hp > MaxHp)
@@ -999,6 +1043,13 @@ namespace EmodiaQuest.Core
             {
                 UpdateQuest();
                 oldQuest = activeQuest;
+            }
+
+            for (int i = 0; i < BulletList.Count; i++)
+            {
+                if (BulletList[i].isActive)
+                    BulletList[i].Update(gameTime, collisionHandler, shootingtype);
+                else BulletList.RemoveAt(i);
             }
 
             
@@ -1098,7 +1149,7 @@ namespace EmodiaQuest.Core
             Hp -= (int)(damage - Math.Round(Armor/10.0));
             if (Hp <= 0)
             {
-                Hp = 100;
+                //Hp = 100;
             }
         }
 
@@ -1113,14 +1164,20 @@ namespace EmodiaQuest.Core
                 case PlayerState.Walking:
                     walkingBones = walkingAP.GetSkinTransforms();
                     break;
-                case PlayerState.Swordfighting:
-                    swordfightingBones = swordfightingAP.GetSkinTransforms();
+                case PlayerState.Swordfighting1:
+                    swordfighting1Bones = swordfighting1AP.GetSkinTransforms();
                     break;
-                case PlayerState.Jumping:
-                    jumpingBones = jumpingAP.GetSkinTransforms();
+                case PlayerState.Running:
+                    runningBones = runningAP.GetSkinTransforms();
                     break;
-                case PlayerState.WalkJumping:
-                    walkingBones = walkingAP.GetSkinTransforms();
+                case PlayerState.Swordfighting2:
+                    swordfighting2Bones = swordfighting2AP.GetSkinTransforms();
+                    break;
+                case PlayerState.Standfighting:
+                    fightingStandBones = fightingStandAP.GetSkinTransforms();
+                    break;
+                case PlayerState.Gunfighting:
+                    gunfightingBones = gunfightingAP.GetSkinTransforms();
                     break;
             }
 
@@ -1135,14 +1192,20 @@ namespace EmodiaQuest.Core
                     case PlayerState.Walking:
                         blendingBones = walkingAP.GetSkinTransforms();
                         break;
-                    case PlayerState.Swordfighting:
-                        blendingBones = swordfightingAP.GetSkinTransforms();
+                    case PlayerState.Swordfighting1:
+                        blendingBones = swordfighting1AP.GetSkinTransforms();
                         break;
-                    case PlayerState.Jumping:
-                        blendingBones = jumpingAP.GetSkinTransforms();
+                    case PlayerState.Running:
+                        blendingBones = runningAP.GetSkinTransforms();
                         break;
-                    case PlayerState.WalkJumping:
-                        blendingBones = walkingAP.GetSkinTransforms();
+                    case PlayerState.Swordfighting2:
+                        swordfighting2Bones = swordfighting2AP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Standfighting:
+                        fightingStandBones = fightingStandAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Gunfighting:
+                        gunfightingBones = gunfightingAP.GetSkinTransforms();
                         break;
                 }
             }
@@ -1154,7 +1217,6 @@ namespace EmodiaQuest.Core
                 {
                     //Console.WriteLine("Effects:" + mesh.Effects.Count);
                     //Draw the Bones which are required
-
                     if (IsBlending)
                     {
                         float percentageOfBlending = ActiveBlendTime / fixedBlendDuration;
@@ -1174,24 +1236,38 @@ namespace EmodiaQuest.Core
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
-                            case PlayerState.Swordfighting:
+                            case PlayerState.Swordfighting1:
                                 for (int i = 0; i < blendingBones.Length; i++)
                                 {
-                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], swordfightingBones[i], 1 - percentageOfBlending);
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], swordfighting1Bones[i], 1 - percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
-                            case PlayerState.Jumping:
+                            case PlayerState.Running:
                                 for (int i = 0; i < blendingBones.Length; i++)
                                 {
-                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], jumpingBones[i], 1 - percentageOfBlending);
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], runningBones[i], 1 - percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
-                            case PlayerState.WalkJumping:
+                            case PlayerState.Swordfighting2:
                                 for (int i = 0; i < blendingBones.Length; i++)
                                 {
-                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], walkingBones[i], 1 - percentageOfBlending);
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], swordfighting2Bones[i], 1 - percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                            case PlayerState.Standfighting:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], fightingStandBones[i], 1 - percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
+                            case PlayerState.Gunfighting:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], gunfightingBones[i], 1 - percentageOfBlending);
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
@@ -1207,14 +1283,20 @@ namespace EmodiaQuest.Core
                             case PlayerState.Walking:
                                 effect.SetBoneTransforms(walkingBones);
                                 break;
-                            case PlayerState.Swordfighting:
-                                effect.SetBoneTransforms(swordfightingBones);
+                            case PlayerState.Swordfighting1:
+                                effect.SetBoneTransforms(swordfighting1Bones);
                                 break;
-                            case PlayerState.Jumping:
-                                effect.SetBoneTransforms(jumpingBones);
+                            case PlayerState.Running:
+                                effect.SetBoneTransforms(runningBones);
                                 break;
-                            case PlayerState.WalkJumping:
-                                effect.SetBoneTransforms(walkingBones);
+                            case PlayerState.Swordfighting2:
+                                effect.SetBoneTransforms(swordfighting2Bones);
+                                break;
+                            case PlayerState.Standfighting:
+                                effect.SetBoneTransforms(fightingStandBones);
+                                break;
+                            case PlayerState.Gunfighting:
+                                effect.SetBoneTransforms(gunfightingBones);
                                 break;
                         }
                     }
@@ -1222,15 +1304,14 @@ namespace EmodiaQuest.Core
 
                     effect.EnableDefaultLighting();
                     effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(Angle) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
-                    //effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(0) * Matrix.CreateTranslation(new Vector3(lastPos.X, 0, lastPos.Y)) * world;
                     effect.View = view;
                     effect.Projection = projection;
-
-                    effect.SpecularColor = new Vector3(0.25f);
+                    effect.SpecularColor = new Vector3(0.15f);
                     effect.SpecularPower = 16;
-                    effect.PreferPerPixelLighting = true;
 
                     // Textures
+                    // Body Textures
+
                     if (mesh.Name == "MainChar_body")
                     {
                         effect.Texture = defaultBodyTex;
@@ -1239,22 +1320,72 @@ namespace EmodiaQuest.Core
                     {
                         effect.Texture = defaultHairTex;
                     }
-                    else
+                    else if (mesh.Name == "MainChar_body_lowPoly")
                     {
                         effect.Texture = defaultBodyTex;
                     }
+                    
 
                 }
-                //Console.WriteLine(mesh.Name);
-                if (mesh.Name == "Stock" && ActiveWeapon != Weapon.Stock)
+                // Always render the Player
+                if (mesh.Name == "MainChar_Body" || mesh.Name == "MainChar_eye" || mesh.Name == "MainChar_Body_lowPoly" || mesh.Name == "Einfache_Hose" || mesh.Name == "Einfache_Schuhe")
                 {
-
+                    mesh.Draw();
                 }
-                else if (mesh.Name == "Hammer" && ActiveWeapon != Weapon.Hammer)
+                //Only render the equipped Weapon
+                else if (mesh.Name == "Stock" && CurrentEquippedWeapon.Name == "Stock")
                 {
-
+                    mesh.Draw();
                 }
-                else mesh.Draw();
+                else if (mesh.Name == "Hammer" && CurrentEquippedWeapon.Name == "Hammer")
+                {
+                    mesh.Draw();
+                }
+                else if (mesh.Name == "Schwert" && CurrentEquippedWeapon.Name == "Schwert")
+                {
+                    mesh.Draw();
+                }
+                else if (mesh.Name == "Einfaches_Gewehr" && CurrentEquippedWeapon.Name == "EinfachesGewehr")
+                {
+                    mesh.Draw();
+                }
+                else if (mesh.Name == "Normales_Gewehr" && CurrentEquippedWeapon.Name == "Gewehr")
+                {
+                    mesh.Draw();
+                }
+                else if (mesh.Name == "Spezielles_Gewehr" && CurrentEquippedWeapon.Name == "SpeziellesGewehr")
+                {
+                    mesh.Draw();
+                }
+                // Only render the equipped Helmet
+                else if (mesh.Name == "Einfache_Kappe" && (CurrentEquippedHelmet.Name == "LederKappe" || CurrentEquippedHelmet.Name == "StoffKappe" || CurrentEquippedHelmet.Name == "MetallKappe"))
+                {
+                    mesh.Draw();
+                }
+                else if (mesh.Name == "Schrott_Helm" && CurrentEquippedHelmet.Name == "rostigerSchrottHelm")
+                {
+                    mesh.Draw();
+                }
+                else if (mesh.Name == "Spezieller_Helm" && (CurrentEquippedHelmet.Name == "speziellerHelm" || CurrentEquippedHelmet.Name == "speziellerRostigerHelm" || CurrentEquippedHelmet.Name == "speziellerSignierterHelm"))
+                {
+                    mesh.Draw();
+                }
+                // Only render the equipped Amor
+                else if (mesh.Name == "Einfache_R_stung" && (CurrentEquippedArmor.Name == "leichteRuestung" || CurrentEquippedArmor.Name == "leichteModerneRuestung"))
+                {
+                    mesh.Draw();
+                }
+                else if (mesh.Name == "Einfaches_Shirt" && (CurrentEquippedArmor.Name == "StoffHemd" || CurrentEquippedArmor.Name == "neuesStoffhemd" || CurrentEquippedArmor.Name == "altesStoffhemd"))
+                {
+                    mesh.Draw();
+                }
+                else if (mesh.Name == "Schwere_R_stung" && (CurrentEquippedArmor.Name == "alteSchwereRuestung" || CurrentEquippedArmor.Name == "moderneSchwereRuestung" || CurrentEquippedArmor.Name == "schwereRuestung"))
+                {
+                    mesh.Draw();
+                }
+
+
+                //else mesh.Draw();
             }
 
 

@@ -515,7 +515,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     Player.Instance.GrandStats();
                     break;
                 case "equipped_helmet":
-                    platform.updateLabel("item_name", Player.Instance.CurrentEquippedHelmet != null ? "Name: " + Player.Instance.CurrentEquippedHelmet.Class : "");
+                    platform.updateLabel("item_name", Player.Instance.CurrentEquippedHelmet != null ? "Name: " + Player.Instance.CurrentEquippedHelmet.Class + ": " + Player.Instance.CurrentEquippedHelmet.Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.CurrentEquippedHelmet != null ? "Level: " + Player.Instance.CurrentEquippedHelmet.Lvl + " / Benoetigte Staerke: " + Player.Instance.CurrentEquippedHelmet.RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.CurrentEquippedHelmet != null ? "Ruestung: " + Player.Instance.CurrentEquippedHelmet.Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.CurrentEquippedHelmet != null ? "Schaden: " + Player.Instance.CurrentEquippedHelmet.MinDamage + " - " + Player.Instance.CurrentEquippedHelmet.MaxDamage : "");
@@ -531,7 +531,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", true);
                     break;
                 case "equipped_armor":
-                    platform.updateLabel("item_name", Player.Instance.CurrentEquippedArmor != null ? "Name: " + Player.Instance.CurrentEquippedArmor.Class : "");
+                    platform.updateLabel("item_name", Player.Instance.CurrentEquippedArmor != null ? "Name: " + Player.Instance.CurrentEquippedArmor.Class + ": " + Player.Instance.CurrentEquippedArmor.Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.CurrentEquippedArmor != null ? "Level: " + Player.Instance.CurrentEquippedArmor.Lvl + " / Benoetigte Staerke: " + Player.Instance.CurrentEquippedArmor.RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.CurrentEquippedArmor != null ? "Ruestung: " + Player.Instance.CurrentEquippedArmor.Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.CurrentEquippedArmor != null ? "Schaden: " + Player.Instance.CurrentEquippedArmor.MinDamage + " - " + Player.Instance.CurrentEquippedArmor.MaxDamage : "");
@@ -547,7 +547,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", true);
                     break;
                 case "equipped_boots":
-                    platform.updateLabel("item_name", Player.Instance.CurrentEquippedBoots != null ? "Name: " + Player.Instance.CurrentEquippedBoots.Class : "");
+                    platform.updateLabel("item_name", Player.Instance.CurrentEquippedBoots != null ? "Name: " + Player.Instance.CurrentEquippedBoots.Class + ": " + Player.Instance.CurrentEquippedBoots.Name: "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.CurrentEquippedBoots != null ? "Level: " + Player.Instance.CurrentEquippedBoots.Lvl + " / Benoetigte Staerke: " + Player.Instance.CurrentEquippedBoots.RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.CurrentEquippedBoots != null ? "Ruestung: " + Player.Instance.CurrentEquippedBoots.Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.CurrentEquippedBoots != null ? "Schaden: " + Player.Instance.CurrentEquippedBoots.MinDamage + " - " + Player.Instance.CurrentEquippedBoots.MaxDamage : "");
@@ -563,7 +563,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", true);
                     break;
                 case "equipped_weapon":
-                    platform.updateLabel("item_name", Player.Instance.CurrentEquippedWeapon != null ? "Name: " + Player.Instance.CurrentEquippedWeapon.Class : "");
+                    platform.updateLabel("item_name", Player.Instance.CurrentEquippedWeapon != null ? "Name: " + Player.Instance.CurrentEquippedWeapon.Class + ": " + Player.Instance.CurrentEquippedWeapon.Name: "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.CurrentEquippedWeapon != null ? "Level: " + Player.Instance.CurrentEquippedWeapon.Lvl + " / Benoetigte Staerke: " + Player.Instance.CurrentEquippedWeapon.RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.CurrentEquippedWeapon != null ? "Ruestung: " + Player.Instance.CurrentEquippedWeapon.Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.CurrentEquippedWeapon != null ? "Schaden: " + Player.Instance.CurrentEquippedWeapon.MinDamage + " - " + Player.Instance.CurrentEquippedWeapon.MaxDamage : "");

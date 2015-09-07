@@ -59,88 +59,88 @@ namespace EmodiaQuest.Core.Items
             Quests.Add(new Item(ItemClass.Quest, "Truhe"));
 
             //Lvl 1
-            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 1, 0, 0));
-            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 2, 0, 0));
-            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 3, 0, 0));
+            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 30, 0, 0, "LederKappe"));
+            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 20, 0, 0, "StoffKappe"));
+            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 40, 0, 0, "MetallKappe"));
 
             //Lvl 2
-            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 5, 0, 0));
-            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 7, 0, 0));
-            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 8, 0, 0));
+            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 50, 0, 0, "LederKappe"));
+            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 80, 0, 0, "rostigerSchrottHelm"));
+            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 90, 0, 0, "rostigerSchrottHelm"));
 
             //Lvl 3
-            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 10, 0, 0));
-            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 12, 0, 0));
-            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 15, 0, 0));
+            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 100, 0, 0, "rostigerSchrottHelm"));
+            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 200, 0, 0, "speziellerHelm"));
+            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 150, 0, 0, "speziellerRostigerHelm"));
 
             //Lvl 4
-            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 20, 0, 0));
-            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 25, 0, 0));
-            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 30, 0, 0));
+            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 50, 0, 0, "LederKappe"));
+            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 400, 0, 0, "speziellerSignierterHelm"));
+            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 200, 0, 0, "speziellerHelm"));
 
             //Lvl 1
-            Boots.Add(new Item(1, ItemClass.Boots, 0, 1, 0, 0));
-            Boots.Add(new Item(1, ItemClass.Helmet, 0, 2, 0, 0));
+            Boots.Add(new Item(1, ItemClass.Boots, 0, 30, 0, 0, "Schuhe"));
+            Boots.Add(new Item(1, ItemClass.Boots, 0, 20, 0, 0, "alteSchuhe"));
 
             //Lvl 2
-            Boots.Add(new Item(2, ItemClass.Boots, 5, 4, 0, 0));
-            Boots.Add(new Item(2, ItemClass.Boots, 5, 5, 0, 0));
-            Boots.Add(new Item(2, ItemClass.Boots, 5, 7, 0, 0));
+            Boots.Add(new Item(2, ItemClass.Boots, 5, 30, 0, 0, "Schuhe"));
+            Boots.Add(new Item(2, ItemClass.Boots, 5, 20, 0, 0, "alteSchuhe"));
+            Boots.Add(new Item(2, ItemClass.Boots, 5, 50, 0, 0, "moderneSchuhe"));
 
             //Lvl 3
-            Boots.Add(new Item(3, ItemClass.Boots, 10, 8, 0, 0));
-            Boots.Add(new Item(3, ItemClass.Boots, 10, 10, 0, 0));
-            Boots.Add(new Item(3, ItemClass.Boots, 10, 12, 0, 0));
+            Boots.Add(new Item(3, ItemClass.Boots, 10, 30, 0, 0, "Schuhe"));
+            Boots.Add(new Item(3, ItemClass.Boots, 10, 25, 0, 0, "alteSchuhe"));
+            Boots.Add(new Item(3, ItemClass.Boots, 10, 55, 0, 0, "moderneSchuhe"));
 
             //Lvl 4
-            Boots.Add(new Item(4, ItemClass.Boots, 20, 15, 0, 0));
-            Boots.Add(new Item(4, ItemClass.Boots, 20, 18, 0, 0));
-            Boots.Add(new Item(4, ItemClass.Boots, 20, 22, 0, 0));
+            Boots.Add(new Item(4, ItemClass.Boots, 20, 50, 0, 0, "Schuhe"));
+            Boots.Add(new Item(4, ItemClass.Boots, 20, 60, 0, 0, "alteSchuhe"));
+            Boots.Add(new Item(4, ItemClass.Boots, 20, 80, 0, 0, "moderneSchuhe"));
 
             //Lvl 1
-            Armors.Add(new Item(1, ItemClass.Armor, 0, 2, 0, 0));
-            Armors.Add(new Item(1, ItemClass.Armor, 0, 4, 0, 0));
-            Armors.Add(new Item(1, ItemClass.Armor, 0, 5, 0, 0));
+            Armors.Add(new Item(1, ItemClass.Armor, 0, 40, 40, 0, "StoffHemd"));
+            Armors.Add(new Item(1, ItemClass.Armor, 0, 60, 60, 0, "neuesStoffhemd"));
+            Armors.Add(new Item(1, ItemClass.Armor, 0, 35, 20, 0, "altesStoffhemd"));
 
             //Lvl 2
-            Armors.Add(new Item(2, ItemClass.Armor, 5, 7, 0, 0));
-            Armors.Add(new Item(2, ItemClass.Armor, 5, 8, 0, 0));
-            Armors.Add(new Item(2, ItemClass.Armor, 5, 10, 0, 0));
+            Armors.Add(new Item(2, ItemClass.Armor, 5, 70, 0, 0, "neuesStoffhemd"));
+            Armors.Add(new Item(2, ItemClass.Armor, 5, 80, 0, 0 , "leichteRuestung"));
+            Armors.Add(new Item(2, ItemClass.Armor, 5, 100, 0, 0, "leichteModerneRuestung"));
 
             //Lvl 3
-            Armors.Add(new Item(3, ItemClass.Armor, 10, 14, 0, 0));
-            Armors.Add(new Item(3, ItemClass.Armor, 10, 16, 0, 0));
-            Armors.Add(new Item(3, ItemClass.Armor, 10, 18, 0, 0));
+            Armors.Add(new Item(3, ItemClass.Armor, 10, 140, 0, 0, "leichteModerneRuestung"));
+            Armors.Add(new Item(3, ItemClass.Armor, 10, 160, 0, 0, "leichteRuestung"));
+            Armors.Add(new Item(3, ItemClass.Armor, 10, 180, 0, 0, "alteSchwereRuestung"));
 
             //Lvl 4
-            Armors.Add(new Item(4, ItemClass.Armor, 20, 25, 0, 0));
-            Armors.Add(new Item(4, ItemClass.Armor, 20, 30, 0, 0));
-            Armors.Add(new Item(4, ItemClass.Armor, 20, 35, 0, 0));
+            Armors.Add(new Item(4, ItemClass.Armor, 20, 250, 0, 0, "alteSchwereRuestung"));
+            Armors.Add(new Item(4, ItemClass.Armor, 20, 300, 0, 0, "moderneSchwereRuestung"));
+            Armors.Add(new Item(4, ItemClass.Armor, 20, 350, 0, 0, "schwereRuestung"));
 
             //Lvl 0
-            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 1, 3, 0, 0));
-            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 1, 4, 0, 0));
-            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 1, 5, 0, 0));
+            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 60, 70, 0, 0, false, "Stock"));
+            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 40, 90, 0, 0, false, "Hammer"));
+            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 100, 105, 0, 0, true, "Gewehr"));
 
             //Lvl 1
-            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 3, 6, 0, 0));
-            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 3, 7, 0, 0));
-            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 3, 8, 0, 0));
+            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 70, 150, 0, 0, true, "EinfachesGewehr"));
+            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 100, 200, 0, 0, true, "Gewehr"));
+            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 160, 180, 0, 0, true, "SpeziellesGewehr"));
 
             //Lvl 2
-            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 8, 12, 0, 0));
-            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 8, 14, 0, 0));
-            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 8, 16, 0, 0));
+            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 100, 120, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 100, 121, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 100, 122, 0, 0, false, "Schwert"));
 
             //Lvl 3
-            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 14, 20, 0, 0));
-            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 14, 24, 0, 0));
-            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 14, 28, 0, 0));
+            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 100, 200, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 100, 201, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 100, 202, 0, 0, false, "Schwert"));
 
             //Lvl 4
-            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 25, 40, 0, 0));
-            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 25, 45, 0, 0));
-            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 25, 50, 0, 0));
+            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 242, 242, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 42, 42, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 420, 42, 0, 0, false, "Schwert"));
 
 
         }

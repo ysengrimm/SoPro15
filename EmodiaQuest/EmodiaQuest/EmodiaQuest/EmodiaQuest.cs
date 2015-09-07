@@ -146,6 +146,11 @@ namespace EmodiaQuest
                     // check if game is in focus
                     Player.Instance.GameIsInFocus = IsActive;
 
+                    // End Game if Player lose too much hp
+                    if (Player.Instance.Hp < 5)
+                    {
+                        this.Exit();
+                    }
                     Ingame.Instance.UpdateIngame(gameTime);
 
                     // HUD/NetStat

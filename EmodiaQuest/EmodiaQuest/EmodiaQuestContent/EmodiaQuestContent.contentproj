@@ -1602,11 +1602,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\player\Texturen\platzhalter.jpg">
-      <Name>platzhalter</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="other\acagamics.png">
       <Name>acagamics</Name>
       <Importer>TextureImporter</Importer>
@@ -1654,6 +1649,211 @@
     </Compile>
     <Compile Include="fbxContent\gameobjects\NormalWall_10x10\Safeworld_wall2_tex_1.png">
       <Name>Safeworld_wall2_tex_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Leichte_Rüstung_Tex_modern.png">
+      <Name>Leichte_Rüstung_Tex_modern</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Leichte_Rüstung_Tex_normal.png">
+      <Name>Leichte_Rüstung_Tex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\platzhalter.jpg">
+      <Name>platzhalter</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Schrott_Helm_Tex_rostig.png">
+      <Name>Schrott_Helm_Tex_rostig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Schrott_Helm_Tex_rostig_mit_gras.png">
+      <Name>Schrott_Helm_Tex_rostig_mit_gras</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Schwere_Rüstung_Tex_alt.png">
+      <Name>Schwere_Rüstung_Tex_alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Schwere_Rüstung_Tex_modern.png">
+      <Name>Schwere_Rüstung_Tex_modern</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Schwere_Rüstung_Tex_normal.png">
+      <Name>Schwere_Rüstung_Tex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Spezieller_Helm_Tex_normal.png">
+      <Name>Spezieller_Helm_Tex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Spezieller_Helm_Tex_rostig.png">
+      <Name>Spezieller_Helm_Tex_rostig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Spezieller_Helm_Tex_signiert.png">
+      <Name>Spezieller_Helm_Tex_signiert</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Stoff_Shirt_Tex_alt.png">
+      <Name>Stoff_Shirt_Tex_alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Stoff_Shirt_Tex_neu.png">
+      <Name>Stoff_Shirt_Tex_neu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Stoff_Shirt_Tex_normal.png">
+      <Name>Stoff_Shirt_Tex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Einfaches_GewehrTex_normal.png">
+      <Name>Waffe_Einfaches_GewehrTex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Einfaches_GewehrTex_vermoost.png">
+      <Name>Waffe_Einfaches_GewehrTex_vermoost</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Einfaches_GewehrTex_zerkratzt.png">
+      <Name>Waffe_Einfaches_GewehrTex_zerkratzt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Hammer_Tex_rostig.png">
+      <Name>Waffe_Hammer_Tex_rostig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Hammer_Tex_rostig_mit_Ledergriff.png">
+      <Name>Waffe_Hammer_Tex_rostig_mit_Ledergriff</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Hammer_Tex_rostig_mit_Ledergriff_und_Blut.png">
+      <Name>Waffe_Hammer_Tex_rostig_mit_Ledergriff_und_Blut</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Hammer_Tex_rostig_mit_Ledergriff_und_Moos.png">
+      <Name>Waffe_Hammer_Tex_rostig_mit_Ledergriff_und_Moos</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Normales_GewehrTex_modern.png">
+      <Name>Waffe_Normales_GewehrTex_modern</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Normales_GewehrTex_normal.png">
+      <Name>Waffe_Normales_GewehrTex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Normales_GewehrTex_vermoost.png">
+      <Name>Waffe_Normales_GewehrTex_vermoost</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Schwert_Tex_normal.png">
+      <Name>Waffe_Schwert_Tex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Schwert_Tex_rostig.png">
+      <Name>Waffe_Schwert_Tex_rostig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Schwert_Tex_vermodert.png">
+      <Name>Waffe_Schwert_Tex_vermodert</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Spezielles_GewehrTex_normal.png">
+      <Name>Waffe_Spezielles_GewehrTex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Stock_Tex_holz.png">
+      <Name>Waffe_Stock_Tex_holz</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Stock_Tex_holz_mit_Ledergriff.png">
+      <Name>Waffe_Stock_Tex_holz_mit_Ledergriff</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Waffe_Stock_Tex_rost_metall.png">
+      <Name>Waffe_Stock_Tex_rost_metall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Hose_Tex_alt.png">
+      <Name>Einfache_Hose_Tex_alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Hose_Tex_modern.png">
+      <Name>Einfache_Hose_Tex_modern</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Hose_Tex_normal.png">
+      <Name>Einfache_Hose_Tex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Kappe_Tex_Leder.png">
+      <Name>Einfache_Kappe_Tex_Leder</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Kappe_Tex_Metall.png">
+      <Name>Einfache_Kappe_Tex_Metall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Kappe_Tex_Stoff.png">
+      <Name>Einfache_Kappe_Tex_Stoff</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Schuhe_Tex_alt.png">
+      <Name>Einfache_Schuhe_Tex_alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Schuhe_Tex_modern.png">
+      <Name>Einfache_Schuhe_Tex_modern</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Einfache_Schuhe_Tex_normal.png">
+      <Name>Einfache_Schuhe_Tex_normal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Texturen\platzhalter.jpg">
+      <Name>platzhalter</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
