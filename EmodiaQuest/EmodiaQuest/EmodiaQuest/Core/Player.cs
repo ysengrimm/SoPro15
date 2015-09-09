@@ -333,7 +333,10 @@ namespace EmodiaQuest.Core
         private Texture2D defaultHairTex;
 
         // bulletModel
-        private Model bulletModel;
+        private Model bulletModel1;
+        private Model bulletModel2;
+        private Model bulletModel3;
+        private Model bullet2animation;
 
         // The Model
         private Model playerModel, standingM, walkingM, runningM, swordfighting1M, swordfighting2M, fightingStandM, gunfightingM;
@@ -556,8 +559,12 @@ namespace EmodiaQuest.Core
             // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 400;
 
-            // Load Bullet
-            bulletModel = contentMngr.Load<Model>("fbxContent/items/Point");
+            // Load Bullets
+            bulletModel1 = contentMngr.Load<Model>("fbxContent/bullets/bullet1/bullet1");
+            bulletModel2 = contentMngr.Load<Model>("fbxContent/bullets/bullet2/bullet2");
+            bulletModel3 = contentMngr.Load<Model>("fbxContent/bullets/bullet3/bullet3");
+            bullet2animation = contentMngr.Load<Model>("fbxContent/bullets/bullet2/bullet2animation/bullet2animation");
+            Bullet.blastAnimation = bullet2animation;
         }
 
         //mystuff
@@ -766,14 +773,29 @@ namespace EmodiaQuest.Core
 
             //update playerState
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed && stateTime <= 150 )
+            if (GUI.Controls_GUI.Instance.mousePressedLeft() && stateTime <= 150 )
             {
                 if (CurrentEquippedWeapon.IsRangedWeapon == true && shootingTimer > shootingThreshold)
                 {
                     ActivePlayerState = PlayerState.Gunfighting;
-                    if (currentMouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
+                    if (GUI.Controls_GUI.Instance.mouseClickAndHoldLeft())
                     {
-                        BulletList.Add(new Bullet(bulletModel, PlayerViewDirection, Position));
+                        Model bulletModelToGive = bulletModel1;
+                        switch (shootingtype)
+                        {
+                            case Shootingtype.Normal:
+                                bulletModelToGive = bulletModel1;
+                                break;
+                            case Shootingtype.Blast:
+                                bulletModelToGive = bulletModel2;
+                                break;
+                            case Shootingtype.Lightning:
+                                bulletModelToGive = bulletModel3;
+                                break;
+                            default:
+                                break;
+                        }
+                        BulletList.Add(new Bullet(bulletModelToGive, PlayerViewDirection, Position, Angle, shootingtype));
                         shootingTimer = 0;
                     }
                     shootingTimer = 0;
@@ -983,7 +1005,7 @@ namespace EmodiaQuest.Core
                         Vector2 circlePos = Position + view * 2.5f;
                         if (gameEnv.EuclideanDistance(circlePos, nmy.Position) < 1.2f)
                         {
-                            if (attackTimer >= attackThreshold && lastMouseState.LeftButton == ButtonState.Released && currentMouseState.LeftButton == ButtonState.Pressed)
+                            if (attackTimer >= attackThreshold && GUI.Controls_GUI.Instance.mouseClickAndHoldLeft())
                             {
                                 nmy.Attack(rnd.Next(MinDamage, MaxDamage + 1));
                                 //attackTimer = 0;
@@ -1048,7 +1070,7 @@ namespace EmodiaQuest.Core
             for (int i = 0; i < BulletList.Count; i++)
             {
                 if (BulletList[i].isActive)
-                    BulletList[i].Update(gameTime, collisionHandler, shootingtype);
+                    BulletList[i].Update(gameTime, collisionHandler);
                 else BulletList.RemoveAt(i);
             }
 
