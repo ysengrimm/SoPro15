@@ -1,0 +1,753 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="EmodiaQuest.Core.Bullet" Collapsed="true">
+    <Position X="18.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQoAACIAEAEAgEiABAAFBCQAABgAQAAAgAAAAIAgiA=</HashCode>
+      <FileName>Core\Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.ChangeValueEvent" Collapsed="true">
+    <Position X="6" Y="11.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Core\ChangeValueEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.CollisionHandler" Collapsed="true">
+    <Position X="15.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAABAAAGAQAAAAAAQAAA=</HashCode>
+      <FileName>Core\CollisionHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.ColorListDungeon" Collapsed="true">
+    <Position X="16" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAEAAAAAAAAAAAAAAAAAQAEAAAAAAQAQAAAAAAAEAA=</HashCode>
+      <FileName>Core\ColorListDungeon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Delegates_CORE" Collapsed="true">
+    <Position X="0.5" Y="11.25" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="EmodiaQuest.Core.Delegates_CORE.ChangeValueDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Delegates_CORE.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Delegates_CORE.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Dungeon" Collapsed="true">
+    <Position X="13.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwACAhAAAwAAAYAAgCBAIAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Core\Dungeon.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LevelGenerator" />
+      <Property Name="Enemy" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.EnvironmentController" Collapsed="true">
+    <Position X="15.25" Y="3.25" Width="2" />
+    <NestedTypes>
+      <Struct Name="EmodiaQuest.Core.EnvironmentController.Object" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\EnvironmentController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="EmodiaQuest.Core.EnvironmentController.TeleObject" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\EnvironmentController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AgAGABhAAkQACAgAkCAiIQAGAQBAhBQgAAiAAAIQGDg=</HashCode>
+      <FileName>Core\EnvironmentController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GameObject" />
+      <Property Name="Item" />
+      <Property Name="Skybox" />
+      <Property Name="TeleporterObject" />
+      <Property Name="Bullet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Game" Collapsed="true">
+    <Position X="10.75" Y="4.5" Width="1.5" />
+    <AssociationLine Name="EnvironmentController" Type="EmodiaQuest.Core.EnvironmentController" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.25" Y="4.64" />
+        <Point X="13.828" Y="4.64" />
+        <Point X="13.828" Y="3.563" />
+        <Point X="15.25" Y="3.563" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="CollisionHandler1" Type="EmodiaQuest.Core.CollisionHandler" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.906" Y="4.5" />
+        <Point X="11.906" Y="4.438" />
+        <Point X="13.745" Y="4.438" Type="JumpStart" />
+        <Point X="13.911" Y="4.438" Type="JumpEnd" />
+        <Point X="15.25" Y="4.438" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>DAAIAAAAAAAAAQAAAABAIABAAAAAAEJAAAAAAQAAEAQ=</HashCode>
+      <FileName>Core\Game.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="EnvironmentController" />
+      <Property Name="CollisionHandler1" />
+      <Property Name="NetGraph" />
+      <Property Name="HUD_GUI" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GameObject" Collapsed="true">
+    <Position X="18.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAGBgAAAABCAARAAJCAIAQCAQAAAgAIgAAAAEAMACA=</HashCode>
+      <FileName>Core\GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Ingame" Collapsed="true">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <AssociationLine Name="Dungeon1" Type="EmodiaQuest.Core.Dungeon" ManuallyRouted="true">
+      <Path>
+        <Point X="9.5" Y="3.953" />
+        <Point X="9.872" Y="3.953" />
+        <Point X="9.872" Y="7.664" />
+        <Point X="14.167" Y="7.664" Type="JumpStart" />
+        <Point X="14.333" Y="7.664" Type="JumpEnd" />
+        <Point X="14.828" Y="7.664" />
+        <Point X="14.828" Y="7.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="SafeWorld" Type="EmodiaQuest.Core.SafeWorld" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.5" Y="3.695" />
+        <Point X="10.32" Y="3.695" />
+        <Point X="10.32" Y="3.287" />
+        <Point X="12.481" Y="3.287" />
+        <Point X="12.481" Y="1.812" />
+        <Point X="13.5" Y="1.812" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Player" Type="EmodiaQuest.Core.Player" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.5" Y="3.848" />
+        <Point X="10.172" Y="3.848" />
+        <Point X="10.172" Y="6.795" />
+        <Point X="11.374" Y="6.795" />
+        <Point X="11.374" Y="7.602" />
+        <Point X="11.375" Y="7.602" />
+        <Point X="11.375" Y="8" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>DIAAAAAEAgAQgAACAAAEABAABABJAAAAQAAAAQAEAAQ=</HashCode>
+      <FileName>Core\Ingame.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="WorldState" />
+      <Property Name="Dungeon1" />
+      <Property Name="SafeWorld" />
+      <Property Name="Player" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Jukebox" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACQAMkAAgAAIFAAAAAAAIBAFEBAAAAAQEEASMCIAAA=</HashCode>
+      <FileName>Core\Jukebox.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SoundDisk" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.NetGraph" Collapsed="true">
+    <Position X="15.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAACsIACAAIAABAIAgAQAAAAAAAAQQ=</HashCode>
+      <FileName>Core\NetGraph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Ai" Collapsed="true">
+    <Position X="18.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAiAABAAAAAIAACAMAAAAAgBAAAAAQAAAAAAAIAAgiA=</HashCode>
+      <FileName>Core\NPCs\Ai.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Player" Collapsed="true">
+    <Position X="11" Y="8" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="EmodiaQuest.Core.Player.Shootingtype" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\Player.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>VLUVI3AAiyB3JrcgsVUCZTNYBt1LEE0D9khtAJA5TuU=</HashCode>
+      <FileName>Core\Player.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PlayerState" />
+      <Property Name="Weapon" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Quest" Collapsed="true">
+    <Position X="8" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAIAgAQAAABAAAAQAAAAAAAAAAAAIAAEAAAQ=</HashCode>
+      <FileName>Core\Quest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.QuestController" Collapsed="true">
+    <Position X="8" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQEAAgAAACgIAAgAAAAAAAAEDACBAABSAAAAAAABAQ=</HashCode>
+      <FileName>Core\QuestController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Quest" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.SafeWorld" Collapsed="true">
+    <Position X="13.5" Y="1.5" Width="1.5" />
+    <InheritanceLine Type="EmodiaQuest.Core.Game" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.5" Y="4.5" />
+        <Point X="11.5" Y="3.564" />
+        <Point X="13.625" Y="3.564" />
+        <Point X="13.625" Y="2.191" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AgACABAAAwAAAQAAgCBAIAAAEABAAAAAQAAAAAAAAAQ=</HashCode>
+      <FileName>Core\SafeWorld.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="NPC" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Settings" Collapsed="true">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADRAAEAAACBACABBAECChFAhBgAAIAYAACAAoIAAA=</HashCode>
+      <FileName>Core\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Skybox" Collapsed="true">
+    <Position X="18.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAgQgAAIAIAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Core\Skybox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.SoundDisk" Collapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="EmodiaQuest.Core.SoundDisk.SoundState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\SoundDisk.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="EmodiaQuest.Core.SoundDisk.SoundType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\SoundDisk.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ACRgAAAAggACAAAAECAAAAyAAAQIAJAEsAA4AAgAYAA=</HashCode>
+      <FileName>Core\SoundDisk.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.TeleporterObject" Collapsed="true">
+    <Position X="18.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAIAAAAAAAAAAAAACAAAAIAAA=</HashCode>
+      <FileName>Core\TeleporterObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.DungeonGeneration.LevelGenerator" Collapsed="true">
+    <Position X="13.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JIAEAAQAATGAEREAgBYAEAAAAAAIAAABAAAAEAAAgAA=</HashCode>
+      <FileName>Core\DungeonGeneration\LevelGenerator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Room" />
+      <Property Name="ColorListDungeon" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.DungeonGeneration.Room" Collapsed="true">
+    <Position X="13.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAABAAAAAAAAAADAEAAAAAAAAAAAAAAAAAIYIA=</HashCode>
+      <FileName>Core\DungeonGeneration\Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Button_GUI" Collapsed="true">
+    <Position X="2.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAABAwAEAIIQEAAAEICoAgAAAABAAAggBAAIgA=</HashCode>
+      <FileName>Core\GUI\Button_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.ButtonEvent_GUI" Collapsed="true">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\GUI\ButtonEvent_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Controls_GUI" Collapsed="true">
+    <Position X="0.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABEAAAAAAEAAAAAAAAGAAAEBAIAQYQAAAAAAVAAA=</HashCode>
+      <FileName>Core\GUI\Controls_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.DialogueBox_GUI" Collapsed="true">
+    <Position X="6" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAABAQAEAAAAAAAAFACoAgAAAABACAAgJAAAAA=</HashCode>
+      <FileName>Core\GUI\DialogueBox_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.IntVector2" Collapsed="true">
+    <Position X="4.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAA=</HashCode>
+      <FileName>Core\GUI\IntVector2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.InventoryItem_GUI" Collapsed="true">
+    <Position X="8" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABACAAABAQAAAAAAAAAAEACgAgAAAABAAAAAAAAQAA=</HashCode>
+      <FileName>Core\GUI\InventoryItem_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.ItemSocket_GUI" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAABAAAAAAAAAAAEEAAgAAEAAABAAAAAAAAgAA=</HashCode>
+      <FileName>Core\GUI\ItemSocket_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Label_GUI" Collapsed="true">
+    <Position X="4.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAABAQAEAAAAAAAAFACoAgAAAABACAAgJAAAAA=</HashCode>
+      <FileName>Core\GUI\Label_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Once" Collapsed="true">
+    <Position X="6" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Core\GUI\Once.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.PlainImage_GUI" Collapsed="true">
+    <Position X="0.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAABAQAEAAAABAAAEICgAgAABABAAAAAAAAAAA=</HashCode>
+      <FileName>Core\GUI\PlainImage_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.PlainText_GUI" Collapsed="true">
+    <Position X="2.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAABAAgAAAAAABACAACAAAAAA=</HashCode>
+      <FileName>Core\GUI\PlainText_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Platform_GUI" Collapsed="true">
+    <Position X="2.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IYRMrASigKwAEjOJKCaAAF6gCAQCDBgCsAAQcgsUMIA=</HashCode>
+      <FileName>Core\GUI\Platform_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Settings_GUI" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAAAAAAAAAAAAAAAAAAAABAgAAAQAAACAAAAAA=</HashCode>
+      <FileName>Core\GUI\Settings_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Slider_GUI" Collapsed="true">
+    <Position X="2.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SADACAgABERBAAgAQAEAAEIChAgAQAABAAAwAAAAAAA=</HashCode>
+      <FileName>Core\GUI\Slider_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.SliderEvent_GUI" Collapsed="true">
+    <Position X="8" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAggAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\GUI\SliderEvent_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.SpriteFonts_GUI" Collapsed="true">
+    <Position X="7.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAACAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\GUI\SpriteFonts_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.Credits_GUI" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAAAAAAAAAAAAIAAAAAAABAAAAAQAAAAAgEAAA=</HashCode>
+      <FileName>Core\GUI\Screens\Credits_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.HUD_GUI" Collapsed="true">
+    <Position X="15.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAIAAAAACABAAAAAQAAAAAgEAAA=</HashCode>
+      <FileName>Core\GUI\Screens\HUD_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.Intro_GUI" Collapsed="true">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAAAAAAAAAAAAIAAAAAAABAAAAAQAAAAAgEAAA=</HashCode>
+      <FileName>Core\GUI\Screens\Intro_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.Inventory_GUI" Collapsed="true">
+    <Position X="0.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAAAAAAACAAICAAAACABAAAAAQAAAAAgEAgA=</HashCode>
+      <FileName>Core\GUI\Screens\Inventory_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.Keybinding_GUI" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAAAAAAAAAAAAIAAAAAAABAAAAAQAAAAAgEAAA=</HashCode>
+      <FileName>Core\GUI\Screens\Keybinding_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.Menu_GUI" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAJAAAAAAAAAAAAAIAAAAAAABAAAAAQAAAAAgEAAA=</HashCode>
+      <FileName>Core\GUI\Screens\Menu_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYACBABAAEAAAgIQAAIAAAgQAABAAAQAQABAAAgEARA=</HashCode>
+      <FileName>Core\GUI\Screens\NPCTalk_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.Options_GUI" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAEAAAAAAACAAIAAAAAAABAAAAAQAAAAAgEAAA=</HashCode>
+      <FileName>Core\GUI\Screens\Options_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.GUI.Screens.Start_GUI" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAAAAAAAAAAAAIAAAAAAABAAAAAQAAAAAgEAAA=</HashCode>
+      <FileName>Core\GUI\Screens\Start_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Items.Item" Collapsed="true">
+    <Position X="18.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAggAAAgAAAAAoAAAYAAAALAYAAEAAAAQAAgEA=</HashCode>
+      <FileName>Core\Items\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EmodiaQuest.Core.Items.ItemTestClass" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAgAAAAAAIgAAAAAQBAEEQAUEQACAAIABA=</HashCode>
+      <FileName>Core\Items\ItemTestClass.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ItemClass" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.NPCs.CustomSkinnedEffect" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AFGkEABABFARVQ6UBREABBIAAEsJADCDARZRhARRgBI=</HashCode>
+      <FileName>Core\NPCs\CustomSkinnedEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.709" Collapsed="true" />
+  </Class>
+  <Class Name="EmodiaQuest.Core.NPCs.Enemy" Collapsed="true">
+    <Position X="16" Y="7.75" Width="1.5" />
+    <AssociationLine Name="EnemyType1" Type="EmodiaQuest.Core.NPCs.EnemyType" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.75" Y="8.312" />
+        <Point X="16.75" Y="9.281" />
+        <Point X="18.75" Y="9.281" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>oQUIISC4AgACAgE4CYAASBSkAokFEIIJVgABAPwf0z0=</HashCode>
+      <FileName>Core\NPCs\Enemy.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ai" />
+      <Property Name="EnemyState" />
+      <Property Name="EnemyType1" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Core.NPCs.NPC" Collapsed="true">
+    <Position X="17" Y="1" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="EmodiaQuest.Core.NPCs.NPC.NPCName" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\NPCs\NPC.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>lAULIKUSQTCyBjM0CZRAzDQCCg2oAIAJXQkgQIFAEi8=</HashCode>
+      <FileName>Core\NPCs\NPC.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="NPCProfession" />
+      <Property Name="NPCState" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.EmodiaQuest_Game" Collapsed="true">
+    <Position X="4.75" Y="3.25" Width="1.75" />
+    <AssociationLine Name="CustomSkinnedEffect" Type="EmodiaQuest.Core.NPCs.CustomSkinnedEffect" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.5" Y="3.494" />
+        <Point X="6.875" Y="3.494" />
+        <Point X="6.875" Y="5.812" />
+        <Point X="8" Y="5.812" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Keybinding_GUI" Type="EmodiaQuest.Core.GUI.Screens.Keybinding_GUI" ManuallyRouted="true">
+      <Path>
+        <Point X="4.75" Y="3.414" />
+        <Point X="4.458" Y="3.414" Type="JumpStart" />
+        <Point X="4.292" Y="3.414" Type="JumpEnd" />
+        <Point X="3.564" Y="3.414" />
+        <Point X="3.564" Y="0.781" />
+        <Point X="2" Y="0.781" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Menu_GUI" Type="EmodiaQuest.Core.GUI.Screens.Menu_GUI" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.463" Y="3.25" />
+        <Point X="5.463" Y="3" />
+        <Point X="5.288" Y="3" Type="JumpStart" />
+        <Point X="5.121" Y="3" Type="JumpEnd" />
+        <Point X="5.029" Y="3" Type="JumpStart" />
+        <Point X="4.863" Y="3" Type="JumpEnd" />
+        <Point X="3.648" Y="3" Type="JumpStart" />
+        <Point X="3.481" Y="3" Type="JumpEnd" />
+        <Point X="2" Y="3" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Settings_GUI" Type="EmodiaQuest.Core.GUI.Settings_GUI" ManuallyRouted="true">
+      <Path>
+        <Point X="4.75" Y="3.822" />
+        <Point X="4.458" Y="3.822" Type="JumpStart" />
+        <Point X="4.292" Y="3.822" Type="JumpEnd" />
+        <Point X="3.579" Y="3.822" />
+        <Point X="3.579" Y="5.281" />
+        <Point X="2" Y="5.281" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="NPCTalk_GUI" Type="EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI" ManuallyRouted="true">
+      <Path>
+        <Point X="4.75" Y="3.558" />
+        <Point X="4.458" Y="3.558" Type="JumpStart" />
+        <Point X="4.292" Y="3.558" Type="JumpEnd" />
+        <Point X="3.579" Y="3.558" />
+        <Point X="3.579" Y="6.044" />
+        <Point X="2" Y="6.044" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Credits_GUI" Type="EmodiaQuest.Core.GUI.Screens.Credits_GUI" ManuallyRouted="true">
+      <Path>
+        <Point X="4.75" Y="3.853" />
+        <Point X="4.458" Y="3.853" Type="JumpStart" />
+        <Point X="4.292" Y="3.853" Type="JumpEnd" />
+        <Point X="3.57" Y="3.853" />
+        <Point X="3.57" Y="6.781" />
+        <Point X="2" Y="6.781" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Inventory_GUI" Type="EmodiaQuest.Core.GUI.Screens.Inventory_GUI" ManuallyRouted="true">
+      <Path>
+        <Point X="4.75" Y="3.884" />
+        <Point X="4.458" Y="3.884" Type="JumpStart" />
+        <Point X="4.292" Y="3.884" Type="JumpEnd" />
+        <Point X="3.579" Y="3.884" />
+        <Point X="3.579" Y="7.531" />
+        <Point X="2" Y="7.531" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ABYAGEEANAAAJwADAAAAQAAAAAACCAgggCCAAAAIAAQ=</HashCode>
+      <FileName>EmodiaQuest.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GameStates_Overall" />
+      <Property Name="Settings" />
+      <Property Name="Jukebox" />
+      <Property Name="ItemTestClass" />
+      <Property Name="Ingame" />
+      <Property Name="Renderer" />
+      <Property Name="QuestController" />
+      <Property Name="CustomSkinnedEffect" />
+      <Property Name="Keybinding_GUI" />
+      <Property Name="Intro_GUI" />
+      <Property Name="Options_GUI" />
+      <Property Name="Menu_GUI" />
+      <Property Name="Settings_GUI" />
+      <Property Name="NPCTalk_GUI" />
+      <Property Name="Credits_GUI" />
+      <Property Name="Inventory_GUI" />
+      <Property Name="ItemSocket_GUI" />
+      <Property Name="Start_GUI" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Programm" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAA=</HashCode>
+      <FileName>Programm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="EmodiaQuest_Game" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EmodiaQuest.Rendering.Renderer" Collapsed="true">
+    <Position X="4.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAEAAAABoAAACAAAAAAAAAAABBAAAAQQAAAAAQAAA=</HashCode>
+      <FileName>Rendering\Renderer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="EffectDirtyFlags" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="EmodiaQuest.Core.EnemyState" Collapsed="true">
+    <Position X="18.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Core\NPCs\EnemyState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.PlayerState" Collapsed="true">
+    <Position X="11.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIQAAAAABAAAAAAAAAAAAAAAAEIAACAAAAIAQA=</HashCode>
+      <FileName>Core\PlayerState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.Weapon" Collapsed="true">
+    <Position X="11.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABACAAAAAAAAAgAAAAAAAAAgAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.WorldState" Collapsed="true">
+    <Position X="8" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\WorldState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.GUI.ButtonState_GUI" Collapsed="true">
+    <Position X="4.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Core\GUI\Enums_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.GUI.SliderState_GUI" Collapsed="true">
+    <Position X="4.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Core\GUI\Enums_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.Items.ItemClass" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAgAAAAAAAAAAAAAQAAAAgAEAAAAAAAAAI=</HashCode>
+      <FileName>Core\Items\Enums_Item.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.NPCs.EffectDirtyFlags" Collapsed="true">
+    <Position X="4.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAIAAAABAgAoBAAAAAEQA=</HashCode>
+      <FileName>Core\NPCs\CustomSkinnedEffect.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.NPCs.EnemyType" Collapsed="true">
+    <Position X="18.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAgEAAAAggAAAAAAQCAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\NPCs\EnemyType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.NPCs.NPCProfession" Collapsed="true">
+    <Position X="19" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAEAAAAgAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Core\NPCs\NPCProfession.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.Core.NPCs.NPCState" Collapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAJAAAAAAAAABAAAAAAAAAAAAgAIAAQAAAAAIQA=</HashCode>
+      <FileName>Core\NPCs\NPCState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EmodiaQuest.GameStates_Overall" Collapsed="true">
+    <Position X="4.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAQEAAAAAAAgQAAAgAgCAEIAAAAAAAAAAA=</HashCode>
+      <FileName>Enums_Overall.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="EmodiaQuest.Core.GUI.GUI_Delegate_Slider" Collapsed="true">
+    <Position X="6" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Core\GUI\Delegates_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="EmodiaQuest.Core.GUI.GUI_Delegate_Button" Collapsed="true">
+    <Position X="7.75" Y="9.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\GUI\Delegates_GUI.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
