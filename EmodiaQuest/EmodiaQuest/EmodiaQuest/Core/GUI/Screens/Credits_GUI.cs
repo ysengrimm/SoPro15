@@ -67,6 +67,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             "Shit.....;"+
             "Shit.....;" +
             "Shit.....;" +
+            "Erdacht und entwickelt von:;" +
             "Janos Zimmermann;" +
             "Alex Mikulinski;" +
             "Claudius Grimm;" +

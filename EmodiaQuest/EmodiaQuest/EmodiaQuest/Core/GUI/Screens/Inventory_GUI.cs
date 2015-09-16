@@ -666,7 +666,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             platform.addLabel(50, 65, 5, "monoFont_big", "", "item_skill", true);
             platform.addLabel(50, 70, 5, "monoFont_big", "", "item_intel", true);
 
-            platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD", "HUD_small");
+            //platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD", "HUD_small");
 
             // XP Number
             platform.addLabel(96, 97, 3, "monoFont_big", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel, "xp_text", true);
