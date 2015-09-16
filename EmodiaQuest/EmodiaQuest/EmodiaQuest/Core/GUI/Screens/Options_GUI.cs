@@ -141,43 +141,43 @@ namespace EmodiaQuest.Core.GUI.Screens
             // Get Keyboard input to change overall GameState
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.O))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
-            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.P))
-            {
-                //GraphicsCopy.IsFullScreen = true;
-                GraphicsCopy.PreferredBackBufferWidth = 1254;
-                //GraphicsCopy.PreferredBackBufferHeight = 480;
-                GraphicsCopy.ApplyChanges();
-            }
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.P))
+            //{
+            //    //GraphicsCopy.IsFullScreen = true;
+            //    GraphicsCopy.PreferredBackBufferWidth = 1254;
+            //    //GraphicsCopy.PreferredBackBufferHeight = 480;
+            //    GraphicsCopy.ApplyChanges();
+            //}
 
-            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.M))
-            {
-                //GraphicsCopy.IsFullScreen = true;
-                GraphicsCopy.PreferredBackBufferWidth = 1254;
-                GraphicsCopy.PreferredBackBufferHeight = 480;
-                GraphicsCopy.ApplyChanges();
-            }
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.M))
+            //{
+            //    //GraphicsCopy.IsFullScreen = true;
+            //    GraphicsCopy.PreferredBackBufferWidth = 1254;
+            //    GraphicsCopy.PreferredBackBufferHeight = 480;
+            //    GraphicsCopy.ApplyChanges();
+            //}
 
-            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.L))
-            {
-                GraphicsCopy.IsFullScreen = true;
-                GraphicsCopy.ApplyChanges();
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.L))
+            //{
+            //    GraphicsCopy.IsFullScreen = true;
+            //    GraphicsCopy.ApplyChanges();
                 
-            }
-            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.V))
-            {
-                //int resX = EmodiaQuest.Core.Settings.Instance.Resolution.X;
-                //int resY = EmodiaQuest.Core.Settings.Instance.Resolution.Y;
-                //EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
+            //}
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.V))
+            //{
+            //    //int resX = EmodiaQuest.Core.Settings.Instance.Resolution.X;
+            //    //int resY = EmodiaQuest.Core.Settings.Instance.Resolution.Y;
+            //    //EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
 
 
-                int monitorWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                int monitorHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                GraphicsCopy.PreferredBackBufferWidth = 1280;
-                GraphicsCopy.PreferredBackBufferHeight = 960;
-                GraphicsCopy.ApplyChanges();
-                EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(1280, 960);
-                //Console.WriteLine(monitorWidth +", "+ monitorHeight);
-            }
+            //    int monitorWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            //    int monitorHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //    GraphicsCopy.PreferredBackBufferWidth = 1280;
+            //    GraphicsCopy.PreferredBackBufferHeight = 960;
+            //    GraphicsCopy.ApplyChanges();
+            //    EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(1280, 960);
+            //    //Console.WriteLine(monitorWidth +", "+ monitorHeight);
+            //}
         }
 
 

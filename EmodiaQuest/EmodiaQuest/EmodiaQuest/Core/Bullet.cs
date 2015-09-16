@@ -57,6 +57,7 @@ namespace EmodiaQuest.Core
             {
                 case Player.Shootingtype.Normal:
                     this.speed = 30;
+                    this.range = 55;
                     break;
                 case Player.Shootingtype.Blast:
                     this.speed = 10;

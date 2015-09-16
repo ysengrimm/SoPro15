@@ -5,5 +5,5 @@ using System.Text;
 
 namespace EmodiaQuest
 {
-    public enum GameStates_Overall { StartScreen, MenuScreen, IngameScreen, OptionsScreen, InventoryScreen, NPCScreen, CreditsScreen, KeyBindingsScreen, IntroScreen, Pause };
+    public enum GameStates_Overall { StartScreen, MenuScreen, IngameScreen, OptionsScreen, InventoryScreen, NPCScreen, CreditsScreen, KeyBindingsScreen, IntroScreen, DeathScreen, EndScreen, Pause };
 }
