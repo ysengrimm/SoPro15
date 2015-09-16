@@ -131,9 +131,11 @@ namespace EmodiaQuest.Core.GUI
 
         public void setButtons(int mainWindowSizeX, int mainWindowSizeY)
         {
-            this.xPosP1 = XPosRelative + WidthRelative - WidthRelative * 0.1f - 1;
+            //this.xPosP1 = XPosRelative + WidthRelative - WidthRelative * 0.1f - 1;
+            this.xPosP1 = XPosRelative + WidthRelative - 3 - 1;
             this.yPosP1 = YPosRelative + 1;
-            this.widthP1 = WidthRelative * 0.1f;
+            //this.widthP1 = WidthRelative * 0.1f;
+            this.widthP1 = 3;
             this.heightP1 = widthP1;
 
             this.xPosP2 = xPosP1;

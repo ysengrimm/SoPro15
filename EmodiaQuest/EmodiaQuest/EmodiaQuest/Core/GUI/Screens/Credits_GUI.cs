@@ -50,12 +50,45 @@ namespace EmodiaQuest.Core.GUI.Screens
             platform.addPlainImage(5, 5, 20, 20, "acagamics", "pixel_red");
             platform.updatePlainImagePicture("acagamics", "other/acagamics");
 
-            // textBox-test
-            platform.addDialogue(20, 50, 30, 30, "monoFont_small", "Let's.......;Test....;This.....;Shit.....;Out.....", "testding");
-            //platform.updateDialogueScaleFactor("testding", 0.2f);
+            platform.addDialogue(5, 30, 90, 50,"monoFont_small",
+            " ;" +
+            " ;" +
+            " ;" +
+            " ;" +
+            " ;" +
+            " ;" +
+            " ;" +
+            " ;" +
+            " ;" +
+            "Willkommen.;" +
+            "Hier kommt der ganze Text fuer die Credits rein.;" +
+            "Breite einfach ungefaehr per Augenmass ausrichten.;"+
+            "This.....;"+
+            "Shit.....;"+
+            "Shit.....;" +
+            "Shit.....;" +
+            "Janos Zimmermann;" +
+            "Alex Mikulinski;" +
+            "Claudius Grimm;" +
+            "Kim Krietemeier;" +
+            " ;" +
+            " ;" +
+            "Thanks for playing this game."+
+            " ;" +
+            "See you soon.;"
             
-            platform.updateDialogueMoveSpeed("testding", 2);
-            //platform.updateDialogueBoxIsShown("testding", false);
+            
+            , "creditsText");
+
+
+            platform.updateDialogueScaleFactor("creditsText", 0.5f);
+            
+            platform.updateDialogueMoveSpeed("creditsText", 1.5f);
+            platform.updateDialogueIsMoving("creditsText", true);
+            platform.updateDialogueBoxIsShown("creditsText", false);
+
+
+            //platform.updateDialogueBoxIsShown("creditsText", false);
             // isMoving, MoveSpeed, Scale, Text, BoxIsShown, BeiNeuemTextAllesNeu
 
 
@@ -67,29 +100,29 @@ namespace EmodiaQuest.Core.GUI.Screens
         {
             //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Z))
             //{
-            //    //platform.updateDialogueBoxIsDown("testding", false);
-            //    //platform.updateDialogueScaleFactor("testding", 3.0f);
-            //    //platform.updateDialogueText("testding", "NEUER TEXT!");
-            //    platform.updateDialoguePosition("testding");
+            //    //platform.updateDialogueBoxIsDown("creditsText", false);
+            //    //platform.updateDialogueScaleFactor("creditsText", 3.0f);
+            //    //platform.updateDialogueText("creditsText", "NEUER TEXT!");
+            //    platform.updateDialoguePosition("creditsText");
             //}
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.U))
             {
-                //platform.updateDialogueBoxIsDown("testding", false);
-                //platform.updateDialogueScaleFactor("testding", 3.0f);
-                //platform.updateDialogueText("testding", "NEUER TEXT!");
-                platform.updateDialogueText("testding", "Das hier;Ist;Der;Neue...;Text!;Der;ist;Neu.;Echt;");
+                //platform.updateDialogueBoxIsDown("creditsText", false);
+                //platform.updateDialogueScaleFactor("creditsText", 3.0f);
+                //platform.updateDialogueText("creditsText", "NEUER TEXT!");
+                platform.updateDialogueText("creditsText", "Das hier;Ist;Der;Neue...;Text!;Der;ist;Neu.;Echt;");
             }
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.N))
             {
-                platform.updateDialogueIsMoving("testding", true);
+                platform.updateDialogueIsMoving("creditsText", true);
             }
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.M))
             {
-                platform.updateDialogueIsMoving("testding", false);
+                platform.updateDialogueIsMoving("creditsText", false);
             }
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.V))
             {
-                platform.updateDialogueBoxIsShown("testding", false);
+                platform.updateDialogueBoxIsShown("creditsText", false);
             }
 
             this.platform.update();

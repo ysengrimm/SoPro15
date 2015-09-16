@@ -489,8 +489,8 @@ namespace EmodiaQuest.Core.GUI
                     {
                         if (passage.IsDrawn)
                             spritebatch.DrawString(db.SpriteFont, passage.Text, new Vector2(db.TextXPos, passage.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), db.TextScaleFactor * db.ScaleFactor, SpriteEffects.None, 0.0f);
-                        else
-                            spritebatch.DrawString(db.SpriteFont, passage.Text, new Vector2(db.TextXPos, passage.YPos), Color.Red, 0.0f, new Vector2(0.0f, 0.0f), db.TextScaleFactor * db.ScaleFactor, SpriteEffects.None, 0.0f);
+                        //else
+                        //    spritebatch.DrawString(db.SpriteFont, passage.Text, new Vector2(db.TextXPos, passage.YPos), Color.Red, 0.0f, new Vector2(0.0f, 0.0f), db.TextScaleFactor * db.ScaleFactor, SpriteEffects.None, 0.0f);
                     }
                 }
             }
@@ -1086,6 +1086,14 @@ namespace EmodiaQuest.Core.GUI
             foreach (DialogueBox_GUI db in dialogues.Where(n => n.LabelName == dialogueName))
             {
                 db.MovementSpeed = factor;
+            }
+        }
+
+        public void updateDialogueIsVisible(string dialogueName, bool isVisible)
+        {
+            foreach (DialogueBox_GUI db in dialogues.Where(n => n.LabelName == dialogueName))
+            {
+                db.IsVisible = isVisible;
             }
         }
 

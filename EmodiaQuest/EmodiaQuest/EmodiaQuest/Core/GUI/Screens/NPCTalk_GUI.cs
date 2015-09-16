@@ -252,6 +252,10 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.updateButtonVisibility("accept", false);
             this.platform.updateButtonClickability("accept", false);
 
+            // Talk Dialogue
+            platform.addDialogue(10, 40, 80, 35, "monoFont_small", "testtestwdioawdhawoidhoawhdhawi;testtestwdioawdhawoidhoawhdhawi;testtestwdioawdhawoidhoawhdhawi", "questDescription");
+            //platform.updateDialogueIsVisible("questDescription", false);
+
             qTest = QuestController.Instance.GetAllAvailableQuests(nPCName);
             
             platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
