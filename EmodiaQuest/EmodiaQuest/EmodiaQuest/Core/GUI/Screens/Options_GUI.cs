@@ -17,23 +17,24 @@ namespace EmodiaQuest.Core.GUI.Screens
             switch (e.Function)
             {
                 case "volumeChange":
-                    EmodiaQuest.Core.Settings.Instance.MainVolume = (float)(e.SliderValue)/100;
+                    EmodiaQuest.Core.Settings.Instance.MainVolume = (float)(e.SliderValue) / 100;
                     this.platform.updateLabel("volume", "Lautstaerke: " + e.SliderValue.ToString());
-                    GraphicsCopy.ApplyChanges();
                     break;
                 case "resolutionChange":
                     EmodiaQuest.Core.Settings.Instance.Resolution = EmodiaQuest.Core.Settings.PossibleResolutions[e.SliderValue];
                     int resX = EmodiaQuest.Core.Settings.Instance.Resolution.X;
                     int resY = EmodiaQuest.Core.Settings.Instance.Resolution.Y;
-                    this.platform.updateLabel("resolution", "Aufloesung: " + resX + " x " + resY);
+                    this.platform.updateLabel("resolution", resX + " x " + resY);
                     EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
+                    //Console.WriteLine(EmodiaQuest.Core.Settings.Instance.Resolution.X);
+                    //Console.WriteLine(EmodiaQuest.Core.Settings.Instance.Resolution.Y);
                     //GraphicsCopy.PreferredBackBufferWidth = resX;
                     //GraphicsCopy.PreferredBackBufferHeight = resY;
                     //GraphicsCopy.ApplyChanges();
                     if (EmodiaQuest.Core.Settings.Instance.Fullscreen)
-                        this.platform.updateLabel("fullscreenMode", "Modus: Vollbild");
+                        this.platform.updateLabel("fullscreenMode", "Aktiv");
                     else
-                        this.platform.updateLabel("fullscreenMode", "Modus: Fenster");
+                        this.platform.updateLabel("fullscreenMode", "Nicht aktiv");
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -48,12 +49,26 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "changeToMainMenu":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
                     break;
-                case "switchFullscreen":                    
-                    EmodiaQuest.Core.Settings.Instance.Fullscreen = !EmodiaQuest.Core.Settings.Instance.Fullscreen;
+                case "switchFullscreen":
                     if (EmodiaQuest.Core.Settings.Instance.Fullscreen)
-                        this.platform.updateLabel("fullscreenMode", "Modus: Vollbild");
+                    {
+                        EmodiaQuest.Core.Settings.Instance.Fullscreen = false;
+                        this.platform.updateLabel("fullscreenMode", "Nicht aktiv");
+                        this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+                    }
                     else
-                        this.platform.updateLabel("fullscreenMode", "Modus: Fenster");
+                    {
+                        int monitorWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                        int monitorHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                        EmodiaQuest.Core.Settings.Instance.Resolution = new IntVector2(monitorWidth, monitorHeight);
+                        //GraphicsCopy.PreferredBackBufferWidth = monitorWidth;
+                        //GraphicsCopy.PreferredBackBufferHeight = monitorHeight;
+
+                        EmodiaQuest.Core.Settings.Instance.Fullscreen = true;
+
+                        this.platform.updateLabel("fullscreenMode", "Aktiv");
+                        EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(monitorWidth, monitorHeight); 
+                    }
                     break;
                 default:
                     Console.WriteLine("Function name does not exist");
@@ -94,20 +109,22 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addLabel(50, 10, 18, "dice_big", "Optionen", "Options", true);
 
             this.platform.addSlider(15, 40, 35, 8, 0, 2, 0, "resolutionChange");
-            this.platform.addSlider(15, 50, 35, 8, 0, 100, 100, "volumeChange");            
+            this.platform.addSlider(15, 50, 35, 8, 0, 100, 100, "volumeChange");
 
-            this.platform.addLabel(55, 40, 35, 8, "monoFont_small", "Aufloesung: 854 x 480", "resolution");
+            this.platform.addLabel(55, 40, 35, 8, "monoFont_small", "854 x 480", "resolution");
             this.platform.addLabel(55, 50, 35, 8, "monoFont_small", "Lautstaerke: 100", "volume");
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
             //this.platform.addButton(20, 60, 30, 8, "switchFullscreen", "Screen Mode");
-            this.platform.addButton(15, 60, 35, 8, "switchFullscreen", true);
-            this.platform.addLabel(55, 60, 35, 8, "monoFont_small", "Modus: Fenster", "fullscreenMode");
+            this.platform.addButton(15, 60, 35, 8, "switchFullscreen", "Vollbild");
+            //this.platform.addButton()
+            //this.platform.updateButtonText("switchFullscreen", "Vollbild");
+            this.platform.addLabel(55, 60, 35, 8, "monoFont_small", "Nicht aktiv", "fullscreenMode");
 
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Hauptmenue");
 
             //this.platform.addButton(35, 60, 30, 8, "nextState", "Start Game");
-           // this.platform.addPlainImage
+            // this.platform.addPlainImage
 
             //this.platform.addPlainImage(10, 10, 30, 30, "HUD_small");
 
@@ -124,7 +141,46 @@ namespace EmodiaQuest.Core.GUI.Screens
             // Get Keyboard input to change overall GameState
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.O))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.P))
+            {
+                //GraphicsCopy.IsFullScreen = true;
+                GraphicsCopy.PreferredBackBufferWidth = 1254;
+                //GraphicsCopy.PreferredBackBufferHeight = 480;
+                GraphicsCopy.ApplyChanges();
+            }
+
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.M))
+            {
+                //GraphicsCopy.IsFullScreen = true;
+                GraphicsCopy.PreferredBackBufferWidth = 1254;
+                GraphicsCopy.PreferredBackBufferHeight = 480;
+                GraphicsCopy.ApplyChanges();
+            }
+
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.L))
+            {
+                GraphicsCopy.IsFullScreen = true;
+                GraphicsCopy.ApplyChanges();
+                
+            }
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.V))
+            {
+                //int resX = EmodiaQuest.Core.Settings.Instance.Resolution.X;
+                //int resY = EmodiaQuest.Core.Settings.Instance.Resolution.Y;
+                //EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(resX, resY);
+
+
+                int monitorWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                int monitorHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                GraphicsCopy.PreferredBackBufferWidth = 1280;
+                GraphicsCopy.PreferredBackBufferHeight = 960;
+                GraphicsCopy.ApplyChanges();
+                EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(1280, 960);
+                //Console.WriteLine(monitorWidth +", "+ monitorHeight);
+            }
         }
+
+
 
         public void draw(SpriteBatch spritebatch)
         {

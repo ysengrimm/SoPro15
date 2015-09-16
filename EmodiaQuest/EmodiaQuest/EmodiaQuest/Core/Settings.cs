@@ -95,6 +95,7 @@ namespace EmodiaQuest.Core
                 else
                 {
                     this.resolution = value;
+                    this.Fullscreen = false;
                     GraphicsCopy.PreferredBackBufferWidth = this.resolution.X;
                     GraphicsCopy.PreferredBackBufferHeight = this.resolution.Y;
                 }

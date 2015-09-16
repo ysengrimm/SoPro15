@@ -267,7 +267,7 @@ namespace EmodiaQuest.Core
         public void breathing()
         {
             if (this.breathingOn)
-                this.ambientIntensity -= 0.04f;
+                this.ambientIntensity -= 0.02f;
             if (this.ambientIntensity < 0.01f)
             {
                 this.ambientIntensity = 0.0f;

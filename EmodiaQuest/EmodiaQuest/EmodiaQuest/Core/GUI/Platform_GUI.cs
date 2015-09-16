@@ -74,6 +74,16 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D pixel_white;
         private Texture2D pixel_red;
 
+        //New Pixels
+        private Texture2D pixel_yellow;
+        private Texture2D pixel_green;
+        private Texture2D pixel_blue_dark;
+        private Texture2D pixel_blue;
+        private Texture2D pixel_blue_light;
+        private Texture2D pixel_violet;
+        private Texture2D pixel_brown;
+
+        // Item Icons
         private Texture2D icon_armor;
         private Texture2D icon_boot;
         private Texture2D icon_helmet;
@@ -91,6 +101,14 @@ namespace EmodiaQuest.Core.GUI
 
         // Dialogue Textures
         private Texture2D dialogue;
+        private Texture2D dialogueUp;
+        private Texture2D dialogueUpNormal;
+        private Texture2D dialogueUpHoverOver;
+        private Texture2D dialogueUpPressed;
+        private Texture2D dialogueDown;
+        private Texture2D dialogueDownNormal;
+        private Texture2D dialogueDownHoverOver;
+        private Texture2D dialogueDownPressed;
 
         // Test Textures
         private Texture2D test1;
@@ -98,6 +116,8 @@ namespace EmodiaQuest.Core.GUI
 
         // Item Content
         private Texture2D itemPicture;
+        private Color itemColor = new Color(255, 255, 255, 20);
+        private Color itemColor2 = new Color(100, 100, 100, 20);
 
         // Fonts
         private SpriteFont monoFont_big;
@@ -139,6 +159,15 @@ namespace EmodiaQuest.Core.GUI
             pixel_white = Content.Load<Texture2D>("Content_GUI/pixel_white");
             pixel_red = Content.Load<Texture2D>("Content_GUI/pixel_red");
 
+            // New pixels
+            pixel_yellow = Content.Load<Texture2D>("Content_GUI/pixel_yellow");
+            pixel_green = Content.Load<Texture2D>("Content_GUI/pixel_green");
+            pixel_blue_dark = Content.Load<Texture2D>("Content_GUI/pixel_blue_dark");
+            pixel_blue = Content.Load<Texture2D>("Content_GUI/pixel_blue");
+            pixel_blue_light = Content.Load<Texture2D>("Content_GUI/pixel_blue_light");
+            pixel_violet = Content.Load<Texture2D>("Content_GUI/pixel_violet");
+            pixel_brown = Content.Load<Texture2D>("Content_GUI/pixel_brown");
+
             icon_armor = Content.Load<Texture2D>("fbxContent/items/icon_armor");
             icon_boot = Content.Load<Texture2D>("fbxContent/items/icon_boot");
             icon_helmet = Content.Load<Texture2D>("fbxContent/items/icon_helmet");
@@ -158,6 +187,14 @@ namespace EmodiaQuest.Core.GUI
 
             // Dialogue Content
             dialogue = Content.Load<Texture2D>("Content_GUI/label");
+            dialogueUp = Content.Load<Texture2D>("Content_GUI/pixel_white");
+            dialogueUpNormal = Content.Load<Texture2D>("Content_GUI/pixel_white");
+            dialogueUpHoverOver = Content.Load<Texture2D>("Content_GUI/pixel_red");
+            dialogueUpPressed = Content.Load<Texture2D>("Content_GUI/pixel_black");
+            dialogueDown = Content.Load<Texture2D>("Content_GUI/pixel_white");
+            dialogueDownNormal = Content.Load<Texture2D>("Content_GUI/pixel_white");
+            dialogueDownHoverOver = Content.Load<Texture2D>("Content_GUI/pixel_red");
+            dialogueDownPressed = Content.Load<Texture2D>("Content_GUI/pixel_black");
 
             // Test Content
             test1 = Content.Load<Texture2D>("Content_GUI/test1");
@@ -165,6 +202,7 @@ namespace EmodiaQuest.Core.GUI
 
             // Item Content
             itemPicture = Content.Load<Texture2D>("Content_GUI/itemSocket");
+
 
             //fonts.Add()
             //dice_big = Content.Load<SpriteFont>("Content_GUI/diceFont_big");
@@ -237,6 +275,74 @@ namespace EmodiaQuest.Core.GUI
                     else
                         bb.Button_State = ButtonState_GUI.Normal;
                 }
+            }
+
+            foreach (DialogueBox_GUI db in dialogues)
+            {
+                Vector2 spriteFontSize = db.SpriteFont.MeasureString("A");
+
+                float sizeOfOnePassage = spriteFontSize.Y * db.TextScaleFactor * db.ScaleFactor;
+                float textCounter = 0;
+                foreach (DialogueString_GUI passage in db.dialogueStrings)
+                {
+                    passage.YPos = db.TextYPos + (int)(textCounter * sizeOfOnePassage + db.textPlus);
+                    textCounter++;
+                    //if (passage.YPos < db.YPos || passage.YPos > db.TextYPos + db.Height - sizeOfOnePassage/2)
+                    if (passage.YPos < db.YPos || passage.YPos + sizeOfOnePassage > db.YPos + db.Height)
+                        passage.IsDrawn = false;
+                    else
+                        passage.IsDrawn = true;
+
+                }
+
+                // Try if TextShouldMove
+                if(db.IsMoving)
+                {
+                    db.Movement+=(0.1f*db.MovementSpeed);                   
+                    db.textPlus -= (int)db.Movement;
+                    if (db.Movement > 1)
+                        db.Movement -= 1;
+                }
+                    
+
+
+                // Try for MouseOver, Pressed, Clicked
+                if (db.IsVisible)
+                {
+                    if (Button_GUI.isInside(mouseHandle.X, mouseHandle.Y, db.xPosP1Int, db.yPosP1Int, db.widthP1Int, db.heightP1Int))
+                    {
+                        if (GUI.Controls_GUI.Instance.mousePressedLeft())
+                            db.ButtonUpTexture = dialogueUpPressed;
+                        else
+                            db.ButtonUpTexture = dialogueUpHoverOver;
+
+                        if (GUI.Controls_GUI.Instance.mouseClickedLeft())
+                        {
+                            if (!db.dialogueStrings.Last().IsDrawn)
+                                db.textPlus -= (int)sizeOfOnePassage;
+                        }
+                    }
+                    else
+                        db.ButtonUpTexture = dialogueUpNormal;
+
+                    if (Button_GUI.isInside(mouseHandle.X, mouseHandle.Y, db.xPosP2Int, db.yPosP2Int, db.widthP2Int, db.heightP2Int))
+                    {
+                        if (GUI.Controls_GUI.Instance.mousePressedLeft())
+                            db.ButtonDownTexture = dialogueDownPressed;
+                        else
+                            db.ButtonDownTexture = dialogueDownHoverOver;
+
+                        if (GUI.Controls_GUI.Instance.mouseClickedLeft())
+                        {
+                            if (!db.dialogueStrings.First().IsDrawn)
+                                db.textPlus += (int)sizeOfOnePassage;
+                        }
+                    }
+                    else
+                        db.ButtonDownTexture = dialogueDownNormal;
+                }
+
+
             }
 
             foreach (InventoryItem_GUI ii in invItems)
@@ -371,26 +477,50 @@ namespace EmodiaQuest.Core.GUI
             {
                 if (db.IsVisible)
                 {
-                    spritebatch.Draw(dialogue, new Rectangle(db.XPos, db.YPos, db.Width, db.Height), drawColor);
-                    spritebatch.DrawString(db.SpriteFont, db.LabelText, new Vector2(db.TextXPos, db.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), db.TextScaleFactor, SpriteEffects.None, 0.0f);
+                    if (db.BoxIsShown)
+                    {
+                        spritebatch.Draw(dialogue, new Rectangle(db.XPos, db.YPos, db.Width, db.Height), drawColor);
+                        spritebatch.Draw(db.ButtonUpTexture, new Rectangle(db.xPosP1Int, db.yPosP1Int, db.widthP1Int, db.heightP1Int), drawColor);
+                        spritebatch.Draw(db.ButtonDownTexture, new Rectangle(db.xPosP2Int, db.yPosP2Int, db.widthP2Int, db.heightP2Int), drawColor);
+                    }
+
+                    //spritebatch.DrawString(db.SpriteFont, db.LabelText, new Vector2(db.TextXPos, db.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), db.TextScaleFactor * db.ScaleFactor, SpriteEffects.None, 0.0f);
+                    foreach (DialogueString_GUI passage in db.dialogueStrings)
+                    {
+                        if (passage.IsDrawn)
+                            spritebatch.DrawString(db.SpriteFont, passage.Text, new Vector2(db.TextXPos, passage.YPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), db.TextScaleFactor * db.ScaleFactor, SpriteEffects.None, 0.0f);
+                        else
+                            spritebatch.DrawString(db.SpriteFont, passage.Text, new Vector2(db.TextXPos, passage.YPos), Color.Red, 0.0f, new Vector2(0.0f, 0.0f), db.TextScaleFactor * db.ScaleFactor, SpriteEffects.None, 0.0f);
+                    }
                 }
             }
 
-
-
+            
+            //Console.WriteLine(drawColor);
             foreach (Button_GUI bb in buttons)
             {
                 if (bb.IsVisible)
                 {
-                    if (bb.Button_State == ButtonState_GUI.Normal)
-                        if (bb.PathOfPicture.Length > 2)
-                            spritebatch.Draw(bb.itemTexture, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
-                        else
+                    if (bb.IsItem)
+                    {
+                        spritebatch.Draw(bb.itemTexture, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                        if (bb.Button_State == ButtonState_GUI.MouseOver)
+                            spritebatch.Draw(pixel_blue_dark, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), itemColor);
+                        if (bb.Button_State == ButtonState_GUI.Pressed)
+                            spritebatch.Draw(pixel_blue_dark, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), itemColor2);
+                    }
+                    else
+                    {
+                        if (bb.Button_State == ButtonState_GUI.Normal)                            
                             spritebatch.Draw(button_n, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
-                    else if (bb.Button_State == ButtonState_GUI.MouseOver)
-                        spritebatch.Draw(button_m, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
-                    else if (bb.Button_State == ButtonState_GUI.Pressed)
-                        spritebatch.Draw(button_p, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                        else if (bb.Button_State == ButtonState_GUI.MouseOver)
+                            spritebatch.Draw(button_m, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                        else if (bb.Button_State == ButtonState_GUI.Pressed)
+                            spritebatch.Draw(button_p, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
+                    }
+
+                    
+                    
                     if (bb.ButtonText != null)
                     {
                         spritebatch.DrawString(monoFont_small, bb.ButtonText, new Vector2(bb.TextXPos, bb.TextYPos), drawColor, 0.0f, new Vector2(0.0f, 0.0f), bb.TextScaleFactor, SpriteEffects.None, 0.0f);
@@ -694,19 +824,34 @@ namespace EmodiaQuest.Core.GUI
             Vector2 spriteFontSize = dFont.MeasureString("A");
 
 
-            // 1.0f means the factor to make the fontSize smaller is 1 right know
-            //float textScaleFactor = (MainWindowSize.Y * height * 0.01f * 1.0f) / spriteFontSize.Y;
-            //float textScaleFactor = spriteFontSize.Y;
-            float textScaleFactor = (MainWindowSize.Y * 10 * 0.01f) / spriteFontSize.Y;
 
-            //int textX = (int)(((MainWindowSize.X * xPos * 0.01f)) + (MainWindowSize.X * width * 0.01f / 2) - (textScaleFactor * spriteFontSize.X / 2));
-            int textX = (int)(MainWindowSize.X * (xPos + 1) * 0.01f);
+            float textScaleFactor = (MainWindowSize.Y) / (spriteFontSize.Y * 10);
 
-            // In Y-Direction there is a small subtraction on the textScaleFactor to put the text more in the lower middle
-            //int textY = (int)(((MainWindowSize.Y * yPos * 0.01f)) + (MainWindowSize.Y * height * 0.01f / 2) - ((textScaleFactor - 0.15f) * spriteFontSize.Y / 2));
-            int textY = (int)(MainWindowSize.Y * (yPos + 1) * 0.01f);
 
-            dialogues.Add(new DialogueBox_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, dFont, labelText, labelName, textX, textY, textScaleFactor));
+            int textX = (int)(MainWindowSize.X * (xPos + 1.0f) * 0.01f);
+
+            int textY = (int)(MainWindowSize.Y * (yPos + 1.0f) * 0.01f);
+
+            // Now we need 2 pictures
+
+            //float xPosP1 = xPos + width - width * 0.1f - 1;
+            //float yPosP1 = yPos + 1;
+            //float widthP1 = width * 0.1f;         
+            //float heightP1 = widthP1;
+
+            //float xPosP2 = xPosP1;
+            //float yPosP2 = yPosP1 + widthP1 + 2;
+            //float widthP2 = widthP1;          
+            //float heightP2 = widthP1;
+
+            //this.addPlainImage(20, 20, 50, 50, "upButton", "pixel_red");
+            //this.addPlainImage(xPosP1, yPosP1, widthP1, heightP1, "upButton", "pixel_red");
+            //this.addPlainImage(xPosP2, yPosP2, widthP2, heightP2, "downButton", "pixel_red");
+
+            //setButtons();
+
+
+            dialogues.Add(new DialogueBox_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, dFont, labelText, labelName, textX, textY, textScaleFactor, (int)MainWindowSize.X, (int)MainWindowSize.Y, pixel_red));
         }
 
         public void addInventoryItem(float xPos, float yPos, float width, float height)
@@ -778,7 +923,7 @@ namespace EmodiaQuest.Core.GUI
             }
         }
 
-        public void updatePlainImagePicture(string imageName, string pathOfNewPicture )
+        public void updatePlainImagePicture(string imageName, string pathOfNewPicture)
         {
             Texture2D newPicture = pixel_red;
             foreach (PlainImage_GUI pi in pimages.Where(n => n.Function == imageName))
@@ -892,6 +1037,60 @@ namespace EmodiaQuest.Core.GUI
             }
         }
 
+        public void updateDialogueBoxIsShown(string dialogueName, bool boxIsShown)
+        {
+            foreach (DialogueBox_GUI db in dialogues.Where(n => n.LabelName == dialogueName))
+            {
+                db.BoxIsShown = boxIsShown;
+            }
+        }
+
+        public void updateDialogueScaleFactor(string dialogueName, float newScaleFactor)
+        {
+            foreach (DialogueBox_GUI db in dialogues.Where(n => n.LabelName == dialogueName))
+            {
+                db.ScaleFactor = newScaleFactor;
+            }
+        }
+
+        public void updateDialogueText(string dialogueName, string newText)
+        {
+            foreach (DialogueBox_GUI db in dialogues.Where(n => n.LabelName == dialogueName))
+            {
+                //db.LabelText = newText;
+                db.updateText(newText);
+            }
+        }
+
+        //public void updateDialoguePosition(string dialogueName)
+        //{
+        //    foreach (DialogueBox_GUI db in dialogues.Where(n => n.LabelName == dialogueName))
+        //    {
+        //        Vector2 spriteFontSize = db.SpriteFont.MeasureString("A");
+        //        int sizeOfOnePassage = (int)(spriteFontSize.Y * db.TextScaleFactor * db.ScaleFactor);
+        //        //Console.WriteLine(sizeOfOnePassage);
+        //        //db.textPlus -= 1;
+        //        db.textPlus += sizeOfOnePassage;
+        //    }
+        //}
+
+        public void updateDialogueIsMoving(string dialogueName, bool isMoving)
+        {
+            foreach (DialogueBox_GUI db in dialogues.Where(n => n.LabelName == dialogueName))
+            {
+                db.IsMoving = isMoving;
+            }
+        }
+        public void updateDialogueMoveSpeed(string dialogueName, float factor)
+        {
+            foreach (DialogueBox_GUI db in dialogues.Where(n => n.LabelName == dialogueName))
+            {
+                db.MovementSpeed = factor;
+            }
+        }
+
+
+
         // Updates the resolutions in every platform instance
         public static void updateAllResolutions(int x, int y)
         {
@@ -980,10 +1179,12 @@ namespace EmodiaQuest.Core.GUI
 
                 Vector2 spriteFontSize = db.SpriteFont.MeasureString("A");
 
-                db.TextScaleFactor = (MainWindowSize.Y * 10 * 0.01f) / spriteFontSize.Y;
+                db.TextScaleFactor = (MainWindowSize.Y) / (spriteFontSize.Y * 10);
 
                 db.TextXPos = (int)(MainWindowSize.X * (db.XPosRelative + 1) * 0.01f);
                 db.TextYPos = (int)(MainWindowSize.Y * (db.YPosRelative + 1) * 0.01f);
+
+                db.setButtons((int)MainWindowSize.X, (int)MainWindowSize.Y);
             }
 
             foreach (PlainImage_GUI pi in pimages)

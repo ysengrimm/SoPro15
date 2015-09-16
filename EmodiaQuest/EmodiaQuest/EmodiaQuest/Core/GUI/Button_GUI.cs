@@ -27,6 +27,8 @@ namespace EmodiaQuest.Core.GUI
         public string PathOfPicture = "";
         public Texture2D itemTexture;
 
+        public bool IsItem = false;
+
         private string buttonText = null;
         private ButtonState_GUI button_State = ButtonState_GUI.Normal;
 
@@ -75,6 +77,7 @@ namespace EmodiaQuest.Core.GUI
             this.IsVisible = isVisible;
             this.PathOfPicture = pathOfPicture;
             this.itemTexture = tex;
+            this.IsItem = true;
         }
 
         public static bool isInside(int mouse_xPos, int mouse_yPos, int button_xPos, int button_yPos, int button_width, int button_height)
