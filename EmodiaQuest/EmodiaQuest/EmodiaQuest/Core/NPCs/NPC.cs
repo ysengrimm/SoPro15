@@ -79,6 +79,11 @@ namespace EmodiaQuest.Core.NPCs
         private Model question;
         private float qRotAngle = 0.0f;
 
+        // Health Orb Content
+        private Model healthOrb;
+        private float orbVisibility = 0.3f;
+        private float orbVisibilitySwitch = 1.0f;
+
         // Shadow Content
         private Model shadow;
         Texture2D shadowTexture;
@@ -175,6 +180,9 @@ namespace EmodiaQuest.Core.NPCs
             // Questionmark Content
             question = contentMngr.Load<Model>("fbxContent/miscellaneous/question/question");
 
+            // Health Orb Content
+            healthOrb = contentMngr.Load<Model>("fbxContent/miscellaneous/healthOrb/healthOrb");
+
             // Shadow Content
             shadow = contentMngr.Load<Model>("fbxContent/miscellaneous/shadow/shadow");
             shadowTexture = contentMngr.Load<Texture2D>("fbxContent/miscellaneous/shadow/Texture1");
@@ -255,6 +263,11 @@ namespace EmodiaQuest.Core.NPCs
                 qRotAngle -= (float)Math.PI * 2;
             if (qRotAngle < Math.PI * 2)
                 qRotAngle += (float)Math.PI * 2;
+            orbVisibility += 0.015f*orbVisibilitySwitch;
+            if (orbVisibility > 1.3f)
+                orbVisibilitySwitch *= -1;
+            if (orbVisibility < 0.3f)
+                orbVisibilitySwitch *= -1;
 
 
 
@@ -372,6 +385,23 @@ namespace EmodiaQuest.Core.NPCs
                         effect.SpecularColor = new Vector3(0.25f);
                         effect.SpecularPower = 16;
                         effect.PreferPerPixelLighting = true;
+                    }
+                    mesh.Draw();
+                }
+
+                foreach (ModelMesh mesh in healthOrb.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.World = Matrix.CreateRotationZ(qRotAngle) * Matrix.CreateScale(0.4f) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X + 2, 2, Position.Y)) * world;
+                        effect.View = view;
+                        effect.Projection = projection;
+                        effect.EmissiveColor = new Vector3(0.2f, 0.2f, 0.2f);
+                        effect.SpecularColor = new Vector3(0.25f);
+                        effect.SpecularPower = 16;
+                        effect.PreferPerPixelLighting = true;
+                        effect.Alpha = orbVisibility;
                     }
                     mesh.Draw();
                 }
