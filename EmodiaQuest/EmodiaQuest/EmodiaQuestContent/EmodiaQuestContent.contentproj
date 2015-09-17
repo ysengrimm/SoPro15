@@ -1942,6 +1942,16 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\healthkugel9.png">
+      <Name>healthkugel9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel9.png">
+      <Name>healthkugel9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="quests\testquest.xml">
       <Name>testquest</Name>
       <Importer>XmlImporter</Importer>
