@@ -1097,6 +1097,14 @@ namespace EmodiaQuest.Core.GUI
             }
         }
 
+        public void updateSliderPosition(string sliderName, int newValue)
+        {
+            foreach (Slider_GUI sl in sliders.Where(n => n.Function == sliderName))
+            {
+                sl.CurrentValue = newValue;
+            }
+        }
+
 
 
         // Updates the resolutions in every platform instance

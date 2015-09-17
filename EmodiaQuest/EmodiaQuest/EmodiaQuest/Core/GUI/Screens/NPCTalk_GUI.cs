@@ -32,6 +32,38 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private Quest currentActiveQuest;
 
+        bool questMenuIsActive = true;
+
+        //EventHandler
+        //public event GUI_Delegate_Slider TrickySliderDelegate;
+        void SliderEventValue(object source, SliderEvent_GUI e)
+        {
+            switch (e.Function)
+            {
+                case "menuChange":
+                    switch (e.SliderValue)
+                    {
+                        case 0:
+                            questMenuIsActive = true;
+                            break;
+                        case 1:
+                            questMenuIsActive = false;
+                            setInvisibleInclickable();
+                            platform.updateButtonVisibility("accept", false);
+                            platform.updateButtonClickability("accept", false);
+                            platform.updateDialogueIsVisible("questDescription", false);
+                            break;
+                        default:
+                            Console.WriteLine("This SliderValue musn't be possible.");
+                            break;
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Function name does not exist");
+                    break;
+            }
+        }
+
         void ButtonEventValue(object source, ButtonEvent_GUI e)
         {
             switch (e.ButtonFunction)
@@ -178,7 +210,7 @@ namespace EmodiaQuest.Core.GUI.Screens
         }
 
         // this is super random but without it there is a nullpointer exception somwhere down there, just ignore it :)
-        private NPC nPCName = new NPC(Vector2.Zero, new EnvironmentController(WorldState.Safeworld, Player.Instance.ContentMngr),NPC.NPCName.Jack, NPCProfession.Arbeitslos);
+        private NPC nPCName = new NPC(Vector2.Zero, new EnvironmentController(WorldState.Safeworld, Player.Instance.ContentMngr), NPC.NPCName.Jack, NPCProfession.Arbeitslos);
         public NPC NPCName
         {
             get { return nPCName; }
@@ -257,12 +289,25 @@ namespace EmodiaQuest.Core.GUI.Screens
             //platform.updateDialogueIsVisible("questDescription", false);
 
             qTest = QuestController.Instance.GetAllAvailableQuests(nPCName);
-            
+
+            platform.addLabel(21, 10, 8, "monoFont_small", "Quests", "labelForMenuChange", false);
+            platform.addSlider(10, 10, 10, 8, 0, 1, 0, "menuChange");
+
+            //EventHandler;
             platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
+            platform.OnSliderValue += new GUI_Delegate_Slider(this.SliderEventValue);
+
         }
 
         public void update()
         {
+
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.R))
+            //{
+            //    platform.updateSliderPosition("menuChange", 1);
+            //    platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+            //}
+            //Console.WriteLine(questMenuIsActive);
 
             //QuestController.Instance.Quests
 
@@ -296,21 +341,28 @@ namespace EmodiaQuest.Core.GUI.Screens
                 this.platform.updateButtonText(buttonInMovement, "Ansehen");
                 this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                 unfold = false;
+
+                // new stuff to set the slider value
+                platform.updateSliderPosition("menuChange", 0);
+                platform.updateLabel("labelForMenuChange", "Quests");
+                questMenuIsActive = true;
+                platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
             }
 
-            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.U))
-            {
-                int counter = 0;
-                Console.WriteLine(counter);
-                //this.platform.updateButtonPosition("quest1", 60, 60);
-                //this.platform.updateLabelPosition("label1", 80, 60);
-                //this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
-                //this.platform.updateLabelVisibility("label1", false);
-                //Console.WriteLine(platform.getLabelPosition("label1"));
-                //platform.updateButtonText("quest1", "fuu");
-                //this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
-            }
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.U))
+            //{
+            //    int counter = 0;
+            //    Console.WriteLine(counter);
+            //    //this.platform.updateButtonPosition("quest1", 60, 60);
+            //    //this.platform.updateLabelPosition("label1", 80, 60);
+            //    //this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+            //    //this.platform.updateLabelVisibility("label1", false);
+            //    //Console.WriteLine(platform.getLabelPosition("label1"));
+            //    //platform.updateButtonText("quest1", "fuu");
+            //    //this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+            //}
             //    //this.platform.updateButtonVisibility("quest1", false);
             //    //this.platform.updateButtonClickability("quest1", false);
             //    this.platform.addButton(10, 35, 30, 8, "quest3", "Quest 3");
