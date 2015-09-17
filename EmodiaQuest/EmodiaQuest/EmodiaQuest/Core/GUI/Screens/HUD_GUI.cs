@@ -17,9 +17,16 @@ namespace EmodiaQuest.Core.GUI.Screens
             switch (e.Function)
             {
                 case "hp":
-                    int intHP = (int)(e.ChangeValue + 10) / 10;
-                    this.platform.updatePlainImage("lifetest", 3, 86.5f - intHP * 1.8f+1.8f, 3, intHP * 1.8f);
-                        //this.platform.addPlainImage(3, 68.5f, 3, 18, "lifetest", "pixel_red");
+                    float hpFactor = Settings.Instance.MaxPlayerHealth / 10;
+                    int intHP = (int)((e.ChangeValue + hpFactor * 0.5f) / hpFactor);
+                    if (intHP > 10 || intHP < 0)
+                    {
+                        intHP = 10;
+                        Console.WriteLine("You're either dead or the MaxPlayerHealth in the settings is not updated correctly. Maybe in the moment when you used new items");
+                    }
+                    //int intHP = (int)(e.ChangeValue) / 10;
+                    //this.platform.updatePlainImage("lifetest", 3, 86.5f - intHP * 1.8f+1.8f, 3, intHP * 1.8f);
+                    platform.updatePlainImagePicture("healthBar", "Content_GUI/Player2D/health/healthkugel"+intHP);
                     break;
                 case "xp":
                     float scaledXp = (e.ChangeValue/Player.Instance.XPToNextLevel) * 100;
@@ -58,12 +65,20 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.loadContent(Content);
             this.platform.backgroundOff();
 
-            
+            // Content for the healthbar
+            platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "healthBar", "pixel_red");
+            platform.updatePlainImagePicture("healthBar", "Content_GUI/Player2D/health/healthkugel10");
+
+            // Content for the concentrationBar
+            platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "concentrationBar", "pixel_red");
+            platform.updatePlainImagePicture("concentrationBar", "Content_GUI/Player2D/mana/manakugel10");
 
             this.platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD", "HUD_small");
             
-            // Lifebar Images
-            this.platform.addPlainImage(3, 68.5f, 3, 18, "lifetest", "pixel_red");
+            
+            //this.platform.addPlainImage(3, 68.5f, 3, 18, "lifetest", "pixel_red");
+
+            
 
             // XP Number
             platform.addLabel(96, 97, 3, "monoFont_big", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel, "xp_text", true);

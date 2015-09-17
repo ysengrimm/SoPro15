@@ -1942,8 +1942,108 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Player2D\mana\healthkugel9.png">
-      <Name>healthkugel9</Name>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel9.png">
+      <Name>manakugel9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel2.png">
+      <Name>manakugel2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel2.png">
+      <Name>healthkugel2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel0.png">
+      <Name>healthkugel0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel1.png">
+      <Name>healthkugel1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel10.png">
+      <Name>healthkugel10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel3.png">
+      <Name>healthkugel3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel4.png">
+      <Name>healthkugel4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel5.png">
+      <Name>healthkugel5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel6.png">
+      <Name>healthkugel6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel7.png">
+      <Name>healthkugel7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\health\healthkugel8.png">
+      <Name>healthkugel8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel0.png">
+      <Name>manakugel0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel1.png">
+      <Name>manakugel1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel10.png">
+      <Name>manakugel10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel3.png">
+      <Name>manakugel3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel4.png">
+      <Name>manakugel4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel5.png">
+      <Name>manakugel5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel6.png">
+      <Name>manakugel6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel7.png">
+      <Name>manakugel7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Player2D\mana\manakugel8.png">
+      <Name>manakugel8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

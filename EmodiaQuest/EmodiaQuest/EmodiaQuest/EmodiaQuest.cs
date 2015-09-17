@@ -194,6 +194,8 @@ namespace EmodiaQuest
                     break;
                 case GameStates_Overall.DeathScreen:
                     EmodiaQuest.Core.GUI.Screens.Death_GUI.Instance.update();
+                    if (kState.IsKeyDown(Keys.Escape))
+                        this.Exit();
                     break;
                 case GameStates_Overall.EndScreen:
                     EmodiaQuest.Core.GUI.Screens.End_GUI.Instance.update();
