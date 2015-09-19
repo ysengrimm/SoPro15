@@ -2062,6 +2062,31 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\player\Texturen\brown_eye.png">
+      <Name>brown_eye</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Texturen\young_lightskinned_male_diffuse.png">
+      <Name>young_lightskinned_male_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\brown_eye.png">
+      <Name>brown_eye</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\male02_diffuse_black.png">
+      <Name>male02_diffuse_black</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\young_lightskinned_male_diffuse.png">
+      <Name>young_lightskinned_male_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="quests\testquest.xml">
       <Name>testquest</Name>
       <Importer>XmlImporter</Importer>
