@@ -241,11 +241,6 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\player\Main_Char_t_pose.fbx">
-      <Name>Main_Char_t_pose</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
-    </Compile>
     <Compile Include="fbxContent\player\Main_Char_walk.fbx">
       <Name>Main_Char_walk</Name>
       <Importer>FbxImporter</Importer>
@@ -705,6 +700,11 @@
       <Name>healthOrb</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\player\Main_Char_t_pose.fbx">
+      <Name>Main_Char_t_pose</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>

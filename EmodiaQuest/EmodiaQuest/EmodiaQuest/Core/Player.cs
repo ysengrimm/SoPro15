@@ -1346,7 +1346,7 @@ namespace EmodiaQuest.Core
 
                 }
                 // Always render the Player
-                if (mesh.Name == "MainChar_Body" || mesh.Name == "MainChar_eye" || mesh.Name == "MainChar_Body_lowPoly" || mesh.Name == "Einfache_Hose" || mesh.Name == "Einfache_Schuhe")
+                if (mesh.Name == "MainChar_body" || mesh.Name == "MainChar_eye" || mesh.Name == "Einfache_Hose" || mesh.Name == "Einfache_Schuhe")
                 {
                     mesh.Draw();
                 }
