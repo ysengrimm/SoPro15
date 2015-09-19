@@ -17,7 +17,7 @@ namespace EmodiaQuest.Core.Items
         public int MaxDamage = 0;
         public int StrengthPlus = 0;
         public int SkillPlus = 0;
-        public int IntelligencePlus = 0;
+        public float IntelligencePlus = 0;
         public int HitPointsPlus = 0;
         public bool IsRangedWeapon = false;
 

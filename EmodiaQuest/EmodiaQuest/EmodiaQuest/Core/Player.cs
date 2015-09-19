@@ -25,6 +25,8 @@ namespace EmodiaQuest.Core
         // time for attacking
         private float attackTimer;
         private float attackThreshold;
+        // bool for triggering one attack
+        bool attacking = false;
 
         // speedHeck for multiple movement keys pressed
         float KeysPressing;
@@ -104,8 +106,8 @@ namespace EmodiaQuest.Core
             }
         } 
 
-        private int focus;
-        public int Focus
+        private float focus;
+        public float Focus
         {
             get { return focus; }
             set
@@ -132,8 +134,8 @@ namespace EmodiaQuest.Core
             }
         }
 
-        private int focusRegen;
-        public int FocusRegen
+        private float focusRegen;
+        public float FocusRegen
         {
             get { return focusRegen; }
             set
@@ -219,9 +221,10 @@ namespace EmodiaQuest.Core
                 }
             }
         }
-
-        private int intelligence;
-        public int Intelligence
+        // start intelenz
+        float startIntelenz = 100;
+        private float intelligence;
+        public float Intelligence
         {
             get { return intelligence; }
             set
@@ -236,7 +239,7 @@ namespace EmodiaQuest.Core
 
         private int strengthGaidedThrougLvls;
         private int skillGainedThroughLvls;
-        private int intellGainedThroughLvls;
+        private float intellGainedThroughLvls = 0;
 
         private int gold;
         public int Gold
@@ -438,9 +441,11 @@ namespace EmodiaQuest.Core
             HpRegen = 0.02f;
 
             // Max Focus is 100 + 10% intel
+            startIntelenz = 100;
+            Intelligence = 100;
             MaxFocus = (int)(100 + Math.Round(Intelligence / 10.0));
             Focus = MaxFocus;
-            FocusRegen = (int) Math.Round(Intelligence/50.0);
+            FocusRegen = (float)(Intelligence/5000.0);
 
             Armor = 0;
             MinDamage = 50;
@@ -457,7 +462,7 @@ namespace EmodiaQuest.Core
             CurrentEquippedHelmet = new Item(1, ItemClass.Helmet, 0, 20, 0, 0, "rostigerSchrottHelm");
             CurrentEquippedArmor = new Item(0, ItemClass.Armor, 0, 0, 10, 10, "leichteModerneRuestung");
             CurrentEquippedBoots = new Item(1, ItemClass.Boots, 0, 10, 0, 0, "Schuhe");
-            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 50, 70, 0, 0, true, "SpeziellesGewehr");
+            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 50, 70, 0, 0, true, "Gewehr");
 
             ActiveQuest = new Quest {Name = "", Description = ""};
 
@@ -586,11 +591,12 @@ namespace EmodiaQuest.Core
 
         public void Update(GameTime gameTime)
         {
-            //Console.WriteLine(CurrentEquippedWeapon.Name);
+            //Console.WriteLine(Focus + " : " + FocusRegen + " Int: "  + Intelligence);
 
             HitEnemyWithSword = false;
             HitAir = false;
             KeysPressing = 1;
+            attacking = false;
 
             // Computer view direction
             PlayerViewDirection = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
@@ -764,7 +770,7 @@ namespace EmodiaQuest.Core
             }
 
             //update playerState
-            if (GUI.Controls_GUI.Instance.mousePressedLeft() && stateTime <= 120 )
+            if (GUI.Controls_GUI.Instance.mousePressedLeft() && stateTime < 120 )
             {
                 // Gunshooting!
                 if (CurrentEquippedWeapon.IsRangedWeapon == true && shootingTimer > shootingThreshold && Focus >= 10)
@@ -799,6 +805,7 @@ namespace EmodiaQuest.Core
                     stateTime = swordFighting1Duration;
                     HitAir = true;
                     attackTimer = 0;
+                    attacking = true;
                 }
                     // Second swordfight animation
                 else if (CurrentEquippedWeapon.IsRangedWeapon == false)
@@ -807,24 +814,25 @@ namespace EmodiaQuest.Core
                     stateTime = swordFighting2Duration;
                     HitAir = true;
                     attackTimer = 0;
+                    attacking = true;
                 }
                 fixedBlendDuration = 200;
             }
                 // Running!
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && PlayerSpeed > Settings.Instance.PlayerSpeed && stateTime <= 100)
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && PlayerSpeed > Settings.Instance.PlayerSpeed && stateTime < 100)
             {
                 ActivePlayerState = PlayerState.Running;
                 fixedBlendDuration = 300;
             }
                 // Walking
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 100)
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime < 100)
             {
                 ActivePlayerState = PlayerState.Walking;
                 stateTime = walkingDuration / 2;
                 fixedBlendDuration = 300;
             }
                 // Standing
-            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 100)
+            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime < 100)
             {
                 ActivePlayerState = PlayerState.Standing;
                 stateTime = standingDuration / 2;
@@ -994,7 +1002,7 @@ namespace EmodiaQuest.Core
                 if (ActivePlayerState == PlayerState.Swordfighting1 || ActivePlayerState == PlayerState.Swordfighting2 || ActivePlayerState == PlayerState.Standfighting)
                 {
                     //mystuff
-                    bool at = false;
+                    //bool at = false;
                     foreach (var nmy in currentBlockEnemyListtest)
                     {
                         Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
@@ -1003,11 +1011,11 @@ namespace EmodiaQuest.Core
                         Vector2 circlePos = Position + view * 2.5f;
                         if (gameEnv.EuclideanDistance(circlePos, nmy.Position) < 1.2f)
                         {
-                            if (attackTimer >= attackThreshold && GUI.Controls_GUI.Instance.mouseClickAndHoldLeft())
+                            if (attacking)
                             {
                                 nmy.Attack(rnd.Next(MinDamage, MaxDamage + 1));
                                 //attackTimer = 0;
-                                at = true;
+                                //at = true;
                                 HitEnemyWithSword = true;
                                 HitAir = false;
                             }
@@ -1099,7 +1107,7 @@ namespace EmodiaQuest.Core
                 // Grant lvlup boni
                 strengthGaidedThrougLvls++;
                 skillGainedThroughLvls++;
-                intellGainedThroughLvls++;
+                intellGainedThroughLvls+=1f;
                 GrandStats();
 
                 Experience = Experience - XPToNextLevel;
@@ -1115,8 +1123,8 @@ namespace EmodiaQuest.Core
             Skill = CurrentEquippedArmor.SkillPlus + CurrentEquippedBoots.SkillPlus + CurrentEquippedHelmet.SkillPlus +
                     CurrentEquippedWeapon.SkillPlus + skillGainedThroughLvls;
 
-            Intelligence = CurrentEquippedArmor.IntelligencePlus + CurrentEquippedBoots.IntelligencePlus + CurrentEquippedHelmet.IntelligencePlus +
-                    CurrentEquippedWeapon.IntelligencePlus + intellGainedThroughLvls;
+            Intelligence = (float)startIntelenz + (float)CurrentEquippedArmor.IntelligencePlus + (float)CurrentEquippedBoots.IntelligencePlus + (float)CurrentEquippedHelmet.IntelligencePlus +
+                    (float)CurrentEquippedWeapon.IntelligencePlus + intellGainedThroughLvls;
 
             Armor = CurrentEquippedArmor.Armor + CurrentEquippedBoots.Armor + CurrentEquippedHelmet.Armor +
                     CurrentEquippedWeapon.Armor;
@@ -1131,9 +1139,9 @@ namespace EmodiaQuest.Core
             MaxHp = (int)((100 * Math.Sqrt(Level)) < 100 ? 100 : (100 * Math.Sqrt(Level)) + Math.Round(Strength / 10.0));
 
             // Max Focus is 100 + 10% intel
-            MaxFocus = (int) (100 + Math.Round(Intelligence/10.0));
+            MaxFocus = (int)(100 + Math.Round(Intelligence/10.0));
 
-            FocusRegen = (int) Math.Round(Intelligence/2.0);
+            FocusRegen =  (float)(Intelligence/5000.0);
         }
 
         private void UpdateQuest()
@@ -1342,7 +1350,6 @@ namespace EmodiaQuest.Core
                     {
                         effect.Texture = defaultBodyTex;
                     }
-                    
 
                 }
                 // Always render the Player

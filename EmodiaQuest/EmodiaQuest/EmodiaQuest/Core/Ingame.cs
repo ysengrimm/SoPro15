@@ -157,6 +157,7 @@ namespace EmodiaQuest.Core
 
         public void ChangeToSafeworld()
         {
+            Player.Instance.BulletList.Clear();
             ActiveWorld = WorldState.Safeworld;
             Player.Instance.GameEnv = SafeWorld.Instance.Controller;
             Player.Instance.Position = new Vector2(170, 330);
