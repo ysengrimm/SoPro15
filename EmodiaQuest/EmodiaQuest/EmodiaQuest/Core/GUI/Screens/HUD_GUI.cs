@@ -17,16 +17,30 @@ namespace EmodiaQuest.Core.GUI.Screens
             switch (e.Function)
             {
                 case "hp":
-                    float hpFactor = Settings.Instance.MaxPlayerHealth / 10;
+                    //float hpFactor = Settings.Instance.MaxPlayerHealth / 10;
+                    float hpFactor = Player.Instance.MaxHp / 10;
                     int intHP = (int)((e.ChangeValue + hpFactor * 0.5f) / hpFactor);
                     if (intHP > 10 || intHP < 0)
                     {
                         intHP = 10;
-                        Console.WriteLine("You're either dead or the MaxPlayerHealth in the settings is not updated correctly. Maybe in the moment when you used new items");
+                        Console.WriteLine("You're either dead or the MaxHp in the player is not updated correctly. Maybe in the moment when you used new items");
                     }
                     //int intHP = (int)(e.ChangeValue) / 10;
                     //this.platform.updatePlainImage("lifetest", 3, 86.5f - intHP * 1.8f+1.8f, 3, intHP * 1.8f);
                     platform.updatePlainImagePicture("healthBar", "Content_GUI/Player2D/health/healthkugel"+intHP);
+                    break;
+                case "focus":
+                    //float hpFactor = Settings.Instance.MaxPlayerHealth / 10;
+                    float focusFactor = Player.Instance.MaxFocus / 10;
+                    int intFocus = (int)((e.ChangeValue + focusFactor * 0.5f) / focusFactor);
+                    if (intFocus > 10 || intFocus < 0)
+                    {
+                        intFocus = 10;
+                        Console.WriteLine("MaxFocus in the player is not updated correctly. Maybe in the moment when you used new items");
+                    }
+                    //int intHP = (int)(e.ChangeValue) / 10;
+                    //this.platform.updatePlainImage("lifetest", 3, 86.5f - intHP * 1.8f+1.8f, 3, intHP * 1.8f);
+                    platform.updatePlainImagePicture("concentrationBar", "Content_GUI/Player2D/mana/manakugel" + intFocus);
                     break;
                 case "xp":
                     float scaledXp = (e.ChangeValue/Player.Instance.XPToNextLevel) * 100;
