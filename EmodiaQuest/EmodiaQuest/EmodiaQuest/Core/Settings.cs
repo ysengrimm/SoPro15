@@ -100,6 +100,8 @@ namespace EmodiaQuest.Core
                     GraphicsCopy.PreferredBackBufferHeight = this.resolution.Y;
                 }
                 GraphicsCopy.ApplyChanges();
+                // TextMessage size update
+                TextMessage.Instance.updateMessageDisplaySize(this.resolution.X, this.resolution.Y);
             }
         }
 

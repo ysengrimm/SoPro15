@@ -84,6 +84,8 @@ namespace EmodiaQuest
             // set screen size
             screenSize = new Vector2(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
 
+            TextMessage.Instance.loadContent(Content);
+
             Ingame.Instance.LoadIngame(Content, screenSize);
 
             // Load sound
@@ -208,6 +210,9 @@ namespace EmodiaQuest
             // if we change the window size outside the constructor (e.g. dynamic window size or fullscreen on/off) we need to call this 
             //graphics.ApplyChanges();
 
+            // Update of TextMessages
+            if (Gamestate_Game != GameStates_Overall.Pause)
+                TextMessage.Instance.update(gameTime);
 
             base.Update(gameTime);
         }
@@ -284,6 +289,9 @@ namespace EmodiaQuest
                     Console.WriteLine("Wrong Gamestate chosen.");
                     break;
             }
+            // Drawing of TextMessages
+            if (Gamestate_Game != GameStates_Overall.Pause)
+                TextMessage.Instance.draw(spriteBatch);
 
             base.Draw(gameTime);
         }

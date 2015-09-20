@@ -45,13 +45,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     {
                         case 0:
                             questMenuIsActive = true;
+                            // Here the stuff for non-questing is made invisible
                             break;
                         case 1:
                             questMenuIsActive = false;
+                            // Set all possible quests to invisible
                             setInvisibleInclickable();
+
+                            // Set the accept-button for the quests to invisible
                             platform.updateButtonVisibility("accept", false);
                             platform.updateButtonClickability("accept", false);
+
                             platform.updateDialogueIsVisible("questDescription", false);
+
                             break;
                         default:
                             Console.WriteLine("This SliderValue musn't be possible.");
