@@ -25,6 +25,8 @@ namespace EmodiaQuest.Core
         // time for attacking
         private float attackTimer;
         private float attackThreshold;
+        // bool for triggering one attack
+        bool attacking = false;
 
         // speedHeck for multiple movement keys pressed
         float KeysPressing;
@@ -33,7 +35,7 @@ namespace EmodiaQuest.Core
         public enum Shootingtype { Normal, Blast, Lightning };
         private Shootingtype shootingtype = Shootingtype.Normal;
         // time for shooting
-        private float shootingTimer = 0;
+        private float shootingTimer;
         private float shootingThreshold;
 
         // For sound handling
@@ -104,8 +106,8 @@ namespace EmodiaQuest.Core
             }
         } 
 
-        private int focus;
-        public int Focus
+        private float focus;
+        public float Focus
         {
             get { return focus; }
             set
@@ -132,8 +134,8 @@ namespace EmodiaQuest.Core
             }
         }
 
-        private int focusRegen;
-        public int FocusRegen
+        private float focusRegen;
+        public float FocusRegen
         {
             get { return focusRegen; }
             set
@@ -219,9 +221,10 @@ namespace EmodiaQuest.Core
                 }
             }
         }
-
-        private int intelligence;
-        public int Intelligence
+        // start intelenz
+        float startIntelenz = 100;
+        private float intelligence;
+        public float Intelligence
         {
             get { return intelligence; }
             set
@@ -236,7 +239,7 @@ namespace EmodiaQuest.Core
 
         private int strengthGaidedThrougLvls;
         private int skillGainedThroughLvls;
-        private int intellGainedThroughLvls;
+        private float intellGainedThroughLvls = 0;
 
         private int gold;
         public int Gold
@@ -438,9 +441,11 @@ namespace EmodiaQuest.Core
             HpRegen = 0.02f;
 
             // Max Focus is 100 + 10% intel
+            startIntelenz = 100;
+            Intelligence = 100;
             MaxFocus = (int)(100 + Math.Round(Intelligence / 10.0));
             Focus = MaxFocus;
-            FocusRegen = (int) Math.Round(Intelligence/50.0);
+            FocusRegen = (float)(Intelligence/5000.0);
 
             Armor = 0;
             MinDamage = 50;
@@ -454,10 +459,10 @@ namespace EmodiaQuest.Core
             PlayerInventory = new List<Item>();
             ItemsDropped = new List<Item>();
 
-            CurrentEquippedHelmet = new Item(1, ItemClass.Helmet, 0, 20, 0, 0, "StoffKappe");
-            CurrentEquippedArmor = new Item(0, ItemClass.Armor, 0, 0, 10, 10, "altesStoffhemd");
+            CurrentEquippedHelmet = new Item(1, ItemClass.Helmet, 0, 20, 0, 0, "rostigerSchrottHelm");
+            CurrentEquippedArmor = new Item(0, ItemClass.Armor, 0, 0, 10, 10, "leichteModerneRuestung");
             CurrentEquippedBoots = new Item(1, ItemClass.Boots, 0, 10, 0, 0, "Schuhe");
-            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 50, 70, 0, 0, false, "Stock");
+            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 50, 70, 0, 0, true, "Gewehr");
 
             ActiveQuest = new Quest {Name = "", Description = ""};
 
@@ -466,6 +471,7 @@ namespace EmodiaQuest.Core
             Angle = 0;
             CollisionRadius = 1.5f;
             attackTimer = 0;
+            shootingTimer = 0;
 
             /**
             * Animation and Model
@@ -483,8 +489,8 @@ namespace EmodiaQuest.Core
             */
 
             //loading Textures
-            defaultBodyTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/young_lightskinned_male_diffuse");
-            defaultHairTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/male02_diffuse_black");
+            defaultBodyTex = contentMngr.Load<Texture2D>("fbxContent/player/young_lightskinned_male_diffuse");
+            defaultHairTex = contentMngr.Load<Texture2D>("fbxContent/player/male02_diffuse_black");
             //loading default mesh
             playerModel = contentMngr.Load<Model>("fbxContent/player/Main_Char_t_pose");
 
@@ -547,6 +553,7 @@ namespace EmodiaQuest.Core
             swordFighting1Duration = (float)swordfighting1C.Duration.TotalMilliseconds / 1f;
             swordFighting2Duration = (float)swordfighting2C.Duration.TotalMilliseconds / 1f;
             fightingStandDuration = (float)fightingStandC.Duration.TotalMilliseconds / 1f;
+            gunFightingDuration = (float)gunfightingC.Duration.TotalMilliseconds / 1f;
             /*
             Console.WriteLine("StandingDuration: " + standingC.Duration.TotalMilliseconds);
             Console.WriteLine("StandingKeyframes: " + standingC.Keyframes.Count);
@@ -555,7 +562,7 @@ namespace EmodiaQuest.Core
             */
             stateTime = 0;
             attackThreshold = swordFighting1Duration;
-            shootingThreshold = swordFighting1Duration;
+            shootingThreshold = gunFightingDuration;
             // Duration of Blending Animations in milliseconds
             fixedBlendDuration = 400;
 
@@ -584,11 +591,12 @@ namespace EmodiaQuest.Core
 
         public void Update(GameTime gameTime)
         {
-            //Console.WriteLine(CurrentEquippedWeapon.Name);
+            //Console.WriteLine(Focus + " : " + FocusRegen + " Int: "  + Intelligence);
 
             HitEnemyWithSword = false;
             HitAir = false;
             KeysPressing = 1;
+            attacking = false;
 
             // Computer view direction
             PlayerViewDirection = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
@@ -715,16 +723,6 @@ namespace EmodiaQuest.Core
                 position.X = movement.X;
             }
 
-
-
-            //Console.WriteLine(shootingTimer);
-            // Shooting bullet
-            if (activeWorld == WorldState.Dungeon)
-            {
-                //if (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed)
-
-            }
-
             // Running towards teleporters
             if (Color.Violet == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
@@ -772,76 +770,75 @@ namespace EmodiaQuest.Core
             }
 
             //update playerState
-
-            if (GUI.Controls_GUI.Instance.mousePressedLeft() && stateTime <= 150 )
+            if (GUI.Controls_GUI.Instance.mousePressedLeft() && stateTime < 120 )
             {
-                if (CurrentEquippedWeapon.IsRangedWeapon == true && shootingTimer > shootingThreshold)
+                // Gunshooting!
+                if (CurrentEquippedWeapon.IsRangedWeapon == true && shootingTimer > shootingThreshold && Focus >= 10)
                 {
-                    ActivePlayerState = PlayerState.Gunfighting;
-                    if (GUI.Controls_GUI.Instance.mouseClickAndHoldLeft())
+                    ActivePlayerState = PlayerState.Gunfighting; Model bulletModelToGive = bulletModel1;
+                    // Choose the right bullet!
+                    switch (shootingtype)
                     {
-                        Model bulletModelToGive = bulletModel1;
-                        switch (shootingtype)
-                        {
-                            case Shootingtype.Normal:
-                                bulletModelToGive = bulletModel1;
-                                break;
-                            case Shootingtype.Blast:
-                                bulletModelToGive = bulletModel2;
-                                break;
-                            case Shootingtype.Lightning:
-                                bulletModelToGive = bulletModel3;
-                                break;
-                            default:
-                                break;
-                        }
-                        BulletList.Add(new Bullet(bulletModelToGive, PlayerViewDirection, Position, Angle, shootingtype));
-                        shootingTimer = 0;
+                        case Shootingtype.Normal:
+                            bulletModelToGive = bulletModel1;
+                            Focus -= 10;
+                            break;
+                        case Shootingtype.Blast:
+                            bulletModelToGive = bulletModel2;
+                            Focus -= 10;
+                            break;
+                        case Shootingtype.Lightning:
+                            bulletModelToGive = bulletModel3;
+                            Focus -= 10;
+                            break;
+                        default:
+                            break;
                     }
                     shootingTimer = 0;
+                    BulletList.Add(new Bullet(bulletModelToGive, PlayerViewDirection, Position, Angle, shootingtype));
                     stateTime = gunFightingDuration;
                 }
+                    // First swordfight animation
                 else if (rnd.Next(2) == 0 && CurrentEquippedWeapon.IsRangedWeapon == false)
                 {
                     ActivePlayerState = PlayerState.Swordfighting1;
                     stateTime = swordFighting1Duration;
+                    HitAir = true;
+                    attackTimer = 0;
+                    attacking = true;
                 }
+                    // Second swordfight animation
                 else if (CurrentEquippedWeapon.IsRangedWeapon == false)
                 {
                     ActivePlayerState = PlayerState.Swordfighting2;
                     stateTime = swordFighting2Duration;
+                    HitAir = true;
+                    attackTimer = 0;
+                    attacking = true;
                 }
-                // Needs to do gunFighting, if gun is equipped
-                fixedBlendDuration = 100;
-                HitAir = true;
-            }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && PlayerSpeed > Settings.Instance.PlayerSpeed && stateTime <= 100)
-            {
-                ActivePlayerState = PlayerState.Running;
                 fixedBlendDuration = 200;
             }
-            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime <= 100)
+                // Running!
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && PlayerSpeed > Settings.Instance.PlayerSpeed && stateTime < 100)
+            {
+                ActivePlayerState = PlayerState.Running;
+                fixedBlendDuration = 300;
+            }
+                // Walking
+            else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime < 100)
             {
                 ActivePlayerState = PlayerState.Walking;
                 stateTime = walkingDuration / 2;
-                fixedBlendDuration = 200;
+                fixedBlendDuration = 300;
             }
-            /* Do we need this!? (Janos)
-            else if (Keyboard.GetState().IsKeyDown(Keys.Space) && stateTime <= 200)
-            {
-                ActivePlayerState = PlayerState.Jumping;
-                stateTime = runningDuration / 2;
-                fixedBlendDuration = 200;
-            }
-            */
-            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime <= 100)
+                // Standing
+            else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime < 100)
             {
                 ActivePlayerState = PlayerState.Standing;
                 stateTime = standingDuration / 2;
-                fixedBlendDuration = 200;
+                fixedBlendDuration = 300;
             }
-
-
+            // update stateTime
             if (stateTime > 0)
             {
                 stateTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -882,6 +879,28 @@ namespace EmodiaQuest.Core
                 // When the playerState changes, we need to blend
                 IsBlending = true;
                 ActiveBlendTime = fixedBlendDuration;
+                
+                switch(ActivePlayerState)
+                {
+                    case PlayerState.Gunfighting:
+                        gunfightingAP.StartClip(gunfightingC);
+                        break;
+                    case PlayerState.Running:
+                        runningAP.StartClip(runningC);
+                        break;
+                    case PlayerState.Standing:
+                        standingAP.StartClip(standingC);
+                        break;
+                    case PlayerState.Swordfighting1:
+                        swordfighting1AP.StartClip(swordfighting1C);
+                        break;
+                    case PlayerState.Swordfighting2:
+                        swordfighting2AP.StartClip(swordfighting2C);
+                        break;
+                    case PlayerState.Walking:
+                        walkingAP.StartClip(walkingC);
+                        break;
+                }
             }
 
 
@@ -900,7 +919,7 @@ namespace EmodiaQuest.Core
                 ActiveBlendTime -= gameTime.ElapsedGameTime.Milliseconds;
             }
 
-            // Update the last animation (only 500 milliseconds after the last changing state required)
+            // Update the last animation (only as long as the fixed blendduration is)
             if (IsBlending)
             {
                 switch (LastPlayerState)
@@ -937,12 +956,7 @@ namespace EmodiaQuest.Core
             Vector2 frontDirection = new Vector2((float)Math.Round(Math.Sin(Angle)), (float)Math.Round(Math.Cos(Angle)));
             Vector2 gridPosInView = new Vector2((float)(Math.Round(Position.X / gridSize) + frontDirection.X), (float)(Math.Round(Position.Y / gridSize) + frontDirection.Y));
 
-            //mystuff
-            //Console.WriteLine(DegreeToRadian(Angle));
-
-            // interaction checks happen only if interactable object is in view (eg no killing behind back anymore)
-            // only == 2 in edges, else normal 3 in a row
-
+            // interaction in the dungeon (only walking)
             if (Ingame.Instance.ActiveWorld == WorldState.Dungeon)
             {
                 attackTimer += gameTime.ElapsedGameTime.Milliseconds;
@@ -984,19 +998,11 @@ namespace EmodiaQuest.Core
                         }
                     }
                 }
-                //Vector2 p = new Vector2(2, 2);
-                //p.Normalize();
-                //Console.WriteLine(p);
-                //mystuff
-                //Console.WriteLine(currentBlockEnemyListtest.Count);
-                //Console.WriteLine(Math.Sin(Angle) + ", " + Math.Cos(Angle));
-
-                //Console.WriteLine((float)Math.Asin(Math.Sin(Angle)) / Math.PI * 180 + 90 + (float)Math.Acos(Math.Cos(Angle)) / Math.PI * 180 + 90);
 
                 if (ActivePlayerState == PlayerState.Swordfighting1 || ActivePlayerState == PlayerState.Swordfighting2 || ActivePlayerState == PlayerState.Standfighting)
                 {
                     //mystuff
-                    bool at = false;
+                    //bool at = false;
                     foreach (var nmy in currentBlockEnemyListtest)
                     {
                         Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
@@ -1005,22 +1011,19 @@ namespace EmodiaQuest.Core
                         Vector2 circlePos = Position + view * 2.5f;
                         if (gameEnv.EuclideanDistance(circlePos, nmy.Position) < 1.2f)
                         {
-                            if (attackTimer >= attackThreshold && GUI.Controls_GUI.Instance.mouseClickAndHoldLeft())
+                            if (attacking)
                             {
                                 nmy.Attack(rnd.Next(MinDamage, MaxDamage + 1));
                                 //attackTimer = 0;
-                                at = true;
+                                //at = true;
                                 HitEnemyWithSword = true;
                                 HitAir = false;
                             }
                         }
                     }
-                    if (at)
-                        attackTimer = 0;
                 }
                 currentBlockEnemyListtest.Clear();
             }
-
 
             // Leveling
             XpToLevel();
@@ -1083,6 +1086,7 @@ namespace EmodiaQuest.Core
             }
             if (!HitEnemyWithSword && HitAir)
             {
+                Console.WriteLine(HitEnemyWithSword + " omg: " + HitAir);
                 Jukebox.Instance.PlayAudioMouseFeedback();
             }
 
@@ -1103,7 +1107,7 @@ namespace EmodiaQuest.Core
                 // Grant lvlup boni
                 strengthGaidedThrougLvls++;
                 skillGainedThroughLvls++;
-                intellGainedThroughLvls++;
+                intellGainedThroughLvls+=1f;
                 GrandStats();
 
                 Experience = Experience - XPToNextLevel;
@@ -1119,8 +1123,8 @@ namespace EmodiaQuest.Core
             Skill = CurrentEquippedArmor.SkillPlus + CurrentEquippedBoots.SkillPlus + CurrentEquippedHelmet.SkillPlus +
                     CurrentEquippedWeapon.SkillPlus + skillGainedThroughLvls;
 
-            Intelligence = CurrentEquippedArmor.IntelligencePlus + CurrentEquippedBoots.IntelligencePlus + CurrentEquippedHelmet.IntelligencePlus +
-                    CurrentEquippedWeapon.IntelligencePlus + intellGainedThroughLvls;
+            Intelligence = (float)startIntelenz + (float)CurrentEquippedArmor.IntelligencePlus + (float)CurrentEquippedBoots.IntelligencePlus + (float)CurrentEquippedHelmet.IntelligencePlus +
+                    (float)CurrentEquippedWeapon.IntelligencePlus + intellGainedThroughLvls;
 
             Armor = CurrentEquippedArmor.Armor + CurrentEquippedBoots.Armor + CurrentEquippedHelmet.Armor +
                     CurrentEquippedWeapon.Armor;
@@ -1135,9 +1139,9 @@ namespace EmodiaQuest.Core
             MaxHp = (int)((100 * Math.Sqrt(Level)) < 100 ? 100 : (100 * Math.Sqrt(Level)) + Math.Round(Strength / 10.0));
 
             // Max Focus is 100 + 10% intel
-            MaxFocus = (int) (100 + Math.Round(Intelligence/10.0));
+            MaxFocus = (int)(100 + Math.Round(Intelligence/10.0));
 
-            FocusRegen = (int) Math.Round(Intelligence/2.0);
+            FocusRegen =  (float)(Intelligence/5000.0);
         }
 
         private void UpdateQuest()
@@ -1333,7 +1337,7 @@ namespace EmodiaQuest.Core
 
                     // Textures
                     // Body Textures
-
+                    
                     if (mesh.Name == "MainChar_body")
                     {
                         effect.Texture = defaultBodyTex;
@@ -1346,11 +1350,10 @@ namespace EmodiaQuest.Core
                     {
                         effect.Texture = defaultBodyTex;
                     }
-                    
 
                 }
                 // Always render the Player
-                if (mesh.Name == "MainChar_Body" || mesh.Name == "MainChar_eye" || mesh.Name == "MainChar_Body_lowPoly" || mesh.Name == "Einfache_Hose" || mesh.Name == "Einfache_Schuhe")
+                if (mesh.Name == "MainChar_body" || mesh.Name == "MainChar_eye" || mesh.Name == "Einfache_Hose" || mesh.Name == "Einfache_Schuhe")
                 {
                     mesh.Draw();
                 }

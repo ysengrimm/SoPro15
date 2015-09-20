@@ -119,7 +119,7 @@ namespace EmodiaQuest.Core
             }
 
             // Netstat update
-            //EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.ActivePlayerState.ToString(), Player.Instance.LastPlayerState.ToString(), Player.Instance.Hp);
+            EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.ActivePlayerState.ToString(), Player.Instance.LastPlayerState.ToString(), Player.Instance.Hp);
             // TODO: HUD update (playerhealth etc.)
 
         }
@@ -138,7 +138,7 @@ namespace EmodiaQuest.Core
             Renderer.Instance.DrawPlayer(Player.Instance);
 
             // NetStat
-            //EmodiaQuest.Core.NetGraph.Instance.Draw(spriteBatch);
+            EmodiaQuest.Core.NetGraph.Instance.Draw(spriteBatch);
             // HUD
             EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.draw(spriteBatch);
             // TODO: Damage Numbers over enemies
@@ -157,6 +157,7 @@ namespace EmodiaQuest.Core
 
         public void ChangeToSafeworld()
         {
+            Player.Instance.BulletList.Clear();
             ActiveWorld = WorldState.Safeworld;
             Player.Instance.GameEnv = SafeWorld.Instance.Controller;
             Player.Instance.Position = new Vector2(170, 330);
