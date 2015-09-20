@@ -574,7 +574,6 @@ namespace EmodiaQuest.Core
             Bullet.blastAnimation = bullet2animation;
         }
 
-        //mystuff
         private double DegreeToRadian(double angle)
         {
             return Math.Abs(Angle) / Math.PI * 180;
@@ -610,19 +609,6 @@ namespace EmodiaQuest.Core
                 {
                     if (gameEnv.EuclideanDistance(npc.Position, Position) < 15f)
                     {
-                        //mystuff <-- why, just why?
-                        //double a = Kosinussatz(npc.Position, v);
-                        //Console.WriteLine(DegreeToRadian(a) - DegreeToRadian(Angle));
-
-                        //Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
-                        //view.Normalize();
-
-                        //Vector2 circlePos = Position + view*3;
-                        //if (gameEnv.EuclideanDistance(circlePos, npc.Position) < 1f)
-                        //    Console.WriteLine("Kreis");
-                        //else
-                        //    Console.WriteLine("Keinkreis");
-
                         // solve quests when near the quest provider
                         foreach (Quest sQuest in QuestController.Instance.GetAllAvailableSolvedQuests(npc))
                         {
@@ -964,7 +950,6 @@ namespace EmodiaQuest.Core
                 // collision with enemies
                 Vector2 currentGridPos = new Vector2((float)Math.Round(position.X / gridSize), (float)Math.Round(position.Y / gridSize));
 
-                //mystuff
                 List<Enemy> currentBlockEnemyListtest = new List<Enemy>();
 
                 for (int i = -1; i < 2; i++)
@@ -973,7 +958,6 @@ namespace EmodiaQuest.Core
                     {
                         List<Enemy> currentBlockEnemyList = gameEnv.enemyArray[(int)currentGridPos.X + i, (int)currentGridPos.Y + j];
 
-                        //mystuff
                         foreach (var item in currentBlockEnemyList)
                         {
                             currentBlockEnemyListtest.Add(item);
@@ -1001,8 +985,7 @@ namespace EmodiaQuest.Core
 
                 if (ActivePlayerState == PlayerState.Swordfighting1 || ActivePlayerState == PlayerState.Swordfighting2 || ActivePlayerState == PlayerState.Standfighting)
                 {
-                    //mystuff
-                    //bool at = false;
+                       //bool at = false;
                     foreach (var nmy in currentBlockEnemyListtest)
                     {
                         Vector2 view = new Vector2((float)Math.Sin(Angle), (float)Math.Cos(Angle));
