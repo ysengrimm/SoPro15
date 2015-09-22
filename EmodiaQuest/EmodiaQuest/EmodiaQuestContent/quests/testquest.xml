@@ -8,30 +8,33 @@
                 <level>0</level>
             </conditions>
 			<story>
-HEY MICS, ich ... mir ... arrrrrgh
-Ich wurde eben BESTOHLEN!!!!
-Als ich noch geschlafen habe hoerte ich irgendwo ein knarksen in dem Haus.
-Ich dacht, dass das nur eine alte Diele war und hab mich auf die andere Seite gedreht
-und bin wieder eingeschlafen.
-Und heute frueh da stand ich auf, und was sehe ich da???
-Alles weg, ALLES!
-Mein ganzes Gold, der ganze Schmuck alles an wertvollen Dingen, die ich je besessen hab!
-Ich bin rausgerannt und hab bei den Nachbarn nachgefragt ob sie was gesehen haben, doch nein, niemand
-hat irgendetwas gesehen.
-Doch dann hat mir eine der Wachen gesagt, dass er im Morgengrauen einen Fremdling in das Labyrinth hat
-gehen sehen. Er hat ihm noch gesagt dass es da unten nicht ungefaehrlich sei, aber der Fremde ist trotzdem 
-herunter gegangen.
-Der Wachman konnte sich noch erinnern, dass der Fremde einen grossen Sack auf den Schultern hatte.
-Mics, das muss der Dieb gewesen sein. Er ist bestimmt schon von den Bestien da unten zerfetzt wurden.
-Bitte geh und schau nach ob du dort irgendwo den Sack finden kannst!!
-Ich werde dich selbstverstaendlich gut fuer den Fund belohnen.
+HEY MICS, ich ... mir ... arrrrrgh;
+Ich wurde eben BESTOHLEN!!!!;
+Als ich noch geschlafen habe hoerte ich irgendwo ein knarksen in;
+dem Haus. Ich dacht, dass das nur eine alte Diele war und hab;
+mich auf die andere Seite gedreht und bin wieder eingeschlafen.;
+Und heute frueh da stand ich auf, und was sehe ich da???;
+Alles weg, ALLES!;
+Mein ganzes Gold, der ganze Schmuck alles an wertvollen Dingen,;
+die ich je besessen hab! Ich bin rausgerannt und hab bei den;
+Nachbarn nachgefragt ob sie was gesehen haben, doch nein,;
+niemand hat irgendetwas gesehen.;
+Doch dann hat mir eine der Wachen gesagt, dass er im;
+Morgengrauen einen Fremdling in das Labyrinth hat gehen sehen.;
+Er hat ihm noch gesagt dass es da unten nicht ungefaehrlich sei,;
+aber der Fremde ist trotzdem herunter gegangen.;
+Der Wachman konnte sich noch erinnern, dass der Fremde einen;
+grossen Sack auf den Schultern hatte. Mics, das muss der Dieb; 
+gewesen sein. Er ist bestimmt schon von den Bestien da unten;
+zerfetzt wurden. Bitte geh und schau nach ob du dort irgendwo; 
+den Sack finden kannst!! Ich werde dich selbstverstaendlich;
+gut fuer den Fund belohnen.;
 Und pass bitte trotzdem auf dich auf, ok?
 </story>
 			<description>
 Jack wurde bestohlen.;
-Geh in die Labyrinthe;
-und finde den Sack;
-mit dem Diebesgut!
+Geh in die Labyrinthe und finde; 
+den Sack mit dem Diebesgut!
 </description>
             <tasks>
 				<item>Diebesgut</item>
@@ -52,20 +55,26 @@ mit dem Diebesgut!
                 <level>0</level>
             </conditions>
             <story>
-Hallo mein lieber Freund.
-Weisst du, die durch die Seuche hervorgegangenen Monster werden von den Forschern und Heiler
-staendig erforscht. Ich helfe da manchmal ein bisschen mit und mir ist aufgefallen, dass mit der
-Seuche eindeutig nicht alles mit rechten Dingen zu geht. Ich kann nicht genau sagen was es
-ist aber mein Gefuehl sagt mir, dass hier irgendetwas nicht stimmt.
-Wir haben letztens rausgefunden, dass die Mutationen immer neuere besondere Formen annehmen.
-In den Labyrinthen tummeln sich mittlerweile Weraffen, welche frueher noch nicht dagewesen sind.
-Wir muessen der Sache unbedingt auf den Grund gehen und herausfinden wie diese entstanden sind.
-Es waere uns eine grosse Hilfe wenn du 10 Blutproben von Weraffen mitbringen koenntest.
-Wir koennen diese dann genau untersuchen und wer weiss, vielleicht finden wir neue Hinweise.
+Hallo mein lieber Freund.;
+Weisst du, die durch die Seuche hervorgegangenen Monster werden;
+von den Forschern und Heiler staendig erforscht. Ich helfe da ;
+manchmal ein bisschen mit und mir ist aufgefallen, dass mit der;
+Seuche eindeutig nicht alles mit rechten Dingen zu geht. Ich ;
+kann nicht genau sagen was es ist aber mein Gefuehl sagt mir, ;
+dass hier irgendetwas nicht stimmt. Wir haben letztens ;
+rausgefunden, dass die Mutationen immer neuere besondere Formen ;
+annehmen. In den Labyrinthen tummeln sich mittlerweile Weraffen, ;
+welche frueher noch nicht dagewesen sind. Wir muessen der Sache ;
+unbedingt auf den Grund gehen und herausfinden wie diese ;
+entstanden sind. Es waere uns eine grosse Hilfe wenn du 10 ;
+Blutproben von Weraffen mitbringen koenntest. Wir koennen diese ;
+dann genau untersuchen und wer weiss, vielleicht finden wir neue ;
+Hinweise.
 </story>
 			<description>
-Geh und besiege 10 Weraffen!
-Komm anschliessend zu Konstantin zurueck.
+Geh und besiege 10 Weraffen!;
+Komm anschliessend zu;
+Konstantin zurueck.
 </description>
             <tasks>
                 <kill>Monster7,10</kill>
@@ -155,18 +164,24 @@ Komm anschliessend zu Yorlgon zurueck.
                 <level>0</level>
             </conditions>
             <story>
-Hallo Mics. Ich habe letztens ein Gespraech zwischen zwei Haendlern gehoert.
-Diese sind mit noch einem Freund durch die Labyrinthe gelaufen und haben dabei wohl disen einen
-aus den Augen verloren. Sie vermuten, dass er wohl draufgegangen ist. Aus dem Gespraech konnte man heraushoeren
-dass es sich wohl um einen sehr beruehmten Koch gehandelt hat. Ich bin ganz begeistert von seinen Rezepten
-gewesen. Er war auch bereits oefters hier bei mir zu Gast und mir ist aufgefallen, dass er immer ein Buechlein bie sich
-hatte. Ich vermute, dass es sich dabei um sein Kochbuch gehandelt hat. 
-Waerst du so freundlich nach diesem Buch zu suchen?
-Ich wuerde mich darueber sehr freuen, und an der Bezahlung soll es natuerlich nicht scheitern.
+Hallo Mics. ;
+Ich habe letztens ein Gespraech zwischen zwei ;
+Haendlern gehoert. Diese sind mit noch einem Freund durch ;
+die Labyrinthe gelaufen und haben dabei wohl disen einen;
+aus den Augen verloren. Sie vermuten, dass er wohl draufgegangen ;
+ist. Aus dem Gespraech konnte man heraushoeren dass es sich wohl ;
+um einen sehr beruehmten Koch gehandelt hat. Ich bin ganz ;
+begeistert von seinen Rezepten gewesen. Er war auch bereits ;
+oefters hier bei mir zu Gast und mir ist aufgefallen, dass er ;
+immer ein Buechlein bie sich hatte. Ich vermute, dass es sich ;
+dabei um sein Kochbuch gehandelt hat. Waerst du so freundlich ;
+nach diesem Buch zu suchen? Ich wuerde mich darueber sehr ;
+freuen, und an der Bezahlung soll es natuerlich nicht scheitern.
 </story>
             <description>
-Geh und finde das Kochbuch im Labyrinth.
-Komm anschliessend zu Jack zurueck.
+Geh und finde das Kochbuch im;
+Labyrinth.Komm anschliessend ;
+zu Jack zurueck.
 </description>
             <tasks>
                 <item>Kochbuch</item>

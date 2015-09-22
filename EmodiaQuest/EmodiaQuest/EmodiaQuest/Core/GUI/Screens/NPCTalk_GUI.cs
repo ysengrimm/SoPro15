@@ -102,8 +102,10 @@ namespace EmodiaQuest.Core.GUI.Screens
                         platform.updateButtonText("accept", "Annehmen");
                         platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
 
-                        platform.addDialogue(3, 40, 25, 12, "monoFont_small", currentActiveQuest.Description, "questDescription");                  /////// das hier in jedes case kopieren
-                        platform.addDialogue(50, 40, 30, 12, "monoFont_small", currentActiveQuest.Story, "questStory");                             ////////////////////////////////////////
+                        platform.updateDialogueText("questDescription", currentActiveQuest.Description);
+                        platform.updateDialogueIsVisible("questDescription", true);
+                        platform.updateDialogueText("questStory", currentActiveQuest.Story);
+                        platform.updateDialogueIsVisible("questStory", true);
                     }
 
                     break;
@@ -133,6 +135,11 @@ namespace EmodiaQuest.Core.GUI.Screens
 
                         platform.updateButtonText("accept", "Annehmen");
                         platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+
+                        platform.updateDialogueText("questDescription", currentActiveQuest.Description);
+                        platform.updateDialogueIsVisible("questDescription", true);
+                        platform.updateDialogueText("questStory", currentActiveQuest.Story);
+                        platform.updateDialogueIsVisible("questStory", true);
                     }
                     break;
                 case "quest3":
@@ -161,6 +168,11 @@ namespace EmodiaQuest.Core.GUI.Screens
 
                         platform.updateButtonText("accept", "Annehmen");
                         platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+
+                        platform.updateDialogueText("questDescription", currentActiveQuest.Description);
+                        platform.updateDialogueIsVisible("questDescription", true);
+                        platform.updateDialogueText("questStory", currentActiveQuest.Story);
+                        platform.updateDialogueIsVisible("questStory", true);
                     }
                     break;
                 case "quest4":
@@ -189,6 +201,11 @@ namespace EmodiaQuest.Core.GUI.Screens
 
                         platform.updateButtonText("accept", "Annehmen");
                         platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+
+                        platform.updateDialogueText("questDescription", currentActiveQuest.Description);
+                        platform.updateDialogueIsVisible("questDescription", true);
+                        platform.updateDialogueText("questStory", currentActiveQuest.Story);
+                        platform.updateDialogueIsVisible("questStory", true);
                     }
                     break;
                 case "quest5":
@@ -217,6 +234,11 @@ namespace EmodiaQuest.Core.GUI.Screens
 
                         platform.updateButtonText("accept", "Annehmen");
                         platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+
+                        platform.updateDialogueText("questDescription", currentActiveQuest.Description);
+                        platform.updateDialogueIsVisible("questDescription", true);
+                        platform.updateDialogueText("questStory", currentActiveQuest.Story);
+                        platform.updateDialogueIsVisible("questStory", true);
                     }
                     break;
                 case "accept":
@@ -288,14 +310,14 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.backgroundOff();
 
             // headline
-            this.platform.addLabel(50, 10, 8, "monoFont_big", nPCName.ToString(), "npcname", true);
+            this.platform.addLabel(50, 7, 10, "monoFont_big", nPCName.ToString(), "npcname", true);
 
             // labels for buttons
-            this.platform.addLabel(70, 30, 8, "monoFont_small", "Hau 3 Monster um.", "label1", true);
-            this.platform.addLabel(70, 40, 8, "monoFont_small", "Sammel das Buch ein.", "label2", true);
-            this.platform.addLabel(70, 50, 8, "monoFont_small", "Hau 3 Monster um.", "label3", true);
-            this.platform.addLabel(70, 60, 8, "monoFont_small", "Sammel das Buch ein.", "label4", true);
-            this.platform.addLabel(70, 70, 8, "monoFont_small", "Hau 3 Monster um.", "label5", true);
+            this.platform.addLabel(70, 30, 5, "monoFont_small", "Hau 3 Monster um.", "label1", true);
+            this.platform.addLabel(70, 40, 5, "monoFont_small", "Sammel das Buch ein.", "label2", true);
+            this.platform.addLabel(70, 50, 5, "monoFont_small", "Hau 3 Monster um.", "label3", true);
+            this.platform.addLabel(70, 60, 5, "monoFont_small", "Sammel das Buch ein.", "label4", true);
+            this.platform.addLabel(70, 70, 5, "monoFont_small", "Hau 3 Monster um.", "label5", true);
 
             // buttons
             this.platform.addButton(10, 30, 20, 8, "quest1", "Ansehen");
@@ -305,18 +327,23 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addButton(10, 70, 20, 8, "quest5", "Ansehen");
 
             // buttonToAcceptQuest
-            this.platform.addButton(60, 80, 25, 8, "accept", "Annehmen");
+            this.platform.addButton(66, 78, 25, 8, "accept", "Annehmen");
             this.platform.updateButtonVisibility("accept", false);
             this.platform.updateButtonClickability("accept", false);
 
             // Talk Dialogue
-            //platform.addDialogue(10, 40, 80, 35, "monoFont_small", "testtestwdioawdhawoidhoawhdhawi;testtestwdioawdhawoidhoawhdhawi;testtestwdioawdhawoidhoawhdhawi", "questDescription");
-            //platform.updateDialogueIsVisible("questDescription", false);
+            platform.addDialogue(65, 40, 33, 30, "monoFont_small", "...", "questDescription");
+            platform.updateDialogueScaleFactor("questDescription", 0.4f);
+            platform.updateDialogueIsVisible("questDescription", false);
+
+            platform.addDialogue(3, 40, 60, 50, "monoFont_small", "...", "questStory");
+            platform.updateDialogueScaleFactor("questStory", 0.4f);
+            platform.updateDialogueIsVisible("questStory", false);
 
             qTest = QuestController.Instance.GetAllAvailableQuests(nPCName);
 
-            platform.addLabel(21, 10, 8, "monoFont_small", "Quests", "labelForMenuChange", false);
-            platform.addSlider(10, 10, 10, 8, 0, 1, 0, "menuChange");
+            //platform.addLabel(21, 10, 8, "monoFont_small", "Quests", "labelForMenuChange", false);
+            //platform.addSlider(10, 10, 10, 8, 0, 1, 0, "menuChange");
 
             //EventHandler;
             platform.OnButtonValue += new GUI_Delegate_Button(this.ButtonEventValue);
@@ -399,10 +426,10 @@ namespace EmodiaQuest.Core.GUI.Screens
                 setInvisibleInclickable();
 
                 this.platform.updateButtonVisibility(buttonInMovement, true);
-                this.platform.updateButtonPosition(buttonInMovement, 10, 30);
+                this.platform.updateButtonPosition(buttonInMovement, 68.5f, 88.5f);
                 this.platform.updateLabelVisibility(labelInMovement, true);
-                this.platform.updateLabelPosition(labelInMovement, 70, 30);
-                this.platform.updateButtonText(buttonInMovement, "Schliessen");
+                this.platform.updateLabelPosition(labelInMovement, 50, 25);
+                this.platform.updateButtonText(buttonInMovement, "Zurueck");
                 this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
 
                 this.platform.updateButtonClickability(buttonInMovement, true);
