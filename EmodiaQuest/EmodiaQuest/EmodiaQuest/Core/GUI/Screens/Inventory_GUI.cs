@@ -93,7 +93,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             switch (e.ButtonFunction)
             {
                 case "itemSlot1":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 1 && Player.Instance.PlayerInventory[0] != null ? "Name: " + Player.Instance.PlayerInventory[0].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 1 && Player.Instance.PlayerInventory[0] != null ? "Name: " + Player.Instance.PlayerInventory[0].Class + " " + Player.Instance.PlayerInventory[0].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 1 && Player.Instance.PlayerInventory[0] != null ? "Level: " + Player.Instance.PlayerInventory[0].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[0].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 1 && Player.Instance.PlayerInventory[0] != null ? "Ruestung: " + Player.Instance.PlayerInventory[0].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 1 && Player.Instance.PlayerInventory[0] != null ? "Schaden: " + Player.Instance.PlayerInventory[0].MinDamage + " - " + Player.Instance.PlayerInventory[0].MaxDamage : "");
@@ -112,7 +112,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot2":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 2 && Player.Instance.PlayerInventory[1] != null ? "Name: " + Player.Instance.PlayerInventory[1].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 2 && Player.Instance.PlayerInventory[1] != null ? "Name: " + Player.Instance.PlayerInventory[1].Class + " " + Player.Instance.PlayerInventory[1].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 2 && Player.Instance.PlayerInventory[1] != null ? "Level: " + Player.Instance.PlayerInventory[1].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[1].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 2 && Player.Instance.PlayerInventory[1] != null ? "Ruestung: " + Player.Instance.PlayerInventory[1].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 2 && Player.Instance.PlayerInventory[1] != null ? "Schaden: " + Player.Instance.PlayerInventory[1].MinDamage + " - " + Player.Instance.PlayerInventory[1].MaxDamage : "");
@@ -131,7 +131,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot3":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 3 && Player.Instance.PlayerInventory[2] != null ? "Name: " + Player.Instance.PlayerInventory[2].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 3 && Player.Instance.PlayerInventory[2] != null ? "Name: " + Player.Instance.PlayerInventory[2].Class + " " + Player.Instance.PlayerInventory[2].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 3 && Player.Instance.PlayerInventory[2] != null ? "Level: " + Player.Instance.PlayerInventory[2].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[2].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 3 && Player.Instance.PlayerInventory[2] != null ? "Ruestung: " + Player.Instance.PlayerInventory[2].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 3 && Player.Instance.PlayerInventory[2] != null ? "Schaden: " + Player.Instance.PlayerInventory[2].MinDamage + " - " + Player.Instance.PlayerInventory[2].MaxDamage : "");
@@ -150,7 +150,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot4":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 4 && Player.Instance.PlayerInventory[3] != null ? "Name: " + Player.Instance.PlayerInventory[3].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 4 && Player.Instance.PlayerInventory[3] != null ? "Name: " + Player.Instance.PlayerInventory[3].Class + " " + Player.Instance.PlayerInventory[3].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 4 && Player.Instance.PlayerInventory[3] != null ? "Level: " + Player.Instance.PlayerInventory[3].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[3].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 4 && Player.Instance.PlayerInventory[3] != null ? "Ruestung: " + Player.Instance.PlayerInventory[3].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 4 && Player.Instance.PlayerInventory[3] != null ? "Schaden: " + Player.Instance.PlayerInventory[3].MinDamage + " - " + Player.Instance.PlayerInventory[3].MaxDamage : "");
@@ -169,7 +169,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot5":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 5 && Player.Instance.PlayerInventory[4] != null ? "Name: " + Player.Instance.PlayerInventory[4].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 5 && Player.Instance.PlayerInventory[4] != null ? "Name: " + Player.Instance.PlayerInventory[4].Class + " " + Player.Instance.PlayerInventory[4].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 5 && Player.Instance.PlayerInventory[4] != null ? "Level: " + Player.Instance.PlayerInventory[4].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[4].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 5 && Player.Instance.PlayerInventory[4] != null ? "Ruestung: " + Player.Instance.PlayerInventory[4].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 5 && Player.Instance.PlayerInventory[4] != null ? "Schaden: " + Player.Instance.PlayerInventory[4].MinDamage + " - " + Player.Instance.PlayerInventory[4].MaxDamage : "");
@@ -188,7 +188,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot6":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 6 && Player.Instance.PlayerInventory[5] != null ? "Name: " + Player.Instance.PlayerInventory[5].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 6 && Player.Instance.PlayerInventory[5] != null ? "Name: " + Player.Instance.PlayerInventory[5].Class + " " + Player.Instance.PlayerInventory[5].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 6 && Player.Instance.PlayerInventory[5] != null ? "Level: " + Player.Instance.PlayerInventory[5].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[5].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 6 && Player.Instance.PlayerInventory[5] != null ? "Ruestung: " + Player.Instance.PlayerInventory[5].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 6 && Player.Instance.PlayerInventory[5] != null ? "Schaden: " + Player.Instance.PlayerInventory[5].MinDamage + " - " + Player.Instance.PlayerInventory[5].MaxDamage : "");
@@ -207,7 +207,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot7":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 7 && Player.Instance.PlayerInventory[6] != null ? "Name: " + Player.Instance.PlayerInventory[6].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 7 && Player.Instance.PlayerInventory[6] != null ? "Name: " + Player.Instance.PlayerInventory[6].Class + " " + Player.Instance.PlayerInventory[6].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 7 && Player.Instance.PlayerInventory[6] != null ? "Level: " + Player.Instance.PlayerInventory[6].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[6].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 7 && Player.Instance.PlayerInventory[6] != null ? "Ruestung: " + Player.Instance.PlayerInventory[6].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 7 && Player.Instance.PlayerInventory[6] != null ? "Schaden: " + Player.Instance.PlayerInventory[6].MinDamage + " - " + Player.Instance.PlayerInventory[6].MaxDamage : "");
@@ -226,7 +226,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot8":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 8 && Player.Instance.PlayerInventory[7] != null ? "Name: " + Player.Instance.PlayerInventory[7].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 8 && Player.Instance.PlayerInventory[7] != null ? "Name: " + Player.Instance.PlayerInventory[7].Class + " " + Player.Instance.PlayerInventory[7].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 8 && Player.Instance.PlayerInventory[7] != null ? "Level: " + Player.Instance.PlayerInventory[7].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[7].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 8 && Player.Instance.PlayerInventory[7] != null ? "Ruestung: " + Player.Instance.PlayerInventory[7].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 8 && Player.Instance.PlayerInventory[7] != null ? "Schaden: " + Player.Instance.PlayerInventory[7].MinDamage + " - " + Player.Instance.PlayerInventory[7].MaxDamage : "");
@@ -245,7 +245,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot9":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 9 && Player.Instance.PlayerInventory[8] != null ? "Name: " + Player.Instance.PlayerInventory[8].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 9 && Player.Instance.PlayerInventory[8] != null ? "Name: " + Player.Instance.PlayerInventory[8].Class + " " + Player.Instance.PlayerInventory[8].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 9 && Player.Instance.PlayerInventory[8] != null ? "Level: " + Player.Instance.PlayerInventory[8].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[8].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 9 && Player.Instance.PlayerInventory[8] != null ? "Ruestung: " + Player.Instance.PlayerInventory[8].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 9 && Player.Instance.PlayerInventory[8] != null ? "Schaden: " + Player.Instance.PlayerInventory[8].MinDamage + " - " + Player.Instance.PlayerInventory[8].MaxDamage : "");
@@ -264,7 +264,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot10":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 10 && Player.Instance.PlayerInventory[9] != null ? "Name: " + Player.Instance.PlayerInventory[9].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 10 && Player.Instance.PlayerInventory[9] != null ? "Name: " + Player.Instance.PlayerInventory[9].Class + " " + Player.Instance.PlayerInventory[9].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 10 && Player.Instance.PlayerInventory[9] != null ? "Level: " + Player.Instance.PlayerInventory[9].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[9].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 10 && Player.Instance.PlayerInventory[9] != null ? "Ruestung: " + Player.Instance.PlayerInventory[9].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 10 && Player.Instance.PlayerInventory[9] != null ? "Schaden: " + Player.Instance.PlayerInventory[9].MinDamage + " - " + Player.Instance.PlayerInventory[9].MaxDamage : "");
@@ -283,7 +283,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot11":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 11 && Player.Instance.PlayerInventory[10] != null ? "Name: " + Player.Instance.PlayerInventory[10].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 11 && Player.Instance.PlayerInventory[10] != null ? "Name: " + Player.Instance.PlayerInventory[10].Class + " " + Player.Instance.PlayerInventory[10].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 11 && Player.Instance.PlayerInventory[10] != null ? "Level: " + Player.Instance.PlayerInventory[10].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[10].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 11 && Player.Instance.PlayerInventory[10] != null ? "Ruestung: " + Player.Instance.PlayerInventory[10].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 11 && Player.Instance.PlayerInventory[10] != null ? "Schaden: " + Player.Instance.PlayerInventory[10].MinDamage + " - " + Player.Instance.PlayerInventory[10].MaxDamage : "");
@@ -302,7 +302,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot12":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 12 && Player.Instance.PlayerInventory[11] != null ? "Name: " + Player.Instance.PlayerInventory[11].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 12 && Player.Instance.PlayerInventory[11] != null ? "Name: " + Player.Instance.PlayerInventory[11].Class + " " + Player.Instance.PlayerInventory[11].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 12 && Player.Instance.PlayerInventory[11] != null ? "Level: " + Player.Instance.PlayerInventory[11].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[11].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 12 && Player.Instance.PlayerInventory[11] != null ? "Ruestung: " + Player.Instance.PlayerInventory[11].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 12 && Player.Instance.PlayerInventory[11] != null ? "Schaden: " + Player.Instance.PlayerInventory[11].MinDamage + " - " + Player.Instance.PlayerInventory[11].MaxDamage : "");
@@ -321,7 +321,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot13":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 13 && Player.Instance.PlayerInventory[12] != null ? "Name: " + Player.Instance.PlayerInventory[12].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 13 && Player.Instance.PlayerInventory[12] != null ? "Name: " + Player.Instance.PlayerInventory[12].Class + " " + Player.Instance.PlayerInventory[12].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 13 && Player.Instance.PlayerInventory[12] != null ? "Level: " + Player.Instance.PlayerInventory[12].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[12].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 13 && Player.Instance.PlayerInventory[12] != null ? "Ruestung: " + Player.Instance.PlayerInventory[12].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 13 && Player.Instance.PlayerInventory[12] != null ? "Schaden: " + Player.Instance.PlayerInventory[12].MinDamage + " - " + Player.Instance.PlayerInventory[12].MaxDamage : "");
@@ -340,7 +340,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot14":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 14 && Player.Instance.PlayerInventory[13] != null ? "Name: " + Player.Instance.PlayerInventory[13].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 14 && Player.Instance.PlayerInventory[13] != null ? "Name: " + Player.Instance.PlayerInventory[13].Class + " " + Player.Instance.PlayerInventory[13].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 14 && Player.Instance.PlayerInventory[13] != null ? "Level: " + Player.Instance.PlayerInventory[13].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[13].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 14 && Player.Instance.PlayerInventory[13] != null ? "Ruestung: " + Player.Instance.PlayerInventory[13].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 14 && Player.Instance.PlayerInventory[13] != null ? "Schaden: " + Player.Instance.PlayerInventory[13].MinDamage + " - " + Player.Instance.PlayerInventory[13].MaxDamage : "");
@@ -359,7 +359,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot15":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 15 && Player.Instance.PlayerInventory[14] != null ? "Name: " + Player.Instance.PlayerInventory[14].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 15 && Player.Instance.PlayerInventory[14] != null ? "Name: " + Player.Instance.PlayerInventory[14].Class + " " + Player.Instance.PlayerInventory[14].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 15 && Player.Instance.PlayerInventory[14] != null ? "Level: " + Player.Instance.PlayerInventory[14].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[14].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 15 && Player.Instance.PlayerInventory[14] != null ? "Ruestung: " + Player.Instance.PlayerInventory[14].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 15 && Player.Instance.PlayerInventory[14] != null ? "Schaden: " + Player.Instance.PlayerInventory[14].MinDamage + " - " + Player.Instance.PlayerInventory[14].MaxDamage : "");
@@ -378,7 +378,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot16":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 16 && Player.Instance.PlayerInventory[15] != null ? "Name: " + Player.Instance.PlayerInventory[15].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 16 && Player.Instance.PlayerInventory[15] != null ? "Name: " + Player.Instance.PlayerInventory[15].Class + " " + Player.Instance.PlayerInventory[15].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 16 && Player.Instance.PlayerInventory[15] != null ? "Level: " + Player.Instance.PlayerInventory[15].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[15].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 16 && Player.Instance.PlayerInventory[15] != null ? "Ruestung: " + Player.Instance.PlayerInventory[15].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 16 && Player.Instance.PlayerInventory[15] != null ? "Schaden: " + Player.Instance.PlayerInventory[15].MinDamage + " - " + Player.Instance.PlayerInventory[15].MaxDamage : "");
@@ -397,7 +397,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot17":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 17 && Player.Instance.PlayerInventory[16] != null ? "Name: " + Player.Instance.PlayerInventory[16].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 17 && Player.Instance.PlayerInventory[16] != null ? "Name: " + Player.Instance.PlayerInventory[16].Class + " " + Player.Instance.PlayerInventory[16].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 17 && Player.Instance.PlayerInventory[16] != null ? "Level: " + Player.Instance.PlayerInventory[16].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[16].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 17 && Player.Instance.PlayerInventory[16] != null ? "Ruestung: " + Player.Instance.PlayerInventory[16].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 17 && Player.Instance.PlayerInventory[16] != null ? "Schaden: " + Player.Instance.PlayerInventory[16].MinDamage + " - " + Player.Instance.PlayerInventory[16].MaxDamage : "");
@@ -416,7 +416,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot18":
-                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 18 && Player.Instance.PlayerInventory[17] != null ? "Name: " + Player.Instance.PlayerInventory[17].Class : "");
+                    platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 18 && Player.Instance.PlayerInventory[17] != null ? "Name: " + Player.Instance.PlayerInventory[17].Class + " " + Player.Instance.PlayerInventory[17].Name : "");
                     platform.updateLabel("item_lvl_strength", Player.Instance.PlayerInventory.Count >= 18 && Player.Instance.PlayerInventory[17] != null ? "Level: " + Player.Instance.PlayerInventory[17].Lvl + " / Benoetigte Staerke: " + Player.Instance.PlayerInventory[17].RequiredStrength : "");
                     platform.updateLabel("item_armor", Player.Instance.PlayerInventory.Count >= 18 && Player.Instance.PlayerInventory[17] != null ? "Ruestung: " + Player.Instance.PlayerInventory[17].Armor : "");
                     platform.updateLabel("item_damage", Player.Instance.PlayerInventory.Count >= 18 && Player.Instance.PlayerInventory[17] != null ? "Schaden: " + Player.Instance.PlayerInventory[17].MinDamage + " - " + Player.Instance.PlayerInventory[17].MaxDamage : "");
