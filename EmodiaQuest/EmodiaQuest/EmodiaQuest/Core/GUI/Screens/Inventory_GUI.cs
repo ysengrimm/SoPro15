@@ -614,7 +614,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addLabel(50, 0, 10, "monoFont_big", "Charakter Stats", "story", true);
 
             //this.platform.addLabel(50, 40, 10, "monoFont_big", "Item Stats", "stats", true);
-            this.platform.addLabel(85, 0, 10, "monoFont_big", "Mini-Karte", "inventory", true);
+            this.platform.addLabel(85, 0, 10, "monoFont_big", "Inventar", "inventory", true);
 
             // ItemSockets (Look out to only use 16:9 or it will not be a square!)
             // First row

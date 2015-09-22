@@ -57,6 +57,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                             platform.updateButtonClickability("accept", false);
 
                             platform.updateDialogueIsVisible("questDescription", false);
+                            platform.updateDialogueIsVisible("questStory", false);
 
                             break;
                         default:
@@ -87,6 +88,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         this.platform.updateButtonText(buttonInMovement, "Ansehen");
                         this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                         unfold = false;
+
+                        platform.updateDialogueIsVisible("questDescription", false);
+                        platform.updateDialogueIsVisible("questStory", false);
                     }
                     else
                     {
@@ -97,6 +101,9 @@ namespace EmodiaQuest.Core.GUI.Screens
 
                         platform.updateButtonText("accept", "Annehmen");
                         platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
+
+                        platform.addDialogue(3, 40, 25, 12, "monoFont_small", currentActiveQuest.Description, "questDescription");                  /////// das hier in jedes case kopieren
+                        platform.addDialogue(50, 40, 30, 12, "monoFont_small", currentActiveQuest.Story, "questStory");                             ////////////////////////////////////////
                     }
 
                     break;
@@ -113,6 +120,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         this.platform.updateButtonText(buttonInMovement, "Ansehen");
                         this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                         unfold = false;
+
+                        platform.updateDialogueIsVisible("questDescription", false);
+                        platform.updateDialogueIsVisible("questStory", false);
                     }
                     else
                     {
@@ -138,6 +148,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         this.platform.updateButtonText(buttonInMovement, "Ansehen");
                         this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                         unfold = false;
+
+                        platform.updateDialogueIsVisible("questDescription", false);
+                        platform.updateDialogueIsVisible("questStory", false);
                     }
                     else
                     {
@@ -163,6 +176,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         this.platform.updateButtonText(buttonInMovement, "Ansehen");
                         this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                         unfold = false;
+
+                        platform.updateDialogueIsVisible("questDescription", false);
+                        platform.updateDialogueIsVisible("questStory", false);
                     }
                     else
                     {
@@ -188,6 +204,9 @@ namespace EmodiaQuest.Core.GUI.Screens
                         this.platform.updateButtonText(buttonInMovement, "Ansehen");
                         this.platform.updateResolution(Settings.Instance.Resolution.X, Settings.Instance.Resolution.Y);
                         unfold = false;
+
+                        platform.updateDialogueIsVisible("questDescription", false);
+                        platform.updateDialogueIsVisible("questStory", false);
                     }
                     else
                     {
@@ -291,7 +310,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.updateButtonClickability("accept", false);
 
             // Talk Dialogue
-            platform.addDialogue(10, 40, 80, 35, "monoFont_small", "testtestwdioawdhawoidhoawhdhawi;testtestwdioawdhawoidhoawhdhawi;testtestwdioawdhawoidhoawhdhawi", "questDescription");
+            //platform.addDialogue(10, 40, 80, 35, "monoFont_small", "testtestwdioawdhawoidhoawhdhawi;testtestwdioawdhawoidhoawhdhawi;testtestwdioawdhawoidhoawhdhawi", "questDescription");
             //platform.updateDialogueIsVisible("questDescription", false);
 
             qTest = QuestController.Instance.GetAllAvailableQuests(nPCName);

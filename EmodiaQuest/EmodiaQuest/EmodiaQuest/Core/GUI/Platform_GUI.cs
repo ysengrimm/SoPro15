@@ -168,12 +168,12 @@ namespace EmodiaQuest.Core.GUI
             pixel_violet = Content.Load<Texture2D>("Content_GUI/pixel_violet");
             pixel_brown = Content.Load<Texture2D>("Content_GUI/pixel_brown");
 
-            icon_armor = Content.Load<Texture2D>("fbxContent/items/icon_armor");
-            icon_boot = Content.Load<Texture2D>("fbxContent/items/icon_boot");
-            icon_helmet = Content.Load<Texture2D>("fbxContent/items/icon_helmet");
-            icon_quest = Content.Load<Texture2D>("fbxContent/items/icon_quest");
-            icon_weapon = Content.Load<Texture2D>("fbxContent/items/icon_weapon");
-            icon_useable = Content.Load<Texture2D>("fbxContent/items/icon_useable");
+            icon_armor = Content.Load<Texture2D>("Content_GUI/Items/icon_armor");
+            icon_boot = Content.Load<Texture2D>("Content_GUI/Items/icon_boot");
+            icon_helmet = Content.Load<Texture2D>("Content_GUI/Items/icon_helmet");
+            icon_quest = Content.Load<Texture2D>("Content_GUI/Items/icon_quest");
+            icon_weapon = Content.Load<Texture2D>("Content_GUI/Items/icon_weapon");
+            icon_useable = Content.Load<Texture2D>("Content_GUI/Items/icon_useable");
 
 
 
@@ -188,12 +188,12 @@ namespace EmodiaQuest.Core.GUI
             // Dialogue Content
             dialogue = Content.Load<Texture2D>("Content_GUI/label");
             dialogueUp = Content.Load<Texture2D>("Content_GUI/pixel_white");
-            dialogueUpNormal = Content.Load<Texture2D>("Content_GUI/pixel_white");
-            dialogueUpHoverOver = Content.Load<Texture2D>("Content_GUI/pixel_red");
-            dialogueUpPressed = Content.Load<Texture2D>("Content_GUI/pixel_black");
-            dialogueDown = Content.Load<Texture2D>("Content_GUI/pixel_white");
-            dialogueDownNormal = Content.Load<Texture2D>("Content_GUI/pixel_white");
-            dialogueDownHoverOver = Content.Load<Texture2D>("Content_GUI/pixel_red");
+            dialogueUpNormal = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueUpNormal");
+            dialogueUpHoverOver = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueUpHoverOver");
+            dialogueUpPressed = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueUpPressed");
+            dialogueDownNormal = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownNormal");
+            dialogueDownHoverOver = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownHoverOver");
+            dialogueDownPressed = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownPressed");
             dialogueDownPressed = Content.Load<Texture2D>("Content_GUI/pixel_black");
 
             // Test Content
@@ -479,7 +479,7 @@ namespace EmodiaQuest.Core.GUI
                 {
                     if (db.BoxIsShown)
                     {
-                        spritebatch.Draw(dialogue, new Rectangle(db.XPos, db.YPos, db.Width, db.Height), drawColor);
+                        //spritebatch.Draw(dialogue, new Rectangle(db.XPos, db.YPos, db.Width, db.Height), drawColor);
                         spritebatch.Draw(db.ButtonUpTexture, new Rectangle(db.xPosP1Int, db.yPosP1Int, db.widthP1Int, db.heightP1Int), drawColor);
                         spritebatch.Draw(db.ButtonDownTexture, new Rectangle(db.xPosP2Int, db.yPosP2Int, db.widthP2Int, db.heightP2Int), drawColor);
                     }

@@ -857,36 +857,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="fbxContent\items\icon_armor.png">
-      <Name>icon_armor</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="fbxContent\items\icon_boot.png">
-      <Name>icon_boot</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="fbxContent\items\icon_helmet.png">
-      <Name>icon_helmet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="fbxContent\items\icon_quest.png">
-      <Name>icon_quest</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="fbxContent\items\icon_useable.png">
-      <Name>icon_useable</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="fbxContent\items\icon_weapon.png">
-      <Name>icon_weapon</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="fbxContent\healthbars\h0\Texture1.png">
       <Name>Texture1</Name>
       <Importer>TextureImporter</Importer>
@@ -2084,6 +2054,141 @@
     </Compile>
     <Compile Include="fbxContent\player\young_lightskinned_male_diffuse.png">
       <Name>young_lightskinned_male_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Arrows\dialogueUpHoverOver.png">
+      <Name>dialogueUpHoverOver</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Arrows\dialogueUpNormal.png">
+      <Name>dialogueUpNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Arrows\dialogueUpPressed.png">
+      <Name>dialogueUpPressed</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Arrows\dialogueDownHoverOver.png">
+      <Name>dialogueDownHoverOver</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Arrows\dialogueDownNormal.png">
+      <Name>dialogueDownNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Arrows\dialogueDownPressed.png">
+      <Name>dialogueDownPressed</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_armor.png">
+      <Name>icon_armor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_boot.png">
+      <Name>icon_boot</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_helmet.png">
+      <Name>icon_helmet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_quest.png">
+      <Name>icon_quest</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_useable.png">
+      <Name>icon_useable</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_weapon.png">
+      <Name>icon_weapon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_armor_high.png">
+      <Name>icon_armor_high</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_armor_low.png">
+      <Name>icon_armor_low</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_armor_medium.png">
+      <Name>icon_armor_medium</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_gun_high.png">
+      <Name>icon_gun_high</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_gun_low.png">
+      <Name>icon_gun_low</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_gun_medium.png">
+      <Name>icon_gun_medium</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_hammer.png">
+      <Name>icon_hammer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_helmet_high.png">
+      <Name>icon_helmet_high</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_helmet_low.png">
+      <Name>icon_helmet_low</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_helmet_medium.png">
+      <Name>icon_helmet_medium</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_high.png">
+      <Name>icon_high</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_low.png">
+      <Name>icon_low</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_medium.png">
+      <Name>icon_medium</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_stick.png">
+      <Name>icon_stick</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Content_GUI\Items\icon_sword.png">
+      <Name>icon_sword</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
