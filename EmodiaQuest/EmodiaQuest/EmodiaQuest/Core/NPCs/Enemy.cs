@@ -713,11 +713,13 @@ namespace EmodiaQuest.Core.NPCs
                     }
                 }
             }
-            Console.WriteLine("Enemy at " + Position + " died");
+
+            Player.Instance.Experience += (int)Math.Round(50 * Math.Pow(Math.Sqrt(Player.Instance.Level), 2));
 
             List<Item> droppedItems = ItemTestClass.Instance.ItemGeneratorMonster(Player.Instance.Level, EnemyType);
             foreach (Item item in droppedItems)
             {
+                TextMessage.Instance.NewMessage("Du hast " + item.Name + " gefunden!", Color.Blue);
                 if (Player.Instance.PlayerInventory.Count < 18)
                 {
                     Player.Instance.PlayerInventory.Add(item);    

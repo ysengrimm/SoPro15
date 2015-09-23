@@ -454,7 +454,7 @@ namespace EmodiaQuest.Core
 
             Level = 1;
             Experience = 0;
-            XPToNextLevel = 100;
+            XPToNextLevel = (int)Math.Round(xpScaleFactor * Math.Pow(2, Level - 2));
 
             PlayerInventory = new List<Item>();
             ItemsDropped = new List<Item>();
@@ -1085,7 +1085,7 @@ namespace EmodiaQuest.Core
             if (Experience >= XPToNextLevel)
             {
                 Level++;
-                Console.WriteLine("Level Up! You are now lvl " + Level);
+                TextMessage.Instance.NewMessage("Glueckwunsch, Du hast Level " + Level + " erreicht!", Color.Green);
 
                 // Grant lvlup boni
                 strengthGaidedThrougLvls++;
@@ -1094,7 +1094,7 @@ namespace EmodiaQuest.Core
                 GrandStats();
 
                 Experience = Experience - XPToNextLevel;
-                XPToNextLevel = (int)Math.Round(xpScaleFactor * Math.Sqrt(Level));
+                XPToNextLevel = (int)Math.Round(xpScaleFactor * Math.Pow(2, Level - 2));
             }
         }
 

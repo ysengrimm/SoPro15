@@ -319,7 +319,7 @@ namespace EmodiaQuest.Core.GUI
                         if (GUI.Controls_GUI.Instance.mouseClickedLeft())
                         {
                             if (!db.dialogueStrings.Last().IsDrawn)
-                                db.textPlus -= (int)sizeOfOnePassage;
+                                db.textPlus += (int)sizeOfOnePassage;
                         }
                     }
                     else
@@ -335,7 +335,7 @@ namespace EmodiaQuest.Core.GUI
                         if (GUI.Controls_GUI.Instance.mouseClickedLeft())
                         {
                             if (!db.dialogueStrings.First().IsDrawn)
-                                db.textPlus += (int)sizeOfOnePassage;
+                                db.textPlus -= (int)sizeOfOnePassage;
                         }
                     }
                     else
