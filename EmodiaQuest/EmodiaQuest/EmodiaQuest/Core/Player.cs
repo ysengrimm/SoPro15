@@ -738,16 +738,16 @@ namespace EmodiaQuest.Core
             }
 
             //Collision with Items
-            if (collisionHandler.Controller.ItemColors != null) // because in a Dungeon we might not have an Itemmap
+            if (collisionHandler.Controller.StatticItemColors != null) // because in a Dungeon we might not have an Itemmap
             {
-                if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.ItemColors, ItemOffset))
+                if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.StatticItemColors, ItemOffset))
                 {
-                    for (var i = 0; i < collisionHandler.Controller.Items.Count; i++)
+                    for (var i = 0; i < collisionHandler.Controller.StaticItems.Count; i++)
                     {
-                        var temp = new Vector2(collisionHandler.Controller.Items.ElementAt(i).position.X, collisionHandler.Controller.Items.ElementAt(i).position.Z);
+                        var temp = new Vector2(collisionHandler.Controller.StaticItems.ElementAt(i).position.X, collisionHandler.Controller.StaticItems.ElementAt(i).position.Z);
                         if (gameEnv.EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
                         {
-                            collisionHandler.Controller.Items.RemoveAt(i);
+                            collisionHandler.Controller.StaticItems.RemoveAt(i);
                             //Console.Out.WriteLine("+1 Point");
                         }
                     }

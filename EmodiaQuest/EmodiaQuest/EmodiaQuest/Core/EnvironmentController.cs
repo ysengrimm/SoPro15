@@ -22,10 +22,10 @@ namespace EmodiaQuest.Core
         public ContentManager Content;
         Random rnd = new Random();
 
-        public Texture2D PlacementMap, CollisionMap, ItemMap;
-        public Color[,] PlacementColors, CollisionColors, ItemColors;
+        public Texture2D PlacementMap, CollisionMap, StaticItemMap;
+        public Color[,] PlacementColors, CollisionColors, StatticItemColors;
 
-        public List<GameObject> Ground, Wall, Items, Accessoires, Buildings, Teleporter, RandomStuff;
+        public List<GameObject> Ground, Wall, StaticItems, Accessoires, Buildings, Teleporter, RandomStuff, Items;
         public List<NPCs.Enemy>[,] enemyArray;
         public List<NPCs.NPC> NPCList;
 
@@ -114,7 +114,7 @@ namespace EmodiaQuest.Core
 
             Ground = new List<GameObject>();
             Wall = new List<GameObject>();
-            Items = new List<GameObject>();
+            StaticItems = new List<GameObject>();
             Accessoires = new List<GameObject>();
             Buildings = new List<GameObject>();
             Teleporter = new List<GameObject>();
@@ -127,7 +127,7 @@ namespace EmodiaQuest.Core
 
             PlacementColors = new Color[MapWidth, MapHeight];
             CollisionColors = new Color[MapWidth, MapHeight];
-            ItemColors = new Color[MapWidth, MapHeight];
+            StatticItemColors = new Color[MapWidth, MapHeight];
 
             CreateEnemyArray();
         }
@@ -177,17 +177,17 @@ namespace EmodiaQuest.Core
         {
             Color[] colors1D;
 
-            this.ItemMap = map;
+            this.StaticItemMap = map;
 
             colors1D = new Color[map.Width * map.Height];
             map.GetData(colors1D);
 
-            ItemColors = new Color[map.Width, map.Height];
+            StatticItemColors = new Color[map.Width, map.Height];
             for (int x = 0; x < map.Width; x++)
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    ItemColors[x, y] = colors1D[x + y * map.Width];
+                    StatticItemColors[x, y] = colors1D[x + y * map.Width];
                 }
             }
         }
@@ -268,9 +268,9 @@ namespace EmodiaQuest.Core
             {
                 for (int j = 0; j < MapHeight; j++)
                 {
-                    if (ItemColors[i, j].R == color.R && ItemColors[i, j].G == color.G)
+                    if (StatticItemColors[i, j].R == color.R && StatticItemColors[i, j].G == color.G)
                     {
-                        itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), ItemColors[i, j].B, name, isRandomStuff));
+                        itemList.Add(new GameObject(model, new Vector3(i * 10, height, j * 10), StatticItemColors[i, j].B, name, isRandomStuff));
                     }
                 }
             }
@@ -420,7 +420,7 @@ namespace EmodiaQuest.Core
             {
                 obj.loadContent(content);
             }
-            foreach (GameObject obj in Items)
+            foreach (GameObject obj in StaticItems)
             {
                 obj.loadContent(content);
             }
@@ -452,7 +452,7 @@ namespace EmodiaQuest.Core
             {
                 obj.update(gametime);
             }
-            foreach (GameObject obj in Items)
+            foreach (GameObject obj in StaticItems)
             {
                 obj.update(gametime);
             }
@@ -484,7 +484,7 @@ namespace EmodiaQuest.Core
             {
                 obj.drawGameobject(world, view, projection);
             }
-            foreach (GameObject obj in Items)
+            foreach (GameObject obj in StaticItems)
             {
                 obj.drawGameobject(world, view, projection);
             }

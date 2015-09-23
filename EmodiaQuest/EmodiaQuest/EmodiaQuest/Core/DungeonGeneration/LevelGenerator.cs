@@ -23,6 +23,9 @@ namespace EmodiaQuest.Core.DungeonGeneration
 
     public class LevelGenerator
     {
+        /// <summary>
+        /// True for debug mode on
+        /// </summary>
         private bool debugON = false;
         private string contentPath;
         public System.Drawing.Bitmap Map;
@@ -178,7 +181,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     // does not set an item in spawn room
                     if (!itemSet && !set && amountQuestItem > 0)
                     {
-                        Controller.ItemColors[room.Center.X, room.Center.Y] = ColorListDungeon.Instance.Item;
+                        Controller.StatticItemColors[room.Center.X, room.Center.Y] = ColorListDungeon.Instance.Item;
                         if (debugON) Map.SetPixel(room.Center.X, room.Center.Y, System.Drawing.Color.Gray);
                         itemSet = true;
                         amountQuestItem--;
@@ -291,7 +294,7 @@ namespace EmodiaQuest.Core.DungeonGeneration
                     return (EnemyType)i;
                 }
             }
-            Console.Out.WriteLine("NO MONSTERTYPE IN THIS STRING");
+            Console.Out.WriteLine("Error: LevelGenerator: Failed to cast a string to EnemyType.");
             return EnemyType.Monster1;      //to return anything
         }
 

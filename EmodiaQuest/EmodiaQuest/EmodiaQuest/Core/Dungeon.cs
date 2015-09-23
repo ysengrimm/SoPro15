@@ -83,7 +83,7 @@ namespace EmodiaQuest.Core
             if(QuestController.Instance.ActiveQuestItems.Any() && QuestController.Instance.ActiveQuestItems[0].Name != "")
             {
                 EnvironmentController.Object questItem = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/" + QuestController.Instance.ActiveQuestItems[0].Name), ColorListDungeon.Instance.Item, new Vector2(1, 1), "questItem", false);
-                Controller.InsertItem(Controller.Items, questItem.Model, questItem.Color, 0, questItem.Name, questItem.IsRandomStuff);
+                Controller.InsertItem(Controller.StaticItems, questItem.Model, questItem.Color, 0, questItem.Name, questItem.IsRandomStuff);
             }
 
             // Insert objects
