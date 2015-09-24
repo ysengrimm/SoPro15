@@ -42,7 +42,6 @@ namespace EmodiaQuest.Core
         public Skybox Skybox;
 
         public List<NPC> NPCList;
-        
 
         /// <summary>
         /// Method for initialising Models and so on in SafeWorld
@@ -143,6 +142,7 @@ namespace EmodiaQuest.Core
             // After everything in the environment is added we load the stuff for the objects (textures etc.)
             Controller.LoadEnvironment(Content);
         }
+
 
         public void UpdateSafeworld(GameTime gametime)
         {

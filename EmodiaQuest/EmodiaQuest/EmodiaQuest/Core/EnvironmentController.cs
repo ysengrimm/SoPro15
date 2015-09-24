@@ -452,8 +452,22 @@ namespace EmodiaQuest.Core
             }
         }
 
+        int temp;   // to not to show some equal messages
         public void UpdateEnvironment(GameTime gametime)
         {
+            // shows hints at game start
+            if (Settings.Instance.hints && temp != gametime.TotalGameTime.Seconds)
+            {
+                int interval = 10;
+                if (gametime.TotalGameTime.Seconds == interval * 1) TextMessage.Instance.NewMessage("Spreche mit einem der 3 NPCs um eine Quest zu erhalten");
+                if (gametime.TotalGameTime.Seconds == interval * 2) TextMessage.Instance.NewMessage("In das Dungeon gelangst du ueber den Brunnen");
+                if (gametime.TotalGameTime.Seconds == interval * 3) TextMessage.Instance.NewMessage("Inventar oeffnen mit I");
+                if (gametime.TotalGameTime.Seconds == interval * 4) TextMessage.Instance.NewMessage("Optionen oeffnen mit O");
+                if (gametime.TotalGameTime.Seconds == interval * 5) TextMessage.Instance.NewMessage("Musik an/aus mit R/P");
+
+                temp = gametime.TotalGameTime.Seconds;
+            }
+
             foreach (GameObject obj in Ground)
             {
                 obj.update(gametime);

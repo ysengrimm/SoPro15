@@ -70,6 +70,18 @@ namespace EmodiaQuest.Core.GUI.Screens
                         EmodiaQuest.Core.GUI.Platform_GUI.updateAllResolutions(monitorWidth, monitorHeight); 
                     }
                     break;
+                case "hintsButton":
+                    if (Settings.Instance.hints)
+                    {
+                        Settings.Instance.hints = false;
+                        platform.updateLabel("hintsLabel", "Deaktiviert");
+                    }
+                    else
+                    {
+                        Settings.Instance.hints = true;
+                        platform.updateLabel("hintsLabel", "Aktiviert");
+                    }
+                    break;
                 default:
                     Console.WriteLine("Function name does not exist");
                     break;
@@ -108,20 +120,23 @@ namespace EmodiaQuest.Core.GUI.Screens
             //this.platform.addPlainText(50.0f, 10.0f, "monoFont_big", "OPTIONS MENU", true);
             this.platform.addLabel(50, 10, 18, "dice_big", "Optionen", "Options", true);
 
-            this.platform.addSlider(15, 40, 35, 8, 0, 2, 0, "resolutionChange");
-            this.platform.addSlider(15, 50, 35, 8, 0, 100, 100, "volumeChange");
+            this.platform.addSlider(15, 30, 35, 8, 0, 2, 0, "resolutionChange");
+            this.platform.addSlider(15, 40, 35, 8, 0, 100, 100, "volumeChange");
 
-            this.platform.addLabel(55, 40, 35, 8, "monoFont_small", "854 x 480", "resolution");
-            this.platform.addLabel(55, 50, 35, 8, "monoFont_small", "Lautstaerke: 100", "volume");
+            this.platform.addLabel(55, 30, 35, 8, "monoFont_small", "854 x 480", "resolution");
+            this.platform.addLabel(55, 40, 35, 8, "monoFont_small", "Lautstaerke: 100", "volume");
             //this.platform.addSlider(35, 60, 30, 8, 0, 100, "volumeChange2");
 
             //this.platform.addButton(20, 60, 30, 8, "switchFullscreen", "Screen Mode");
-            this.platform.addButton(15, 60, 35, 8, "switchFullscreen", "Vollbild");
+            this.platform.addButton(15, 50, 35, 8, "switchFullscreen", "Vollbild");
             //this.platform.addButton()
             //this.platform.updateButtonText("switchFullscreen", "Vollbild");
-            this.platform.addLabel(55, 60, 35, 8, "monoFont_small", "Nicht aktiv", "fullscreenMode");
+            this.platform.addLabel(55, 50, 35, 8, "monoFont_small", "Nicht aktiv", "fullscreenMode");
 
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Hauptmenue");
+
+            this.platform.addButton(15, 60, 35, 8, "hintsButton", "Hinweise");
+            this.platform.addLabel(55, 60, 35, 8, "monoFont_small", "Aktiviert", "hintsLabel");
 
             //this.platform.addButton(35, 60, 30, 8, "nextState", "Start Game");
             // this.platform.addPlainImage

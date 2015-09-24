@@ -122,6 +122,10 @@ namespace EmodiaQuest.Core
             }
         }
 
+        /// <summary>
+        /// Enables/disables hints
+        /// </summary>
+        public bool hints = true;
 
         /// <summary>
         /// Far plane distance
