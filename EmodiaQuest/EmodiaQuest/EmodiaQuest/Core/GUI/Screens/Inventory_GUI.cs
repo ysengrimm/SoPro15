@@ -81,7 +81,8 @@ namespace EmodiaQuest.Core.GUI.Screens
                     break;
                 case "quest":
                     platform.updateLabel("active_quest", Player.Instance.ActiveQuest.Name != "" ? Player.Instance.ActiveQuest.Name : "Kein aktiver Quest");
-                    platform.updateLabel("active_quest_desc", Player.Instance.ActiveQuest.Description != "" ? Player.Instance.ActiveQuest.Description : "");
+
+                    platform.updateDialogueText("questDescription", Player.Instance.ActiveQuest.Description != "" ? Player.Instance.ActiveQuest.Description : "");
                     break;
             }
         }
@@ -699,7 +700,10 @@ namespace EmodiaQuest.Core.GUI.Screens
 
             this.platform.addLabel(15, 0, 10, "monoFont_big", "Questlog", "changeside", true);
             platform.addLabel(15, 10, 5, "monoFont_big", Player.Instance.ActiveQuest.Name != "" ? Player.Instance.ActiveQuest.Name : "Kein aktiver Quest", "active_quest", true);
-            platform.addLabel(15, 15, 4, "monoFont_big", Player.Instance.ActiveQuest.Description != "" ? Player.Instance.ActiveQuest.Description : "", "active_quest_desc", true);
+
+            platform.addDialogue(0.6f, 13, 33, 30, "monoFont_small", Player.Instance.ActiveQuest.Description != "" ? Player.Instance.ActiveQuest.Description : "", "questDescription");
+            platform.updateDialogueScaleFactor("questDescription", 0.4f);
+            //platform.updateDialogueIsVisible("questDescription", false);
 
             this.platform.addLabel(50, 0, 10, "monoFont_big", "Charakter Stats", "story", true);
 

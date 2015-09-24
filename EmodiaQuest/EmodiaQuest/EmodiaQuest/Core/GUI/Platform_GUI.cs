@@ -223,7 +223,6 @@ namespace EmodiaQuest.Core.GUI
             dialogueDownNormal = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownNormal");
             dialogueDownHoverOver = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownHoverOver");
             dialogueDownPressed = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownPressed");
-            dialogueDownPressed = Content.Load<Texture2D>("Content_GUI/pixel_black");
 
             // Test Content
             test1 = Content.Load<Texture2D>("Content_GUI/test1");
