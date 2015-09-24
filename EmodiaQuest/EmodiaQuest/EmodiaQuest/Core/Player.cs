@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using EmodiaQuest.Core.Items;
 using EmodiaQuest.Core.NPCs;
+using EmodiaQuest.Core.GUI.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -459,10 +460,24 @@ namespace EmodiaQuest.Core
             PlayerInventory = new List<Item>();
             ItemsDropped = new List<Item>();
 
-            CurrentEquippedHelmet = new Item(1, ItemClass.Helmet, 0, 20, 0, 0, "rostigerSchrottHelm");
-            CurrentEquippedArmor = new Item(0, ItemClass.Armor, 0, 0, 10, 10, "leichteModerneRuestung");
-            CurrentEquippedBoots = new Item(1, ItemClass.Boots, 0, 10, 0, 0, "Schuhe");
-            CurrentEquippedWeapon = new Item(0, ItemClass.Weapon, 0, 50, 70, 0, 0, true, "Gewehr");
+            // Default equipment
+            CurrentEquippedHelmet = new Item(1, ItemClass.Einfache_Kappe, 0, 20, 0, 0, ItemClass.Einfache_Kappe.ToString());
+            Inventory_GUI.Instance.platform.updateButtonPicture("equipped_helmet", CurrentEquippedHelmet.Class.ToString());
+            Inventory_GUI.Instance.platform.updateItemLevel("equipped_helmet", CurrentEquippedHelmet.Lvl);
+
+            CurrentEquippedArmor = new Item(0, ItemClass.Einfaches_Shirt, 0, 0, 10, 10, ItemClass.Einfaches_Shirt.ToString());
+            Inventory_GUI.Instance.platform.updateButtonPicture("equipped_armor", CurrentEquippedArmor.Class.ToString());
+            Inventory_GUI.Instance.platform.updateItemLevel("equipped_armor", CurrentEquippedArmor.Lvl);
+
+            CurrentEquippedBoots = new Item(1, ItemClass.Beinkleid, 0, 10, 0, 0, ItemClass.Beinkleid.ToString());
+            Inventory_GUI.Instance.platform.updateButtonPicture("equipped_boots", CurrentEquippedBoots.Class.ToString());
+            Inventory_GUI.Instance.platform.updateItemLevel("equipped_boots", CurrentEquippedBoots.Lvl);
+
+            CurrentEquippedWeapon = new Item(0, ItemClass.Normales_Gewehr, 0, 50, 70, 0, 0, true, ItemClass.Normales_Gewehr.ToString());
+            Inventory_GUI.Instance.platform.updateButtonPicture("equipped_weapon", CurrentEquippedWeapon.Class.ToString());
+            Inventory_GUI.Instance.platform.updateItemLevel("equipped_weapon", CurrentEquippedWeapon.Lvl);
+            
+
 
             ActiveQuest = new Quest {Name = "", Description = ""};
 
@@ -737,21 +752,37 @@ namespace EmodiaQuest.Core
                 }
             }
 
-            //Collision with Items
+            //Collision with static Items
             if (collisionHandler.Controller.StatticItemColors != null) // because in a Dungeon we might not have an Itemmap
             {
                 if (Color.White != collisionHandler.GetCollisionColor(new Vector2(Position.X, Position.Y), collisionHandler.Controller.StatticItemColors, ItemOffset))
                 {
-                    for (var i = 0; i < collisionHandler.Controller.StaticItems.Count; i++)
+                    for (var i = 0; i < collisionHandler.Controller.QuestItems.Count; i++)
                     {
-                        var temp = new Vector2(collisionHandler.Controller.StaticItems.ElementAt(i).position.X, collisionHandler.Controller.StaticItems.ElementAt(i).position.Z);
+                        var temp = new Vector2(collisionHandler.Controller.QuestItems.ElementAt(i).position.X, collisionHandler.Controller.QuestItems.ElementAt(i).position.Z);
                         if (gameEnv.EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
                         {
-                            collisionHandler.Controller.StaticItems.RemoveAt(i);
-                            //Console.Out.WriteLine("+1 Point");
+                            collisionHandler.Controller.QuestItems.RemoveAt(i);
                         }
                     }
 
+                }
+            }
+
+            //Collision with health balls
+            //same as with static Items but without Grid
+            //checks if collision with all health balls, there should be not to many so its enough performance
+            if (collisionHandler.Controller.Items.Count > 0)
+            {
+                for (var i = 0; i < collisionHandler.Controller.Items.Count; i++)
+                {
+                    var temp = new Vector2(collisionHandler.Controller.Items.ElementAt(i).position.X, collisionHandler.Controller.Items.ElementAt(i).position.Z);
+                    if (gameEnv.EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 1)
+                    {
+                        hp += maxHp*0.02f;
+                        TextMessage.Instance.NewMessage(maxHp*0.02f + " Hp bekommen!");
+                        collisionHandler.Controller.Items.RemoveAt(i);
+                    }
                 }
             }
 
@@ -1019,11 +1050,11 @@ namespace EmodiaQuest.Core
                 oldEquippedBoots = CurrentEquippedBoots;
                 oldEquippedHelmet = CurrentEquippedHelmet;
                 oldEquippedWeapon = CurrentEquippedWeapon;
-                if (CurrentEquippedWeapon.Name == "EinfachesGewehr")
+                if (CurrentEquippedWeapon.Name == ItemClass.Einfaches_Gewehr.ToString())
                 {
                     shootingtype = Shootingtype.Normal;
                 }
-                else if(CurrentEquippedWeapon.Name == "Gewehr")
+                else if(CurrentEquippedWeapon.Name == ItemClass.Normales_Gewehr.ToString())
                 {
                     shootingtype = Shootingtype.Blast;
                 }
@@ -1085,7 +1116,7 @@ namespace EmodiaQuest.Core
             if (Experience >= XPToNextLevel)
             {
                 Level++;
-                TextMessage.Instance.NewMessage("Glueckwunsch, Du hast Level " + Level + " erreicht!", Color.Green);
+                TextMessage.Instance.NewMessage("Level " + Level + " erreicht!", Color.Green);
 
                 // Grant lvlup boni
                 strengthGaidedThrougLvls++;
@@ -1341,53 +1372,53 @@ namespace EmodiaQuest.Core
                     mesh.Draw();
                 }
                 //Only render the equipped Weapon
-                else if (mesh.Name == "Stock" && CurrentEquippedWeapon.Name == "Stock")
+                else if (mesh.Name == "Stock" && CurrentEquippedWeapon.Name == ItemClass.Stock.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Hammer" && CurrentEquippedWeapon.Name == "Hammer")
+                else if (mesh.Name == "Hammer" && CurrentEquippedWeapon.Name == ItemClass.Hammer.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Schwert" && CurrentEquippedWeapon.Name == "Schwert")
+                else if (mesh.Name == "Schwert" && CurrentEquippedWeapon.Name == ItemClass.Schwert.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Einfaches_Gewehr" && CurrentEquippedWeapon.Name == "EinfachesGewehr")
+                else if (mesh.Name == "Einfaches_Gewehr" && CurrentEquippedWeapon.Name == ItemClass.Einfaches_Gewehr.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Normales_Gewehr" && CurrentEquippedWeapon.Name == "Gewehr")
+                else if (mesh.Name == "Normales_Gewehr" && CurrentEquippedWeapon.Name == ItemClass.Normales_Gewehr.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Spezielles_Gewehr" && CurrentEquippedWeapon.Name == "SpeziellesGewehr")
+                else if (mesh.Name == "Spezielles_Gewehr" && CurrentEquippedWeapon.Name == ItemClass.Schweres_Gewehr.ToString())
                 {
                     mesh.Draw();
                 }
                 // Only render the equipped Helmet
-                else if (mesh.Name == "Einfache_Kappe" && (CurrentEquippedHelmet.Name == "LederKappe" || CurrentEquippedHelmet.Name == "StoffKappe" || CurrentEquippedHelmet.Name == "MetallKappe"))
+                else if (mesh.Name == "Einfache_Kappe" && CurrentEquippedHelmet.Name == ItemClass.Einfache_Kappe.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Schrott_Helm" && CurrentEquippedHelmet.Name == "rostigerSchrottHelm")
+                else if (mesh.Name == "Schrott_Helm" && CurrentEquippedHelmet.Name == ItemClass.Hut_aus_Schrott.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Spezieller_Helm" && (CurrentEquippedHelmet.Name == "speziellerHelm" || CurrentEquippedHelmet.Name == "speziellerRostigerHelm" || CurrentEquippedHelmet.Name == "speziellerSignierterHelm"))
+                else if (mesh.Name == "Spezieller_Helm" && CurrentEquippedHelmet.Name == ItemClass.Schwerer_Helm.ToString())
                 {
                     mesh.Draw();
                 }
                 // Only render the equipped Amor
-                else if (mesh.Name == "Einfache_R_stung" && (CurrentEquippedArmor.Name == "leichteRuestung" || CurrentEquippedArmor.Name == "leichteModerneRuestung"))
+                else if (mesh.Name == "Einfache_R_stung" && CurrentEquippedArmor.Name == ItemClass.Einfache_Ruestung.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Einfaches_Shirt" && (CurrentEquippedArmor.Name == "StoffHemd" || CurrentEquippedArmor.Name == "neuesStoffhemd" || CurrentEquippedArmor.Name == "altesStoffhemd"))
+                else if (mesh.Name == "Einfaches_Shirt" && CurrentEquippedArmor.Name == ItemClass.Einfaches_Shirt.ToString())
                 {
                     mesh.Draw();
                 }
-                else if (mesh.Name == "Schwere_R_stung" && (CurrentEquippedArmor.Name == "alteSchwereRuestung" || CurrentEquippedArmor.Name == "moderneSchwereRuestung" || CurrentEquippedArmor.Name == "schwereRuestung"))
+                else if (mesh.Name == "Schwere_R_stung" && CurrentEquippedArmor.Name == ItemClass.Schwere_Ruestung.ToString())
                 {
                     mesh.Draw();
                 }

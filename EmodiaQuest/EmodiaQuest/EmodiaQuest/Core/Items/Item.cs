@@ -55,15 +55,15 @@ namespace EmodiaQuest.Core.Items
         {
             switch (itemClass)
             {
-                case ItemClass.Helmet:
+                case ItemClass.Einfache_Kappe: case ItemClass.Hut_aus_Schrott: case ItemClass.Schwerer_Helm:
                     helmetCount++;
                     this.ID = helmetCount;
                     break;
-                case ItemClass.Armor:
+                case ItemClass.Einfache_Ruestung: case ItemClass.Einfaches_Shirt: case ItemClass.Schwere_Ruestung:
                     armorCount++;
                     this.ID = armorCount;
                     break;
-                case ItemClass.Boots:
+                case ItemClass.Beinkleid:
                     bootCount++;
                     this.ID = bootCount;
                     break;

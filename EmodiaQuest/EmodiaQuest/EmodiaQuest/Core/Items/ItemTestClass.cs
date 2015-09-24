@@ -59,88 +59,88 @@ namespace EmodiaQuest.Core.Items
             Quests.Add(new Item(ItemClass.Quest, "Truhe"));
 
             //Lvl 1
-            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 30, 0, 0, "LederKappe"));
-            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 20, 0, 0, "StoffKappe"));
-            Helmets.Add(new Item(1, ItemClass.Helmet, 0, 40, 0, 0, "MetallKappe"));
+            Helmets.Add(new Item(1, ItemClass.Einfache_Kappe, 0, 30, 0, 0, ItemClass.Einfache_Kappe.ToString()));
+            Helmets.Add(new Item(1, ItemClass.Hut_aus_Schrott, 0, 20, 0, 0, ItemClass.Hut_aus_Schrott.ToString()));
+            Helmets.Add(new Item(1, ItemClass.Schwerer_Helm, 0, 40, 0, 0, ItemClass.Schwerer_Helm.ToString()));
 
             //Lvl 2
-            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 50, 0, 0, "LederKappe"));
-            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 80, 0, 0, "rostigerSchrottHelm"));
-            Helmets.Add(new Item(2, ItemClass.Helmet, 5, 90, 0, 0, "rostigerSchrottHelm"));
+            Helmets.Add(new Item(2, ItemClass.Einfache_Kappe, 5, 50, 0, 0, ItemClass.Einfache_Kappe.ToString()));
+            Helmets.Add(new Item(2, ItemClass.Hut_aus_Schrott, 5, 80, 0, 0, ItemClass.Hut_aus_Schrott.ToString()));
+            Helmets.Add(new Item(2, ItemClass.Schwerer_Helm, 5, 90, 0, 0, ItemClass.Schwerer_Helm.ToString()));
 
             //Lvl 3
-            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 100, 0, 0, "rostigerSchrottHelm"));
-            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 200, 0, 0, "speziellerHelm"));
-            Helmets.Add(new Item(3, ItemClass.Helmet, 10, 150, 0, 0, "speziellerRostigerHelm"));
+            Helmets.Add(new Item(3, ItemClass.Einfache_Kappe, 10, 100, 0, 0, ItemClass.Einfache_Kappe.ToString()));
+            Helmets.Add(new Item(3, ItemClass.Hut_aus_Schrott, 10, 200, 0, 0, ItemClass.Hut_aus_Schrott.ToString()));
+            Helmets.Add(new Item(3, ItemClass.Schwerer_Helm, 10, 150, 0, 0, ItemClass.Schwerer_Helm.ToString()));
 
             //Lvl 4
-            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 50, 0, 0, "LederKappe"));
-            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 400, 0, 0, "speziellerSignierterHelm"));
-            Helmets.Add(new Item(4, ItemClass.Helmet, 20, 200, 0, 0, "speziellerHelm"));
+            Helmets.Add(new Item(4, ItemClass.Einfache_Kappe, 20, 50, 0, 0, ItemClass.Einfache_Kappe.ToString()));
+            Helmets.Add(new Item(4, ItemClass.Hut_aus_Schrott, 20, 400, 0, 0, ItemClass.Hut_aus_Schrott.ToString()));
+            Helmets.Add(new Item(4, ItemClass.Schwerer_Helm, 20, 200, 0, 0, ItemClass.Schwerer_Helm.ToString()));
 
             //Lvl 1
-            Boots.Add(new Item(1, ItemClass.Boots, 0, 30, 0, 0, "Schuhe"));
-            Boots.Add(new Item(1, ItemClass.Boots, 0, 20, 0, 0, "alteSchuhe"));
+            Boots.Add(new Item(1, ItemClass.Beinkleid, 0, 30, 0, 0, ItemClass.Beinkleid.ToString()));
+            Boots.Add(new Item(1, ItemClass.Beinkleid, 0, 20, 0, 0, ItemClass.Beinkleid.ToString()));
 
             //Lvl 2
-            Boots.Add(new Item(2, ItemClass.Boots, 5, 30, 0, 0, "Schuhe"));
-            Boots.Add(new Item(2, ItemClass.Boots, 5, 20, 0, 0, "alteSchuhe"));
-            Boots.Add(new Item(2, ItemClass.Boots, 5, 50, 0, 0, "moderneSchuhe"));
+            Boots.Add(new Item(2, ItemClass.Beinkleid, 5, 30, 0, 0, ItemClass.Beinkleid.ToString()));
+            Boots.Add(new Item(2, ItemClass.Beinkleid, 5, 20, 0, 0, ItemClass.Beinkleid.ToString()));
+            Boots.Add(new Item(2, ItemClass.Beinkleid, 5, 50, 0, 0, ItemClass.Beinkleid.ToString()));
 
             //Lvl 3
-            Boots.Add(new Item(3, ItemClass.Boots, 10, 30, 0, 0, "Schuhe"));
-            Boots.Add(new Item(3, ItemClass.Boots, 10, 25, 0, 0, "alteSchuhe"));
-            Boots.Add(new Item(3, ItemClass.Boots, 10, 55, 0, 0, "moderneSchuhe"));
+            Boots.Add(new Item(3, ItemClass.Beinkleid, 10, 30, 0, 0, ItemClass.Beinkleid.ToString()));
+            Boots.Add(new Item(3, ItemClass.Beinkleid, 10, 25, 0, 0, ItemClass.Beinkleid.ToString()));
+            Boots.Add(new Item(3, ItemClass.Beinkleid, 10, 55, 0, 0, ItemClass.Beinkleid.ToString()));
 
             //Lvl 4
-            Boots.Add(new Item(4, ItemClass.Boots, 20, 50, 0, 0, "Schuhe"));
-            Boots.Add(new Item(4, ItemClass.Boots, 20, 60, 0, 0, "alteSchuhe"));
-            Boots.Add(new Item(4, ItemClass.Boots, 20, 80, 0, 0, "moderneSchuhe"));
+            Boots.Add(new Item(4, ItemClass.Beinkleid, 20, 50, 0, 0, ItemClass.Beinkleid.ToString()));
+            Boots.Add(new Item(4, ItemClass.Beinkleid, 20, 60, 0, 0, ItemClass.Beinkleid.ToString()));
+            Boots.Add(new Item(4, ItemClass.Beinkleid, 20, 80, 0, 0, ItemClass.Beinkleid.ToString()));
 
             //Lvl 1
-            Armors.Add(new Item(1, ItemClass.Armor, 0, 40, 40, 0, "StoffHemd"));
-            Armors.Add(new Item(1, ItemClass.Armor, 0, 60, 60, 0, "neuesStoffhemd"));
-            Armors.Add(new Item(1, ItemClass.Armor, 0, 35, 20, 0, "altesStoffhemd"));
+            Armors.Add(new Item(1, ItemClass.Einfaches_Shirt, 0, 40, 40, 0, ItemClass.Einfaches_Shirt.ToString()));
+            Armors.Add(new Item(1, ItemClass.Einfache_Ruestung, 0, 60, 60, 0, ItemClass.Einfache_Ruestung.ToString()));
+            Armors.Add(new Item(1, ItemClass.Schwere_Ruestung, 0, 35, 20, 0, ItemClass.Schwere_Ruestung.ToString()));
 
             //Lvl 2
-            Armors.Add(new Item(2, ItemClass.Armor, 5, 70, 0, 0, "neuesStoffhemd"));
-            Armors.Add(new Item(2, ItemClass.Armor, 5, 80, 0, 0 , "leichteRuestung"));
-            Armors.Add(new Item(2, ItemClass.Armor, 5, 100, 0, 0, "leichteModerneRuestung"));
+            Armors.Add(new Item(2, ItemClass.Einfaches_Shirt, 5, 70, 0, 0, ItemClass.Einfaches_Shirt.ToString()));
+            Armors.Add(new Item(2, ItemClass.Einfache_Ruestung, 5, 80, 0, 0, ItemClass.Einfache_Ruestung.ToString()));
+            Armors.Add(new Item(2, ItemClass.Schwere_Ruestung, 5, 100, 0, 0, ItemClass.Schwere_Ruestung.ToString()));
 
             //Lvl 3
-            Armors.Add(new Item(3, ItemClass.Armor, 10, 140, 0, 0, "leichteModerneRuestung"));
-            Armors.Add(new Item(3, ItemClass.Armor, 10, 160, 0, 0, "leichteRuestung"));
-            Armors.Add(new Item(3, ItemClass.Armor, 10, 180, 0, 0, "alteSchwereRuestung"));
+            Armors.Add(new Item(3, ItemClass.Einfaches_Shirt, 10, 140, 0, 0, ItemClass.Einfaches_Shirt.ToString()));
+            Armors.Add(new Item(3, ItemClass.Einfache_Ruestung, 10, 160, 0, 0, ItemClass.Einfache_Ruestung.ToString()));
+            Armors.Add(new Item(3, ItemClass.Schwere_Ruestung, 10, 180, 0, 0, ItemClass.Schwere_Ruestung.ToString()));
 
             //Lvl 4
-            Armors.Add(new Item(4, ItemClass.Armor, 20, 250, 0, 0, "alteSchwereRuestung"));
-            Armors.Add(new Item(4, ItemClass.Armor, 20, 300, 0, 0, "moderneSchwereRuestung"));
-            Armors.Add(new Item(4, ItemClass.Armor, 20, 350, 0, 0, "schwereRuestung"));
+            Armors.Add(new Item(4, ItemClass.Einfaches_Shirt, 20, 250, 0, 0, ItemClass.Einfaches_Shirt.ToString()));
+            Armors.Add(new Item(4, ItemClass.Einfache_Ruestung, 20, 300, 0, 0, ItemClass.Einfache_Ruestung.ToString()));
+            Armors.Add(new Item(4, ItemClass.Schwere_Ruestung, 20, 350, 0, 0, ItemClass.Schwere_Ruestung.ToString()));
 
             //Lvl 0
-            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 60, 70, 0, 0, false, "Stock"));
-            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 40, 90, 0, 0, false, "Hammer"));
-            Weapons.Add(new Item(0, ItemClass.Weapon, 0, 100, 105, 0, 0, true, "Gewehr"));
+            Weapons.Add(new Item(0, ItemClass.Stock, 0, 60, 70, 0, 0, false, ItemClass.Stock.ToString()));
+            Weapons.Add(new Item(0, ItemClass.Hammer, 0, 40, 90, 0, 0, false, ItemClass.Hammer.ToString()));
+            Weapons.Add(new Item(0, ItemClass.Einfaches_Gewehr, 0, 100, 105, 0, 0, true, ItemClass.Einfaches_Gewehr.ToString()));
 
             //Lvl 1
-            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 70, 150, 0, 0, true, "EinfachesGewehr"));
-            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 100, 200, 0, 0, true, "Gewehr"));
-            Weapons.Add(new Item(1, ItemClass.Weapon, 3, 160, 180, 0, 0, true, "SpeziellesGewehr"));
+            Weapons.Add(new Item(1, ItemClass.Normales_Gewehr, 3, 70, 150, 0, 0, true, ItemClass.Normales_Gewehr.ToString()));
+            Weapons.Add(new Item(1, ItemClass.Einfaches_Gewehr, 3, 100, 200, 0, 0, true, ItemClass.Einfaches_Gewehr.ToString()));
+            Weapons.Add(new Item(1, ItemClass.Schweres_Gewehr, 3, 160, 180, 0, 0, true, ItemClass.Schweres_Gewehr.ToString()));
 
             //Lvl 2
-            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 100, 120, 0, 0, false, "Schwert"));
-            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 100, 121, 0, 0, false, "Schwert"));
-            Weapons.Add(new Item(2, ItemClass.Weapon, 7, 100, 122, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(2, ItemClass.Schwert, 7, 100, 120, 0, 0, false, ItemClass.Schwert.ToString()));
+            Weapons.Add(new Item(2, ItemClass.Schwert, 7, 100, 121, 0, 0, false, ItemClass.Schwert.ToString()));
+            Weapons.Add(new Item(2, ItemClass.Schwert, 7, 100, 122, 0, 0, false, ItemClass.Schwert.ToString()));
 
             //Lvl 3
-            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 100, 200, 0, 0, false, "Schwert"));
-            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 100, 201, 0, 0, false, "Schwert"));
-            Weapons.Add(new Item(3, ItemClass.Weapon, 12, 100, 202, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(3, ItemClass.Schwert, 12, 100, 200, 0, 0, false, ItemClass.Schwert.ToString()));
+            Weapons.Add(new Item(3, ItemClass.Schwert, 12, 100, 201, 0, 0, false, ItemClass.Schwert.ToString()));
+            Weapons.Add(new Item(3, ItemClass.Schwert, 12, 100, 202, 0, 0, false, ItemClass.Schwert.ToString()));
 
             //Lvl 4
-            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 242, 242, 0, 0, false, "Schwert"));
-            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 42, 42, 0, 0, false, "Schwert"));
-            Weapons.Add(new Item(4, ItemClass.Weapon, 25, 420, 42, 0, 0, false, "Schwert"));
+            Weapons.Add(new Item(4, ItemClass.Schwert, 25, 242, 242, 0, 0, false, ItemClass.Schwert.ToString()));
+            Weapons.Add(new Item(4, ItemClass.Schwert, 25, 42, 42, 0, 0, false, ItemClass.Schwert.ToString()));
+            Weapons.Add(new Item(4, ItemClass.Schwert, 25, 420, 42, 0, 0, false, ItemClass.Schwert.ToString()));
 
 
         }
@@ -236,7 +236,22 @@ namespace EmodiaQuest.Core.Items
 
             List<Item> giveList = new List<Item>();
 
+            giveList.Add(getOneItem(availableList, ItemClass.Stock));
+            giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+            giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+            giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+            giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+            giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
 
+            giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+            giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+            giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+
+            giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+            giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+            giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+
+            giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
 
 
             switch (chooseItemDie)
@@ -244,122 +259,273 @@ namespace EmodiaQuest.Core.Items
                 case 1:
                     if (npcName == "Yorlgon")
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                        giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
                     }
                     else
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
                     }
                     break;
                 case 2:
                     if (npcName == "Yorlgon")
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
                     }
                     else
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
                     }
                     break;
                 case 3:
                     if (npcName == "Yorlgon")
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
                     }
                     else
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                        giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
                     }
                     break;
                 case 4:
                     if (npcName == "Yorlgon")
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                        giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                        giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
                     }
                     else
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                        giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
                     }
                     break;
                 case 5:
                     if (npcName == "Yorlgon")
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                        giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                        giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                        giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
                     }
                     else
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                        giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
                     }
                     break;
                 case 6:
                     if (npcName == "Yorlgon")
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                        giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
+                        giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                        giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                        giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
                     }
                     else
                     {
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                        giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                        giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                        giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                        giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                        giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                        giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                        giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                        giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
                     }
                     break;
                 case 7:
-                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
+                    giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                    giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                    giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
                     break;
                 case 8:
-                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
+                    giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                    giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                    giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                    giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
                     break;
                 case 9:
-                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
-                    giveList.Add(getOneItem(availableList, ItemClass.Armor));
-                    giveList.Add(getOneItem(availableList, ItemClass.Helmet));
-                    giveList.Add(getOneItem(availableList, ItemClass.Boots));
-                    giveList.Add(getOneItem(availableList, ItemClass.Weapon));
+                    giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                    giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                    giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Shirt));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwere_Ruestung));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfache_Kappe));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hut_aus_Schrott));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwerer_Helm));
+                    giveList.Add(getOneItem(availableList, ItemClass.Beinkleid));
+                    giveList.Add(getOneItem(availableList, ItemClass.Stock));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schwert));
+                    giveList.Add(getOneItem(availableList, ItemClass.Hammer));
+                    giveList.Add(getOneItem(availableList, ItemClass.Einfaches_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Normales_Gewehr));
+                    giveList.Add(getOneItem(availableList, ItemClass.Schweres_Gewehr));
                     break;
                 default:
                     Console.WriteLine("Wrong number in chooseItemDie");

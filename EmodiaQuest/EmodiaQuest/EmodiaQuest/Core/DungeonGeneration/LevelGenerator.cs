@@ -404,6 +404,9 @@ namespace EmodiaQuest.Core.DungeonGeneration
             */
         }
 
+        //it can happen that if there are two enemies on two grids side by side
+        //if they are too close to each other (but on different grids)
+        //they can stuck on each other
         private void insertEnemies()
         {
             int count = Settings.Instance.NumEnemies;

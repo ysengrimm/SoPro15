@@ -22,16 +22,21 @@ namespace EmodiaQuest.Core
         public ContentManager Content;
         Random rnd = new Random();
 
-        public Texture2D PlacementMap, CollisionMap, StaticItemMap;
+        public Texture2D PlacementMap, CollisionMap, QuestItemMap;
         public Color[,] PlacementColors, CollisionColors, StatticItemColors;
 
-        public List<GameObject> Ground, Wall, StaticItems, Accessoires, Buildings, Teleporter, RandomStuff, Items;
+        public List<GameObject> Ground, Wall, QuestItems, Accessoires, Buildings, Teleporter, RandomStuff, Items;
         public List<NPCs.Enemy>[,] enemyArray;
         public List<NPCs.NPC> NPCList;
 
         public WorldState CurrentWorld;
 
         private Model a;
+
+        // Health Orb Content
+        private float qRotAngle = 0.0f;
+        private float orbVisibility = 0.3f;
+        private float orbVisibilitySwitch = 1.0f;
 
         /// <summary>
         /// ONLY FOR DUNGEON
@@ -114,7 +119,8 @@ namespace EmodiaQuest.Core
 
             Ground = new List<GameObject>();
             Wall = new List<GameObject>();
-            StaticItems = new List<GameObject>();
+            QuestItems = new List<GameObject>();
+            Items = new List<GameObject>();
             Accessoires = new List<GameObject>();
             Buildings = new List<GameObject>();
             Teleporter = new List<GameObject>();
@@ -173,11 +179,11 @@ namespace EmodiaQuest.Core
         /// Creates a new item map from a pixelmap
         /// <param name="map">A Texture2D with loaded item map-picture.</param>
         /// </summary>
-        public void CreateItemMap(Texture2D map)
+        public void CreateQuestItemMap(Texture2D map)
         {
             Color[] colors1D;
 
-            this.StaticItemMap = map;
+            this.QuestItemMap = map;
 
             colors1D = new Color[map.Width * map.Height];
             map.GetData(colors1D);
@@ -262,7 +268,7 @@ namespace EmodiaQuest.Core
         /// <param name="name">Name of this Object</param>
         /// <param name="isRandomStuff">Decides, if this Object is type of Random Stuff</param>
         /// </summary>
-        public void InsertItem(List<GameObject> itemList, Model model, Color color, int height, String name, bool isRandomStuff)
+        public void InsertQuestItem(List<GameObject> itemList, Model model, Color color, int height, String name, bool isRandomStuff)
         {
             for (int i = 0; i < MapWidth; i++)
             {
@@ -420,7 +426,11 @@ namespace EmodiaQuest.Core
             {
                 obj.loadContent(content);
             }
-            foreach (GameObject obj in StaticItems)
+            foreach (GameObject obj in QuestItems)
+            {
+                obj.loadContent(content);
+            }
+            foreach (GameObject obj in Items)
             {
                 obj.loadContent(content);
             }
@@ -452,7 +462,11 @@ namespace EmodiaQuest.Core
             {
                 obj.update(gametime);
             }
-            foreach (GameObject obj in StaticItems)
+            foreach (GameObject obj in QuestItems)
+            {
+                obj.update(gametime);
+            }
+            foreach (GameObject obj in Items)
             {
                 obj.update(gametime);
             }
@@ -484,9 +498,40 @@ namespace EmodiaQuest.Core
             {
                 obj.drawGameobject(world, view, projection);
             }
-            foreach (GameObject obj in StaticItems)
+            foreach (GameObject obj in QuestItems)
             {
                 obj.drawGameobject(world, view, projection);
+            }
+            
+            qRotAngle += 0.05f;
+            if (qRotAngle > Math.PI * 2)
+                qRotAngle -= (float)Math.PI * 2;
+            if (qRotAngle < Math.PI * 2)
+                qRotAngle += (float)Math.PI * 2;
+            orbVisibility += 0.015f * orbVisibilitySwitch;
+            if (orbVisibility > 1.3f)
+                orbVisibilitySwitch *= -1;
+            if (orbVisibility < 0.3f)
+                orbVisibilitySwitch *= -1;
+
+            foreach (GameObject obj in Items)
+            {
+                foreach (ModelMesh mesh in obj.model.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.World = Matrix.CreateRotationZ(qRotAngle) * Matrix.CreateScale(0.4f) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(obj.position.X, 2, obj.position.Z)) * world;
+                        effect.View = view;
+                        effect.Projection = projection;
+                        effect.EmissiveColor = new Vector3(0.2f, 0.2f, 0.2f);
+                        effect.SpecularColor = new Vector3(0.25f);
+                        effect.SpecularPower = 16;
+                        effect.PreferPerPixelLighting = true;
+                        effect.Alpha = orbVisibility;
+                    }
+                    mesh.Draw();
+                }
             }
             foreach (GameObject obj in Accessoires)
             {

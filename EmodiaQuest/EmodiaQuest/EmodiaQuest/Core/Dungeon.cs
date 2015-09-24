@@ -79,12 +79,14 @@ namespace EmodiaQuest.Core
             // Do not insert in the map !!!
             EnvironmentController.Object nothing = new EnvironmentController.Object(null, ColorListDungeon.Instance.Nothing, Vector2.One, "nothing", false); Controller.CollisionObjList.Add(nothing);
             
-
+            
             if(QuestController.Instance.ActiveQuestItems.Any() && QuestController.Instance.ActiveQuestItems[0].Name != "")
             {
-                EnvironmentController.Object questItem = new EnvironmentController.Object(Content.Load<Model>("fbxContent/items/" + QuestController.Instance.ActiveQuestItems[0].Name), ColorListDungeon.Instance.Item, new Vector2(1, 1), "questItem", false);
-                Controller.InsertItem(Controller.StaticItems, questItem.Model, questItem.Color, 0, questItem.Name, questItem.IsRandomStuff);
+                EnvironmentController.Object questItem = new EnvironmentController.Object(Content.Load<Model>("fbxContent/Questitems/" + QuestController.Instance.ActiveQuestItems[0].Name), ColorListDungeon.Instance.Item, new Vector2(1, 1), "questItem", false);
+                Controller.InsertQuestItem(Controller.QuestItems, questItem.Model, questItem.Color, 2, questItem.Name, questItem.IsRandomStuff);
             }
+            
+
 
             // Insert objects
             Controller.InsertObj(Controller.Wall, wall.Model, wall.Color, 0, wall.Name, wall.IsRandomStuff);

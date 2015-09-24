@@ -26,6 +26,9 @@ namespace EmodiaQuest.Core.GUI
         public bool isClickable = true;
         public string PathOfPicture = "";
         public Texture2D itemTexture;
+        public Texture2D itemLevelTexture;
+        // draw level background of an item or not
+        public bool hasItemLevel = false;
 
         public bool IsItem = false;
 
@@ -63,7 +66,7 @@ namespace EmodiaQuest.Core.GUI
             this.IsVisible = isVisible;
         }
 
-        public Button_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, string function, bool isVisible, string pathOfPicture, Texture2D tex)
+        public Button_GUI(float xPosRelative, float yPosRelative, int xPos, int yPos, float widthRelative, float heightRelative, int width, int height, string function, bool isVisible, string pathOfPicture, Texture2D itemTexture, Texture2D itemLevelTexture)
         {
             this.XPosRelative = xPosRelative;
             this.YPosRelative = yPosRelative;
@@ -76,7 +79,8 @@ namespace EmodiaQuest.Core.GUI
             this.Function = function;
             this.IsVisible = isVisible;
             this.PathOfPicture = pathOfPicture;
-            this.itemTexture = tex;
+            this.itemTexture = itemTexture;
+            this.itemLevelTexture = itemLevelTexture;
             this.IsItem = true;
         }
 

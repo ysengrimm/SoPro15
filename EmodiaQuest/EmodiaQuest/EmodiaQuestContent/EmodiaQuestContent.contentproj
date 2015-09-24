@@ -2087,108 +2087,93 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_armor.png">
-      <Name>icon_armor</Name>
+    <Compile Include="Content_GUI\Items\Beinkleid.png">
+      <Name>Beinkleid</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_boot.png">
-      <Name>icon_boot</Name>
+    <Compile Include="Content_GUI\Items\Einfaches_Gewehr.png">
+      <Name>Einfaches_Gewehr</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_helmet.png">
-      <Name>icon_helmet</Name>
+    <Compile Include="Content_GUI\Items\Einfaches_Shirt.png">
+      <Name>Einfaches_Shirt</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_quest.png">
-      <Name>icon_quest</Name>
+    <Compile Include="Content_GUI\Items\Einfache_Kappe.png">
+      <Name>Einfache_Kappe</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_useable.png">
-      <Name>icon_useable</Name>
+    <Compile Include="Content_GUI\Items\Einfache_Ruestung.png">
+      <Name>Einfache_Ruestung</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_weapon.png">
-      <Name>icon_weapon</Name>
+    <Compile Include="Content_GUI\Items\Hammer.png">
+      <Name>Hammer</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_armor_high.png">
-      <Name>icon_armor_high</Name>
+    <Compile Include="Content_GUI\Items\High.png">
+      <Name>High</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_armor_low.png">
-      <Name>icon_armor_low</Name>
+    <Compile Include="Content_GUI\Items\Hut_aus_Schrott.png">
+      <Name>Hut_aus_Schrott</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_armor_medium.png">
-      <Name>icon_armor_medium</Name>
+    <Compile Include="Content_GUI\Items\Low.png">
+      <Name>Low</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_gun_high.png">
-      <Name>icon_gun_high</Name>
+    <Compile Include="Content_GUI\Items\Medium.png">
+      <Name>Medium</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_gun_low.png">
-      <Name>icon_gun_low</Name>
+    <Compile Include="Content_GUI\Items\Normales_Gewehr.png">
+      <Name>Normales_Gewehr</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_gun_medium.png">
-      <Name>icon_gun_medium</Name>
+    <Compile Include="Content_GUI\Items\Quest.png">
+      <Name>Quest</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_hammer.png">
-      <Name>icon_hammer</Name>
+    <Compile Include="Content_GUI\Items\Schwerer_Helm.png">
+      <Name>Schwerer_Helm</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_helmet_high.png">
-      <Name>icon_helmet_high</Name>
+    <Compile Include="Content_GUI\Items\Schweres_Gewehr.png">
+      <Name>Schweres_Gewehr</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_helmet_low.png">
-      <Name>icon_helmet_low</Name>
+    <Compile Include="Content_GUI\Items\Schwere_Ruestung.png">
+      <Name>Schwere_Ruestung</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_helmet_medium.png">
-      <Name>icon_helmet_medium</Name>
+    <Compile Include="Content_GUI\Items\Schwert.png">
+      <Name>Schwert</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_high.png">
-      <Name>icon_high</Name>
+    <Compile Include="Content_GUI\Items\Stock.png">
+      <Name>Stock</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content_GUI\Items\icon_low.png">
-      <Name>icon_low</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Content_GUI\Items\icon_medium.png">
-      <Name>icon_medium</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Content_GUI\Items\icon_stick.png">
-      <Name>icon_stick</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Content_GUI\Items\icon_sword.png">
-      <Name>icon_sword</Name>
+    <Compile Include="Content_GUI\Items\Useable.png">
+      <Name>Useable</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -48,6 +48,11 @@ namespace EmodiaQuest.Core.NPCs
 
         private float gridSize = Settings.Instance.GridSize;
 
+        /// <summary>
+        /// Trigger to spawn only one ball
+        /// </summary>
+        private bool spawnHealthBall = true;
+
         public bool IsAlive { get; set; }
 
         private CollisionHandler collHandler;
@@ -662,6 +667,12 @@ namespace EmodiaQuest.Core.NPCs
                     }
                 }
             }
+
+            if (!IsAlive && spawnHealthBall)
+            {
+                currentEnvironment.Items.Add(new GameObject(Content.Load<Model>("fbxContent/miscellaneous/healthOrb/healthOrb"), new Vector3(Position.X, 0, Position.Y), 0, "healthOrb", false));
+                spawnHealthBall = false;
+            }
         }
 
         bool onSameGridElement(Vector2 a, Vector2 b)
@@ -719,7 +730,7 @@ namespace EmodiaQuest.Core.NPCs
             List<Item> droppedItems = ItemTestClass.Instance.ItemGeneratorMonster(Player.Instance.Level, EnemyType);
             foreach (Item item in droppedItems)
             {
-                TextMessage.Instance.NewMessage("Du hast " + item.Name + " gefunden!", Color.Blue);
+                TextMessage.Instance.NewMessage("Item " + item.Name + " Lvl." + item.Lvl + " gefunden!", Color.Blue);
                 if (Player.Instance.PlayerInventory.Count < 18)
                 {
                     Player.Instance.PlayerInventory.Add(item);    

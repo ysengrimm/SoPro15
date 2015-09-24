@@ -35,8 +35,18 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.loadContent(Content);
 
 
-            this.platform.addLabel(50, 0, 20, "dice_big", "Willkommen", "menu", true);
-
+            this.platform.addLabel(50, 0, 13, "dice_big", "Willkommen", "menu", true);
+            this.platform.addLabel(50, 10, 8, "dice_big", "Lass erstmal die Augen zu.", "menu", true);
+            this.platform.addLabel(50, 17, 8, "dice_big", "Du bist gestern in der Taverne aufgewacht.", "menu", true);
+            this.platform.addLabel(50, 24, 8, "dice_big", "Du hast einen ordentlichen Kater.", "menu", true);
+            this.platform.addLabel(50, 31, 8, "dice_big", "Du kannst dich an rein gar nichts mehr erinnern.", "menu", true);
+            this.platform.addLabel(50, 38, 8, "dice_big", "Die Leute nennen dich Mics Acaga.", "menu", true);
+            this.platform.addLabel(50, 45, 8, "dice_big", "Du hast dich umgehoert und rausgefunden, ", "menu", true);
+            this.platform.addLabel(50, 52, 8, "dice_big", "dass das Land verseucht ist.", "menu", true);
+            this.platform.addLabel(50, 59, 8, "dice_big", "Die Menschen mutierten und nun gibt es viele Monster", "menu", true);
+            this.platform.addLabel(50, 66, 8, "dice_big", "in den Labyrinthen unter der Stadt.", "menu", true);
+            this.platform.addLabel(50, 75, 15, "dice_big", "Was ist passiert???", "menu", true);
+            
             this.platform.addButton(0, 0, 100, 100, "clickToPlay", false);
 
             //EventHandler;

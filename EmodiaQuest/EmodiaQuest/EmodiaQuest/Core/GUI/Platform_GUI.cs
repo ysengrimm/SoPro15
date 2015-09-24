@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using EmodiaQuest.Core.Items;
 
 namespace EmodiaQuest.Core.GUI
 {
@@ -47,7 +48,6 @@ namespace EmodiaQuest.Core.GUI
         public static int MainWindowWidthInt { get; set; }
         public static int MainWindowHeightInt { get; set; }
 
-
         //private short alphaValue = 255;
         public Color drawColor = Color.White;
         public bool backgroundEnabled = true;
@@ -84,12 +84,26 @@ namespace EmodiaQuest.Core.GUI
         private Texture2D pixel_brown;
 
         // Item Icons
-        private Texture2D icon_armor;
-        private Texture2D icon_boot;
-        private Texture2D icon_helmet;
-        private Texture2D icon_quest;
-        private Texture2D icon_weapon;
-        private Texture2D icon_useable;
+        private Texture2D icon_Einfaches_Gewehr;
+        private Texture2D icon_Normales_Gewehr;
+        private Texture2D icon_Schweres_Gewehr;
+        private Texture2D icon_Einfache_Kappe;
+        private Texture2D icon_Hut_aus_Schrott;
+        private Texture2D icon_Schwerer_Helm;
+        private Texture2D icon_Einfaches_Shirt; 
+        private Texture2D icon_Einfache_Ruestung; 
+        private Texture2D icon_Schwere_Ruestung;
+        private Texture2D icon_Hammer;
+        private Texture2D icon_Stock;
+        private Texture2D icon_Schwert;
+        private Texture2D icon_Beinkleid; 
+        private Texture2D icon_Useable;
+        private Texture2D icon_Quest;
+
+        // Itemlevel Icons
+        private Texture2D icon_Low;
+        private Texture2D icon_Medium;
+        private Texture2D icon_High;
 
         // Slider Textures
         private Texture2D slider_background;
@@ -168,12 +182,27 @@ namespace EmodiaQuest.Core.GUI
             pixel_violet = Content.Load<Texture2D>("Content_GUI/pixel_violet");
             pixel_brown = Content.Load<Texture2D>("Content_GUI/pixel_brown");
 
-            icon_armor = Content.Load<Texture2D>("Content_GUI/Items/icon_armor");
-            icon_boot = Content.Load<Texture2D>("Content_GUI/Items/icon_boot");
-            icon_helmet = Content.Load<Texture2D>("Content_GUI/Items/icon_helmet");
-            icon_quest = Content.Load<Texture2D>("Content_GUI/Items/icon_quest");
-            icon_weapon = Content.Load<Texture2D>("Content_GUI/Items/icon_weapon");
-            icon_useable = Content.Load<Texture2D>("Content_GUI/Items/icon_useable");
+            // Item Icons
+            icon_Einfaches_Gewehr = Content.Load<Texture2D>("Content_GUI/Items/Einfaches_Gewehr");
+            icon_Normales_Gewehr = Content.Load<Texture2D>("Content_GUI/Items/Normales_Gewehr");
+            icon_Schweres_Gewehr = Content.Load<Texture2D>("Content_GUI/Items/Schweres_Gewehr");
+            icon_Einfache_Kappe = Content.Load<Texture2D>("Content_GUI/Items/Einfache_Kappe");
+            icon_Hut_aus_Schrott = Content.Load<Texture2D>("Content_GUI/Items/Hut_aus_Schrott");
+            icon_Schwerer_Helm = Content.Load<Texture2D>("Content_GUI/Items/Schwerer_Helm");
+            icon_Einfaches_Shirt = Content.Load<Texture2D>("Content_GUI/Items/Einfaches_Shirt");
+            icon_Einfache_Ruestung = Content.Load<Texture2D>("Content_GUI/Items/Einfache_Ruestung");
+            icon_Schwere_Ruestung = Content.Load<Texture2D>("Content_GUI/Items/Schwere_Ruestung");
+            icon_Hammer = Content.Load<Texture2D>("Content_GUI/Items/Hammer");
+            icon_Stock = Content.Load<Texture2D>("Content_GUI/Items/Stock");
+            icon_Schwert = Content.Load<Texture2D>("Content_GUI/Items/Schwert");
+            icon_Beinkleid = Content.Load<Texture2D>("Content_GUI/Items/Beinkleid");
+            icon_Useable = Content.Load<Texture2D>("Content_GUI/Items/Useable");
+            icon_Quest = Content.Load<Texture2D>("Content_GUI/Items/Quest");
+
+            // Itemlevel Icons
+            icon_Low = Content.Load<Texture2D>("Content_GUI/Items/Low");
+            icon_Medium = Content.Load<Texture2D>("Content_GUI/Items/Medium");
+            icon_High = Content.Load<Texture2D>("Content_GUI/Items/High");
 
 
 
@@ -503,6 +532,7 @@ namespace EmodiaQuest.Core.GUI
                 {
                     if (bb.IsItem)
                     {
+                        if(bb.hasItemLevel) spritebatch.Draw(bb.itemLevelTexture, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                         spritebatch.Draw(bb.itemTexture, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), drawColor);
                         if (bb.Button_State == ButtonState_GUI.MouseOver)
                             spritebatch.Draw(pixel_blue_dark, new Rectangle(bb.XPos, bb.YPos, bb.Width, bb.Height), itemColor);
@@ -587,7 +617,7 @@ namespace EmodiaQuest.Core.GUI
             int yPosAbs = (int)(MainWindowSize.Y * yPos * 0.01);
             int widthAbs = (int)(MainWindowSize.X * width * 0.01);
             int heightAbs = (int)(MainWindowSize.Y * height * 0.01);
-            buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, true, "AAA", itemSocket));
+            buttons.Add(new Button_GUI(xPos, yPos, xPosAbs, yPosAbs, width, height, widthAbs, heightAbs, name, true, "AAA", itemSocket, icon_Low));
         }
 
 
@@ -685,23 +715,50 @@ namespace EmodiaQuest.Core.GUI
                 case "test2":
                     plTexture = test2;
                     break;
-                case "icon_armor":
-                    plTexture = icon_armor;
+                case "Einfaches_Gewehr":
+                    plTexture = icon_Einfaches_Gewehr;
                     break;
-                case "icon_boot":
-                    plTexture = icon_boot;
+                case "Normales_Gewehr":
+                    plTexture = icon_Normales_Gewehr;
                     break;
-                case "icon_helmet":
-                    plTexture = icon_helmet;
+                case "Schweres_Gewehr":
+                    plTexture = icon_Schweres_Gewehr;
                     break;
-                case "icon_quest":
-                    plTexture = icon_quest;
+                case "Einfache_Kappe":
+                    plTexture = icon_Einfache_Kappe;
                     break;
-                case "icon_weapon":
-                    plTexture = icon_weapon;
+                case "Hut_aus_Schrott":
+                    plTexture = icon_Hut_aus_Schrott;
                     break;
-                case "icon_useable":
-                    plTexture = icon_useable;
+                case "Schwerer_Helm":
+                    plTexture = icon_Schwerer_Helm;
+                    break;
+                case "Einfaches_Shirt":
+                    plTexture = icon_Einfaches_Shirt;
+                    break;
+                case "Einfache_Ruestung":
+                    plTexture = icon_Einfache_Ruestung;
+                    break;
+                case "Schwere_Ruestung":
+                    plTexture = icon_Schwere_Ruestung;
+                    break;
+                case "Hammer":
+                    plTexture = icon_Hammer;
+                    break;
+                case "Stock":
+                    plTexture = icon_Stock;
+                    break;
+                case "Schwert":
+                    plTexture = icon_Schwert;
+                    break;
+                case "Beinkleid":
+                    plTexture = icon_Beinkleid;
+                    break;
+                case "Useable":
+                    plTexture = icon_Useable;
+                    break;
+                case "Quest":
+                    plTexture = icon_Quest;
                     break;
                 case "item_socket":
                     plTexture = itemSocket;
@@ -933,6 +990,31 @@ namespace EmodiaQuest.Core.GUI
             }
         }
 
+        /// <summary>
+        /// Updates backgroundLevel of an Item. -1 for no background
+        /// </summary>
+        /// <param name="buttonName"></param>
+        /// <param name="level"></param>
+        public void updateItemLevel(string buttonName, int level)
+        {
+            foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
+            {
+                bb.PathOfPicture = "AAA"; // Important!
+
+                Texture2D itemLevelTexture;     //background
+                if (level == -1)
+                {
+                    bb.hasItemLevel = false;
+                    break;
+                }
+                else if (level < 2) itemLevelTexture = icon_Low;
+                else if (level == 2 || level == 3) itemLevelTexture = icon_Medium;
+                else itemLevelTexture = icon_High;
+                bb.hasItemLevel = true;
+                bb.itemLevelTexture = itemLevelTexture;
+            }
+        }
+
         public void updateButtonPicture(string buttonName, string newPictureType)
         {
             foreach (Button_GUI bb in buttons.Where(n => n.Function == buttonName))
@@ -943,23 +1025,50 @@ namespace EmodiaQuest.Core.GUI
                 Texture2D itemTexture = itemSocket;
                 switch (newPictureType)
                 {
-                    case "armor":
-                        itemTexture = icon_armor;
+                    case "Einfaches_Gewehr":
+                        itemTexture = icon_Einfaches_Gewehr;
                         break;
-                    case "boot":
-                        itemTexture = icon_boot;
+                    case "Normales_Gewehr":
+                        itemTexture = icon_Normales_Gewehr;
                         break;
-                    case "helmet":
-                        itemTexture = icon_helmet;
+                    case "Schweres_Gewehr":
+                        itemTexture = icon_Schweres_Gewehr;
                         break;
-                    case "quest":
-                        itemTexture = icon_quest;
+                    case "Einfache_Kappe":
+                        itemTexture = icon_Einfache_Kappe;
                         break;
-                    case "weapon":
-                        itemTexture = icon_weapon;
+                    case "Hut_aus_Schrott":
+                        itemTexture = icon_Hut_aus_Schrott;
                         break;
-                    case "useable":
-                        itemTexture = icon_useable;
+                    case "Schwerer_Helm":
+                        itemTexture = icon_Schwerer_Helm;
+                        break;
+                    case "Einfaches_Shirt":
+                        itemTexture = icon_Einfaches_Shirt;
+                        break;
+                    case "Einfache_Ruestung":
+                        itemTexture = icon_Einfache_Ruestung;
+                        break;
+                    case "Schwere_Ruestung":
+                        itemTexture = icon_Schwere_Ruestung;
+                        break;
+                    case "Hammer":
+                        itemTexture = icon_Hammer;
+                        break;
+                    case "Stock":
+                        itemTexture = icon_Stock;
+                        break;
+                    case "Schwert":
+                        itemTexture = icon_Schwert;
+                        break;
+                    case "Beinkleid":
+                        itemTexture = icon_Beinkleid;
+                        break;
+                    case "Useable":
+                        itemTexture = icon_Useable;
+                        break;
+                    case "Quest":
+                        itemTexture = icon_Quest;
                         break;
                     case "socket":
                         itemTexture = itemSocket;

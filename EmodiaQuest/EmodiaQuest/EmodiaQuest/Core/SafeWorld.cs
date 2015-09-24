@@ -63,7 +63,7 @@ namespace EmodiaQuest.Core
 
             // generate some Maps
             Controller.CreatePlacementMap(PlacementMap);
-            Controller.CreateItemMap(ItemMap);
+            Controller.CreateQuestItemMap(ItemMap);
 
             // Walls
             EnvironmentController.Object wall1 = new EnvironmentController.Object(Content.Load<Model>("fbxContent/gameobjects/NormalWall_10x10/Safeworld_wall_1"), new Color(1, 0, 0), new Vector2(1, 1), "wall1", false); Controller.CollisionObjList.Add(wall1);
