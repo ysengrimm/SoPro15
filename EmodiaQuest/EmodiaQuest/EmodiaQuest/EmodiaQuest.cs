@@ -111,7 +111,7 @@ namespace EmodiaQuest
         protected override void Update(GameTime gameTime)
         {
             KeyboardState kState = Keyboard.GetState();
-            EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
+            EmodiaQuest.Core.GUI.Controls_GUI.Instance.update(gameTime);
 
             // Update Sound
             Jukebox.Instance.UpdateJukebox(gameTime, IsActive);
