@@ -689,6 +689,9 @@ namespace EmodiaQuest.Core.GUI.Screens
             }
         }
 
+        // item lookup for displaying
+        private Dictionary<Item, String> playerInventoryLookup = new Dictionary<Item, String>();
+
         public Platform_GUI platform = new Platform_GUI();
 
         public void loadContent(ContentManager Content)
@@ -788,12 +791,97 @@ namespace EmodiaQuest.Core.GUI.Screens
             // Hab grad nur First genommen, weil ich erst ein Item drin hab. Sonst natuerlich ElementAt
             this.platform.CharItems.Add(Items.ItemTestClass.Instance.Quests.First());
             this.platform.CharItems.Add(Items.ItemTestClass.Instance.Helmets.First());
+
+            
         }
 
         public void update()
         {
             platform.update();
 
+            // sry this isn't really pretty but it works
+            playerInventoryLookup.Remove(Player.Instance.CurrentEquippedWeapon);
+            playerInventoryLookup.Remove(Player.Instance.CurrentEquippedHelmet);
+            playerInventoryLookup.Remove(Player.Instance.CurrentEquippedArmor);
+            playerInventoryLookup.Remove(Player.Instance.CurrentEquippedBoots);
+
+            playerInventoryLookup.Add(Player.Instance.CurrentEquippedWeapon ?? new Item(ItemClass.Hammer, "lol"), "equipped_weapon");
+            playerInventoryLookup.Add(Player.Instance.CurrentEquippedHelmet ?? new Item(ItemClass.Einfache_Kappe, "lol"), "equipped_helmet");
+            playerInventoryLookup.Add(Player.Instance.CurrentEquippedArmor ?? new Item(ItemClass.Einfache_Ruestung, "lol"), "equipped_armor");
+            playerInventoryLookup.Add(Player.Instance.CurrentEquippedBoots ?? new Item(ItemClass.Beinkleid, "lol"), "equipped_boots");
+
+            // do the item thing for player equippment
+            foreach (var slotItem in new List<Item>() { Player.Instance.CurrentEquippedWeapon, Player.Instance.CurrentEquippedHelmet, Player.Instance.CurrentEquippedArmor, Player.Instance.CurrentEquippedBoots })
+            {
+                    switch (slotItem.Class)
+                    {
+                        case ItemClass.Beinkleid:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], slotItem.Lvl);
+                            break;
+                        case ItemClass.Einfache_Kappe:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Einfache_Ruestung:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Einfaches_Gewehr:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Einfaches_Shirt:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Hammer:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Hut_aus_Schrott:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Normales_Gewehr:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Quest:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Schwere_Ruestung:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Schwerer_Helm:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Schweres_Gewehr:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Schwert:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Stock:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        case ItemClass.Useable:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], slotItem.Class.ToString());
+                            platform.updateItemLevel(playerInventoryLookup[slotItem], (slotItem.Lvl));
+                            break;
+                        default:
+                            platform.updateButtonPicture(playerInventoryLookup[slotItem], "socket");
+                            break;
+                    }
+                }
+
+            // do the item thing for the inventory
             for (int i = 0; i < Player.Instance.PlayerInventory.Count; i++)
             {
                 switch (Player.Instance.PlayerInventory[i].Class)
