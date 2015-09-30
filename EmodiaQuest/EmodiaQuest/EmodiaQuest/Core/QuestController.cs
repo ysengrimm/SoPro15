@@ -326,7 +326,7 @@ namespace EmodiaQuest.Core
 
                         // adding active quest items
                         String itemOut;
-                        quest.Conditions.TryGetValue("item", out itemOut);
+                        quest.Tasks.TryGetValue("item", out itemOut);
                         foreach (var itemQ in ItemTestClass.Instance.Quests)
                         {
                             if (itemQ.Name == itemOut)
@@ -345,6 +345,17 @@ namespace EmodiaQuest.Core
                     {
                         ActiveQuests.Add(quest);
                         Console.WriteLine("Added Quest: " + quest.Name);
+
+                        // adding active quest items
+                        String itemOut;
+                        quest.Tasks.TryGetValue("item", out itemOut);
+                        foreach (var itemQ in ItemTestClass.Instance.Quests)
+                        {
+                            if (itemQ.Name == itemOut)
+                            {
+                                ActiveQuestItems.Add(itemQ);
+                            }
+                        }
                     }
                     IsQuestActive = true;
                     Player.Instance.ActiveQuest = ActiveQuests[0];
