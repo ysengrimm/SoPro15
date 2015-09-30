@@ -473,7 +473,7 @@ namespace EmodiaQuest.Core
             Inventory_GUI.Instance.platform.updateButtonPicture("equipped_boots", CurrentEquippedBoots.Class.ToString());
             Inventory_GUI.Instance.platform.updateItemLevel("equipped_boots", CurrentEquippedBoots.Lvl);
 
-            CurrentEquippedWeapon = new Item(0, ItemClass.Normales_Gewehr, 0, 50, 70, 0, 0, true, ItemClass.Normales_Gewehr.ToString());
+            CurrentEquippedWeapon = new Item(0, ItemClass.Stock, 0, 50, 70, 0, 0, false, ItemClass.Stock.ToString());
             Inventory_GUI.Instance.platform.updateButtonPicture("equipped_weapon", CurrentEquippedWeapon.Class.ToString());
             Inventory_GUI.Instance.platform.updateItemLevel("equipped_weapon", CurrentEquippedWeapon.Lvl);
             
@@ -605,7 +605,37 @@ namespace EmodiaQuest.Core
 
         public void Update(GameTime gameTime)
         {
-            //Console.WriteLine(Focus + " : " + FocusRegen + " Int: "  + Intelligence);
+            ///Cheats
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.D1))
+            {
+                CurrentEquippedWeapon = new Item(0, ItemClass.Stock, 0, 70, 100, 0, 0, false, ItemClass.Stock.ToString());
+            }
+            else if(Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                CurrentEquippedWeapon = new Item(0, ItemClass.Hammer, 0, 70, 100, 0, 0, false, ItemClass.Hammer.ToString());
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D3))
+            {
+                CurrentEquippedWeapon = new Item(0, ItemClass.Schwert, 0, 70, 100, 0, 0, false, ItemClass.Schwert.ToString());
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D4))
+            {
+                CurrentEquippedWeapon = new Item(0, ItemClass.Einfaches_Gewehr, 0, 70, 00, 0, 0, true, ItemClass.Einfaches_Gewehr.ToString());
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D5))
+            {
+                CurrentEquippedWeapon = new Item(0, ItemClass.Normales_Gewehr, 0, 70, 100, 0, 0, true, ItemClass.Normales_Gewehr.ToString());
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D6))
+            {
+                CurrentEquippedWeapon = new Item(0, ItemClass.Schweres_Gewehr, 0, 70, 100, 0, 0, true, ItemClass.Schweres_Gewehr.ToString());
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D0))
+            {
+                Hp = MaxHp;
+            }
+ 
 
             HitEnemyWithSword = false;
             HitAir = false;
