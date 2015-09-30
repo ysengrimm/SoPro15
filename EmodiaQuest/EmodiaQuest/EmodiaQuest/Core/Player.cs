@@ -795,17 +795,8 @@ namespace EmodiaQuest.Core
                         {
                             collisionHandler.Controller.QuestItems.RemoveAt(i);
 
-                            foreach (GameObject gameObject in collisionHandler.Controller.QuestItems)
-                            {
-                                foreach (Item activeQuestItem in QuestController.Instance.ActiveQuestItems)
-                                {
-                                    if (gameObject.Name == activeQuestItem.Name)
-                                    {
-                                        Console.WriteLine("Added " + activeQuestItem.Name + " to your questinventory");
-                                        QuestInventory.Add(activeQuestItem);
-                                    }
-                                }
-                            }
+                            Console.WriteLine("Added " + QuestController.Instance.ActiveQuestItems[0].Name + " to your questinventory");
+                            QuestInventory.Add(QuestController.Instance.ActiveQuestItems[0]);
                         }
                     }
 
