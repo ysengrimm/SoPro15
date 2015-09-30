@@ -131,7 +131,7 @@ namespace EmodiaQuest.Core
                             case "item":
                                 String itemOut;
                                 activeQuest.Tasks.TryGetValue(key, out itemOut);
-                                foreach (var itemQ in Player.Instance.PlayerInventory)
+                                foreach (var itemQ in Player.Instance.QuestInventory)
                                 {
                                     if (itemQ.Name == itemOut)
                                     {
@@ -196,7 +196,7 @@ namespace EmodiaQuest.Core
                             case "item":
                                 String itemOut;
                                 quest.Conditions.TryGetValue(key, out itemOut);
-                                foreach (var itemQ in Player.Instance.PlayerInventory)
+                                foreach (var itemQ in Player.Instance.QuestInventory)
                                 {
                                     if (itemQ.Name == itemOut)
                                     {
