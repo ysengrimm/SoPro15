@@ -608,32 +608,31 @@ namespace EmodiaQuest.Core
         public void Update(GameTime gameTime)
         {
             ///Cheats
-            
-            if (Keyboard.GetState().IsKeyDown(Keys.D1))
+            if (GUI.Controls_GUI.Instance.keyClicked(Keys.D1))
             {
                 CurrentEquippedWeapon = new Item(0, ItemClass.Stock, 0, 70, 100, 0, 0, false, ItemClass.Stock.ToString());
             }
-            else if(Keyboard.GetState().IsKeyDown(Keys.D2))
+            else if(GUI.Controls_GUI.Instance.keyClicked(Keys.D2))
             {
                 CurrentEquippedWeapon = new Item(0, ItemClass.Hammer, 0, 70, 100, 0, 0, false, ItemClass.Hammer.ToString());
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D3))
+            else if (GUI.Controls_GUI.Instance.keyClicked(Keys.D3))
             {
                 CurrentEquippedWeapon = new Item(0, ItemClass.Schwert, 0, 70, 100, 0, 0, false, ItemClass.Schwert.ToString());
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D4))
+            else if (GUI.Controls_GUI.Instance.keyClicked(Keys.D4))
             {
                 CurrentEquippedWeapon = new Item(0, ItemClass.Einfaches_Gewehr, 0, 70, 00, 0, 0, true, ItemClass.Einfaches_Gewehr.ToString());
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D5))
+            else if (GUI.Controls_GUI.Instance.keyClicked(Keys.D5))
             {
                 CurrentEquippedWeapon = new Item(0, ItemClass.Normales_Gewehr, 0, 70, 100, 0, 0, true, ItemClass.Normales_Gewehr.ToString());
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D6))
+            else if (GUI.Controls_GUI.Instance.keyClicked(Keys.D6))
             {
                 CurrentEquippedWeapon = new Item(0, ItemClass.Schweres_Gewehr, 0, 70, 100, 0, 0, true, ItemClass.Schweres_Gewehr.ToString());
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D0))
+            else if (GUI.Controls_GUI.Instance.keyClicked(Keys.D0))
             {
                 Hp = MaxHp;
             }

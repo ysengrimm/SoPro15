@@ -389,22 +389,23 @@ namespace EmodiaQuest.Core.NPCs
                     mesh.Draw();
                 }
 
-                foreach (ModelMesh mesh in healthOrb.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateRotationZ(qRotAngle) * Matrix.CreateScale(0.4f) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X + 2, 2, Position.Y)) * world;
-                        effect.View = view;
-                        effect.Projection = projection;
-                        effect.EmissiveColor = new Vector3(0.2f, 0.2f, 0.2f);
-                        effect.SpecularColor = new Vector3(0.25f);
-                        effect.SpecularPower = 16;
-                        effect.PreferPerPixelLighting = true;
-                        effect.Alpha = orbVisibility;
-                    }
-                    mesh.Draw();
-                }
+                // Drawing the healthOrb
+                //foreach (ModelMesh mesh in healthOrb.Meshes)
+                //{
+                //    foreach (BasicEffect effect in mesh.Effects)
+                //    {
+                //        effect.EnableDefaultLighting();
+                //        effect.World = Matrix.CreateRotationZ(qRotAngle) * Matrix.CreateScale(0.4f) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X + 2, 2, Position.Y)) * world;
+                //        effect.View = view;
+                //        effect.Projection = projection;
+                //        effect.EmissiveColor = new Vector3(0.2f, 0.2f, 0.2f);
+                //        effect.SpecularColor = new Vector3(0.25f);
+                //        effect.SpecularPower = 16;
+                //        effect.PreferPerPixelLighting = true;
+                //        effect.Alpha = orbVisibility;
+                //    }
+                //    mesh.Draw();
+                //}
             }
 
             // Drawing the portal
