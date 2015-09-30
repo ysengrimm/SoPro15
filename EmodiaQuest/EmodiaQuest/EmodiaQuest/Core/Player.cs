@@ -329,6 +329,8 @@ namespace EmodiaQuest.Core
         }
         private Quest oldQuest;
 
+        public List<Item> QuestInventory = new List<Item>(); 
+
         /**
          * Animation and Model
         **/
@@ -793,6 +795,18 @@ namespace EmodiaQuest.Core
                         if (gameEnv.EuclideanDistance(temp, new Vector2(Position.X, Position.Y)) <= 12)
                         {
                             collisionHandler.Controller.QuestItems.RemoveAt(i);
+
+                            foreach (GameObject gameObject in collisionHandler.Controller.QuestItems)
+                            {
+                                foreach (Item activeQuestItem in QuestController.Instance.ActiveQuestItems)
+                                {
+                                    if (gameObject.Name == activeQuestItem.Name)
+                                    {
+                                        Console.WriteLine("Added " + activeQuestItem.Name + " to your questinventory");
+                                        QuestInventory.Add(activeQuestItem);
+                                    }
+                                }
+                            }
                         }
                     }
 
