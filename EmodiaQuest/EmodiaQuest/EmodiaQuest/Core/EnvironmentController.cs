@@ -522,7 +522,7 @@ namespace EmodiaQuest.Core
                 qRotAngle -= (float)Math.PI * 2;
             if (qRotAngle < Math.PI * 2)
                 qRotAngle += (float)Math.PI * 2;
-            orbVisibility += 0.015f * orbVisibilitySwitch;
+            orbVisibility += 0.03f * orbVisibilitySwitch;
             if (orbVisibility > 1.3f)
                 orbVisibilitySwitch *= -1;
             if (orbVisibility < 0.3f)
