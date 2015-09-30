@@ -223,6 +223,7 @@ namespace EmodiaQuest.Core.GUI
             dialogueDownNormal = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownNormal");
             dialogueDownHoverOver = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownHoverOver");
             dialogueDownPressed = Content.Load<Texture2D>("Content_GUI/Arrows/dialogueDownPressed");
+            dialogueDownPressed = Content.Load<Texture2D>("Content_GUI/pixel_black");
 
             // Test Content
             test1 = Content.Load<Texture2D>("Content_GUI/test1");
@@ -346,7 +347,9 @@ namespace EmodiaQuest.Core.GUI
 
                         if (GUI.Controls_GUI.Instance.mouseClickedLeft())
                         {
-                            if (!db.dialogueStrings.Last().IsDrawn)
+                            //if (!db.dialogueStrings.Last().IsDrawn)
+                            //    db.textPlus -= (int)sizeOfOnePassage;
+                            if (!db.dialogueStrings.First().IsDrawn)
                                 db.textPlus += (int)sizeOfOnePassage;
                         }
                     }
@@ -362,7 +365,9 @@ namespace EmodiaQuest.Core.GUI
 
                         if (GUI.Controls_GUI.Instance.mouseClickedLeft())
                         {
-                            if (!db.dialogueStrings.First().IsDrawn)
+                            //if (!db.dialogueStrings.First().IsDrawn)
+                            //    db.textPlus += (int)sizeOfOnePassage;
+                            if (!db.dialogueStrings.Last().IsDrawn)
                                 db.textPlus -= (int)sizeOfOnePassage;
                         }
                     }

@@ -156,6 +156,12 @@ namespace EmodiaQuest.Core.GUI.Screens
             // Get Keyboard input to change overall GameState
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.O))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.V))
+            //    Controls_GUI.Instance.WaitPoint_New("f", 10);
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.B))
+            //    Controls_GUI.Instance.WaitPoint_New("g", 1);
+            //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.C))
+            //    Controls_GUI.Instance.WaitPoint_FactorLength("f", 0.5);
             
             
             //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.P))
