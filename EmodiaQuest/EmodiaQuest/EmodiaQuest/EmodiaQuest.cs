@@ -23,6 +23,7 @@ namespace EmodiaQuest
         SpriteBatch spriteBatch;
 
         public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
+        public static GameStates_Overall Gamestate_Game_SaveUp = GameStates_Overall.StartScreen;
 
         private Vector2 screenSize;
 
@@ -111,18 +112,23 @@ namespace EmodiaQuest
         protected override void Update(GameTime gameTime)
         {
             KeyboardState kState = Keyboard.GetState();
-            EmodiaQuest.Core.GUI.Controls_GUI.Instance.update(gameTime);
+
+            if (Gamestate_Game != GameStates_Overall.Pause)
+                EmodiaQuest.Core.GUI.Controls_GUI.Instance.update(gameTime);
 
             // Update Sound
             Jukebox.Instance.UpdateJukebox(gameTime, IsActive);
 
-            if (!IsActive && Gamestate_Game != GameStates_Overall.StartScreen)
+            if (!IsActive && Gamestate_Game != GameStates_Overall.StartScreen && Gamestate_Game != GameStates_Overall.Pause)
             {
+                Gamestate_Game_SaveUp = Gamestate_Game;
                 Gamestate_Game = GameStates_Overall.Pause;
             }
 
             if (IsActive && Gamestate_Game == GameStates_Overall.Pause)
-                Gamestate_Game = GameStates_Overall.MenuScreen;
+                Gamestate_Game = Gamestate_Game_SaveUp;
+                //Gamestate_Game = GameStates_Overall.MenuScreen;
+                
 
             switch (Gamestate_Game)
             {
