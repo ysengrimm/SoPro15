@@ -711,6 +711,16 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+    <Compile Include="fbxContent\NPC\NPC_male_jack.fbx">
+      <Name>NPC_male_jack</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\NPC_male_smithing.fbx">
+      <Name>NPC_male_smithing</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
     <None Include="Texturen\Skybox\grimmnight_large.jpg">
       <Name>grimmnight_large</Name>
       <Importer>TextureImporter</Importer>
@@ -2179,6 +2189,61 @@
     </Compile>
     <Compile Include="Content_GUI\Items\Useable.png">
       <Name>Useable</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\brown_eye.png">
+      <Name>brown_eye</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\male02_diffuse_black.png">
+      <Name>male02_diffuse_black</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\young_lightskinned_male_diffuse.png">
+      <Name>young_lightskinned_male_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\Einfache_Kappe_Tex_Metall.png">
+      <Name>Einfache_Kappe_Tex_Metall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\Einfache_Schuhe_Tex_alt.png">
+      <Name>Einfache_Schuhe_Tex_alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\Einfache_Hose_Tex_alt.png">
+      <Name>Einfache_Hose_Tex_alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\Stoff_Shirt_Tex_alt.png">
+      <Name>Stoff_Shirt_Tex_alt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\Stoff_Shirt_Tex_neu.png">
+      <Name>Stoff_Shirt_Tex_neu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\Waffe_Hammer_Tex_rostig_mit_Ledergriff_und_Blut.png">
+      <Name>Waffe_Hammer_Tex_rostig_mit_Ledergriff_und_Blut</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\Einfache_Hose_Tex_modern.png">
+      <Name>Einfache_Hose_Tex_modern</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="fbxContent\NPC\Amboss_tex.png">
+      <Name>Amboss_tex</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

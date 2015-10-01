@@ -15,20 +15,21 @@ namespace EmodiaQuest.Core.NPCs
 {
     public class NPC
     {
+        private float rotation;
         // implements damage, range, mesh, texture etc (Are Questing Npcs also part of this class!?) NO!
 
         //Some variables for the Load and stuff
         public ContentManager contentMngr;
         // The Model
-        private Model npcModel, standingM, walkingM, jumpingM, swordfightingM, bowfightingM, runningM, idleM, talkingM;
+        private Model npcModel, standingM, walkingM, smithingM, swordfightingM, bowfightingM, runningM, idleM, talkingM;
         // Skinning Data
-        private SkinningData standingSD, walkingSD, jumpingSD, swordfightingSD, bowfightingSD, runningSD, idleSD, talkingSD;
+        private SkinningData standingSD, walkingSD, smithingSD, swordfightingSD, bowfightingSD, runningSD, idleSD, talkingSD;
         // The animation Player
-        private AnimationPlayer standingAP, walkingAP, jumpingAP, swordfightingAP, bowfightingAP, runningAP, idleAP, talkingAP;
+        private AnimationPlayer standingAP, walkingAP, smithingAP, swordfightingAP, bowfightingAP, runningAP, idleAP, talkingAP;
         // The animation Clips, which will be used by the model
-        private AnimationClip standingC, walkingC, jumpingC, swordfightingC, bowfightingC, runningC, idleC, talkingC;
+        private AnimationClip standingC, walkingC, smithingC, swordfightingC, bowfightingC, runningC, idleC, talkingC;
         // The Bone Matrices for each animation
-        private Matrix[] blendingBones, standingBones, walkingBones, jumpingBones, swordfightingBones, bowfightingBones, runningBones, idleBones, talkingBones;
+        private Matrix[] blendingBones, standingBones, walkingBones, smithingBones, swordfightingBones, bowfightingBones, runningBones, idleBones, talkingBones;
         // The playerState, which will be needed to update the right animation
         public NPCState CurrentNPCState = NPCState.Standing;
         public NPCState LastNPCState = NPCState.Standing;
@@ -38,7 +39,7 @@ namespace EmodiaQuest.Core.NPCs
         // duration of the animations
         private float standingDuration;
         private float walkingDuration;
-        private float jumpingDuration;
+        private float smithingDuration;
         private float swordFightingDuration;
 
         private float stateTime;
@@ -108,14 +109,19 @@ namespace EmodiaQuest.Core.NPCs
 
 
         // Constructor
-        public NPC(Vector2 position, EnvironmentController currentEnvironment, NPCName name, NPCProfession profession)
+        public NPC(Vector2 position,float rotation, EnvironmentController currentEnvironment, NPCName name, NPCProfession profession)
         {
+            this.rotation = rotation;
             this.Name = name;
             this.Profession = profession;
             this.currentEnvironment = currentEnvironment;
             this.Position = position;
             this.TrackingRadius = 30f;
             MovementSpeed = 0.25f;
+            if(Profession == NPCProfession.Schmied)
+            {
+                CurrentNPCState = NPCState.Smithing;
+            }
         }
 
 
@@ -131,47 +137,47 @@ namespace EmodiaQuest.Core.NPCs
             defaultHairTex = contentMngr.Load<Texture2D>("Texturen/Playertexturen/male02_diffuse_black");
             defaultEyeTex = contentMngr.Load<Texture2D>("Texturen/NPCTexturen/Body/male/brown_eye");
             // loading Cloth Textures
-            defaultShirtTex = contentMngr.Load<Texture2D>("Texturen/NPCTexturen/Cloth/Hemd_blue");
-            defaultTrousersTex = contentMngr.Load<Texture2D>("Texturen/NPCTexturen/Cloth/Trousers_green");
+            //defaultShirtTex = contentMngr.Load<Texture2D>("Texturen/NPCTexturen/Cloth/Hemd_blue");
+            //defaultTrousersTex = contentMngr.Load<Texture2D>("Texturen/NPCTexturen/Cloth/Trousers_green");
 
             // loading default mesh
-            npcModel = content.Load<Model>("fbxContent/NPC/NPC_male_idle");
+            npcModel = content.Load<Model>("fbxContent/NPC/NPC_male_jack");
 
             // loading Animation Models
-            standingM = contentMngr.Load<Model>("fbxContent/NPC/NPC_male_idle");
-            walkingM = contentMngr.Load<Model>("fbxContent/NPC/NPC_male_idle");
-            jumpingM = contentMngr.Load<Model>("fbxContent/NPC/NPC_male_idle");
-            swordfightingM = contentMngr.Load<Model>("fbxContent/NPC/NPC_male_idle");
+            standingM = contentMngr.Load<Model>("fbxContent/NPC/NPC_male_jack");
+            //walkingM = contentMngr.Load<Model>("fbxContent/NPC/NPC_male_idle");
+            smithingM = contentMngr.Load<Model>("fbxContent/NPC/NPC_male_smithing");
+            //swordfightingM = contentMngr.Load<Model>("fbxContent/NPC/NPC_male_idle");
 
             // Loading Skinning Data
             standingSD = standingM.Tag as SkinningData;
-            walkingSD = walkingM.Tag as SkinningData;
-            jumpingSD = jumpingM.Tag as SkinningData;
-            swordfightingSD = swordfightingM.Tag as SkinningData;
+            //walkingSD = walkingM.Tag as SkinningData;
+            smithingSD = smithingM.Tag as SkinningData;
+            //swordfightingSD = swordfightingM.Tag as SkinningData;
 
             // Load an animation Player for each animation
             standingAP = new AnimationPlayer(standingSD);
-            walkingAP = new AnimationPlayer(walkingSD);
-            jumpingAP = new AnimationPlayer(jumpingSD);
-            swordfightingAP = new AnimationPlayer(swordfightingSD);
+            //walkingAP = new AnimationPlayer(walkingSD);
+            smithingAP = new AnimationPlayer(smithingSD);
+            //swordfightingAP = new AnimationPlayer(swordfightingSD);
 
             // loading the animation clips
-            standingC = standingSD.AnimationClips["idle"];
-            walkingC = walkingSD.AnimationClips["idle"];
-            jumpingC = jumpingSD.AnimationClips["idle"];
-            swordfightingC = swordfightingSD.AnimationClips["idle"];
+            standingC = standingSD.AnimationClips["jack"];
+            //walkingC = walkingSD.AnimationClips["idle"];
+            smithingC = smithingSD.AnimationClips["smithing"];
+            //swordfightingC = swordfightingSD.AnimationClips["idle"];
 
             // Safty Start Animations
             standingAP.StartClip(standingC);
-            walkingAP.StartClip(walkingC);
-            jumpingAP.StartClip(jumpingC);
-            swordfightingAP.StartClip(swordfightingC);
+            //walkingAP.StartClip(walkingC);
+            smithingAP.StartClip(smithingC);
+            //swordfightingAP.StartClip(swordfightingC);
 
             //assign the specific animationTimes
             standingDuration = standingC.Duration.Milliseconds / 1f;
-            walkingDuration = walkingC.Duration.Milliseconds / 1f;
-            jumpingDuration = jumpingC.Duration.Milliseconds / 1f;
-            swordFightingDuration = swordfightingC.Duration.Milliseconds / 1f;
+            //walkingDuration = walkingC.Duration.Milliseconds / 1f;
+            smithingDuration = smithingC.Duration.Milliseconds / 1f;
+            //swordFightingDuration = swordfightingC.Duration.Milliseconds / 1f;
 
             stateTime = 0;
             // Duration of Blending Animations in milliseconds
@@ -235,15 +241,15 @@ namespace EmodiaQuest.Core.NPCs
                 case NPCState.Walking:
                     walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
-                case NPCState.Jumping:
-                    jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                case NPCState.Smithing:
+                    smithingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
                 case NPCState.Swordfighting:
                     swordfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
                 case NPCState.Talking:
                     walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                    jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    smithingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
             }
 
@@ -297,15 +303,15 @@ namespace EmodiaQuest.Core.NPCs
                     case NPCState.Walking:
                         walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
-                    case NPCState.Jumping:
-                        jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    case NPCState.Smithing:
+                        smithingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
                     case NPCState.Swordfighting:
                         swordfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
                     case NPCState.Talking:
                         walkingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-                        jumpingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        smithingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
                 }
             }
@@ -338,8 +344,8 @@ namespace EmodiaQuest.Core.NPCs
                 case NPCState.Swordfighting:
                     swordfightingBones = swordfightingAP.GetSkinTransforms();
                     break;
-                case NPCState.Jumping:
-                    jumpingBones = jumpingAP.GetSkinTransforms();
+                case NPCState.Smithing:
+                    smithingBones = smithingAP.GetSkinTransforms();
                     break;
                 case NPCState.Talking:
                     walkingBones = walkingAP.GetSkinTransforms();
@@ -360,8 +366,8 @@ namespace EmodiaQuest.Core.NPCs
                     case NPCState.Swordfighting:
                         blendingBones = swordfightingAP.GetSkinTransforms();
                         break;
-                    case NPCState.Jumping:
-                        blendingBones = jumpingAP.GetSkinTransforms();
+                    case NPCState.Smithing:
+                        blendingBones = smithingAP.GetSkinTransforms();
                         break;
                     case NPCState.Talking:
                         blendingBones = walkingAP.GetSkinTransforms();
@@ -482,27 +488,6 @@ namespace EmodiaQuest.Core.NPCs
             {
 
                 //Console.WriteLine(mesh.Name);
-                // Only renders the Right assigned Weapon
-                if (mesh.Name == "Stock" && activeWeapon != Weapon.Stock)
-                {
-
-                }
-                else if (mesh.Name == "Hammer" && activeWeapon != Weapon.Hammer)
-                {
-
-                }
-                // Only renders the Meshes with the right resolution
-                else if (mesh.Name == "NPC_body" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.High)
-                {
-
-                }
-                else if (mesh.Name == "NPC_body_lowPoly" && Settings.Instance.NPCMeshQuality != Settings.MeshQuality.Low)
-                {
-
-                }
-                // renders everything that should be
-                else
-                {
                     foreach (SkinnedEffect effect in mesh.Effects)
                     //foreach (CustomSkinnedEffect effect in mesh.Effects)
                     {
@@ -533,10 +518,10 @@ namespace EmodiaQuest.Core.NPCs
                                     }
                                     effect.SetBoneTransforms(blendingBones);
                                     break;
-                                case NPCState.Jumping:
+                                case NPCState.Smithing:
                                     for (int i = 0; i < blendingBones.Length; i++)
                                     {
-                                        blendingBones[i] = Matrix.Lerp(blendingBones[i], jumpingBones[i], 1 - percentageOfBlending);
+                                        blendingBones[i] = Matrix.Lerp(blendingBones[i], smithingBones[i], 1 - percentageOfBlending);
                                     }
                                     effect.SetBoneTransforms(blendingBones);
                                     break;
@@ -562,8 +547,8 @@ namespace EmodiaQuest.Core.NPCs
                                 case NPCState.Swordfighting:
                                     effect.SetBoneTransforms(swordfightingBones);
                                     break;
-                                case NPCState.Jumping:
-                                    effect.SetBoneTransforms(jumpingBones);
+                                case NPCState.Smithing:
+                                    effect.SetBoneTransforms(smithingBones);
                                     break;
                                 case NPCState.Talking:
                                     effect.SetBoneTransforms(walkingBones);
@@ -573,15 +558,51 @@ namespace EmodiaQuest.Core.NPCs
 
 
                         effect.EnableDefaultLighting();
-                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
+                        effect.World = Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation) * Matrix.CreateTranslation(new Vector3(Position.X, 0, Position.Y)) * world;
                         effect.View = view;
                         effect.Projection = projection;
                         effect.SpecularColor = new Vector3(0.25f);
                         effect.SpecularPower = 16;
                         effect.PreferPerPixelLighting = true;
+
+                        // Draw the right Mesh
+                        if(mesh.Name == "Einfache_Hose")
+                        {
+                            mesh.Draw();
+                        }
+                        else if(mesh.Name == "Einfache_Kappe")
+                        {
+                            mesh.Draw();
+                        }
+                        else if(mesh.Name == "Einfache_Schuhe")
+                        {
+                            mesh.Draw();
+                        }
+                        else if(mesh.Name == "Einfaches_Shirt")
+                        {
+                            mesh.Draw();
+                        }
+                        else if(mesh.Name == "NPC_body")
+                        {
+                            effect.Texture = defaultBodyTex;
+                            mesh.Draw();
+                        }
+                        else if(mesh.Name == "NPC_eyes")
+                        {
+                            mesh.Draw();
+                        }
+                        else if(mesh.Name == "Hammer" && Profession == NPCProfession.Schmied)
+                        {
+                            mesh.Draw();
+                        }
+                        else if (mesh.Name == "Amboss" && Profession == NPCProfession.Schmied)
+                        {
+                            mesh.Draw();
+                        }
                         // Textures
 
                         // Body
+                        /*
                         if (mesh.Name == "NPC_body")
                         {
                             effect.Texture = defaultBodyTex;
@@ -594,8 +615,9 @@ namespace EmodiaQuest.Core.NPCs
                         {
                             effect.Texture = defaultEyeTex;
                         }
-
+                        */
                         // Cloth
+                            /*
                         else if (mesh.Name == "NPC_shirt")
                         {
                             effect.Texture = defaultShirtTex;
@@ -613,8 +635,9 @@ namespace EmodiaQuest.Core.NPCs
                         {
                             effect.Texture = defaultBodyTex;
                         }
-                    }
-                    mesh.Draw();
+                             * */
+
+                    
                 }
             }
         }

@@ -5,5 +5,5 @@ using System.Text;
 
 namespace EmodiaQuest.Core.NPCs
 {
-    public enum NPCState { Standing, Walking, Jumping, Swordfighting, Bowfighting, Running, Idle, Talking }
+    public enum NPCState { Standing, Walking, Smithing, Swordfighting, Bowfighting, Running, Idle, Talking }
 }

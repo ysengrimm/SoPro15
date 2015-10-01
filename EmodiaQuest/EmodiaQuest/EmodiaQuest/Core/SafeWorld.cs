@@ -93,13 +93,12 @@ namespace EmodiaQuest.Core
             //now after all collision objects are choosen generate and load collision map          
             Controller.GenerateCollisionMap(Content);
 
-            
             // Create NPCList
             NPCList = new List<NPC>();
             // Create NPCs
-            NPC Jack = new NPC(new Vector2(230,330), Controller, NPC.NPCName.Jack, NPCProfession.Wirt);
-            NPC Yorlgon = new NPC(new Vector2(355,320), Controller, NPC.NPCName.Yorlgon, NPCProfession.Schmied);
-            NPC Konstantin = new NPC(new Vector2(293.5f,338), Controller, NPC.NPCName.Konstantin, NPCProfession.Haendler);
+            NPC Jack = new NPC(new Vector2(230,328), 0, Controller, NPC.NPCName.Jack, NPCProfession.Wirt);
+            NPC Yorlgon = new NPC(new Vector2(354f,320.75f), (float)-Math.PI/2, Controller, NPC.NPCName.Yorlgon, NPCProfession.Schmied);
+            NPC Konstantin = new NPC(new Vector2(293.5f,338), (float)Math.PI, Controller, NPC.NPCName.Konstantin, NPCProfession.Haendler);
 
             Jack.LoadContent(Content);
             Yorlgon.LoadContent(Content);
