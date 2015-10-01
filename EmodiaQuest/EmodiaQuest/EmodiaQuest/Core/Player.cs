@@ -647,7 +647,11 @@ namespace EmodiaQuest.Core
 
             if (GUI.Controls_GUI.Instance.keyClicked(Keys.D8))
             {
-                // Get Quest-Item "Diebesgut
+                if (QuestController.Instance.ActiveQuestItems.Any())
+                {
+                    QuestInventory.Add(QuestController.Instance.ActiveQuestItems[0]);
+                    TextMessage.Instance.NewMessage("Du hast den gesuchten Gegenstand gefunden!", Color.Gold);
+                }
             }
  
 
