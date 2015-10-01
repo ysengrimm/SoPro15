@@ -345,15 +345,15 @@ namespace EmodiaQuest.Core
         private Model bullet2animation;
 
         // The Model
-        private Model playerModel, standingM, walkingM, runningM, swordfighting1M, swordfighting2M, fightingStandM, gunfightingM;
+        private Model playerModel, standingM, walkingM, runningM, swordfighting1M, swordfighting2M, fightingStandM, gunfightingM, dyingM;
         // Skinning Data
-        private SkinningData standingSD, walkingSD, runningSD, swordfighting1SD, swordfighting2SD, fightingStandSD, gunfightingSD;
+        private SkinningData standingSD, walkingSD, runningSD, swordfighting1SD, swordfighting2SD, fightingStandSD, gunfightingSD, dyingSD;
         // The animation Player
-        private AnimationPlayer standingAP, walkingAP, runningAP, swordfighting1AP, swordfighting2AP, fightingStandAP, gunfightingAP;
+        private AnimationPlayer standingAP, walkingAP, runningAP, swordfighting1AP, swordfighting2AP, fightingStandAP, gunfightingAP, dyingAP;
         // The animation Clips, which will be used by the model
-        private AnimationClip standingC, walkingC, runningC, swordfighting1C, swordfighting2C, fightingStandC, gunfightingC;
+        private AnimationClip standingC, walkingC, runningC, swordfighting1C, swordfighting2C, fightingStandC, gunfightingC, dyingC;
         // The Bone Matrices for each animation
-        private Matrix[] blendingBones, standingBones, walkingBones, runningBones, swordfighting1Bones, swordfighting2Bones, fightingStandBones, gunfightingBones;
+        private Matrix[] blendingBones, standingBones, walkingBones, runningBones, swordfighting1Bones, swordfighting2Bones, fightingStandBones, gunfightingBones, dyingBones;
         // The playerState, which will be needed to update the right animation
         public PlayerState ActivePlayerState = PlayerState.Standing;
         public PlayerState LastPlayerState = PlayerState.Standing;
@@ -366,6 +366,7 @@ namespace EmodiaQuest.Core
         public float swordFighting2Duration;
         public float fightingStandDuration;
         public float gunFightingDuration;
+        public float dyingDuration;
 
         private float stateTime;
         private float fixedBlendDuration;
@@ -519,6 +520,7 @@ namespace EmodiaQuest.Core
             swordfighting2M = contentMngr.Load<Model>("fbxContent/player/Main_Char_swordFighting2");
             fightingStandM = contentMngr.Load<Model>("fbxContent/player/Main_Char_fighting_stand");
             gunfightingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_gunFighting");
+            dyingM = contentMngr.Load<Model>("fbxContent/player/Main_Char_die");
 
             //Loading Skinning Data
             standingSD = standingM.Tag as SkinningData;
@@ -528,6 +530,7 @@ namespace EmodiaQuest.Core
             swordfighting2SD = swordfighting2M.Tag as SkinningData;
             fightingStandSD = fightingStandM.Tag as SkinningData;
             gunfightingSD = gunfightingM.Tag as SkinningData;
+            dyingSD = dyingM.Tag as SkinningData;
 
             //Load an animation Player for each animation
             standingAP = new AnimationPlayer(standingSD);
@@ -537,6 +540,7 @@ namespace EmodiaQuest.Core
             swordfighting2AP = new AnimationPlayer(swordfighting2SD);
             fightingStandAP = new AnimationPlayer(fightingStandSD);
             gunfightingAP = new AnimationPlayer(gunfightingSD);
+            dyingAP = new AnimationPlayer(dyingSD);
 
             //loading Animation
             /*
@@ -552,6 +556,7 @@ namespace EmodiaQuest.Core
             swordfighting2C = swordfighting2SD.AnimationClips["swordFighting2"];
             fightingStandC = fightingStandSD.AnimationClips["fighting_stand"];
             gunfightingC = gunfightingSD.AnimationClips["gunFighting"];
+            dyingC = dyingSD.AnimationClips["die"];
             
 
             //Safty Start Animations
@@ -562,6 +567,7 @@ namespace EmodiaQuest.Core
             swordfighting2AP.StartClip(swordfighting2C);
             fightingStandAP.StartClip(fightingStandC);
             gunfightingAP.StartClip(gunfightingC);
+            dyingAP.StartClip(dyingC);
 
             //assign the specific animationTimes
             standingDuration = 200;
@@ -571,6 +577,8 @@ namespace EmodiaQuest.Core
             swordFighting2Duration = (float)swordfighting2C.Duration.TotalMilliseconds / 1f;
             fightingStandDuration = (float)fightingStandC.Duration.TotalMilliseconds / 1f;
             gunFightingDuration = (float)gunfightingC.Duration.TotalMilliseconds / 1f;
+            dyingDuration = (float)dyingC.Duration.TotalMilliseconds / 1f;
+            
             /*
             Console.WriteLine("StandingDuration: " + standingC.Duration.TotalMilliseconds);
             Console.WriteLine("StandingKeyframes: " + standingC.Keyframes.Count);
@@ -634,7 +642,7 @@ namespace EmodiaQuest.Core
             }
             else if (GUI.Controls_GUI.Instance.keyClicked(Keys.D0))
             {
-                Hp = MaxHp;
+                Hp = 0;
             }
  
 
@@ -821,7 +829,20 @@ namespace EmodiaQuest.Core
             }
 
             //update playerState
-            if (GUI.Controls_GUI.Instance.mousePressedLeft() && stateTime < 120 )
+            if (Player.Instance.Hp < 0.1f && ActivePlayerState != PlayerState.Dying)
+            {
+                ActivePlayerState = PlayerState.Dying;
+                stateTime = dyingDuration;
+                ActiveBlendTime = 300;
+            }
+            else if(ActivePlayerState == PlayerState.Dying)
+            {
+                if (stateTime <= 20)
+                {
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.DeathScreen;
+                }
+            }
+            else if (GUI.Controls_GUI.Instance.mousePressedLeft() && stateTime < 120 )
             {
                 // Gunshooting!
                 if (CurrentEquippedWeapon.IsRangedWeapon == true && shootingTimer > shootingThreshold && Focus >= 10)
@@ -921,6 +942,9 @@ namespace EmodiaQuest.Core
                 case PlayerState.Gunfighting:
                     gunfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                     break;
+                case PlayerState.Dying :
+                    dyingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                    break;
             }
 
             // Secure, that the last Playerstate is always a other Playerstate, than the acutal
@@ -950,6 +974,9 @@ namespace EmodiaQuest.Core
                         break;
                     case PlayerState.Walking:
                         walkingAP.StartClip(walkingC);
+                        break;
+                    case PlayerState.Dying:
+                        dyingAP.StartClip(dyingC);
                         break;
                 }
             }
@@ -995,6 +1022,9 @@ namespace EmodiaQuest.Core
                         break;
                     case PlayerState.Gunfighting:
                         gunfightingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+                        break;
+                    case PlayerState.Dying:
+                        dyingAP.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
                         break;
                 }
             }
@@ -1223,7 +1253,7 @@ namespace EmodiaQuest.Core
             Hp -= (int)(damage - Math.Round(Armor/10.0));
             if (Hp <= 0)
             {
-                //Hp = 100;
+                Hp = 0;
             }
         }
 
@@ -1253,6 +1283,9 @@ namespace EmodiaQuest.Core
                 case PlayerState.Gunfighting:
                     gunfightingBones = gunfightingAP.GetSkinTransforms();
                     break;
+                case PlayerState.Dying:
+                    dyingBones = dyingAP.GetSkinTransforms();
+                    break;
             }
 
             if (IsBlending)
@@ -1280,6 +1313,9 @@ namespace EmodiaQuest.Core
                         break;
                     case PlayerState.Gunfighting:
                         gunfightingBones = gunfightingAP.GetSkinTransforms();
+                        break;
+                    case PlayerState.Dying:
+                        dyingBones = dyingAP.GetSkinTransforms();
                         break;
                 }
             }
@@ -1345,6 +1381,13 @@ namespace EmodiaQuest.Core
                                 }
                                 effect.SetBoneTransforms(blendingBones);
                                 break;
+                            case PlayerState.Dying:
+                                for (int i = 0; i < blendingBones.Length; i++)
+                                {
+                                    blendingBones[i] = Matrix.Lerp(blendingBones[i], dyingBones[i], 1 - percentageOfBlending);
+                                }
+                                effect.SetBoneTransforms(blendingBones);
+                                break;
                         }
                     }
                     else
@@ -1371,6 +1414,9 @@ namespace EmodiaQuest.Core
                                 break;
                             case PlayerState.Gunfighting:
                                 effect.SetBoneTransforms(gunfightingBones);
+                                break;
+                            case PlayerState.Dying:
+                                effect.SetBoneTransforms(dyingBones);
                                 break;
                         }
                     }

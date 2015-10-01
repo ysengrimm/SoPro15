@@ -47,7 +47,7 @@ namespace EmodiaQuest.Core
                     break;
             }
         }
-
+        private float dyingFlow = 0;
         public WorldState ActiveWorld;
         public ContentManager Content;
         /// <summary>
@@ -100,10 +100,20 @@ namespace EmodiaQuest.Core
         public void UpdateIngame(GameTime gameTime)
         {
 
-
+            Vector3 cameraPos;
+            dyingFlow += 0.007f;
             // Update camera and view matrices
-            Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
-                Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
+            if (Player.Instance.ActivePlayerState == PlayerState.Dying)
+            {
+                cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f - dyingFlow*0.8f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
+                               Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75 + dyingFlow))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
+            }
+            else
+            {
+                cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
+                               Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
+            }
+           
             Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 2.5f, Player.Instance.Position.Y), Vector3.UnitY);
 
             // Playerupdate
