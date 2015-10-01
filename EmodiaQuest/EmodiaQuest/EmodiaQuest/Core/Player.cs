@@ -644,6 +644,11 @@ namespace EmodiaQuest.Core
             {
                 Hp = 0;
             }
+
+            if (GUI.Controls_GUI.Instance.keyClicked(Keys.D8))
+            {
+                // Get Quest-Item "Diebesgut
+            }
  
 
             HitEnemyWithSword = false;
