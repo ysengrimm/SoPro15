@@ -155,6 +155,8 @@ namespace EmodiaQuest.Core
                         PossibleSolvedQuests.Add(activeQuest);
                     }
 
+                    // clear the players quest items
+                    Player.Instance.QuestInventory.Clear();
                 }
             }
             else

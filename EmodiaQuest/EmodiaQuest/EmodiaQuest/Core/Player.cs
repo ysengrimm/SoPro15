@@ -442,7 +442,7 @@ namespace EmodiaQuest.Core
             // Max HP is XP for next lvl + 10% strength with base 100
             MaxHp = (float)((100 * Math.Sqrt(Level)) < 100 ? 100 : (100 * Math.Sqrt(Level)) + Math.Round(Strength / 10.0));
             Hp = MaxHp;
-            HpRegen = 0.02f;
+            HpRegen = 0.005f;
 
             // Max Focus is 100 + 10% intel
             startIntelenz = 100;
@@ -669,6 +669,7 @@ namespace EmodiaQuest.Core
                             if (QuestController.Instance.SolveQuest(sQuest.Name))
                             {
                                 Console.WriteLine("You solved the Quest " + sQuest.Name);
+                                TextMessage.Instance.NewMessage("Du hast die Aufgabe " + sQuest.Name + " erledigt!", Color.Gold);
                             }
                             else
                             {
@@ -805,6 +806,7 @@ namespace EmodiaQuest.Core
 
                             Console.WriteLine("Added " + QuestController.Instance.ActiveQuestItems[0].Name + " to your questinventory");
                             QuestInventory.Add(QuestController.Instance.ActiveQuestItems[0]);
+                            TextMessage.Instance.NewMessage("Du hast den gesuchten Gegenstand gefunden!", Color.Gold);
                         }
                     }
 
@@ -1213,13 +1215,13 @@ namespace EmodiaQuest.Core
             MaxDamage = CurrentEquippedArmor.MaxDamage + CurrentEquippedBoots.MaxDamage + CurrentEquippedHelmet.MaxDamage +
                     CurrentEquippedWeapon.MaxDamage + (int)Math.Round(Skill/10.0);
 
-            // Max HP is XP for next lvl + 10% strength with base 100
-            MaxHp = (int)((100 * Math.Sqrt(Level)) < 100 ? 100 : (100 * Math.Sqrt(Level)) + Math.Round(Strength / 10.0));
+            // +5 * level + 10% of strength
+            MaxHp = (int)(95 + 5f * Level + Strength * 0.1f);
 
             // Max Focus is 100 + 10% intel
             MaxFocus = (int)(100 + Math.Round(Intelligence/10.0));
 
-            FocusRegen =  (float)(Intelligence/5000.0);
+            FocusRegen = (float)(Intelligence/5000.0);
         }
 
         private void UpdateQuest()
