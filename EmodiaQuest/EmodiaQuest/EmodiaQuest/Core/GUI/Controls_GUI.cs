@@ -35,6 +35,8 @@ namespace EmodiaQuest.Core.GUI
         private List<Wait_GUI> waitList = new List<Wait_GUI>();
         private double elapsedTime = 0.0;
 
+        public GameTime Control_GameTime;
+
 
         public void loadContent()
         {
@@ -43,6 +45,8 @@ namespace EmodiaQuest.Core.GUI
         }
         public void update(GameTime gameTime)
         {
+            Control_GameTime = gameTime;
+
             lastMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
 

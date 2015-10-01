@@ -39,6 +39,15 @@ namespace EmodiaQuest.Core
         Vector2 playerPos;
         Vector2 playerView;
 
+
+        // Portal Content
+        int portalCount = 1;
+        private Model portal;
+        List<Texture2D> portalList = new List<Texture2D>();
+        Texture2D portalTest;
+        private float portalTimer = 0;
+        private float qRotAngle = 0.0f;
+
         // Effect
         Effect copiedEffect;
 
@@ -73,6 +82,18 @@ namespace EmodiaQuest.Core
 
         public void loadContent(ContentManager Content)
         {
+            if (this.Name == "teleporter")
+            {
+                // Portal Content
+                portal = Content.Load<Model>("fbxContent/miscellaneous/portal/portal");
+                for (int i = 0; i < 16; i++)
+                {
+                    portalList.Add(portalTest);
+                    portalList[i] = Content.Load<Texture2D>("fbxContent/miscellaneous/portal/Texture" + (i + 1));
+                }
+                portalTest = portalList[0];
+            }
+
             if (IsRandomStuff)
             {
                 rnd = new Random();
@@ -173,13 +194,13 @@ namespace EmodiaQuest.Core
 
         public void update(GameTime gametime)
         {
-           
+
             // culling and update
             //distanceToPlayer = (float)EuclideanDistance(new Vector2(this.position.X, this.position.Z), Player.Instance.Position);
             //playerPos = Player.Instance.Position;
             //playerView = Player.Instance.PlayerViewDirection;
             //playerView.Normalize();
-        
+
         }
 
         /*
@@ -225,10 +246,51 @@ namespace EmodiaQuest.Core
         public void drawGameobject(Matrix world, Matrix view, Matrix projection)
         {
 
+            
+
             // Safeworld rendering
             if (EmodiaQuest.Core.Ingame.Instance.ActiveWorld == WorldState.Safeworld)
             {
-                if(IsRandomStuff && distanceToPlayer > Settings.Instance.EnvironmentDetailDistance)
+                if (this.Name == "teleporter")
+                {
+                    // Updating the portal
+                    portalTimer += GUI.Controls_GUI.Instance.Control_GameTime.ElapsedGameTime.Milliseconds;
+                    //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.B))
+                    if (portalTimer > 75)
+                    {
+                        portalCount++;
+                        portalTimer = 0;
+                        if (portalCount > 16)
+                            portalCount = 1;
+                        portalTest = portalList[portalCount - 1];
+                    }
+                    qRotAngle += 0.015f;
+                    if (qRotAngle > Math.PI * 2)
+                        qRotAngle -= (float)Math.PI * 2;
+                    if (qRotAngle < Math.PI * 2)
+                        qRotAngle += (float)Math.PI * 2;
+
+                    // Drawing the portal
+                    foreach (ModelMesh mesh in portal.Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            effect.Texture = portalTest;
+                            effect.EnableDefaultLighting();
+                            effect.World = Matrix.CreateRotationZ((float)(qRotAngle)) * Matrix.CreateScale(1f) *Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateRotationY(rotationY) * Matrix.CreateRotationX(rotationX) * Matrix.CreateRotationZ(rotationZ) * Matrix.CreateTranslation(0, 1.65f, 0) * Matrix.CreateTranslation(position) * world;
+                            effect.View = view;
+                            effect.Projection = projection;
+                            effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.5f);
+                            effect.SpecularColor = new Vector3(0.0f);
+                            effect.SpecularPower = 0;
+                            effect.Alpha = 0.8f;
+                            effect.PreferPerPixelLighting = true;
+                        }
+                        mesh.Draw();
+                    }
+                }
+
+                if (IsRandomStuff && distanceToPlayer > Settings.Instance.EnvironmentDetailDistance)
                 {
                     return;
                 }
@@ -254,7 +316,7 @@ namespace EmodiaQuest.Core
 
                                     effect.AmbientLightColor = ambi * (4.0f - distanceToPlayer * 0.02f);
                                     effect.DiffuseColor = diff * (4.0f - distanceToPlayer * 0.02f);
-                                    if(Name == "brownWay")
+                                    if (Name == "brownWay")
                                     {
                                         effect.DiffuseColor = new Vector3(0.1578511f, 0.05631156f, 0.03418359f) * 3;
                                     }
@@ -265,12 +327,51 @@ namespace EmodiaQuest.Core
                         }
                     }
                 }
-                
+
             }
 
             // Dungeon Rendering
             else
             {
+
+                if (this.Name == "teleporter")
+                {
+                    // Updating the portal
+                    portalTimer += GUI.Controls_GUI.Instance.Control_GameTime.ElapsedGameTime.Milliseconds;
+                    //if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.B))
+                    if (portalTimer > 75)
+                    {
+                        portalCount++;
+                        portalTimer = 0;
+                        if (portalCount > 16)
+                            portalCount = 1;
+                        portalTest = portalList[portalCount - 1];
+                    }
+                    qRotAngle += 0.015f;
+                    if (qRotAngle > Math.PI * 2)
+                        qRotAngle -= (float)Math.PI * 2;
+                    if (qRotAngle < Math.PI * 2)
+                        qRotAngle += (float)Math.PI * 2;
+
+                    // Drawing the portal
+                    foreach (ModelMesh mesh in portal.Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            effect.Texture = portalTest;
+                            effect.EnableDefaultLighting();
+                            effect.World = Matrix.CreateRotationZ((float)(qRotAngle)) * Matrix.CreateScale(1f) * Matrix.CreateRotationX((float)(-0.5 * Math.PI)) * Matrix.CreateRotationY(rotation * (float)Math.PI / 2) * Matrix.CreateRotationY(rotationY) * Matrix.CreateRotationX(rotationX) * Matrix.CreateRotationZ(rotationZ) * Matrix.CreateTranslation(0, 1.65f, 0) * Matrix.CreateTranslation(position) * world;
+                            effect.View = view;
+                            effect.Projection = projection;
+                            effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.5f);
+                            effect.SpecularColor = new Vector3(0.0f);
+                            effect.SpecularPower = 0;
+                            effect.Alpha = 0.8f;
+                            effect.PreferPerPixelLighting = true;
+                        }
+                        mesh.Draw();
+                    }
+                }
 
                 copiedEffect = Player.Instance.copiedEffect;
 
