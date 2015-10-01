@@ -71,6 +71,11 @@ namespace EmodiaQuest.Core.GUI.Screens
             // Get Keyboard input to change overall GameState
             if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.O))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Escape))
+            {
+                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
+            }
         }
 
         public void draw(SpriteBatch spritebatch)

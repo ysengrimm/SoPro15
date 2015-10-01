@@ -99,6 +99,8 @@ namespace EmodiaQuest.Core
 
         public void UpdateIngame(GameTime gameTime)
         {
+
+
             // Update camera and view matrices
             Vector3 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
                 Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
@@ -121,6 +123,12 @@ namespace EmodiaQuest.Core
             // Netstat update
             EmodiaQuest.Core.NetGraph.Instance.Update(gameTime, Player.Instance.Position.X, Player.Instance.Position.Y, Player.Instance.ActivePlayerState.ToString(), Player.Instance.LastPlayerState.ToString(), Player.Instance.Hp);
             // TODO: HUD update (playerhealth etc.)
+
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Escape))
+            {
+                EmodiaQuest_Game.Gamestate_Game_Continue = GameStates_Overall.IngameScreen;
+                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
+            }
 
         }
 

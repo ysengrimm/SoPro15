@@ -441,6 +441,12 @@ namespace EmodiaQuest.Core.GUI.Screens
                 unfold = true;
             }
 
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Escape))
+            {
+                EmodiaQuest_Game.Gamestate_Game_Continue = GameStates_Overall.NPCScreen;
+                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
+            }
+
         }
 
         public void draw(SpriteBatch spritebatch)

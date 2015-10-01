@@ -24,6 +24,7 @@ namespace EmodiaQuest
 
         public static GameStates_Overall Gamestate_Game = GameStates_Overall.StartScreen;
         public static GameStates_Overall Gamestate_Game_SaveUp = GameStates_Overall.StartScreen;
+        public static GameStates_Overall Gamestate_Game_Continue = GameStates_Overall.IngameScreen;
 
         private Vector2 screenSize;
 
@@ -136,13 +137,13 @@ namespace EmodiaQuest
                     //EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Start_GUI.Instance.update();
                     if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                        EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
                     break;
                 case GameStates_Overall.MenuScreen:
                     //EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Menu_GUI.Instance.update();
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
                     break;
                 case GameStates_Overall.IngameScreen:
 
@@ -150,8 +151,8 @@ namespace EmodiaQuest
                     if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                         this.Exit();
                     //Close Game with Escape
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
 
                     // check if game is in focus
                     Player.Instance.GameIsInFocus = IsActive;
@@ -171,34 +172,36 @@ namespace EmodiaQuest
                 case GameStates_Overall.OptionsScreen:
                     //EmodiaQuest.Core.GUI.Controls_GUI.Instance.update();
                     EmodiaQuest.Core.GUI.Screens.Options_GUI.Instance.update();
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
                     break;
                 case GameStates_Overall.InventoryScreen:
                     EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.update();
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
                     break;
                 case GameStates_Overall.NPCScreen:
                     EmodiaQuest.Core.GUI.Screens.NPCTalk_GUI.Instance.update();
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
                     break;
                 case GameStates_Overall.Pause:
                     //EmodiaQuest.Core.GUI.Screens.Inventory_GUI.Instance.update();
                     break;
                 case GameStates_Overall.KeyBindingsScreen:
                     EmodiaQuest.Core.GUI.Screens.Keybinding_GUI.Instance.update();
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
                     break;
                 case GameStates_Overall.IntroScreen:
                     EmodiaQuest.Core.GUI.Screens.Intro_GUI.Instance.update();
+                    if (kState.IsKeyDown(Keys.Escape))
+                        EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
                     break;
                 case GameStates_Overall.CreditsScreen:
                     EmodiaQuest.Core.GUI.Screens.Credits_GUI.Instance.update();
-                    if (kState.IsKeyDown(Keys.Escape))
-                        this.Exit();
+                    //if (kState.IsKeyDown(Keys.Escape))
+                    //    this.Exit();
                     break;
                 case GameStates_Overall.DeathScreen:
                     EmodiaQuest.Core.GUI.Screens.Death_GUI.Instance.update();

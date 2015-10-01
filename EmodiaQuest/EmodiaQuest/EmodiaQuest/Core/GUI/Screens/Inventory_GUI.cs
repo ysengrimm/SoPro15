@@ -1006,6 +1006,12 @@ namespace EmodiaQuest.Core.GUI.Screens
             // Get Keyboard input to change overall GameState
             if (Controls_GUI.Instance.keyClicked(Keys.I))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+
+            if (EmodiaQuest.Core.GUI.Controls_GUI.Instance.keyClicked(Keys.Escape))
+            {
+                EmodiaQuest_Game.Gamestate_Game_Continue = GameStates_Overall.InventoryScreen;
+                EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.MenuScreen;
+            }
         }
 
         private void ClearAllInventoryImages()

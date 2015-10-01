@@ -23,7 +23,7 @@ namespace EmodiaQuest.Core.GUI.Screens
                     if (showIntro)
                         EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IntroScreen;
                     else
-                        EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+                        EmodiaQuest_Game.Gamestate_Game = EmodiaQuest_Game.Gamestate_Game_Continue;
                     break;
                 case "options":
                     EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.OptionsScreen;
