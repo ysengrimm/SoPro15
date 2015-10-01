@@ -103,14 +103,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 1 && Player.Instance.PlayerInventory[0] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[0].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 1 && Player.Instance.PlayerInventory[0] != null ? Player.Instance.PlayerInventory[0] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
-                        platform.updateButtonClickability("equip_item", true);    
+                        platform.updateButtonClickability("equip_item", true);
+
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
                     }
-                    
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "itemSlot2":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 2 && Player.Instance.PlayerInventory[1] != null ? Player.Instance.PlayerInventory[1].Name : "");
@@ -122,14 +127,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 2 && Player.Instance.PlayerInventory[1] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[1].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 2 && Player.Instance.PlayerInventory[1] != null ? Player.Instance.PlayerInventory[1] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot3":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 3 && Player.Instance.PlayerInventory[2] != null ? Player.Instance.PlayerInventory[2].Name : "");
@@ -141,14 +151,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 3 && Player.Instance.PlayerInventory[2] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[2].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 3 && Player.Instance.PlayerInventory[2] != null ? Player.Instance.PlayerInventory[2] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot4":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 4 && Player.Instance.PlayerInventory[3] != null ? Player.Instance.PlayerInventory[3].Name : "");
@@ -160,14 +175,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 4 && Player.Instance.PlayerInventory[3] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[3].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 4 && Player.Instance.PlayerInventory[3] != null ? Player.Instance.PlayerInventory[3] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot5":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 5 && Player.Instance.PlayerInventory[4] != null ? Player.Instance.PlayerInventory[4].Name : "");
@@ -179,14 +199,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 5 && Player.Instance.PlayerInventory[4] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[4].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 5 && Player.Instance.PlayerInventory[4] != null ? Player.Instance.PlayerInventory[4] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot6":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 6 && Player.Instance.PlayerInventory[5] != null ? Player.Instance.PlayerInventory[5].Name : "");
@@ -198,14 +223,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 6 && Player.Instance.PlayerInventory[5] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[5].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 6 && Player.Instance.PlayerInventory[5] != null ? Player.Instance.PlayerInventory[5] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot7":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 7 && Player.Instance.PlayerInventory[6] != null ? Player.Instance.PlayerInventory[6].Name : "");
@@ -217,14 +247,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 7 && Player.Instance.PlayerInventory[6] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[6].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 7 && Player.Instance.PlayerInventory[6] != null ? Player.Instance.PlayerInventory[6] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot8":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 8 && Player.Instance.PlayerInventory[7] != null ? Player.Instance.PlayerInventory[7].Name : "");
@@ -236,14 +271,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 8 && Player.Instance.PlayerInventory[7] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[7].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 8 && Player.Instance.PlayerInventory[7] != null ? Player.Instance.PlayerInventory[7] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot9":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 9 && Player.Instance.PlayerInventory[8] != null ? Player.Instance.PlayerInventory[8].Name : "");
@@ -255,14 +295,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 9 && Player.Instance.PlayerInventory[8] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[8].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 9 && Player.Instance.PlayerInventory[8] != null ? Player.Instance.PlayerInventory[8] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot10":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 10 && Player.Instance.PlayerInventory[9] != null ? Player.Instance.PlayerInventory[9].Name : "");
@@ -274,14 +319,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 10 && Player.Instance.PlayerInventory[9] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[9].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 10 && Player.Instance.PlayerInventory[9] != null ? Player.Instance.PlayerInventory[9] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot11":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 11 && Player.Instance.PlayerInventory[10] != null ? Player.Instance.PlayerInventory[10].Name : "");
@@ -293,14 +343,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 11 && Player.Instance.PlayerInventory[10] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[10].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 11 && Player.Instance.PlayerInventory[10] != null ? Player.Instance.PlayerInventory[10] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot12":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 12 && Player.Instance.PlayerInventory[11] != null ? Player.Instance.PlayerInventory[11].Name : "");
@@ -312,14 +367,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 12 && Player.Instance.PlayerInventory[11] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[11].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 12 && Player.Instance.PlayerInventory[11] != null ? Player.Instance.PlayerInventory[11] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot13":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 13 && Player.Instance.PlayerInventory[12] != null ? Player.Instance.PlayerInventory[12].Name : "");
@@ -331,14 +391,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 13 && Player.Instance.PlayerInventory[12] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[12].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 13 && Player.Instance.PlayerInventory[12] != null ? Player.Instance.PlayerInventory[12] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot14":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 14 && Player.Instance.PlayerInventory[13] != null ? Player.Instance.PlayerInventory[13].Name : "");
@@ -350,14 +415,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 14 && Player.Instance.PlayerInventory[13] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[13].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 14 && Player.Instance.PlayerInventory[13] != null ? Player.Instance.PlayerInventory[13] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot15":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 15 && Player.Instance.PlayerInventory[14] != null ? Player.Instance.PlayerInventory[14].Name : "");
@@ -369,14 +439,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 15 && Player.Instance.PlayerInventory[14] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[14].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 15 && Player.Instance.PlayerInventory[14] != null ? Player.Instance.PlayerInventory[14] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot16":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 16 && Player.Instance.PlayerInventory[15] != null ? Player.Instance.PlayerInventory[15].Name : "");
@@ -388,14 +463,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 16 && Player.Instance.PlayerInventory[15] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[15].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 16 && Player.Instance.PlayerInventory[15] != null ? Player.Instance.PlayerInventory[15] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot17":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 17 && Player.Instance.PlayerInventory[16] != null ? Player.Instance.PlayerInventory[16].Name : "");
@@ -407,14 +487,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 17 && Player.Instance.PlayerInventory[16] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[16].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 17 && Player.Instance.PlayerInventory[16] != null ? Player.Instance.PlayerInventory[16] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "itemSlot18":
                     platform.updateLabel("item_name", Player.Instance.PlayerInventory.Count >= 18 && Player.Instance.PlayerInventory[17] != null ? Player.Instance.PlayerInventory[17].Name : "");
@@ -426,14 +511,19 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateLabel("item_intel", Player.Instance.PlayerInventory.Count >= 18 && Player.Instance.PlayerInventory[17] != null ? "Intelligenz Plus: " + Player.Instance.PlayerInventory[17].IntelligencePlus : "");
                     currentSelectedItem = Player.Instance.PlayerInventory.Count >= 18 && Player.Instance.PlayerInventory[17] != null ? Player.Instance.PlayerInventory[17] : null;
 
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
+                    platform.updateButtonVisibility("equip_item", false);
+                    platform.updateButtonClickability("equip_item", false);
+
                     if (currentSelectedItem != null)
                     {
                         platform.updateButtonVisibility("equip_item", true);
                         platform.updateButtonClickability("equip_item", true);
-                    }
 
-                    platform.updateButtonVisibility("unequip_item", false);
-                    platform.updateButtonClickability("unequip_item", false);
+                        platform.updateButtonVisibility("unequip_item", true);
+                        platform.updateButtonClickability("unequip_item", true);
+                    }
                     break;
                 case "equip_item":
                     if (Player.Instance.Strength >= currentSelectedItem.RequiredStrength)
@@ -564,47 +654,8 @@ namespace EmodiaQuest.Core.GUI.Screens
                     else TextMessage.Instance.NewMessage("Zu wenig Kraft fuer dieses Item", Color.Red);
                     break;
                 case "unequip_item":
-                    switch (currentSelectedItem.Class)
-                    {
-                        case ItemClass.Einfaches_Gewehr: case ItemClass.Hammer: case ItemClass.Normales_Gewehr: 
-                        case ItemClass.Schweres_Gewehr: case ItemClass.Schwert: case ItemClass.Stock:
-                            if (Player.Instance.CurrentEquippedWeapon != null)
-                            {
-                                Player.Instance.PlayerInventory.Add(Player.Instance.CurrentEquippedWeapon);
-                                Player.Instance.CurrentEquippedWeapon = null;
-                            }
-                            platform.updateButtonPicture("equipped_weapon", "socket");
-                            platform.updateItemLevel("equipped_weapon", -1);
-                            break;
-                        case ItemClass.Einfaches_Shirt: case ItemClass.Einfache_Ruestung: case ItemClass.Schwere_Ruestung:
-                            if (Player.Instance.CurrentEquippedArmor != null)
-                            {
-                                Player.Instance.PlayerInventory.Add(Player.Instance.CurrentEquippedArmor);
-                                Player.Instance.CurrentEquippedArmor = null;
-                            }
-                            platform.updateButtonPicture("equipped_armor", "socket");
-                            platform.updateItemLevel("equipped_armor", -1);
-                            break;
-                        case ItemClass.Beinkleid:
-                            if (Player.Instance.CurrentEquippedBoots != null)
-                            {
-                                Player.Instance.PlayerInventory.Add(Player.Instance.CurrentEquippedBoots);
-                                Player.Instance.CurrentEquippedBoots = null;
-                            }
-                            platform.updateButtonPicture("equipped_boots", "socket");
-                            platform.updateItemLevel("equipped_boots", -1);
-                            break;
-                        case ItemClass.Einfache_Kappe: case ItemClass.Hut_aus_Schrott: case ItemClass.Schwerer_Helm:
-                            if (Player.Instance.CurrentEquippedHelmet != null)
-                            {
-                                Player.Instance.PlayerInventory.Add(Player.Instance.CurrentEquippedHelmet);
-                                Player.Instance.CurrentEquippedHelmet = null;
-                            }
-                            platform.updateButtonPicture("equipped_helmet", "socket");
-                            platform.updateItemLevel("equipped_helmet", -1);
-                            break;
-                    }
-                    Player.Instance.GrandStats();
+                    Player.Instance.PlayerInventory.Remove(currentSelectedItem);
+                    ClearAllInventoryImages();
                     break;
                 case "equipped_helmet":
                     platform.updateLabel("item_name", Player.Instance.CurrentEquippedHelmet != null ? Player.Instance.CurrentEquippedHelmet.Name : "");
@@ -619,8 +670,8 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonVisibility("equip_item", false);
                     platform.updateButtonClickability("equip_item", false);
 
-                    platform.updateButtonVisibility("unequip_item", true);
-                    platform.updateButtonClickability("unequip_item", true);
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "equipped_armor":
                     platform.updateLabel("item_name", Player.Instance.CurrentEquippedArmor != null ? Player.Instance.CurrentEquippedArmor.Name : "");
@@ -635,8 +686,8 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonVisibility("equip_item", false);
                     platform.updateButtonClickability("equip_item", false);
 
-                    platform.updateButtonVisibility("unequip_item", true);
-                    platform.updateButtonClickability("unequip_item", true);
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "equipped_boots":
                     platform.updateLabel("item_name", Player.Instance.CurrentEquippedBoots != null ? Player.Instance.CurrentEquippedBoots.Name: "");
@@ -651,8 +702,8 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonVisibility("equip_item", false);
                     platform.updateButtonClickability("equip_item", false);
 
-                    platform.updateButtonVisibility("unequip_item", true);
-                    platform.updateButtonClickability("unequip_item", true);
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
                     break;
                 case "equipped_weapon":
                     platform.updateLabel("item_name", Player.Instance.CurrentEquippedWeapon != null ? Player.Instance.CurrentEquippedWeapon.Name: "");
@@ -667,8 +718,8 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updateButtonVisibility("equip_item", false);
                     platform.updateButtonClickability("equip_item", false);
 
-                    platform.updateButtonVisibility("unequip_item", true);
-                    platform.updateButtonClickability("unequip_item", true);
+                    platform.updateButtonVisibility("unequip_item", false);
+                    platform.updateButtonClickability("unequip_item", false);
                     break;
             }
         }
@@ -745,11 +796,11 @@ namespace EmodiaQuest.Core.GUI.Screens
             platform.addButton(83, 32, 4.5f, 8, "equipped_boots");
             platform.addButton(93, 22, 4.5f, 8, "equipped_weapon");
 
-            platform.addButton(45, 75, 12, 6, "equip_item", "Ausruesten");
+            platform.addButton(45, 77, 12, 6, "equip_item", "Ausruesten");
             platform.updateButtonVisibility("equip_item", false);
             platform.updateButtonClickability("equip_item", false);
 
-            platform.addButton(45, 75, 12, 6, "unequip_item", "Ablegen");
+            platform.addButton(45, 85, 12, 6, "unequip_item", "Wegwerfen");
             platform.updateButtonVisibility("unequip_item", false);
             platform.updateButtonClickability("unequip_item", false);
 
@@ -955,6 +1006,14 @@ namespace EmodiaQuest.Core.GUI.Screens
             // Get Keyboard input to change overall GameState
             if (Controls_GUI.Instance.keyClicked(Keys.I))
                 EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.IngameScreen;
+        }
+
+        private void ClearAllInventoryImages()
+        {
+            for (int i = 0; i < 17; i++)
+            {
+                platform.updateButtonPicture("itemSlot" + (i + 1), "socket");
+            }
         }
 
         public void draw(SpriteBatch spritebatch)
