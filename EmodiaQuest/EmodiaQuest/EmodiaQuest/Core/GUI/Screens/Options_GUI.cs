@@ -74,12 +74,12 @@ namespace EmodiaQuest.Core.GUI.Screens
                     if (Settings.Instance.hints)
                     {
                         Settings.Instance.hints = false;
-                        platform.updateLabel("hintsLabel", "Deaktiviert");
+                        platform.updateLabel("hintsLabel", "Nicht aktiv");
                     }
                     else
                     {
                         Settings.Instance.hints = true;
-                        platform.updateLabel("hintsLabel", "Aktiviert");
+                        platform.updateLabel("hintsLabel", "Aktiv");
                     }
                     break;
                 default:
@@ -136,7 +136,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             this.platform.addButton(35, 75, 30, 8, "changeToMainMenu", "Hauptmenue");
 
             this.platform.addButton(15, 60, 35, 8, "hintsButton", "Hinweise");
-            this.platform.addLabel(55, 60, 35, 8, "monoFont_small", "Aktiviert", "hintsLabel");
+            this.platform.addLabel(55, 60, 35, 8, "monoFont_small", "Aktiv", "hintsLabel");
 
             //this.platform.addButton(35, 60, 30, 8, "nextState", "Start Game");
             // this.platform.addPlainImage

@@ -46,7 +46,7 @@ den Sack mit dem Diebesgut!
         </quest>
 		
 		<quest>
-            <name>Blut ist ein ganz besondrer Saft.</name>
+            <name>Blut ist ein ganz besondrer Saft</name>
             <difficulty>1</difficulty>
             <owner>Konstantin</owner>
             <repeatable>no</repeatable>

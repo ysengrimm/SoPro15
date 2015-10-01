@@ -51,11 +51,15 @@ namespace EmodiaQuest.Core.GUI.Screens
                 case "hp":
                     break;
                 case "xp":
-                    float scaledXp = (e.ChangeValue / Player.Instance.XPToNextLevel) * 100;
-
+                    float scaledXp = ((float)Player.Instance.Experience / Player.Instance.XPToNextLevel) * 100f;
                     platform.updatePlainImage("xpBar", 0, 99, scaledXp, 2);
+
+                    platform.updateLabel("xp_text", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel);
                     break;
                 case "xp_next_lvl":
+                    float scaledXp2 = ((float)Player.Instance.Experience / Player.Instance.XPToNextLevel) * 100f;
+                    platform.updatePlainImage("xpBar", 0, 99, scaledXp2, 2);
+
                     platform.updateLabel("xp_text", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel);
                     break;
                 case "level":
@@ -818,7 +822,7 @@ namespace EmodiaQuest.Core.GUI.Screens
             //platform.addPlainImage(0, 100 - 100 * 0.189f * 1.777f + 1, 100, 100 * 0.189f * 1.777f, "HUD", "HUD_small");
 
             // XP Number
-            platform.addLabel(96, 97, 3, "monoFont_big", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel, "xp_text", true);
+            platform.addLabel(93, 97, 3, "monoFont_big", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel, "xp_text", true);
 
             // XP Bar
             platform.addPlainImage(0, 99, 0, 2, "xpBar", "pixel_red");
@@ -1016,7 +1020,7 @@ namespace EmodiaQuest.Core.GUI.Screens
 
         private void ClearAllInventoryImages()
         {
-            for (int i = 0; i < 17; i++)
+            for (int i = 0; i < 18; i++)
             {
                 platform.updateButtonPicture("itemSlot" + (i + 1), "socket");
             }

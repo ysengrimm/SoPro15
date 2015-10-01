@@ -43,12 +43,15 @@ namespace EmodiaQuest.Core.GUI.Screens
                     platform.updatePlainImagePicture("concentrationBar", "Content_GUI/Player2D/mana/manakugel" + intFocus);
                     break;
                 case "xp":
-                    float scaledXp = ((float)Player.Instance.Experience / Player.Instance.XPToNextLevel) * 100;
+                    float scaledXp = ((float)Player.Instance.Experience / Player.Instance.XPToNextLevel) * 100f;
                     platform.updatePlainImage("xpBar", 0, 99, scaledXp, 2);
 
                     platform.updateLabel("xp_text", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel);
                     break;
                 case "xp_next_lvl":
+                    float scaledXp2 = ((float)Player.Instance.Experience / Player.Instance.XPToNextLevel) * 100f;
+                    platform.updatePlainImage("xpBar", 0, 99, scaledXp2, 2);
+
                     platform.updateLabel("xp_text", Player.Instance.Experience + "/" + Player.Instance.XPToNextLevel);
                     break;
                 case "level":
