@@ -1150,6 +1150,15 @@ namespace EmodiaQuest.Core
                 oldQuest = activeQuest;
             }
 
+            foreach (Quest solvedQuest in QuestController.Instance.SolvedQuests)
+            {
+                if (solvedQuest.Name == "Es lebe, wer sich tapfer haelt!")
+                {
+                    TextMessage.Instance.NewMessage("Haste glatt gewonnen du lucker!", Color.Gold);
+                    EmodiaQuest_Game.Gamestate_Game = GameStates_Overall.EndScreen;
+                }
+            }
+
             for (int i = 0; i < BulletList.Count; i++)
             {
                 if (BulletList[i].isActive)
