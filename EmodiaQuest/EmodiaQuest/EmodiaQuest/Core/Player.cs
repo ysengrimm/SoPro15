@@ -640,6 +640,10 @@ namespace EmodiaQuest.Core
             {
                 CurrentEquippedWeapon = new Item(0, ItemClass.Schweres_Gewehr, 0, 70, 100, 0, 0, true, ItemClass.Schweres_Gewehr.ToString());
             }
+            else if (GUI.Controls_GUI.Instance.keyClicked(Keys.D7))
+            {
+                Hp = 100;
+            }
             else if (GUI.Controls_GUI.Instance.keyClicked(Keys.D0))
             {
                 Hp = 0;

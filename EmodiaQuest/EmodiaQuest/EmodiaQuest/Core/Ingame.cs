@@ -105,16 +105,18 @@ namespace EmodiaQuest.Core
             // Update camera and view matrices
             if (Player.Instance.ActivePlayerState == PlayerState.Dying)
             {
-                cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f - dyingFlow*0.3f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
+                cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
                                Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75 + dyingFlow))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
+                Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 2.5f-dyingFlow/3f, Player.Instance.Position.Y), Vector3.UnitY);
             }
             else
             {
                 cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
                                Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
+                Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 2.5f, Player.Instance.Position.Y), Vector3.UnitY);
             }
            
-            Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 2.5f, Player.Instance.Position.Y), Vector3.UnitY);
+            //Renderer.Instance.View = Matrix.CreateLookAt(cameraPos, new Vector3(Player.Instance.Position.X, 2.5f, Player.Instance.Position.Y), Vector3.UnitY);
 
             // Playerupdate
             Player.Instance.Update(gameTime);
@@ -156,7 +158,7 @@ namespace EmodiaQuest.Core
             Renderer.Instance.DrawPlayer(Player.Instance);
 
             // NetStat
-            EmodiaQuest.Core.NetGraph.Instance.Draw(spriteBatch);
+            //EmodiaQuest.Core.NetGraph.Instance.Draw(spriteBatch);
             // HUD
             EmodiaQuest.Core.GUI.Screens.HUD_GUI.Instance.draw(spriteBatch);
             // TODO: Damage Numbers over enemies
