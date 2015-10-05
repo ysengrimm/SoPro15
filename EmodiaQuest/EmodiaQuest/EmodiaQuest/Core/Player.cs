@@ -1184,7 +1184,7 @@ namespace EmodiaQuest.Core
             }
             if (!HitEnemyWithSword && HitAir)
             {
-                Console.WriteLine(HitEnemyWithSword + " omg: " + HitAir);
+                //Console.WriteLine(HitEnemyWithSword + " omg: " + HitAir);
                 Jukebox.Instance.PlayAudioMouseFeedback();
             }
 

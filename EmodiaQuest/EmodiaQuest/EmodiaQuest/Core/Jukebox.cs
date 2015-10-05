@@ -51,7 +51,7 @@ namespace EmodiaQuest.Core
         public List<SoundDisk> Music;
 
         // FX Sounds
-        SoundDisk Hit_1, Plop_1;
+        SoundDisk Hit_1, Plop_1, Die_1, Die_2, Shot_1, Thunder_1;
 
         public List<SoundDisk> FXSounds;
 
@@ -76,6 +76,14 @@ namespace EmodiaQuest.Core
 
 
             // Load the FX
+            Die_1 = new SoundDisk("Die_1", SoundDisk.SoundType.FX, "Sounds/fx/die_1", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Die_1);
+            Die_2 = new SoundDisk("Die_2", SoundDisk.SoundType.FX, "Sounds/fx/die_2", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Die_2);
+            Shot_1 = new SoundDisk("Shot_1", SoundDisk.SoundType.FX, "Sounds/fx/shot", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Shot_1);
+            Thunder_1 = new SoundDisk("Thunder_1", SoundDisk.SoundType.FX, "Sounds/fx/thunder", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Thunder_1);
             Hit_1 = new SoundDisk("Hit_1", SoundDisk.SoundType.FX, "Sounds/fx/Schlag_1", new TimeSpan(0, 0, 0, 0, 300));
             FXSounds.Add(Hit_1);
             Plop_1 = new SoundDisk("Plop_1", SoundDisk.SoundType.FX, "Sounds/fx/Plop_1", new TimeSpan(0, 0, 0, 0, 0));
@@ -88,6 +96,7 @@ namespace EmodiaQuest.Core
             foreach (SoundDisk fxSound in FXSounds)
             {
                 fxSound.LoadSoundDisk(Content);
+                Console.WriteLine(fxSound.Name);
             }
             foreach (SoundDisk speach in Speaches)
             {
@@ -162,6 +171,7 @@ namespace EmodiaQuest.Core
                 case GameStates_Overall.IngameScreen:
                     // Button Pressed Sound
                     Plop_1.Update(gameTime);
+                    Thunder_1.Update(gameTime);
                     // PlayerSounds
                     if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting1)
                     {
@@ -177,10 +187,26 @@ namespace EmodiaQuest.Core
         {
             Plop_1.Play();
         }
-
         public void PlaySwordFightSound()
         {
             Hit_1.Play();
+        }
+        public void PlayDie_1()
+        {
+            Die_1.Play();
+        }
+        public void PlayDie_2()
+        {
+            Die_2.Play();
+        }
+        public void PlayShot_1()
+        {
+            Shot_1.Play();
+        }
+        public void PlayThunder_1()
+        {           
+            Thunder_1.Play();
+            Console.WriteLine("Thunder! " + Thunder_1.IsPlaying);
         }
 
         /// <summary>

@@ -105,7 +105,7 @@ namespace EmodiaQuest.Core
             // Update camera and view matrices
             if (Player.Instance.ActivePlayerState == PlayerState.Dying)
             {
-                cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f - dyingFlow*0.3f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
+                cameraPos = Vector3.Transform(new Vector3(Player.Instance.Position.X + 7f, 2.5f, Player.Instance.Position.Y + 7f) - new Vector3(Player.Instance.Position.X, 4, Player.Instance.Position.Y),
                                Matrix.CreateRotationY((float)(Player.Instance.Angle + Math.PI * 0.75 + dyingFlow))) + new Vector3(Player.Instance.Position.X, 5, Player.Instance.Position.Y);
             }
             else
@@ -171,6 +171,7 @@ namespace EmodiaQuest.Core
             Player.Instance.Position = this.Dungeon.Controller.StartPoint;
             CollisionHandler.Instance.SetEnvironmentController(Dungeon.Controller);
             Dungeon.CreateRandomStuff();
+            Jukebox.Instance.PlayThunder_1();
         }
 
         public void ChangeToSafeworld()
@@ -180,6 +181,7 @@ namespace EmodiaQuest.Core
             Player.Instance.GameEnv = SafeWorld.Instance.Controller;
             Player.Instance.Position = new Vector2(170, 330);
             CollisionHandler.Instance.SetEnvironmentController(SafeWorld.Instance.Controller);
+            Jukebox.Instance.PlayThunder_1();
         }
 
         /// <summary>
