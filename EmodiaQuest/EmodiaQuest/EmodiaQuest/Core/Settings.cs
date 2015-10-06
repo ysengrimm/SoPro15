@@ -212,11 +212,11 @@ namespace EmodiaQuest.Core
 
             MainVolume = 1.0f;
 
-            FXVolume = 0.5f;
+            FXVolume = 1f;
 
-            MusicVolume = 0.5f;
+            MusicVolume = 0.25f;
 
-            SpeakerVolume = 0.75f;
+            SpeakerVolume = 1f;
 
             PlayerSpeed = 0.25f;
 

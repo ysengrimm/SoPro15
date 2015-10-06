@@ -51,7 +51,7 @@ namespace EmodiaQuest.Core
         public List<SoundDisk> Music;
 
         // FX Sounds
-        SoundDisk Hit_1, Plop_1, Die_1, Die_2, Shot_1, Thunder_1;
+        SoundDisk Hit_1, Plop_1, Die_1, Die_2, Shot_1, Thunder_1, Klick_1, Coin_1, Walk_long, Growl_1, Growl_2;
 
         public List<SoundDisk> FXSounds;
 
@@ -80,7 +80,7 @@ namespace EmodiaQuest.Core
             FXSounds.Add(Die_1);
             Die_2 = new SoundDisk("Die_2", SoundDisk.SoundType.FX, "Sounds/fx/die_2", new TimeSpan(0, 0, 0, 0, 0));
             FXSounds.Add(Die_2);
-            Shot_1 = new SoundDisk("Shot_1", SoundDisk.SoundType.FX, "Sounds/fx/shot", new TimeSpan(0, 0, 0, 0, 0));
+            Shot_1 = new SoundDisk("Shot_1", SoundDisk.SoundType.FX, "Sounds/fx/shot", new TimeSpan(0, 0, 0, 0, 300));
             FXSounds.Add(Shot_1);
             Thunder_1 = new SoundDisk("Thunder_1", SoundDisk.SoundType.FX, "Sounds/fx/thunder", new TimeSpan(0, 0, 0, 0, 0));
             FXSounds.Add(Thunder_1);
@@ -88,6 +88,16 @@ namespace EmodiaQuest.Core
             FXSounds.Add(Hit_1);
             Plop_1 = new SoundDisk("Plop_1", SoundDisk.SoundType.FX, "Sounds/fx/Plop_1", new TimeSpan(0, 0, 0, 0, 0));
             FXSounds.Add(Plop_1);
+            Klick_1 = new SoundDisk("Klick_1", SoundDisk.SoundType.FX, "Sounds/fx/klick", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Klick_1);
+            Coin_1 = new SoundDisk("Coin_1", SoundDisk.SoundType.FX, "Sounds/fx/coin", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Coin_1);
+            Walk_long = new SoundDisk("Walk_long", SoundDisk.SoundType.FX, "Sounds/fx/steps_long", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Walk_long);
+            Growl_1 = new SoundDisk("Growl_1", SoundDisk.SoundType.FX, "Sounds/fx/growl", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Growl_1);
+            Growl_2 = new SoundDisk("Growl_2", SoundDisk.SoundType.FX, "Sounds/fx/growl_v2", new TimeSpan(0, 0, 0, 0, 0));
+            FXSounds.Add(Growl_2);
 
             foreach(SoundDisk music in Music)
             {
@@ -96,7 +106,7 @@ namespace EmodiaQuest.Core
             foreach (SoundDisk fxSound in FXSounds)
             {
                 fxSound.LoadSoundDisk(Content);
-                Console.WriteLine(fxSound.Name);
+                //Console.WriteLine(fxSound.Name);
             }
             foreach (SoundDisk speach in Speaches)
             {
@@ -157,35 +167,59 @@ namespace EmodiaQuest.Core
                 activeMusic.Pause();
             }
 
+            // Always updated
+            Klick_1.Update(gameTime);
+            Plop_1.Update(gameTime);
+            // Screen depending updates
             switch (EmodiaQuest_Game.Gamestate_Game)
             {
                 case GameStates_Overall.MenuScreen:
                     // Button Pressed Sound
-                    Plop_1.Update(gameTime);
+                    
                     break;
                 case GameStates_Overall.OptionsScreen:
                     // Button Pressed Sound
-                    Plop_1.Update(gameTime);
                     break;
-
+                
                 case GameStates_Overall.IngameScreen:
                     // Button Pressed Sound
-                    Plop_1.Update(gameTime);
                     Thunder_1.Update(gameTime);
-                    // PlayerSounds
-                    if (Player.Instance.ActivePlayerState == PlayerState.Swordfighting1)
-                    {
-                        Hit_1.Update(gameTime);
-                    }
+                    Shot_1.Update(gameTime);
+                    Hit_1.Update(gameTime);
+                    Die_1.Update(gameTime);
+                    Die_2.Update(gameTime);
+                    Coin_1.Update(gameTime);
+                    Walk_long.Update(gameTime);
+                    Growl_1.Update(gameTime);
+                    Growl_2.Update(gameTime);
+
                     break;
             }
 
         }
-
-
+        public void PlayGrowl_2()
+        {
+            Growl_2.Play();
+        }
+        public void PlayGrowl_1()
+        {
+            Growl_1.Play();
+        }
+        public void PlayWalk_Long()
+        {
+            Walk_long.Play();
+        }
+        public void PlayWalk_Long(TimeSpan timeD, float speed)
+        {
+            Walk_long.Play(timeD , speed);
+        }
+        public void PlayCoin()
+        {
+            Coin_1.Play();
+        }
         public void PlayAudioMouseFeedback()
         {
-            Plop_1.Play();
+            Klick_1.Play();
         }
         public void PlaySwordFightSound()
         {
@@ -202,11 +236,12 @@ namespace EmodiaQuest.Core
         public void PlayShot_1()
         {
             Shot_1.Play();
+            //Console.WriteLine("Shoot!");
         }
         public void PlayThunder_1()
         {           
             Thunder_1.Play();
-            Console.WriteLine("Thunder! " + Thunder_1.IsPlaying);
+            //Console.WriteLine("Thunder! " + Thunder_1.IsPlaying);
         }
 
         /// <summary>

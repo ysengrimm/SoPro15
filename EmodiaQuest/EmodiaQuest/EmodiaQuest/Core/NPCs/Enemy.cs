@@ -16,6 +16,8 @@ namespace EmodiaQuest.Core.NPCs
 {
     public class Enemy
     {
+        Random rnd;
+
         // Variables for Ai
         private EnvironmentController currentEnvironment;
         private Ai enemyAi;
@@ -119,7 +121,7 @@ namespace EmodiaQuest.Core.NPCs
             this.Position = position;
             this.EnemyType = enemyType;
             currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Add(this);
-            this.isAttacking = false;
+            this.isAttacking = false;    
         }
 
 
@@ -127,7 +129,7 @@ namespace EmodiaQuest.Core.NPCs
         public void LoadContent(ContentManager content)
         {
             this.Content = content;
-
+            rnd = new Random();
             // Normal variables for each different enemy Type
             switch (EnemyType)
             {
@@ -479,12 +481,12 @@ namespace EmodiaQuest.Core.NPCs
 
             // Computing the distance to the player
             distanceToPlayer = (float)EuclideanDistance(this.Position, Player.Instance.Position);
-
+            
             if (distanceToPlayer < 60)
             {
                 //Update Temp EnemyState
                 TempEnemyState = CurrentEnemyState;
-
+                rnd.Next(10);
                 oldPosition = Position;
 
                 attackTimer += gameTime.ElapsedGameTime.Milliseconds;
@@ -564,6 +566,14 @@ namespace EmodiaQuest.Core.NPCs
                     {
                         Player.Instance.Attack(Damage);
                         attackTimer = 0;
+                        if(rnd.Next(2) == 0)
+                        {
+                            Jukebox.Instance.PlayGrowl_1();
+                        }
+                        else
+                        {
+                            Jukebox.Instance.PlayGrowl_2();
+                        }
                     }
                     // The breathing, which means if the creature is hit, it turns red for a short while
                     if (isHit)
@@ -700,8 +710,16 @@ namespace EmodiaQuest.Core.NPCs
             if (!(CurrentHealth <= 0)) return;
             if (currentEnvironment.enemyArray[(int)Math.Round(Position.X / 10), (int)Math.Round(Position.Y / 10)].Remove(this))
             {
-                IsAlive = false;
-
+                if (rnd.Next(2) == 1)
+                {
+                    Jukebox.Instance.PlayDie_1();
+                }
+                else
+                {
+                    Jukebox.Instance.PlayDie_2();
+                }
+                
+                IsAlive = false;               
                 // Add killed monsters
                 String killOut = "";
                 foreach (Quest activeQuest in QuestController.Instance.ActiveQuests)

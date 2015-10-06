@@ -683,6 +683,7 @@ namespace EmodiaQuest.Core
                             {
                                 Console.WriteLine("You solved the Quest " + sQuest.Name);
                                 TextMessage.Instance.NewMessage("Du hast die Aufgabe " + sQuest.Name + " erledigt!", Color.Gold);
+                                Jukebox.Instance.PlayCoin();
                             }
                             else
                             {
@@ -706,7 +707,7 @@ namespace EmodiaQuest.Core
             currentMouseState = Mouse.GetState();
 
             // only set fixed mouse pos if game is in focus
-            if (gameIsInFocus)
+            if (gameIsInFocus && ActivePlayerState != PlayerState.Dying)
             {
                 //scale position to 0.0 to 1.0 then center the +/- change
                 Angle += (float)-(((currentMouseState.X / windowSize.X) - 0.5) * RotationSpeed);
@@ -737,36 +738,38 @@ namespace EmodiaQuest.Core
             {
                 PlayerSpeed = Settings.Instance.PlayerSpeed;
             }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            if (ActivePlayerState != PlayerState.Dying)
             {
-                KeysPressing += 0.2f;
-                movement.Y += PlayerSpeed * (float)Math.Cos(Angle);
-                movement.X += PlayerSpeed * (float)Math.Sin(Angle);
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
+                {
+                    KeysPressing += 0.2f;
+                    movement.Y += PlayerSpeed * (float)Math.Cos(Angle);
+                    movement.X += PlayerSpeed * (float)Math.Sin(Angle);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.S))
+                {
+                    KeysPressing += 0.2f;
+                    PlayerSpeed /= KeysPressing;
+                    PlayerSpeed = Settings.Instance.PlayerSpeed / 1.5f;
+                    movement.Y -= PlayerSpeed * (float)Math.Cos(Angle);
+                    movement.X -= PlayerSpeed * (float)Math.Sin(Angle);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                {
+                    KeysPressing += 0.2f;
+                    PlayerSpeed /= KeysPressing;
+                    movement.Y -= PlayerSpeed * (float)Math.Cos(Angle - Math.PI / 2);
+                    movement.X -= PlayerSpeed * (float)Math.Sin(Angle - Math.PI / 2);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.D))
+                {
+                    KeysPressing += 0.2f;
+                    PlayerSpeed /= KeysPressing;
+                    movement.Y += PlayerSpeed * (float)Math.Cos(Angle + 3 * Math.PI / 2);
+                    movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
+                }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                KeysPressing += 0.2f;
-                PlayerSpeed /= KeysPressing;
-                PlayerSpeed = Settings.Instance.PlayerSpeed / 1.5f;
-                movement.Y -= PlayerSpeed * (float)Math.Cos(Angle);
-                movement.X -= PlayerSpeed * (float)Math.Sin(Angle);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                KeysPressing += 0.2f;
-                PlayerSpeed /= KeysPressing;
-                movement.Y -= PlayerSpeed * (float)Math.Cos(Angle - Math.PI / 2);
-                movement.X -= PlayerSpeed * (float)Math.Sin(Angle - Math.PI / 2);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                KeysPressing += 0.2f;
-                PlayerSpeed /= KeysPressing;
-                movement.Y += PlayerSpeed * (float)Math.Cos(Angle + 3 * Math.PI / 2);
-                movement.X += PlayerSpeed * (float)Math.Sin(Angle + 3 * Math.PI / 2);
-            }
-
+            
             // Collision with Walls
             if (Color.White == collisionHandler.GetCollisionColor(new Vector2(Position.X, movement.Y), collisionHandler.Controller.CollisionColors, MovementOffset))
             {
@@ -869,14 +872,17 @@ namespace EmodiaQuest.Core
                         case Shootingtype.Normal:
                             bulletModelToGive = bulletModel1;
                             Focus -= 10;
+                            Jukebox.Instance.PlayShot_1();
                             break;
                         case Shootingtype.Blast:
                             bulletModelToGive = bulletModel2;
                             Focus -= 10;
+                            Jukebox.Instance.PlayShot_1();
                             break;
                         case Shootingtype.Lightning:
                             bulletModelToGive = bulletModel3;
                             Focus -= 10;
+                            Jukebox.Instance.PlayShot_1();
                             break;
                         default:
                             break;
@@ -910,6 +916,8 @@ namespace EmodiaQuest.Core
             {
                 ActivePlayerState = PlayerState.Running;
                 fixedBlendDuration = 300;
+                stateTime = runningDuration;
+                Jukebox.Instance.PlayWalk_Long();
             }
                 // Walking
             else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime < 100)
@@ -917,6 +925,7 @@ namespace EmodiaQuest.Core
                 ActivePlayerState = PlayerState.Walking;
                 stateTime = walkingDuration / 2;
                 fixedBlendDuration = 300;
+                Jukebox.Instance.PlayWalk_Long();
             }
                 // Standing
             else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime < 100)

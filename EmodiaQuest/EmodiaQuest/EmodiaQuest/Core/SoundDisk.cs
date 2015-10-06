@@ -58,6 +58,8 @@ namespace EmodiaQuest.Core
             set { delay = value; }
             get { return delay; }
         }
+
+        private float speed = 1;
         /// <summary>
         /// the active playtime of the sounddisk
         /// start = full soundlength
@@ -154,6 +156,13 @@ namespace EmodiaQuest.Core
         {
             ForceToPlay = true;
         }
+
+        public void Play(TimeSpan timeD, float speed)
+        {
+            ForceToPlay = true;
+            Duration = timeD;
+            this.speed = speed;
+        }
         /// <summary>
         /// Stops the Sounddisk, you need to Press "Play again" if you want to "resume"
         /// </summary>
@@ -237,6 +246,10 @@ namespace EmodiaQuest.Core
             {
                 // updates if the Sounddisk has FX (no pause or stop functionality)
                 case SoundType.FX:
+                    if (Name == "Klick_1")
+                    {
+                        //Console.WriteLine(Name + " : " + IsPlaying + " : " + activeSoundState);
+                    }
                     if (ForceToPlay && activeSoundState == SoundState.Idle)
                     {
                         if (activeDelay != 0)
@@ -253,11 +266,12 @@ namespace EmodiaQuest.Core
                     {
                         ActiveDelay -= gameTime.ElapsedGameTime.Milliseconds;
                     }
-                    else if ((activeSoundState == SoundState.Delaying && ActiveDelay <= 0) || (activeSoundState == SoundState.Playing && ActiveTimer == (float)Duration.Milliseconds))
+                    else if ((activeSoundState == SoundState.Delaying && ActiveDelay <= 0) || (activeSoundState == SoundState.Playing && ActiveTimer >= (float)Duration.TotalMilliseconds))
                     {
                         activeSoundState = SoundState.Playing;
                         ActiveDelay = 0;
                         SoundEffectInstance temp = SoundEffect.CreateInstance();
+                        //temp.Pitch = speed;
                         temp.Play();
                         temp.Volume = Settings.Instance.MainVolume * Settings.Instance.FXVolume;
                         ActiveTimer -= 1;
@@ -269,8 +283,8 @@ namespace EmodiaQuest.Core
                     }
                     else if (activeSoundState == SoundState.Playing && activeTimer <= 0)
                     {
-                        ActiveTimer = Duration.Milliseconds;
-                        activeDelay = Delay.Milliseconds;
+                        ActiveTimer = (float)Duration.TotalMilliseconds;
+                        activeDelay = (float)Delay.TotalMilliseconds;
                         activeSoundState = SoundState.Idle;
                     }
                     break;
@@ -325,8 +339,8 @@ namespace EmodiaQuest.Core
                     }
                     else if (activeSoundState == SoundState.Playing && activeTimer <= 0)
                     {
-                        ActiveTimer = Duration.Milliseconds;
-                        activeDelay = Delay.Milliseconds;
+                        ActiveTimer = (float)Duration.TotalMilliseconds;
+                        activeDelay = (float)Delay.TotalMilliseconds;
                         activeSoundState = SoundState.Idle;
                         soundInstance.Stop();
                     }
