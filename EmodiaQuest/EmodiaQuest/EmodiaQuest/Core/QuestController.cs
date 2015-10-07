@@ -166,7 +166,6 @@ namespace EmodiaQuest.Core
                 PossibleActiveQuests.Clear();
                 foreach (Quest quest in questsByOwner)
                 {
-                    Console.WriteLine(quest.Name);
                     bool solved = false, visit = false, kill = false, item = false;
                     List<bool> outCompare = new List<bool>();
                     foreach (var key in quest.Conditions.Keys)

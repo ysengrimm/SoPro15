@@ -92,7 +92,7 @@ namespace EmodiaQuest.Core
             FXSounds.Add(Klick_1);
             Coin_1 = new SoundDisk("Coin_1", SoundDisk.SoundType.FX, "Sounds/fx/coin", new TimeSpan(0, 0, 0, 0, 0));
             FXSounds.Add(Coin_1);
-            Walk_long = new SoundDisk("Walk_long", SoundDisk.SoundType.FX, "Sounds/fx/steps_long", new TimeSpan(0, 0, 0, 0, 0));
+            Walk_long = new SoundDisk("Walk_long", SoundDisk.SoundType.FX, "Sounds/fx/steps_short", new TimeSpan(0, 0, 0, 0, 0));
             FXSounds.Add(Walk_long);
             Growl_1 = new SoundDisk("Growl_1", SoundDisk.SoundType.FX, "Sounds/fx/growl", new TimeSpan(0, 0, 0, 0, 0));
             FXSounds.Add(Growl_1);
@@ -209,9 +209,9 @@ namespace EmodiaQuest.Core
         {
             Walk_long.Play();
         }
-        public void PlayWalk_Long(TimeSpan timeD, float speed)
+        public void PlayWalk_Long(float length)
         {
-            Walk_long.Play(timeD , speed);
+            Walk_long.Play(length);
         }
         public void PlayCoin()
         {

@@ -15,7 +15,13 @@ namespace EmodiaQuest.Core
 {
     public class SoundDisk
     {
-
+        /// <summary>
+        /// All instances of the sound are in here
+        /// </summary>
+        private List<SoundEffectInstance> instances;
+        /// <summary>
+        /// States fpr the Sound
+        /// </summary>
         public enum SoundState { Fading, Playing, Paused, Stopped, Delaying, Idle, Resumed}
         /// <summary>
         /// The active state of the Sound, mostly for intern calculations
@@ -58,8 +64,6 @@ namespace EmodiaQuest.Core
             set { delay = value; }
             get { return delay; }
         }
-
-        private float speed = 1;
         /// <summary>
         /// the active playtime of the sounddisk
         /// start = full soundlength
@@ -148,6 +152,10 @@ namespace EmodiaQuest.Core
             {
                 soundInstance = SoundEffect.CreateInstance();
             }
+            else if(SoundTyp == SoundType.FX)
+            {
+                instances = new List<SoundEffectInstance>();
+            }
         }
         /// <summary>
         /// Plays the Sounddisk
@@ -157,11 +165,11 @@ namespace EmodiaQuest.Core
             ForceToPlay = true;
         }
 
-        public void Play(TimeSpan timeD, float speed)
+        public void Play(float length)
         {
             ForceToPlay = true;
-            Duration = timeD;
-            this.speed = speed;
+            activeTimer = length;
+            Duration = new TimeSpan(0, 0, 0, 0, (int)length);
         }
         /// <summary>
         /// Stops the Sounddisk, you need to Press "Play again" if you want to "resume"
@@ -246,9 +254,9 @@ namespace EmodiaQuest.Core
             {
                 // updates if the Sounddisk has FX (no pause or stop functionality)
                 case SoundType.FX:
-                    if (Name == "Klick_1")
+                    if (Name == "Walk_long")
                     {
-                        //Console.WriteLine(Name + " : " + IsPlaying + " : " + activeSoundState);
+                        Console.WriteLine(activeTimer);
                     }
                     if (ForceToPlay && activeSoundState == SoundState.Idle)
                     {
@@ -266,14 +274,14 @@ namespace EmodiaQuest.Core
                     {
                         ActiveDelay -= gameTime.ElapsedGameTime.Milliseconds;
                     }
-                    else if ((activeSoundState == SoundState.Delaying && ActiveDelay <= 0) || (activeSoundState == SoundState.Playing && ActiveTimer >= (float)Duration.TotalMilliseconds))
+                    else if ((activeSoundState == SoundState.Delaying && ActiveDelay <= 0) || (activeSoundState == SoundState.Playing && ActiveTimer == (float)Duration.TotalMilliseconds))
                     {
                         activeSoundState = SoundState.Playing;
                         ActiveDelay = 0;
                         SoundEffectInstance temp = SoundEffect.CreateInstance();
-                        //temp.Pitch = speed;
                         temp.Play();
                         temp.Volume = Settings.Instance.MainVolume * Settings.Instance.FXVolume;
+                        //instances.Add(temp);
                         ActiveTimer -= 1;
                     }
                     else if (activeSoundState == SoundState.Playing && activeTimer > 0)
@@ -287,6 +295,33 @@ namespace EmodiaQuest.Core
                         activeDelay = (float)Delay.TotalMilliseconds;
                         activeSoundState = SoundState.Idle;
                     }
+
+                    // handle instances
+                    /*
+                    if (Name == "Walk_long" && instances.Count > 0 && (Player.Instance.ActivePlayerState != PlayerState.Walking || Player.Instance.ActivePlayerState != PlayerState.Running))
+                    {
+                        instances[0].Stop();
+                        instances.RemoveAt(0);
+                        Console.WriteLine("Stop Walk");
+                    }
+                    if (instances.Count > 1)
+                    {
+                        instances[1].Stop();
+                        instances.RemoveAt(1);
+                        Console.WriteLine("Deleted " + Name);
+                    }
+                     * */
+                    // handle walk sound
+                    /*
+                    if (Name == "Walk_long" && (Player.Instance.ActivePlayerState != PlayerState.Walking || Player.Instance.ActivePlayerState != PlayerState.Running))
+                    {
+                        foreach(SoundEffectInstance inst in instances)
+                        {
+                            inst.Stop();
+
+                        }
+                    }
+                    */
                     break;
                 // updates the Sounddisk if it is from the type "music"
                 case SoundType.Music:

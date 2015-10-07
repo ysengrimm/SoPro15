@@ -918,6 +918,7 @@ namespace EmodiaQuest.Core
                 fixedBlendDuration = 300;
                 stateTime = runningDuration;
                 Jukebox.Instance.PlayWalk_Long();
+                Console.WriteLine("Step!");
             }
                 // Walking
             else if ((lastPos.X != movement.X || lastPos.Y != movement.Y) && stateTime < 100)
@@ -926,6 +927,7 @@ namespace EmodiaQuest.Core
                 stateTime = walkingDuration / 2;
                 fixedBlendDuration = 300;
                 Jukebox.Instance.PlayWalk_Long();
+                Console.WriteLine("Stepping!");
             }
                 // Standing
             else if (lastPos.X == movement.X && lastPos.Y == movement.Y && stateTime < 100)
